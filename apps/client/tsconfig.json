@@ -1,23 +1,19 @@
 {
-  "compilerOptions": {
-    "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "jsx": "react-native",
-    "module": "es2015",
-    "moduleResolution": "node",
-    "noImplicitAny": false,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": false,
-    "sourceMap": true,
-    "target": "esnext",
-    "lib": ["esnext", "dom"],
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "baseUrl": "./"
-  },
-  "exclude": ["node_modules"],
-  "include": ["index.js", "App.js", "app", "test", "*.js"],
-  "extends": "expo/tsconfig.base"
+	"extends": "expo/tsconfig.base",
+	// "extends": ["expo/tsconfig.base", "../../tsconfig.base.json"], // use this after upgrading to TS v5
+	"compilerOptions": {
+		"strict": true, // remove this line after upgrading to TS v5
+		"jsx": "react-native",
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"paths": {
+			"src/*": ["src/*"],
+			"src/types/*": ["./src/types/*"],
+			"src/types/redux": ["./src/redux/types"],
+			"src/svg": ["./src/assets/svg/index"]
+		}
+	},
+
+	"include": ["src", "expo-plugins", "app.config.ts", "index.ts"],
+	"exclude": ["node_modules", ".dump"]
 }
