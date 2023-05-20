@@ -1,7 +1,7 @@
 import React from "react";
 import { Slot } from "expo-router";
 
-import { Provider } from "../contexts/Auth";
+import { Provider } from "../contexts/authContext";
 
 export default function Root() {
 	return (

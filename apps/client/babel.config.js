@@ -9,7 +9,7 @@ module.exports = function (api) {
 		},
 		plugins: [
 			// Removable in Expo SDK 49
-			require.resolve("expo-router/babel"),
+			require.resolve("expo-router/babel"),//expo router plugin
 			[
 				"module-resolver",
 				{
@@ -29,7 +29,8 @@ module.exports = function (api) {
 					},
 				},
 			],
-			"react-native-reanimated/plugin", // !! added Reanimated plugin. It has to be listed last.
+			'@babel/plugin-proposal-export-namespace-from',//plugin to remove reanimated error -> https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation/#web
+			"react-native-reanimated/plugin",
 		],
 	};
 };

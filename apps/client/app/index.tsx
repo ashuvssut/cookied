@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-import { useAuth } from "../contexts/Auth";
+import { useAuth } from "../contexts/authContext";
 
 export default function Index() {
 	const { signOut } = useAuth();

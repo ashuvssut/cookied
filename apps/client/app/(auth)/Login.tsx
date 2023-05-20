@@ -1,16 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import LoginScreen from "../../screens/LoginScreen";// index file used to avoid repetative import (for ex:- /LoginScren/LoginScreen)
 
-type Props = {}
+type Props = {};
 
 const Login = (props: Props) => {
-  return (
-    <View>
-      <Text>Login</Text>
-    </View>
-  )
-}
+	return <LoginScreen />;
+};
 
-export default Login
+export default Login;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
