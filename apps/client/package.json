@@ -7,8 +7,8 @@
 		"android": "expo run:android",
 		"ios": "expo run:ios",
 		"web": "expo start --web",
-		"reset-cache": "cd apps/client && npx react-native start --reset-cache",
-		"gradle-clean": "cd apps/client/android && ./gradlew clean"
+		"reset-cache": "npx react-native start --reset-cache",
+		"gradle-clean": "cd ./android && ./gradlew clean"
 	},
 	"dependencies": {
 		"@expo/webpack-config": "^18.0.4",
