@@ -8,7 +8,7 @@
 	"private": true,
 	"scripts": {
 		"android": "yarn workspace client android",
-		"web": "yarn workspace client expo:web",
+		"web": "yarn workspace client web",
 		"ext": "yarn workspace ext dev"
 	},
 	"workspaces": [

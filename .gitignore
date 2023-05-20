@@ -1,6 +1,5 @@
 node_modules
 
-apps/client-e2e/artifacts
 .dump
 .gradle
 .env
