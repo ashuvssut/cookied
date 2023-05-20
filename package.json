@@ -7,8 +7,11 @@
 	"author": "Team Cookied",
 	"private": true,
 	"scripts": {
-		"android": "yarn workspace client android",
+		"metro": "yarn workspace client dev",
 		"web": "yarn workspace client web",
+		"android": "yarn workspace client android",
+		"reset-cache": "yarn workspace client reset-cache",
+		"gradle-clean": "yarn workspace client gradle-clean",
 		"ext": "yarn workspace ext dev"
 	},
 	"workspaces": [
