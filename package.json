@@ -7,11 +7,9 @@
 	"author": "Team Cookied",
 	"private": true,
 	"scripts": {
-		"client:devbuild": "yarn workspace client android",
-		"client": "yarn workspace client dev",
-		"client2:devbuild": "yarn workspace client2 android",
-		"client2": "yarn workspace client2 dev",
-		"api": "yarn workspace api dev"
+		"android": "yarn workspace client android",
+		"web": "yarn workspace client expo:web",
+		"ext": "yarn workspace ext dev"
 	},
 	"workspaces": [
 		"apps/*",

@@ -5,7 +5,7 @@
 			"path": "."
 		},
 		{
-			"name": "client",
+			"name": "Client",
 			"path": "apps/client"
 		},
 		{
