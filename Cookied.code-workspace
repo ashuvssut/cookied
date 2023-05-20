@@ -5,11 +5,7 @@
 			"path": "."
 		},
 		{
-			"name": "Client - Ignite CLI bootstrapped",
-			"path": "apps/client2"
-		},
-		{
-			"name": "Client - Expo bare-workflow - uses dev build",
+			"name": "Client - Expo dev build",
 			"path": "apps/client"
 		},
 		{

@@ -1,6 +1,6 @@
 node_modules
 
-.dump
+.dump/
 .gradle
 .env
 # apps/client/android/app/google-services.json
