@@ -1,6 +1,14 @@
-node_modules
-ios
-android
-.vscode
-ignite/ignite.json
-package.json
+# Add files here to ignore them from prettier formatting
+
+/dist
+/coverage
+
+
+build
+/public/images
+/public/favicon
+/public/*.png
+/public/*.jpg
+src/fonts
+.gitignore
+.prettierignore

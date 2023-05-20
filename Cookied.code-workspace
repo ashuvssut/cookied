@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"name": "Root",
+			"path": "."
+		},
+		{
+			"name": "client",
+			"path": "apps/client"
+		},
+		{
+			"name": "Chrome Extension",
+			"path": "apps/chrome-extension"
+		}
+	],
+	"settings": {
+		"svg.preview.background": "dark-transparent"
+	}
+}

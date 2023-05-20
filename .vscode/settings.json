@@ -1,0 +1,4 @@
+{
+	"terminal.integrated.cwd": "${workspaceFolder}"
+	//	"typescript.preferences.importModuleSpecifier": "non-relative",
+}

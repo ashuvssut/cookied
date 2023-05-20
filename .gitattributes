@@ -1,0 +1,3 @@
+# https://stackoverflow.com/questions/16244969/how-to-tell-git-to-ignore-individual-lines-i-e-gitignore-for-specific-lines-of
+*.tsx filter=gitignore
+*.ts filter=gitignore
