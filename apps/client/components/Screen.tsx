@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Box } from "../theme/theme";
+import { Box } from "../theme";
 
 type Props = {
 	children?: React.ReactNode;
