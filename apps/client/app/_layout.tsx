@@ -4,7 +4,7 @@ import { ThemeProvider } from "@shopify/restyle";
 import { Slot } from "expo-router";
 
 import { Provider } from "../contexts/authContext";
-import { darkTheme, lightTheme } from "../theme/theme";
+import { darkTheme, lightTheme } from "../theme";
 
 export default function Root() {
 	const colorScheme = useColorScheme();

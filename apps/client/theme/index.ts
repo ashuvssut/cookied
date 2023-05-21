@@ -3,7 +3,7 @@ import { Dimensions, Platform } from "react-native";
 
 const { width } = Dimensions.get("window");
 const scale = width / 375;
-
+console.log(Platform);
 const theme = createTheme({
 	colors: {
 		primary: "#7286D3",
@@ -55,6 +55,7 @@ const theme = createTheme({
 					height: 853,
 				},
 			},
+			
 		}),
 	},
 	textVariants: {
@@ -63,47 +64,47 @@ const theme = createTheme({
 			lineHeight: 24 * scale,
 		},
 		body: {
-			fontFamily: "SF-ProDisplay-Regular",
+			// fontFamily: "SF-ProDisplay-Regular",
 			fontSize: 16 * scale,
 			lineHeight: 24 * scale,
 		},
 		banner: {
-			fontFamily: "Led-Counter-7",
+			// fontFamily: "Led-Counter-7",
 			fontSize: 27 * scale,
 			lineHeight: 48 * scale,
 		},
 		title: {
-			fontFamily: "SF-ProDisplay-Bold",
+			// fontFamily: "SF-ProDisplay-Bold",
 			fontSize: 27 * scale,
 			lineHeight: 48 * scale,
 		},
 		header: {
-			fontFamily: "SF-ProDisplay-Bold",
+			// fontFamily: "SF-ProDisplay-Bold",
 			fontSize: 24 * scale,
 			lineHeight: 48 * scale,
 		},
 		subtitle: {
-			fontFamily: "SF-ProDisplay-Medium",
+			// fontFamily: "SF-ProDisplay-Medium",
 			fontSize: 23 * scale,
 			lineHeight: 36 * scale,
 		},
 		caption: {
-			fontFamily: "SF-ProDisplay-Light",
+			// fontFamily: "SF-ProDisplay-Light",
 			fontSize: 14 * scale,
 			lineHeight: 21 * scale,
 		},
 		label: {
-			fontFamily: "SF-ProDisplay-Medium",
+			// fontFamily: "SF-ProDisplay-Medium",
 			fontSize: 12 * scale,
 			lineHeight: 18 * scale,
 		},
 		button: {
-			fontFamily: "SF-ProDisplay-Bold",
+			// fontFamily: "SF-ProDisplay-Bold",
 			fontSize: 18 * scale,
 			lineHeight: 27 * scale,
 		},
 		menuItem: {
-			fontFamily: "SF-ProDisplay-Regular",
+			// fontFamily: "SF-ProDisplay-Regular",
 			fontSize: 18 * scale,
 			lineHeight: 27 * scale,
 		},
