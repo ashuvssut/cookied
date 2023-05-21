@@ -3,8 +3,8 @@ import { useColorScheme } from "react-native";
 import { ThemeProvider } from "@shopify/restyle";
 import { Slot } from "expo-router";
 
-import { Provider } from "../contexts/authContext";
 import { darkTheme, lightTheme } from "../theme";
+import { ProtectedRoute } from "../components/ProtectedRoute";
 
 export default function Root() {
 	const colorScheme = useColorScheme();
@@ -12,9 +12,9 @@ export default function Root() {
 	return (
 		// Setup the auth context and render our layout inside of it.
 		<ThemeProvider theme={selectedTheme}>
-			<Provider>
+			<ProtectedRoute>
 				<Slot />
-			</Provider>
+			</ProtectedRoute>
 		</ThemeProvider>
 	);
 }
