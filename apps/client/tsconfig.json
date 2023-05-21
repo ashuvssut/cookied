@@ -5,13 +5,6 @@
 		"strict": true, // remove this line after upgrading to TS v5
 		"jsx": "react-native",
 		"allowSyntheticDefaultImports": true,
-		"baseUrl": ".",
-		"paths": {
-			"src/*": ["src/*"],
-			"src/types/*": ["./src/types/*"],
-			"src/types/redux": ["./src/redux/types"],
-			"src/svg": ["./src/assets/svg/index"]
-		}
 	},
 
 	"include": ["src", "expo-plugins", "app.config.ts", "index.ts"],
