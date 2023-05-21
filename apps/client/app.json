@@ -1,8 +1,7 @@
 {
 	"expo": {
-		"slug": "cookied",
+		"slug": "Cookied",
 		"name": "Cookied",
-		"displayName": "Cookied",
 		"version": "0.1.0",
 		"scheme": "cookied",
 		"assetBundlePatterns": ["**/*"],
