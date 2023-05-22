@@ -3,7 +3,43 @@ import { Dimensions, Platform } from "react-native";
 
 const { width } = Dimensions.get("window");
 const scale = width / 375;
-console.log(Platform);
+const BREAKPOINTS = {
+	phone: {
+		width: 0,
+		height: 640,
+	},
+	tablet: {
+		width: 768,
+		height: 1024,
+	},
+	smallPhone: {
+		width: 320,
+		height: 568,
+	},
+	largePhone: {
+		width: 414,
+		height: 896,
+	},
+	xlargePhone:
+		Platform.OS === "ios"
+			? {
+					width: 428,
+					height: 926,
+			  }
+			: Platform.OS === "android"
+			? {
+					width: 480,
+					height: 853,
+			  }
+			: {
+					width: 1000,
+					height: 746,
+			  },
+	largeScreen: {
+		width: 1000,
+		height: 746,
+	},
+};
 const theme = createTheme({
 	colors: {
 		primary: "#7286D3",
@@ -25,88 +61,46 @@ const theme = createTheme({
 		l: 24 * scale,
 		xl: 32 * scale,
 	},
-	breakpoints: {
-		phone: {
-			width: 0,
-			height: 640,
-		},
-		tablet: {
-			width: 768,
-			height: 1024,
-		},
-		smallPhone: {
-			width: 320,
-			height: 568,
-		},
-		largePhone: {
-			width: 414,
-			height: 896,
-		},
-		...Platform.select({
-			ios: {
-				xlargePhone: {
-					width: 428,
-					height: 926,
-				},
-			},
-			android: {
-				xlargePhone: {
-					width: 480,
-					height: 853,
-				},
-			},
-			
-		}),
-	},
+	breakpoints: BREAKPOINTS,
 	textVariants: {
 		defaults: {
 			fontSize: 16 * scale,
-			lineHeight: 24 * scale,
 		},
 		body: {
 			// fontFamily: "SF-ProDisplay-Regular",
 			fontSize: 16 * scale,
-			lineHeight: 24 * scale,
 		},
 		banner: {
 			// fontFamily: "Led-Counter-7",
 			fontSize: 27 * scale,
-			lineHeight: 48 * scale,
 		},
 		title: {
 			// fontFamily: "SF-ProDisplay-Bold",
 			fontSize: 27 * scale,
-			lineHeight: 48 * scale,
 		},
 		header: {
 			// fontFamily: "SF-ProDisplay-Bold",
 			fontSize: 24 * scale,
-			lineHeight: 48 * scale,
 		},
 		subtitle: {
 			// fontFamily: "SF-ProDisplay-Medium",
 			fontSize: 23 * scale,
-			lineHeight: 36 * scale,
 		},
 		caption: {
 			// fontFamily: "SF-ProDisplay-Light",
 			fontSize: 14 * scale,
-			lineHeight: 21 * scale,
 		},
 		label: {
 			// fontFamily: "SF-ProDisplay-Medium",
 			fontSize: 12 * scale,
-			lineHeight: 18 * scale,
 		},
 		button: {
 			// fontFamily: "SF-ProDisplay-Bold",
 			fontSize: 18 * scale,
-			lineHeight: 27 * scale,
 		},
 		menuItem: {
 			// fontFamily: "SF-ProDisplay-Regular",
 			fontSize: 18 * scale,
-			lineHeight: 27 * scale,
 		},
 	},
 	cardVariants: {
