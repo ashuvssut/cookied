@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
-// $highlight-text: #f2f3f5;
+// $highlight-text: #cfd0d4;
 // $highlight-bg: #3e4249;
 //
 // $text: #949aa5;
@@ -9,18 +9,19 @@ import { createTheme } from "@mui/material/styles";
 export const theme = createTheme({
 	palette: {
 		primary: {
-			main: "#2b2c30",
-		},
-		secondary: {
-			main: "#3e4249",
+			main: "#cfd0d4",
 		},
 		background: {
 			default: "#1e1f22",
 			paper: "#2b2c30",
 		},
 		text: {
-			primary: "#949aa5",
-			secondary: "#f2f3f5",
+			primary: "#cfd0d4",
+			secondary: "#949aa5",
+		},
+		divider: "#3e4047",
+		action: {
+			hoverOpacity: 0.15,
 		},
 	},
 	typography: {
@@ -37,5 +38,45 @@ export const theme = createTheme({
 			"Helvetica Neue",
 			"sans-serif",
 		].join(","),
+	},
+	components: {
+		MuiTextField: {
+			defaultProps: {
+				variant: "outlined",
+			},
+			styleOverrides: {
+				root: {
+					// change background color of input
+					"& .MuiOutlinedInput-root": {
+						backgroundColor: "#1e1f22",
+						"& fieldset": {
+							borderColor: "#1e1f22",
+						},
+					},
+				},
+			},
+		},
+		MuiSelect: {
+			styleOverrides: {
+				icon: {
+					color: "#f2f3f5",
+				},
+				outlined: {
+					backgroundColor: "#1e1f22",
+					borderColor: "#1e1f22",
+				},
+			},
+		},
+		MuiButton: {
+			defaultProps: {
+				variant: "outlined",
+			},
+			styleOverrides: {
+				root: {
+					padding: "8px 24px",
+					borderRadius: 10,
+				},
+			},
+		},
 	},
 });

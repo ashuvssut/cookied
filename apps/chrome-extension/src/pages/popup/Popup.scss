@@ -1,0 +1,37 @@
+// scss variable
+$highlight-bg: #3e4249;
+$surface-bg: #2b2c30;
+$background-bg: #1e1f22;
+$highlight-text: #f2f3f5;
+$text: #949aa5;
+
+#app-container {
+	height: 100%;
+	display: flex;
+}
+.app {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	background-color: $background-bg;
+	gap: 5px;
+	header {
+		border-radius: 5px 5px 0 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	main {
+		border-radius: 0 0 5px 5px;
+		flex: 1;
+		justify-content: center;
+		display: flex;
+		align-items: center;
+		h1 {
+			font-size: 1.5rem;
+			font-weight: bolder;
+			width: 70%;
+			text-align: center;
+		}
+	}
+}
