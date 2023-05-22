@@ -7,11 +7,20 @@ import Screen from "../../components/Screen";
 import { Box, Text } from "../../theme";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-
+import { useSendIntent } from "../../hooks/useSendIntent";
+import { useEffect } from "react";
 type Props = {};
 
 const LoginScreen = (props: Props) => {
 	const theme = useTheme();
+	
+	const { sharedData, sharedExtraData, sharedMimeType } = useSendIntent();
+	useEffect(() => {
+		console.log("sharedData", sharedData);
+		console.log("sharedExtraData", sharedExtraData);
+		console.log("sharedMimeType", sharedMimeType);
+	}, [sharedData, sharedExtraData, sharedMimeType]);
+
 	return (
 		<Screen setTopInset={true}>
 			<Box
@@ -25,8 +34,8 @@ const LoginScreen = (props: Props) => {
 					backgroundColor={{ phone: "background" }}
 					justifyContent={"center"}
 					alignItems={"center"}
-					width={{phone:"80%",largeScreen:"30%"}}
-					height={{phone:"60%",largeScreen:"60%"}}
+					width={{ phone: "80%", largeScreen: "30%" }}
+					height={{ phone: "60%", largeScreen: "60%" }}
 					borderRadius={20}
 					elevation={30}
 					shadowColor={"surface"}
