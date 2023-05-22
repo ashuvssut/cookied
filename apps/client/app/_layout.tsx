@@ -6,7 +6,14 @@ import { Slot } from "expo-router";
 import { darkTheme, lightTheme } from "../theme";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 
-export default function Root() {
+type Props = {
+	url?: string;
+};
+
+export default function Root(props: Props) {
+	console.log("Properties", props.url);
+	console.log("Properties Are running", props);
+
 	const colorScheme = useColorScheme();
 	const selectedTheme = colorScheme === "dark" ? darkTheme : lightTheme;
 	return (

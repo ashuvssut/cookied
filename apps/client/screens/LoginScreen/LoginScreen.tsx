@@ -25,15 +25,13 @@ const LoginScreen = (props: Props) => {
 					backgroundColor={{ phone: "background" }}
 					justifyContent={"center"}
 					alignItems={"center"}
-					width={"80%"}
-					height={"60%"}
-					maxHeight={500}
-					maxWidth={500 / 1.62}
+					width={{phone:"80%",largeScreen:"30%"}}
+					height={{phone:"60%",largeScreen:"60%"}}
 					borderRadius={20}
 					elevation={30}
 					shadowColor={"surface"}
 				>
-					<Text variant={"header"} fontSize={30} color={"text"}>
+					<Text variant={"header"} color={"text"}>
 						LOGIN
 					</Text>
 					<Input />

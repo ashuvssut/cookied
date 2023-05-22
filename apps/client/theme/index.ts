@@ -1,7 +1,7 @@
 import { createBox, createText, createTheme } from "@shopify/restyle";
 import { Dimensions, Platform } from "react-native";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 const scale = width / 375;
 const BREAKPOINTS = {
 	phone: {
@@ -55,52 +55,52 @@ const theme = createTheme({
 		paragraph: "#43C3EC",
 	},
 	spacing: {
-		xs: 4 * scale,
-		s: 8 * scale,
-		m: 16 * scale,
-		l: 24 * scale,
-		xl: 32 * scale,
+		xs: 4 ,//* scale
+		s: 8 ,//* scale
+		m: 16 ,//* scale
+		l: 24 ,//* scale
+		xl: 32 ,//* scale
 	},
 	breakpoints: BREAKPOINTS,
 	textVariants: {
 		defaults: {
-			fontSize: 16 * scale,
+			fontSize: 16, // * scale
 		},
 		body: {
-			// fontFamily: "SF-ProDisplay-Regular",
-			fontSize: 16 * scale,
+			// fontFamily: "SF-ProDisplay-Regular", * scale
+			fontSize: 16,
 		},
 		banner: {
-			// fontFamily: "Led-Counter-7",
-			fontSize: 27 * scale,
+			// fontFamily: "Led-Counter-7", * scale
+			fontSize: 27,
 		},
 		title: {
-			// fontFamily: "SF-ProDisplay-Bold",
-			fontSize: 27 * scale,
+			// fontFamily: "SF-ProDisplay-Bold", * scale
+			fontSize: 27,
 		},
 		header: {
-			// fontFamily: "SF-ProDisplay-Bold",
-			fontSize: 24 * scale,
+			// fontFamily: "SF-ProDisplay-Bold", * scale
+			fontSize: 24,
 		},
 		subtitle: {
-			// fontFamily: "SF-ProDisplay-Medium",
-			fontSize: 23 * scale,
+			// fontFamily: "SF-ProDisplay-Medium", * scale
+			fontSize: 23,
 		},
 		caption: {
-			// fontFamily: "SF-ProDisplay-Light",
-			fontSize: 14 * scale,
+			// fontFamily: "SF-ProDisplay-Light", * scale
+			fontSize: 14,
 		},
 		label: {
-			// fontFamily: "SF-ProDisplay-Medium",
-			fontSize: 12 * scale,
+			// fontFamily: "SF-ProDisplay-Medium", * scale
+			fontSize: 12,
 		},
 		button: {
-			// fontFamily: "SF-ProDisplay-Bold",
-			fontSize: 18 * scale,
+			// fontFamily: "SF-ProDisplay-Bold", * scale
+			fontSize: 18,
 		},
 		menuItem: {
-			// fontFamily: "SF-ProDisplay-Regular",
-			fontSize: 18 * scale,
+			// fontFamily: "SF-ProDisplay-Regular", * scale
+			fontSize: 18,
 		},
 	},
 	cardVariants: {

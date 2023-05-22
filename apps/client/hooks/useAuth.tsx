@@ -13,7 +13,8 @@ export function useAuth() {
 		try {
 			// Go to OAuth provider login page - https://appwrite.io/docs/client/account?sdk=web-default#accountCreateOAuth2Session
 			account.createOAuth2Session(
-				"google" /** TODO: add success and failure deeplinks */,
+				"google","cookied://"
+				/** TODO: add success and failure deeplinks */
 			);
 			// find a way to await for completion of the createOAuth2Session step
 			// await??

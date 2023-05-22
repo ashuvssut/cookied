@@ -1,5 +1,7 @@
-import { Client } from "appwrite";
+import { Account, Client } from "appwrite";
 
 export const client = new Client()
 	.setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-	.setProject("5df5acd0d48c2"); // Your project ID
+	.setProject("6469040898e19fe9052c"); // Your project ID
+
+export const account = new Account(client);

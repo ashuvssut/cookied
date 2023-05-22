@@ -15,7 +15,10 @@ const Button = ({ title, onPress }) => {
 				flex={1}
 				borderRadius={2}
 			>
-				<Text variant="button" color="white">
+				<Text
+					variant="button"
+					color={{ phone: "white", largeScreen: "accent" }}
+				>
 					{title}
 				</Text>
 			</Box>
