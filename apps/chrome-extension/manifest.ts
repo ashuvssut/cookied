@@ -5,10 +5,10 @@ import packageJson from "./package.json";
  */
 const manifest: chrome.runtime.ManifestV3 = {
   manifest_version: 3,
-  name: packageJson.name,
+  name: "Cookied!!",
   version: packageJson.version,
   description: packageJson.description,
-  options_page: "src/pages/options/index.html",
+  // options_page: "src/pages/options/index.html",
   background: {
     service_worker: "src/pages/background/index.js",
     type: "module",
@@ -17,9 +17,9 @@ const manifest: chrome.runtime.ManifestV3 = {
     default_popup: "src/pages/popup/index.html",
     default_icon: "34-logo.png",
   },
-  // chrome_url_overrides: {
-  //   newtab: "src/pages/newtab/index.html",
-  // },
+  chrome_url_overrides: {
+    newtab: "src/pages/newtab/index.html",
+  },
   icons: {
     "128": "128-logo.png",
   },
