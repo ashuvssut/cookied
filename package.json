@@ -10,6 +10,8 @@
 		"metro": "yarn workspace client dev",
 		"web": "yarn workspace client web",
 		"android": "yarn workspace client android",
+		"apk": "cd ./apps/client/android && ./gradlew assembleRelease",
+		"apk-install": "adb install ./apps/client/android/app/build/outputs/apk/release/app-release.apk",
 		"reset-cache": "yarn workspace client reset-cache",
 		"gradle-clean": "yarn workspace client gradle-clean",
 		"ext": "yarn workspace ext dev"
