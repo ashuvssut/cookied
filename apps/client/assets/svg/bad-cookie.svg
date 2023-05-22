@@ -35,8 +35,8 @@
 </g>
 <defs>
 <radialGradient id="paint0_radial_3307_1309" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(181.374 166.303) scale(203.496 203.496)">
-<stop stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0"/>
+<!-- <stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/> -->
 </radialGradient>
 <linearGradient id="paint1_linear_3307_1309" x1="43.056" y1="32.287" x2="39.904" y2="70.112" gradientUnits="userSpaceOnUse">
 <stop stop-color="#8F420B"/>
@@ -159,4 +159,3 @@
 </clipPath>
 </defs>
 </svg>
-
