@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import ShareMenu from "react-native-share-menu";
 import { ShareData } from "react-native-share-menu";
+import { LogBox } from "react-native";
 
 export const useSendIntent = () => {
 	const [sharedData, setSharedData] = useState<string | string[]>("");
@@ -24,6 +25,7 @@ export const useSendIntent = () => {
 	}, []);
 
 	useEffect(() => {
+		LogBox.ignoreLogs(["new NativeEventEmitter()"]);
 		const listener = ShareMenu.addNewShareListener(handleShare);
 
 		return () => {
