@@ -1,4 +1,5 @@
 import React from "react";
+import { Text, Box } from "../theme";
 import { useColorScheme } from "react-native";
 import { ThemeProvider } from "@shopify/restyle";
 import { Slot } from "expo-router";
@@ -11,9 +12,6 @@ type Props = {
 };
 
 export default function Root(props: Props) {
-	console.log("Properties", props.url);
-	console.log("Properties Are running", props);
-
 	const colorScheme = useColorScheme();
 	const selectedTheme = colorScheme === "dark" ? darkTheme : lightTheme;
 	return (
@@ -21,6 +19,9 @@ export default function Root(props: Props) {
 		<ThemeProvider theme={selectedTheme}>
 			<ProtectedRoute>
 				<Slot />
+				<Box backgroundColor={"primary"}>
+					<Text color={"text"}>{props.url}</Text>
+				</Box>
 			</ProtectedRoute>
 		</ThemeProvider>
 	);
