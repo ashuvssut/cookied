@@ -14,6 +14,8 @@
 		}
 	],
 	"settings": {
-		"svg.preview.background": "dark-transparent"
+		"svg.preview.background": "dark-transparent",
+		"java.compile.nullAnalysis.mode": "automatic",
+		"terminal.integrated.cwd": "${workspaceFolder}"
 	}
 }
