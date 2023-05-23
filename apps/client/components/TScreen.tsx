@@ -9,7 +9,7 @@ type Props = {
 	setTopInset?: boolean;
 };
 
-const Screen = ({ children, setTopInset }: Props) => {
+const TScreen = ({ children, setTopInset }: Props) => {
 	const inset = useSafeAreaInsets();
 	return (
 		<Box
@@ -25,7 +25,7 @@ const Screen = ({ children, setTopInset }: Props) => {
 	);
 };
 
-export default Screen;
+export default TScreen;
 
 const styles = StyleSheet.create({
 	screen: {},

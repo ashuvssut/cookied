@@ -23,6 +23,7 @@
 		"expo-router": "^1.5.3",
 		"expo-splash-screen": "~0.18.2",
 		"expo-status-bar": "^1.4.4",
+		"formik": "^2.2.9",
 		"jotai": "^2.1.0",
 		"react": "18.2.0",
 		"react-dom": "^18.2.0",

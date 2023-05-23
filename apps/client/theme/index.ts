@@ -154,5 +154,5 @@ export const lightTheme: Theme = {
 };
 
 export const Box = createBox<Theme>();
-export const Text = createText<Theme>();
+export const TText = createText<Theme>();
 export const Card = createBox<Theme, typeof theme.cardVariants>();
