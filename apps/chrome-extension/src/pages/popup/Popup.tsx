@@ -6,7 +6,7 @@ import BookmarkForm from "@src/pages/popup/BookmarkForm";
 import { theme } from "@src/theme";
 import { useAuth } from "@src/hooks/useAuth";
 import Header from "@src/pages/popup/Header";
-import Auth from "@src/pages/popup/Auth";
+import { Auth } from "@src/pages/popup/Auth";
 
 const Popup = () => {
 	const { user, signIn, signOut } = useAuth();

@@ -13,7 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import ListItemText from "@mui/material/ListItemText";
 import { useAuth } from "@src/hooks/useAuth";
 import { useAtom } from "jotai";
-import { showAuthAtom } from "@src/pages/popup/Auth";
+import { showAuthAtom } from "@src/pages/popup/Auth/Auth";
 import { useState } from "react";
 import useTheme from "@mui/material/styles/useTheme";
 
