@@ -1,63 +1,22 @@
-import { useState } from "react";
-import logo from "@assets/svg/good-cookie.svg";
 import "@pages/popup/Popup.scss";
-import {
-	Box,
-	Typography,
-	Paper,
-	ThemeProvider,
-	Avatar,
-	Tooltip,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import BookmarkForm from "@src/pages/popup/BookmarkForm";
 import { theme } from "@src/theme";
 import { useAuth } from "@src/hooks/useAuth";
-import { Button3D } from "@src/components/Button3D.scss";
+import Header from "@src/pages/popup/Header";
+import Auth from "@src/pages/popup/Auth";
 
 const Popup = () => {
 	const { user, signIn, signOut } = useAuth();
-	function onAvatarClick() {
-		console.log("user", user);
-		if (user) {
-			signOut();
-		} else {
-			signIn();
-		}
-	}
 
-	// get avatar separately - https://github.com/appwrite/appwrite/issues/3574#issuecomment-1191841176
-	const dummyAvatar = "https://avatars.githubusercontent.com/u/60546840?v=4";
 	return (
 		<ThemeProvider theme={theme}>
 			<Box className="app" sx={{ p: 1 }}>
-				<Paper component="header" sx={{ borderRadius: "5px 5px 0 0", p: 2 }}>
-					<Box display="flex" alignItems="center">
-						<img src={logo} style={{ width: 35 }} alt="logo" />
-						<Typography variant="h5" ml={1} fontWeight="bold">
-							Cookied!!
-						</Typography>
-					</Box>
-
-					<Tooltip title={user ? user.name : "Login"}>
-						<Avatar
-							alt={user?.name}
-							src={user ? dummyAvatar : undefined}
-							sx={{ width: 35, height: 35, cursor: "pointer" }}
-							onClick={onAvatarClick}
-						/>
-					</Tooltip>
-				</Paper>
+				<Header />
 				<Paper component="main" sx={{ borderRadius: "0 0 5px 5px", p: 2 }}>
-					{user ? (
-						<BookmarkForm />
-					) : (
-						<Typography variant="h5" className="login-message">
-							<Box display="flex" alignItems="center">
-								Please <Button3D onClick={signIn}>Login</Button3D> to
-							</Box>
-							start saving your Bookmarks!
-						</Typography>
-					)}
+					{user ? <BookmarkForm /> : <Auth />}
 				</Paper>
 			</Box>
 		</ThemeProvider>

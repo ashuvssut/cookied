@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 import "./button-3d.scss";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 
 interface Props {
 	onClick: () => void;

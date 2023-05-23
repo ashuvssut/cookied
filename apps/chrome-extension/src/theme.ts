@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import createTheme from "@mui/material/styles/createTheme";
 
 // $highlight-text: #cfd0d4;
 // $highlight-bg: #3e4249;
@@ -20,9 +20,7 @@ export const theme = createTheme({
 			secondary: "#949aa5",
 		},
 		divider: "#3e4047",
-		action: {
-			hoverOpacity: 0.15,
-		},
+		action: { hoverOpacity: 0.15 },
 	},
 	typography: {
 		fontFamily: [
@@ -75,6 +73,13 @@ export const theme = createTheme({
 				root: {
 					padding: "8px 24px",
 					borderRadius: 10,
+				},
+			},
+		},
+		MuiSvgIcon: {
+			styleOverrides: {
+				root: {
+					color: "#cfd0d4",
 				},
 			},
 		},

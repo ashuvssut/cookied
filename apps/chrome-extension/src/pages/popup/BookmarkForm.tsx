@@ -1,15 +1,13 @@
-import {
-	Box,
-	Typography,
-	TextField,
-	Select,
-	FormControl,
-	InputLabel,
-	MenuItem,
-	Button,
-	Divider,
-	Stack,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import Stack from "@mui/material/Stack";
 import { useEffect, useState } from "react";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
