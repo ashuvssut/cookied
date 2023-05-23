@@ -12,9 +12,9 @@ import {
 import BookmarkForm from "@src/pages/popup/BookmarkForm";
 import { theme } from "@src/theme";
 import { useAuth } from "@src/hooks/useAuth";
+import { Button3D } from "@src/components/Button3D.scss";
 
 const Popup = () => {
-	const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 	const { user, signIn, signOut } = useAuth();
 	function onAvatarClick() {
 		console.log("user", user);
@@ -38,12 +38,7 @@ const Popup = () => {
 						</Typography>
 					</Box>
 
-					<Tooltip
-						title={user ? user.name : "Login here"}
-						open={user === null ? true : isTooltipOpen}
-						onMouseEnter={() => setIsTooltipOpen(true)}
-						onMouseLeave={() => setIsTooltipOpen(false)}
-					>
+					<Tooltip title={user ? user.name : "Login"}>
 						<Avatar
 							alt={user?.name}
 							src={user ? dummyAvatar : undefined}
@@ -56,8 +51,11 @@ const Popup = () => {
 					{user ? (
 						<BookmarkForm />
 					) : (
-						<Typography variant="h5" align="center">
-							Please Login to start saving your Bookmarks⚡️
+						<Typography variant="h5" className="login-message">
+							<Box display="flex" alignItems="center">
+								Please <Button3D onClick={signIn}>Login</Button3D> to
+							</Box>
+							start saving your Bookmarks!
 						</Typography>
 					)}
 				</Paper>

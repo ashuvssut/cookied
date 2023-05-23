@@ -1,4 +1,3 @@
-// scss variable
 $highlight-bg: #3e4249;
 $surface-bg: #2b2c30;
 $background-bg: #1e1f22;
@@ -26,11 +25,13 @@ $text: #949aa5;
 		justify-content: center;
 		display: flex;
 		align-items: center;
-		h1 {
-			font-size: 1.5rem;
-			font-weight: bolder;
-			width: 70%;
+		.login-message {
 			text-align: center;
+			word-spacing: 12px;
+			align-items: center;
+			display: flex;
+			flex-direction: column;
+			line-height: 2;
 		}
 	}
 }
