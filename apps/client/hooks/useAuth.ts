@@ -1,28 +1,39 @@
-import { Account, Models } from "appwrite";
+import { Account, ID, Models } from "appwrite";
 import { atom, useAtom } from "jotai";
 import { client } from "../utils/appwrite";
 
 export const userAtom = atom<Models.User<Models.Preferences> | null>(null);
+export const sessionAtom = atom<Models.Session | null>(null);
 
 export function useAuth() {
 	const [user, setUser] = useAtom(userAtom);
+	const [session, setSession] = useAtom(sessionAtom);
 
-	async function signIn() {
+	async function signIn(email: string, password: string) {
 		const account = new Account(client);
 
 		try {
-			// Go to OAuth provider login page - https://appwrite.io/docs/client/account?sdk=web-default#accountCreateOAuth2Session
-			account.createOAuth2Session(
-				"google",
-				/** TODO: add success and failure deeplinks */
-			);
-			// find a way to await for completion of the createOAuth2Session step
-			// await??
-
-			// updateUser after login attempt
-			// https://appwrite.io/docs/client/account?sdk=web-default#accountGet
+			const sessionRes = await account.createEmailSession(email, password);
 			const user = await account.get();
+			console.log("User", user);
+			console.log("User Session", sessionRes);
 			setUser(user);
+			setSession(sessionRes);
+			return user;
+		} catch (e) {
+			console.error(e);
+			setUser(null);
+			return null;
+		}
+	}
+
+	async function register(name: string, email: string, password: string) {
+		const account = new Account(client);
+
+		try {
+			const userRes = await account.create(ID.unique(), email, password, name);
+			console.log("User", userRes);
+			setUser(userRes);
 			return user;
 		} catch (e) {
 			console.error(e);
@@ -34,18 +45,17 @@ export function useAuth() {
 	async function signOut() {
 		const account = new Account(client);
 		try {
-			// https://appwrite.io/docs/client/account?sdk=web-default#accountGetSession
-			const session = await account.getSession("current");
+			if (session) {
+				const response = await account.deleteSession(session.$id);
+				console.log("Session deleted", response);
 
-			// https://appwrite.io/docs/client/account?sdk=web-default#accountDeleteSession
-			const response = await account.deleteSession(session.$id);
-			console.log("Session deleted", response);
-
-			setUser(null);
+				setUser(null);
+				setSession(null);
+			}
 		} catch (e) {
-			console.error(e);
+			console.error("Not able to logout",e);
 		}
 	}
 
-	return { user, signIn, signOut };
+	return { user, register, signIn, signOut };
 }

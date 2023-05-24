@@ -1,21 +1,29 @@
-import { Account, Models } from "appwrite";
-import { atom, useAtom } from "jotai";
+import { Account, Models, ID } from "appwrite";
+import { useAtom } from "jotai";
 import { client } from "../utils/appwrite";
+import { atomWithStorage } from "jotai/utils";
 
-export const userAtom = atom<Models.User<Models.Preferences> | null>(null);
+type TUser = Models.User<Models.Preferences>;
+export const currentUser = atomWithStorage<TUser | null>("currentUser", null);
 
 export function useAuth() {
-	const [user, setUser] = useAtom(userAtom);
+	const [user, setUser] = useAtom(currentUser);
+	const account = new Account(client);
+
+	async function registerUser({ email, password, name }: TRegisterUser) {
+		try {
+			// https://appwrite.io/docs/client/account?sdk=web-default#accountCreate
+			const user = await account.create(ID.unique(), email, password, name);
+			return user;
+		} catch (e) {
+			console.error(e);
+			throw new Error(String(e));
+		}
+	}
 
 	async function signIn() {
-		const account = new Account(client);
-
 		try {
 			// Go to OAuth provider login page - https://appwrite.io/docs/client/account?sdk=web-default#accountCreateOAuth2Session
-			account.createOAuth2Session(
-				"google",
-				/** TODO: add success and failure deeplinks */
-			);
 			// find a way to await for completion of the createOAuth2Session step
 			// await??
 
@@ -32,13 +40,9 @@ export function useAuth() {
 	}
 
 	async function signOut() {
-		const account = new Account(client);
 		try {
-			// https://appwrite.io/docs/client/account?sdk=web-default#accountGetSession
-			const session = await account.getSession("current");
-
 			// https://appwrite.io/docs/client/account?sdk=web-default#accountDeleteSession
-			const response = await account.deleteSession(session.$id);
+			const response = await account.deleteSession("current");
 			console.log("Session deleted", response);
 
 			setUser(null);
@@ -47,5 +51,8 @@ export function useAuth() {
 		}
 	}
 
-	return { user, signIn, signOut };
+	return { user, registerUser, signIn, signOut };
 }
+
+export type LoginUser = { email: string; password: string };
+export type TRegisterUser = LoginUser & { name: string };

@@ -12,7 +12,7 @@ import { SignupForm } from "@src/pages/popup/Auth/SignupForm";
 export const showAuthAtom = atomWithStorage("showAuth", false);
 export const Auth = () => {
 	const [showAuth, _] = useAtom(showAuthAtom);
-	const [showLogin, setShowLogin] = useState(true);
+	const [showLogin, setShowLogin] = useState(false);
 	if (!showAuth) return <LoginMessage />;
 	if (showLogin) return <LoginForm toggleForm={() => setShowLogin(false)} />;
 	return <SignupForm toggleForm={() => setShowLogin(true)} />;

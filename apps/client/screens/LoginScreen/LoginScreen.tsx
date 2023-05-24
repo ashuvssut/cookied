@@ -3,17 +3,17 @@ import React from "react";
 import { Link } from "expo-router";
 import { useTheme } from "@shopify/restyle";
 
-import Screen from "../../components/Screen";
-import { Box, Text } from "../../theme";
-import Input from "../../components/Input";
-import Button from "../../components/Button";
+import TScreen from "../../components/TScreen";
+import { Box, TText } from "../../theme";
+import TInput from "../../components/TInput";
+import TButton from "../../components/TButton";
 import { useSendIntent } from "../../hooks/useSendIntent";
 import { useEffect } from "react";
 type Props = {};
 
 const LoginScreen = (props: Props) => {
 	const theme = useTheme();
-	
+
 	const { sharedData, sharedExtraData, sharedMimeType } = useSendIntent();
 	useEffect(() => {
 		console.log("sharedData", sharedData);
@@ -22,7 +22,7 @@ const LoginScreen = (props: Props) => {
 	}, [sharedData, sharedExtraData, sharedMimeType]);
 
 	return (
-		<Screen setTopInset={true}>
+		<TScreen setTopInset={true}>
 			<Box
 				flex={1}
 				backgroundColor={"surface"}
@@ -40,15 +40,28 @@ const LoginScreen = (props: Props) => {
 					elevation={30}
 					shadowColor={"surface"}
 				>
-					<Text variant={"header"} color={"text"}>
+					<TText marginBottom={"s"} variant={"header"} color={"text"}>
 						LOGIN
-					</Text>
-					<Input />
-					<Input />
-					<Button onPress={() => console.log("hello")} title="LOGIN" />
+					</TText>
+					<TInput placeholder="Enter Email" />
+					<TInput placeholder="Enter Password" />
+					<TButton
+						height={50}
+						onPress={() => console.log("Hello")}
+						title="LOGIN"
+					/>
+					<TText variant={"body"} color={"text"}>
+						OR
+					</TText>
+					<TButton
+						height={50}
+						href="/register"
+						onPress={() => console.log("hello")}
+						title="REGISTER"
+					/>
 				</Box>
 			</Box>
-		</Screen>
+		</TScreen>
 	);
 };
 
