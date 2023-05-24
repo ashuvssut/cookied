@@ -4,7 +4,12 @@ import { useTheme } from "@shopify/restyle";
 import { Box } from "../theme";
 
 type Props = {
-	placeholder: string;
+	placeholder?: string;
+	value: string;
+	onChangeText: (text: string) => void;
+	autoCorrect?: boolean;
+	onBlur?: any;
+	type?: string;
 };
 
 const TInput = (props: Props) => {
@@ -28,6 +33,7 @@ const TInput = (props: Props) => {
 					fontFamily: theme.textVariants.body.fontFamily,
 					alignItems: "center",
 				}}
+				
 				{...props}
 			/>
 		</Box>

@@ -6,12 +6,13 @@ import { Link } from "expo-router";
 
 type Props = {
 	title: string;
-	onPress: () => void;
+	onPress?: () => void;
 	height?: number;
 	href?: string;
+	disabled?: boolean;
 };
 
-const TButton = ({ title, onPress, height, href }: Props) => {
+const TButton = ({ title, onPress, height, href, disabled }: Props) => {
 	const theme = useTheme();
 
 	if (href) {
@@ -51,6 +52,36 @@ const TButton = ({ title, onPress, height, href }: Props) => {
 					</Box>
 				</TouchableOpacity>
 			</Link>
+		);
+	}
+
+	if (disabled) {
+		return (
+			<TouchableOpacity
+				disabled
+				style={{
+					width: "80%",
+					minHeight: 50,
+					height: height ? height : 50,
+					marginVertical: 15,
+				}}
+				onPress={onPress}
+			>
+				<Box
+					justifyContent={"center"}
+					alignItems={"center"}
+					backgroundColor="surface"
+					flex={1}
+					borderRadius={2}
+				>
+					<TText
+						variant="button"
+						color={{ phone: "white", largeScreen: "accent" }}
+					>
+						{title}
+					</TText>
+				</Box>
+			</TouchableOpacity>
 		);
 	}
 
