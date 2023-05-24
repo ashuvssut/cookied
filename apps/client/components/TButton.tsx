@@ -16,7 +16,6 @@ const TButton = ({ title, onPress, height, href, disabled }: Props) => {
 	const theme = useTheme();
 
 	if (href) {
-		console.log(href);
 		return (
 			<Link
 				href={href}

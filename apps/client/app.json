@@ -5,7 +5,10 @@
 		"version": "0.1.0",
 		"scheme": "cookied",
 		"assetBundlePatterns": ["**/*"],
-		"extra": {},
+		"extra": {
+			"APPWRITE_ENDPOINT":"https://cloud.appwrite.io/v1",
+			"APPWRITE_PROJECT_ID":"6469040898e19fe9052c"
+		},
 		"web": {
 			"bundler": "metro"
 		}

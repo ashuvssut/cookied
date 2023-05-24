@@ -9,10 +9,10 @@ import { useSendIntent } from "../hooks/useSendIntent";
 import { useAtom } from "jotai";
 
 export default function Root() {
-	const { sharedData, sharedMimeType, sharedExtraData } = useSendIntent();
+	// const { sharedData, sharedMimeType, sharedExtraData } = useSendIntent();
 	const colorScheme = useColorScheme();
 	const selectedTheme = colorScheme === "dark" ? darkTheme : lightTheme;
-	console.log("SharedData", sharedData);
+	// console.log("SharedData", sharedData);
 	
 
 	return (

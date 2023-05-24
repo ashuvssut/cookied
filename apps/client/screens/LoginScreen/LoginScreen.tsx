@@ -19,12 +19,6 @@ const LoginScreen = (props: Props) => {
 	const theme = useTheme();
 	const { signIn } = useAuth();
 
-	const { sharedData, sharedExtraData, sharedMimeType } = useSendIntent();
-	useEffect(() => {
-		console.log("sharedData", sharedData);
-		console.log("sharedExtraData", sharedExtraData);
-		console.log("sharedMimeType", sharedMimeType);
-	}, [sharedData, sharedExtraData, sharedMimeType]);
 
 	return (
 		<TScreen setTopInset={true}>
@@ -110,7 +104,6 @@ const LoginScreen = (props: Props) => {
 					<TButton
 						height={50}
 						href="/register"
-						onPress={() => console.log("hello")}
 						title="REGISTER"
 					/>
 				</Box>
