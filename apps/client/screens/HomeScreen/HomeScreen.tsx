@@ -1,12 +1,15 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function HomeScreen() {
 	const { signOut } = useAuth();
 	return (
-		<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-			<Text onPress={() => signOut()}>Sign Out</Text>
-		</View>
+		<TouchableOpacity
+			onPress={() => signOut()}
+			style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+		>
+			<Text>Sign Out</Text>
+		</TouchableOpacity>
 	);
 }
