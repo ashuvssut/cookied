@@ -14,11 +14,14 @@
 		"apk-install": "adb install ./apps/client/android/app/build/outputs/apk/release/app-release.apk",
 		"reset-cache": "yarn workspace client reset-cache",
 		"gradle-clean": "yarn workspace client gradle-clean",
-		"ext": "yarn workspace ext dev"
+		"ext": "yarn workspace ext dev",
+		"new-fx": "yarn workspace api new",
+		"deploy-fx": "yarn workspace api deploy"
 	},
 	"workspaces": [
 		"apps/*",
-		"packages/*"
+		"packages/*",
+		"apps/api/functions/*"
 	],
 	"dependencies": {}
 }

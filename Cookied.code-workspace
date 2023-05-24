@@ -11,6 +11,10 @@
 		{
 			"name": "Chrome Extension",
 			"path": "apps/chrome-extension"
+		},
+		{
+			"name": "API",
+			"path": "apps/api"
 		}
 	],
 	"settings": {

@@ -1,0 +1,21 @@
+{
+    "projectId": "6469040898e19fe9052c",
+    "projectName": "Cookied",
+    "functions": [
+        {
+            "$id": "646db9ad40d80ca71fa1",
+            "name": "registerUser",
+            "runtime": "node-16.0",
+            "path": "functions/registerUser",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        }
+    ]
+}
