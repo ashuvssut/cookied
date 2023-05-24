@@ -22,6 +22,7 @@ export function useAuth() {
 			setIsLoading(true);
 			const userData = await AsyncStorage.getItem("User");
 			const sessionData = await AsyncStorage.getItem("Session");
+			console.log("User Data", userData, sessionData);
 			if (userData || sessionData) {
 				if (userData) {
 					setUser(JSON.parse(userData));
@@ -50,10 +51,13 @@ export function useAuth() {
 
 	async function signIn(email: string, password: string) {
 		setIsLoading(true);
+		console.log("Signing In 1", client);
 		const account = new Account(client);
+		console.log("Signing In 2",account);
 
 		try {
 			const sessionRes = await account.createEmailSession(email, password);
+			console.log("Signing In 2");
 			const user = await account.get();
 			AsyncStorage.setItem("Session", JSON.stringify(sessionRes));
 			AsyncStorage.setItem("User", JSON.stringify(user));
@@ -65,7 +69,7 @@ export function useAuth() {
 			setIsAuthenticated(true);
 			return user;
 		} catch (e) {
-			console.error(e);
+			console.error("eRROR ", e);
 			setUser(null);
 			setIsLoading(false);
 			return null;
@@ -74,8 +78,10 @@ export function useAuth() {
 
 	async function register(name: string, email: string, password: string) {
 		setIsLoading(true);
-		const account = new Account(client);
+		console.log("Account 1", client);
 
+		const account = new Account(client);
+		console.log("Account 2", account);
 		try {
 			const userRes = await account.create(ID.unique(), email, password, name);
 			const sessionRes = await account.createEmailSession(email, password);
