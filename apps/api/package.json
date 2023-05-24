@@ -2,11 +2,15 @@
 	"name": "api",
 	"version": "0.0.1",
 	"description": "Appwrite functions",
+	"author": "Team Cookied",
+	"private": true,
+	"type": "module",
 	"scripts": {
 		"new": "appwrite init function && node ./scripts.js",
 		"deploy": "appwrite deploy function"
 	},
-	"type": "module",
-	"dependencies": {},
-	"devDependencies": {}
+	"workspaces": [
+		"functions/*"
+	],
+	"dependencies": {}
 }

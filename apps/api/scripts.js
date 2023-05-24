@@ -9,9 +9,8 @@ function editPackageJsons() {
 	packageJsonsArray.forEach(packageJsonPath => {
 		if (!packageJsonPath) return;
 		const pwd = packageJsonPath.split("/")[1];
-
-		const kebabCasePwd = pwd.trim().replace(/\s+/g, "-").toLowerCase();
-
+		const kebabCasePwd = convertToKebabCase(pwd);
+		
 		const packageJson = fs.readFileSync(packageJsonPath, "utf8");
 
 		const newPackageJson = packageJson.replace(
@@ -26,9 +25,9 @@ function editPackageJsons() {
 }
 
 function convertToKebabCase(str) {
-	const str = str.trim();
+	const string = str.trim();
 	// insert a space in camelCase text such as "camelCase" to "camel Case"
-	const insertSpace = str.replace(/([a-z])([A-Z])/g, "$1 $2");
+	const insertSpace = string.replace(/([a-z])([A-Z])/g, "$1 $2");
 	const lowerCase = insertSpace.toLowerCase();
 	return lowerCase.replace(/(\s|_)+/g, "-");
 }

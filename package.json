@@ -19,8 +19,10 @@
 		"deploy-fx": "yarn workspace api deploy"
 	},
 	"workspaces": [
-		"apps/*",
 		"packages/*",
+		"apps/chrome-extension/",
+		"apps/client/",
+		"apps/api/",
 		"apps/api/functions/*"
 	],
 	"dependencies": {}

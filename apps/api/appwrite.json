@@ -3,7 +3,7 @@
     "projectName": "Cookied",
     "functions": [
         {
-            "$id": "646db9ad40d80ca71fa1",
+            "$id": "646dd540af7d291f04ed",
             "name": "registerUser",
             "runtime": "node-16.0",
             "path": "functions/registerUser",
