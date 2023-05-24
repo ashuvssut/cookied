@@ -1,20 +1,24 @@
 {
 	"folders": [
 		{
-			"name": "Root",
+			"name": "cookied | Root",
 			"path": "."
 		},
 		{
-			"name": "Client - Expo dev build",
+			"name": "client | Expo dev build",
 			"path": "apps/client"
 		},
 		{
-			"name": "Chrome Extension",
+			"name": "ext | Chrome Extension",
 			"path": "apps/chrome-extension"
 		},
 		{
-			"name": "API",
+			"name": "api | Vercel Serverless",
 			"path": "apps/api"
+		},
+		{
+			"name": "fx | AppWrite Functions",
+			"path": "apps/fx"
 		}
 	],
 	"settings": {

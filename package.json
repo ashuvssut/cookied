@@ -7,23 +7,22 @@
 	"author": "Team Cookied",
 	"private": true,
 	"scripts": {
+		"ext": "yarn workspace ext dev",
+		"new-fx": "yarn workspace fx new",
+		"deploy-fx": "yarn workspace fx deploy",
 		"metro": "yarn workspace client dev",
 		"web": "yarn workspace client web",
 		"android": "yarn workspace client android",
+		"api": "yarn workspace api dev",
 		"apk": "cd ./apps/client/android && ./gradlew assembleRelease",
 		"apk-install": "adb install ./apps/client/android/app/build/outputs/apk/release/app-release.apk",
 		"reset-cache": "yarn workspace client reset-cache",
-		"gradle-clean": "yarn workspace client gradle-clean",
-		"ext": "yarn workspace ext dev",
-		"new-fx": "yarn workspace api new",
-		"deploy-fx": "yarn workspace api deploy"
+		"gradle-clean": "yarn workspace client gradle-clean"
 	},
 	"workspaces": [
 		"packages/*",
-		"apps/chrome-extension/",
-		"apps/client/",
-		"apps/api/",
-		"apps/api/functions/*"
+		"apps/*",
+		"apps/fx/functions/*"
 	],
 	"dependencies": {}
 }
