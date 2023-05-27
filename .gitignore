@@ -5,3 +5,6 @@ node_modules
 .env
 # apps/client/android/app/google-services.json
 .vscode/tasks.json
+
+# Local Netlify folder
+.netlify

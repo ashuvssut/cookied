@@ -4,36 +4,76 @@ import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { client } from "../utils/appwrite";
 import { useCallback, useEffect } from "react";
+import { Platform } from "react-native";
+import axios from "axios";
+import {
+	createAccount,
+	getUserDetails,
+	loginWithEmail,
+	logout,
+} from "../apis/appwriteAuthApi";
 
 export const userAtom = atom<Models.User<Models.Preferences> | null>(null);
 export const sessionAtom = atom<Models.Session | null>(null);
 export const loadingAtom = atom<boolean | null>(null);
 export const isAuthAtom = atom<boolean | null>(null);
+export const isVerifiedAtom = atom<boolean | null>(null);
 
 export function useAuth() {
 	const [isLoading, setIsLoading] = useAtom(loadingAtom);
 	const [user, setUser] = useAtom(userAtom);
 	const [session, setSession] = useAtom(sessionAtom);
 	const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthAtom);
+	const [isVerified, setIsVerified] = useAtom(isVerifiedAtom);
 
 	const loadUser = useCallback(async () => {
 		try {
 			console.log("I am loading User");
 			setIsLoading(true);
-			const userData = await AsyncStorage.getItem("User");
-			const sessionData = await AsyncStorage.getItem("Session");
-			console.log("User Data", userData, sessionData);
-			if (userData || sessionData) {
-				if (userData) {
-					setUser(JSON.parse(userData));
+			let userData: string | null = null;
+			let sessionData: string | null = null;
+			if (Platform.OS === "web") {
+				userData = localStorage.getItem("User");
+				sessionData = localStorage.getItem("Session");
+				if (userData || sessionData) {
+					if (userData) {
+						const parsedUserData: Models.User<Models.Preferences> =
+							JSON.parse(userData);
+						setUser(JSON.parse(userData));
+						parsedUserData.emailVerification
+							? setIsVerified(true)
+							: setIsVerified(false);
+					}
+					if (sessionData) {
+						setSession(JSON.parse(sessionData));
+					}
+					setIsAuthenticated(true);
+					setIsLoading(false);
+					return;
 				}
-				if (sessionData) {
-					setUser(JSON.parse(sessionData));
+			} else {
+				userData = await AsyncStorage.getItem("User");
+				sessionData = await AsyncStorage.getItem("Session");
+				if (userData || sessionData) {
+					if (userData) {
+						const parsedUserData: Models.User<Models.Preferences> =
+							JSON.parse(userData);
+						setUser(JSON.parse(userData));
+						parsedUserData.emailVerification
+							? setIsVerified(true)
+							: setIsVerified(false);
+					}
+					if (sessionData) {
+						setUser(JSON.parse(sessionData));
+					}
+					console.log("User Data", userData, sessionData);
+					setIsAuthenticated(true);
+					setIsLoading(false);
+					return;
 				}
-				setIsAuthenticated(true);
-				setIsLoading(false);
-				return;
 			}
+			console.log("User Data", userData, sessionData);
+
 			setIsAuthenticated(false);
 			setIsLoading(false);
 		} catch (e) {
@@ -53,21 +93,32 @@ export function useAuth() {
 		setIsLoading(true);
 		console.log("Signing In 1", client);
 		const account = new Account(client);
-		console.log("Signing In 2",account);
+		console.log("Signing In 2", account);
 
 		try {
+			if (Platform.OS === "web") {
+				const sessionRes = await loginWithEmail(email, password);
+				const userRes = await getUserDetails();
+				localStorage.setItem("Session", JSON.stringify(sessionRes));
+				localStorage.setItem("User", JSON.stringify(userRes));
+				setUser(userRes);
+				setSession(sessionRes);
+				setIsLoading(false);
+				setIsAuthenticated(true);
+				return userRes;
+			}
 			const sessionRes = await account.createEmailSession(email, password);
 			console.log("Signing In 2");
-			const user = await account.get();
+			const userRes = await account.get();
 			AsyncStorage.setItem("Session", JSON.stringify(sessionRes));
-			AsyncStorage.setItem("User", JSON.stringify(user));
-			console.log("User", user);
+			AsyncStorage.setItem("User", JSON.stringify(userRes));
+			console.log("User", userRes);
 			console.log("User Session", sessionRes);
-			setUser(user);
+			setUser(userRes);
 			setSession(sessionRes);
 			setIsLoading(false);
 			setIsAuthenticated(true);
-			return user;
+			return userRes;
 		} catch (e) {
 			console.error("eRROR ", e);
 			setUser(null);
@@ -81,8 +132,18 @@ export function useAuth() {
 		console.log("Account 1", client);
 
 		const account = new Account(client);
-		console.log("Account 2", account);
 		try {
+			if (Platform.OS === "web") {
+				const userRes = await createAccount(email, password, name);
+				const sessionRes = await loginWithEmail(email, password);
+				localStorage.setItem("Session", JSON.stringify(sessionRes));
+				localStorage.setItem("User", JSON.stringify(userRes));
+				setUser(userRes);
+				setSession(sessionRes);
+				setIsLoading(false);
+				setIsAuthenticated(true);
+				return userRes;
+			}
 			const userRes = await account.create(ID.unique(), email, password, name);
 			const sessionRes = await account.createEmailSession(email, password);
 			console.log("User", userRes);
@@ -105,16 +166,33 @@ export function useAuth() {
 	async function signOut() {
 		setIsLoading(true);
 		const account = new Account(client);
+		console.log("Start Logging out Sesion");
 
 		try {
+			if (Platform.OS === "web") {
+				let msg = "";
+				console.log("Logging out Sesion", JSON.stringify(session));
+				if (session || user) {
+					if (session) {
+						msg = await logout(session.$id);
+						localStorage.removeItem("Session");
+					} else if (user) {
+						localStorage.removeItem("User");
+					}
+				}
+				setUser(null);
+				setSession(null);
+				setIsLoading(false);
+				setIsAuthenticated(null);
+				return msg;
+			}
 			if (session || user) {
 				console.log("Session deleted");
 				if (session) {
 					const response = await account.deleteSession(session.$id);
 					console.log("Session deleted", response);
 					AsyncStorage.removeItem("Session");
-				}
-				if (user) {
+				} else if (user) {
 					AsyncStorage.removeItem("User");
 					console.log("User deleted");
 				}
@@ -131,5 +209,13 @@ export function useAuth() {
 		}
 	}
 
-	return { user, register, signIn, signOut, isLoading, isAuthenticated };
+	return {
+		user,
+		register,
+		signIn,
+		signOut,
+		isLoading,
+		isAuthenticated,
+		isVerified,
+	};
 }

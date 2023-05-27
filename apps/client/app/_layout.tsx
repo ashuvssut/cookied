@@ -3,7 +3,7 @@ import { useColorScheme } from "react-native";
 import { ThemeProvider } from "@shopify/restyle";
 import { Slot } from "expo-router";
 
-import { darkTheme, lightTheme } from "../theme";
+import { TText, darkTheme, lightTheme } from "../theme";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 import { useSendIntent } from "../hooks/useSendIntent";
 import { useAtom } from "jotai";
@@ -13,7 +13,6 @@ export default function Root() {
 	const colorScheme = useColorScheme();
 	const selectedTheme = colorScheme === "dark" ? darkTheme : lightTheme;
 	// console.log("SharedData", sharedData);
-	
 
 	return (
 		// Setup the auth context and render our layout inside of it.
@@ -24,3 +23,4 @@ export default function Root() {
 		</ThemeProvider>
 	);
 }
+

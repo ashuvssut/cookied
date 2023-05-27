@@ -8,7 +8,7 @@ import { TText } from "../theme";
 function useProtectedRoute() {
 	const segments = useSegments();
 	const router = useRouter();
-	const { isAuthenticated } = useAuth();
+	const { isAuthenticated, isVerified } = useAuth();
 
 	useEffect(() => {
 		const inAuthGroup = segments[0] === "(auth)";
@@ -18,6 +18,12 @@ function useProtectedRoute() {
 			router.replace("/login");
 		} else if (!!isAuthenticated && !!inAuthGroup) {
 			// Redirect away from the login page to app/index.
+			//TODO : implement email verification later
+			// if (isVerified) {
+			// 	router.replace("/");
+			// 	return
+			// }
+			// router.replace("/verify");
 			router.replace("/");
 		}
 	}, [isAuthenticated, segments]);
