@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { Formik } from "formik";
 import loginSchema from "../../validators/loginSchema";
 import { useAuth } from "../../hooks/useAuth";
+import AuthHeader from "../../components/AuthHeader";
 
 type Props = {};
 
@@ -19,94 +20,120 @@ const LoginScreen = (props: Props) => {
 	const theme = useTheme();
 	const { signIn } = useAuth();
 
-
 	return (
 		<TScreen setTopInset={true}>
+			<AuthHeader headerName="Log In" />
 			<Box
 				flex={1}
-				backgroundColor={"surface"}
-				justifyContent={"center"}
-				alignItems={"center"}
+				backgroundColor={"background"}
+				paddingHorizontal={"m"}
 				position={"relative"}
 			>
-				<Box
-					backgroundColor={{ phone: "background" }}
-					justifyContent={"center"}
-					alignItems={"center"}
-					width={{ phone: "80%", largeScreen: "30%" }}
-					height={{ phone: "60%", largeScreen: "60%" }}
-					borderRadius={20}
-					elevation={30}
-					shadowColor={"surface"}
+				<TText
+					marginTop={"l"}
+					marginBottom={"s"}
+					variant={"subHeader"}
+					color={"textSecondary"}
 				>
-					<TText marginBottom={"s"} variant={"header"} color={"text"}>
-						LOGIN
-					</TText>
-					<Formik
-						initialValues={{
-							email: "",
-							password: "",
-						}}
-						validationSchema={loginSchema}
-						validateOnMount
-						onSubmit={(value: { email: string; password: string }) => {
-							signIn(value.email, value.password);
-						}}
-					>
-						{({
-							handleChange,
-							handleBlur,
-							handleSubmit,
-							values,
-							errors,
-							isValid,
-							touched,
-						}) => (
-							<>
-								<TInput
-									value={values.email}
-									onChangeText={handleChange("email")}
-									autoCorrect={false}
-									onBlur={handleBlur("email")}
-									placeholder="Enter Email"
-								/>
-								{values.email.length !== 0 && errors.email && touched.email && (
+					Login with Email and Password
+				</TText>
+				<Formik
+					initialValues={{
+						email: "",
+						password: "",
+					}}
+					validationSchema={loginSchema}
+					validateOnMount
+					onSubmit={(value: { email: string; password: string }) => {
+						signIn(value.email, value.password);
+					}}
+				>
+					{({
+						handleChange,
+						handleBlur,
+						handleSubmit,
+						values,
+						errors,
+						isValid,
+						touched,
+					}) => (
+						<>
+							<TText
+								marginTop={"xl"}
+								marginBottom={"s"}
+								variant={"label"}
+								color={"text"}
+							>
+								Email
+							</TText>
+							<TInput
+								value={values.email}
+								onChangeText={handleChange("email")}
+								autoCorrect={false}
+								onBlur={handleBlur("email")}
+								placeholder="Enter Email"
+							/>
+							{values.email.length !== 0 && errors.email && touched.email && (
+								<TText color={"error"} variant={"body"}>
+									{errors.email}
+								</TText>
+							)}
+							<TText
+								marginTop={"s"}
+								marginBottom={"s"}
+								variant={"label"}
+								color={"text"}
+							>
+								Password
+							</TText>
+							<TInput
+								value={values.password}
+								onChangeText={handleChange("password")}
+								autoCorrect={false}
+								type="password"
+								onBlur={handleBlur("password")}
+								placeholder="Enter Password"
+							/>
+							{values.password.length !== 0 &&
+								errors.password &&
+								touched.password && (
 									<TText color={"error"} variant={"body"}>
-										{errors.email}
+										{errors.password}
 									</TText>
 								)}
-								<TInput
-									value={values.password}
-									onChangeText={handleChange("password")}
-									autoCorrect={false}
-									type="password"
-									onBlur={handleBlur("password")}
-									placeholder="Enter Password"
-								/>
-								{values.password.length !== 0 &&
-									errors.password &&
-									touched.password && (
-										<TText color={"error"} variant={"body"}>
-											{errors.password}
-										</TText>
-									)}
-								{isValid ? (
-									<TButton onPress={handleSubmit} title="LOGIN" />
-								) : (
-									<TButton disabled title="LOGIN" />
-								)}
-							</>
-						)}
-					</Formik>
-					<TText variant={"body"} color={"text"}>
-						OR
-					</TText>
-					<TButton
-						height={50}
-						href="/register"
-						title="REGISTER"
-					/>
-				</Box>
+							<TText
+								textDecorationLine={"underline"}
+								color={"textSecondary"}
+								variant={"link"}
+							>
+								Forgot Password ?
+							</TText>
+							{isValid ? (
+								<TButton onPress={handleSubmit} title="Log In" />
+							) : (
+								<TButton disabled title="Log In" />
+							)}
+							<TText
+								textAlign={"center"}
+								fontWeight={{ phone: "200", largeScreen: "400" }}
+								color={"textSecondary"}
+								variant={"link"}
+							>
+								Don't have an account ?{" "}
+								<Link href="/register">
+									<TText
+										textAlign={"center"}
+										fontWeight={{ phone: "200", largeScreen: "400" }}
+										color={"text"}
+										variant={"body"}
+									>
+										Sign Up
+									</TText>
+								</Link>
+							</TText>
+						</>
+					)}
+				</Formik>
 			</Box>
 		</TScreen>
 	);

@@ -29,11 +29,12 @@ const ScrollScreen = ({
 		<ScrollView style={{ ...styles.screen }}>
 			<Box
 				flex={1}
+				paddingHorizontal={"m"}
 				style={{
 					paddingTop: setTopInset ? inset.top : 0,
 					minHeight: setTopInset ? height + inset.top : height,
 				}}
-				backgroundColor={"surface"}
+				backgroundColor={"background"}
 			>
 				{children}
 			</Box>

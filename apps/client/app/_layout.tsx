@@ -7,6 +7,7 @@ import { TText, darkTheme, lightTheme } from "../theme";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 import { useSendIntent } from "../hooks/useSendIntent";
 import { useAtom } from "jotai";
+import AuthHeader from "../components/AuthHeader";
 
 export default function Root() {
 	// const { sharedData, sharedMimeType, sharedExtraData } = useSendIntent();
@@ -23,4 +24,3 @@ export default function Root() {
 		</ThemeProvider>
 	);
 }
-

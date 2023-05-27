@@ -44,6 +44,7 @@ const theme = createTheme({
 	colors: {
 		primary: "#7286D3",
 		text: "#1F1F1F",
+		textSecondary: "#1F1F1F",
 		background: "#FFFFFF",
 		surface: "#F5F5F5",
 		accent: "#FFC107",
@@ -53,13 +54,15 @@ const theme = createTheme({
 		menuText: "#FFFFFF",
 		white: "hsla(0, 0%, 100%, 1)",
 		paragraph: "#43C3EC",
+		whiteBorder: "hsla(0, 0%, 35%, 0.64)",
 	},
 	spacing: {
-		xs: 4 ,//* scale
-		s: 8 ,//* scale
-		m: 16 ,//* scale
-		l: 24 ,//* scale
-		xl: 32 ,//* scale
+		xs: 4, //* scale
+		s: 8, //* scale
+		m: 16, //* scale
+		l: 24, //* scale
+		xl: 32,
+		xxl: 48,//* scale
 	},
 	breakpoints: BREAKPOINTS,
 	textVariants: {
@@ -82,6 +85,10 @@ const theme = createTheme({
 			// fontFamily: "SF-ProDisplay-Bold", * scale
 			fontSize: 24,
 		},
+		subHeader: {
+			// fontFamily: "SF-ProDisplay-Bold", * scale
+			fontSize: 18,
+		},
 		subtitle: {
 			// fontFamily: "SF-ProDisplay-Medium", * scale
 			fontSize: 23,
@@ -92,7 +99,12 @@ const theme = createTheme({
 		},
 		label: {
 			// fontFamily: "SF-ProDisplay-Medium", * scale
-			fontSize: 12,
+			fontWeight:"300",
+			fontSize: 18,
+		},
+		link: {
+			fontWeight:"200",
+			fontSize: 16,
 		},
 		button: {
 			// fontFamily: "SF-ProDisplay-Bold", * scale
@@ -123,7 +135,8 @@ export const darkTheme: Theme = {
 		...theme.colors,
 		primary: "hsla(228, 59%, 38%, 1)",
 		text: "hsla(0, 0%, 100%, 1)",
-		background: "hsla(0, 0%, 12%, 1)",
+		textSecondary: "hsla(0, 0%, 62%, 1)",
+		background: "hsla(0, 0%, 0%, 1)",
 		surface: "hsla(0, 0%, 10%, 1)",
 		accent: "hsla(45, 100%, 50%, 1)",
 		error: "hsla(348, 64%, 56%, 1)",
@@ -142,6 +155,7 @@ export const lightTheme: Theme = {
 		...theme.colors,
 		primary: "hsla(226, 46%, 55%, 1)",
 		text: "hsla(0, 0%, 12%, 1)",
+		textSecondary: "hsla(0, 0%, 22%, 1)",
 		background: "hsla(0, 0%, 100%, 1)",
 		surface: "hsla(0, 0%, 96%, 1)",
 		accent: "hsla(45, 100%, 50%, 1)",

@@ -16,12 +16,12 @@ const TInput = (props: Props) => {
 	const theme = useTheme();
 	return (
 		<Box
-			width={"80%"}
+			width={{ phone: "100%", largeScreen: "40%" }}
 			height={50}
 			borderWidth={1}
 			borderColor="primary"
 			paddingLeft={"s"}
-			borderRadius={5}
+			borderRadius={8}
 			marginBottom={{ phone: "m", largePhone: "m" }}
 			backgroundColor={"white"}
 		>
@@ -33,7 +33,6 @@ const TInput = (props: Props) => {
 					fontFamily: theme.textVariants.body.fontFamily,
 					alignItems: "center",
 				}}
-				
 				{...props}
 			/>
 		</Box>

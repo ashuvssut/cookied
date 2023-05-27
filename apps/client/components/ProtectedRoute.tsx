@@ -24,7 +24,7 @@ function useProtectedRoute() {
 			// 	return
 			// }
 			// router.replace("/verify");
-			router.replace("/");
+			router.replace("(app)/");
 		}
 	}, [isAuthenticated, segments]);
 }

@@ -17,8 +17,9 @@ const TScreen = ({ children, setTopInset }: Props) => {
 				...styles.screen,
 				paddingTop: setTopInset ? inset.top : 0,
 			}}
+			paddingHorizontal={"m"}
 			flex={1}
-			backgroundColor="surface"
+			backgroundColor="background"
 		>
 			{children}
 		</Box>

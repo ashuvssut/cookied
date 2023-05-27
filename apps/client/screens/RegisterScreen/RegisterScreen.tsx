@@ -8,6 +8,7 @@ import { Box, TText } from "../../theme";
 import ScrollScreen from "../../components/ScrollScreen";
 import registerSchema from "../../validators/registerSchema";
 import { useAuth } from "../../hooks/useAuth";
+import AuthHeader from "../../components/AuthHeader";
 
 type Props = {};
 
@@ -15,9 +16,10 @@ const RegisterScreen = (props: Props) => {
 	const { register } = useAuth();
 	return (
 		<ScrollScreen setTopInset={true}>
+			<AuthHeader headerName="Sign Up"/>
 			<Box
 				flex={1}
-				backgroundColor={"surface"}
+				backgroundColor={"background"}
 				justifyContent={"center"}
 				alignItems={"center"}
 				position={"relative"}
