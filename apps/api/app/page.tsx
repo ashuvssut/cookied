@@ -29,12 +29,10 @@ const Newtab = () => {
 			<hr />
 			<h2 style={{ margin: "2rem auto 0.5rem" }}>Help Wanted!</h2>
 			<p>
-				AppWrite client Web SDKs did not work on <em>Chrome extension</em> and{" "}
-				<em>
-					React Native <strong>Web</strong>
-				</em>{" "}
-				so we had to use Vercel API endpoints to make requests on behalf of the
-				client. We are looking for help to fix this AppWrite Web SDKs issue to
+				AppWrite rejects requests sent from <em>Chrome extension</em> because it
+				does allow chrome extension origin (extension://&#60;extension-id&#62;).
+				So we had to use Vercel API endpoints to make requests on behalf of the
+				chrome extension. We are looking for help to fix this issue to
 				avoid using Vercel API Endpoints. If you are interested, please checkout
 				this{" "}
 				<a

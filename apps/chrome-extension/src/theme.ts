@@ -70,9 +70,17 @@ export const theme = createTheme({
 				variant: "outlined",
 			},
 			styleOverrides: {
-				root: {
-					padding: "8px 24px",
-					borderRadius: 10,
+				root: ({ ownerState, theme }) => {
+					return {
+						padding: "8px 24px",
+						borderRadius: 10,
+						...(ownerState.variant === "contained" && {
+							color: "#2b2c30",
+							"& svg": {
+								color: "#2b2c30",
+							},
+						}),
+					};
 				},
 			},
 		},

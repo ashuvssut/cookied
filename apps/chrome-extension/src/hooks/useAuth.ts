@@ -12,10 +12,12 @@ export function useAuth() {
 	const [user, setUser] = useAtom(currentUser);
 	const account = new Account(client);
 
-
 	async function registerUser(userData: TRegisterUser) {
 		try {
-			const user = await axios.post(`${VERCEL_PROD_URL}/registerUser`, userData);
+			const user = await axios.post(
+				`${VERCEL_PROD_URL}/registerUser`,
+				userData,
+			);
 			console.log("user from registerUser", user);
 			return user;
 		} catch (e) {
@@ -26,12 +28,6 @@ export function useAuth() {
 
 	async function signIn() {
 		try {
-			// Go to OAuth provider login page - https://appwrite.io/docs/client/account?sdk=web-default#accountCreateOAuth2Session
-			// find a way to await for completion of the createOAuth2Session step
-			// await??
-
-			// updateUser after login attempt
-			// https://appwrite.io/docs/client/account?sdk=web-default#accountGet
 			const user = await account.get();
 			setUser(user);
 			return user;
@@ -60,28 +56,28 @@ export function useAuth() {
 export type LoginUser = { email: string; password: string };
 export type TRegisterUser = LoginUser & { name: string };
 
-	// async function registerUser({ email, password, name }: RegisterUser) { // DIDN'T WORK
-	// 	try {
-	// 		const user = await account.create(ID.unique(), email, password, name);
-	// 		return user;
-	// 	} catch (e) {
-	// 		console.error(e);
-	// 		return null;
-	// 	}
-	// }
-  //
-	// async function registerUser(userData: TRegisterUser) { // DIDN'T WORK EITHER
-	// 	const functions = new Functions(client);
-	// 	try {
-	// 		const res = await functions.createExecution(
-	// 			REGISTER_USER_FX_ID,
-	// 			JSON.stringify(userData),
-	// 			true,
-	// 		);
-	// 		console.log("res", res);
-	// 		return res;
-	// 	} catch (e) {
-	// 		console.error(e);
-	// 		throw new Error(String(e));
-	// 	}
-	// }
+// async function registerUser({ email, password, name }: RegisterUser) { // DIDN'T WORK
+// 	try {
+// 		const user = await account.create(ID.unique(), email, password, name);
+// 		return user;
+// 	} catch (e) {
+// 		console.error(e);
+// 		return null;
+// 	}
+// }
+//
+// async function registerUser(userData: TRegisterUser) { // DIDN'T WORK EITHER
+// 	const functions = new Functions(client);
+// 	try {
+// 		const res = await functions.createExecution(
+// 			REGISTER_USER_FX_ID,
+// 			JSON.stringify(userData),
+// 			true,
+// 		);
+// 		console.log("res", res);
+// 		return res;
+// 	} catch (e) {
+// 		console.error(e);
+// 		throw new Error(String(e));
+// 	}
+// }
