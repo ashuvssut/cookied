@@ -81,7 +81,7 @@ export function useAuth() {
 	}, []);
 
 	useEffect(() => {
-		loadUser();
+			loadUser();
 	}, []);
 
 	async function signIn(email: string, password: string) {
@@ -105,8 +105,8 @@ export function useAuth() {
 			const sessionRes = await account.createEmailSession(email, password);
 			console.log("Signing In 2");
 			const userRes = await account.get();
-			AsyncStorage.setItem("Session", JSON.stringify(sessionRes));
-			AsyncStorage.setItem("User", JSON.stringify(userRes));
+			await AsyncStorage.setItem("Session", JSON.stringify(sessionRes));
+			await AsyncStorage.setItem("User", JSON.stringify(userRes));
 			console.log("User", userRes);
 			console.log("User Session", sessionRes);
 			setUser(userRes);
@@ -126,7 +126,6 @@ export function useAuth() {
 		setIsLoading(true);
 		console.log("Account 1", client);
 
-		const account = new Account(client);
 		try {
 			if (Platform.OS === "web") {
 				const userRes = await createAccount(email, password, name);
@@ -139,11 +138,12 @@ export function useAuth() {
 				setIsAuthenticated(true);
 				return userRes;
 			}
+			const account = new Account(client);
 			const userRes = await account.create(ID.unique(), email, password, name);
 			const sessionRes = await account.createEmailSession(email, password);
 			console.log("User", userRes);
-			AsyncStorage.setItem("User", JSON.stringify(userRes));
-			AsyncStorage.setItem("Session", JSON.stringify(sessionRes));
+			await AsyncStorage.setItem("User", JSON.stringify(userRes));
+			await AsyncStorage.setItem("Session", JSON.stringify(sessionRes));
 			setUser(userRes);
 			setSession(sessionRes);
 			setIsLoading(false);
@@ -185,10 +185,10 @@ export function useAuth() {
 				console.log("Session deleted");
 				if (session) {
 					const response = await account.deleteSession(session.$id);
-					console.log("Session deleted", response);
-					AsyncStorage.removeItem("Session");
+					console.log("Session deleted", JSON.stringify(response));
+					await AsyncStorage.removeItem("Session");
 				} else if (user) {
-					AsyncStorage.removeItem("User");
+					await AsyncStorage.removeItem("User");
 					console.log("User deleted");
 				}
 				setUser(null);
