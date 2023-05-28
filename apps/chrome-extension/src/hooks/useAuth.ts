@@ -2,8 +2,6 @@ import { Account, Models, ID, Functions } from "appwrite";
 import { useAtom } from "jotai";
 import { client } from "../utils/appwrite";
 import { atomWithStorage } from "jotai/utils";
-import { VERCEL_DEV_URL, VERCEL_PROD_URL } from "@src/utils/constants";
-import axios from "axios";
 
 type TUser = Models.User<Models.Preferences>;
 export const currentUser = atomWithStorage<TUser | null>("currentUser", null);
@@ -12,17 +10,13 @@ export function useAuth() {
 	const [user, setUser] = useAtom(currentUser);
 	const account = new Account(client);
 
-	async function registerUser(userData: TRegisterUser) {
+	async function registerUser({ email, password, name }: TRegisterUser) {
 		try {
-			const user = await axios.post(
-				`${VERCEL_PROD_URL}/registerUser`,
-				userData,
-			);
-			console.log("user from registerUser", user);
+			const user = await account.create(ID.unique(), email, password, name);
 			return user;
 		} catch (e) {
 			console.error(e);
-			throw new Error(String(e));
+			return null;
 		}
 	}
 
@@ -56,17 +50,21 @@ export function useAuth() {
 export type LoginUser = { email: string; password: string };
 export type TRegisterUser = LoginUser & { name: string };
 
-// async function registerUser({ email, password, name }: RegisterUser) { // DIDN'T WORK
+// async function registerUser(userData: TRegisterUser) {
 // 	try {
-// 		const user = await account.create(ID.unique(), email, password, name);
+// 		const user = await axios.post(
+// 			`${VERCEL_PROD_URL}/registerUser`,
+// 			userData,
+// 		);
+// 		console.log("user from registerUser", user);
 // 		return user;
 // 	} catch (e) {
 // 		console.error(e);
-// 		return null;
+// 		throw new Error(String(e));
 // 	}
 // }
 //
-// async function registerUser(userData: TRegisterUser) { // DIDN'T WORK EITHER
+// async function registerUser(userData: TRegisterUser) {
 // 	const functions = new Functions(client);
 // 	try {
 // 		const res = await functions.createExecution(
