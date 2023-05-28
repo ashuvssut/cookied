@@ -8,8 +8,8 @@ module.exports = {
 	assetBundlePatterns: ["**/*"],
 	version: "1.0.0",
 	extra: {
-		MODE: process.env.MODE,
 		...env,
+		MODE: !!env.MODE ? env.MODE : "development",
 	},
 	web: { bundler: "metro" },
 };
