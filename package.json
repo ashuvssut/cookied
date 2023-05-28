@@ -8,9 +8,9 @@
 	"private": true,
 	"scripts": {
 		"ext": "yarn workspace ext dev",
-		"new-fx": "yarn workspace fx new",
-		"deploy-fx": "yarn workspace fx deploy",
-		"metro": "yarn workspace client dev",
+		"fx-new": "yarn workspace fx new",
+		"fx-deploy": "yarn workspace fx deploy",
+		"client": "yarn workspace client dev",
 		"web": "yarn workspace client web",
 		"android": "yarn workspace client android",
 		"api": "yarn workspace api dev",
