@@ -1,7 +1,6 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+import { Pressable, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
 import { Box, TText } from "../theme";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -21,7 +20,10 @@ const AuthHeader = (props: Props) => {
 			// paddingHorizontal={{ phone: "m", largeScreen: "xl" }}
 			flexDirection={"row"}
 		>
-			<TouchableOpacity hitSlop={30}>
+			<Pressable
+				hitSlop={30}
+				style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
+			>
 				<Box
 					backgroundColor={"background"}
 					borderRadius={{ phone: 10, largeScreen: 8 }}
@@ -35,7 +37,7 @@ const AuthHeader = (props: Props) => {
 				>
 					<Ionicons name="chevron-back" size={24} color="white" />
 				</Box>
-			</TouchableOpacity>
+			</Pressable>
 
 			<TText variant={"header"} color={"text"}>
 				{props.headerName}

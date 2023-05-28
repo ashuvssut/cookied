@@ -1,9 +1,7 @@
-import { Platform, Pressable, StyleSheet, View } from "react-native";
 import React from "react";
+import { StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import { useTheme } from "@shopify/restyle";
-import { useSendIntent } from "../../hooks/useSendIntent";
-import { useEffect } from "react";
 import { Formik } from "formik";
 
 import TScreen from "../../components/TScreen";

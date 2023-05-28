@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { useTheme } from "@shopify/restyle";
-import { TouchableOpacity } from "react-native";
+import { Pressable } from "react-native";
 import { Link } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -21,8 +21,11 @@ const TButton = ({ title, onPress, height, href, disabled }: Props) => {
 	if (href) {
 		return (
 			<Link href={href} style={styles.button} asChild>
-				<TouchableOpacity
-					style={styles.button}
+				<Pressable
+					style={({ pressed }) => [
+						{ opacity: pressed ? 0.5 : 1.0 },
+						styles.button,
+					]}
 					onPress={onPress}
 				>
 					<Box
@@ -46,14 +49,21 @@ const TButton = ({ title, onPress, height, href, disabled }: Props) => {
 							</TText>
 						</LinearGradient>
 					</Box>
-				</TouchableOpacity>
+				</Pressable>
 			</Link>
 		);
 	}
 
 	if (disabled) {
 		return (
-			<TouchableOpacity disabled style={styles.button} onPress={onPress}>
+			<Pressable
+				disabled
+				style={({ pressed }) => [
+					{ opacity: pressed ? 0.5 : 1.0 },
+					styles.button,
+				]}
+				onPress={onPress}
+			>
 				<Box
 					justifyContent={"center"}
 					alignItems={"center"}
@@ -75,12 +85,15 @@ const TButton = ({ title, onPress, height, href, disabled }: Props) => {
 						</TText>
 					</LinearGradient>
 				</Box>
-			</TouchableOpacity>
+			</Pressable>
 		);
 	}
 
 	return (
-		<TouchableOpacity style={styles.button} onPress={onPress}>
+		<Pressable
+			style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }, styles.button]}
+			onPress={onPress}
+		>
 			<Box
 				justifyContent={"center"}
 				alignItems={"center"}
@@ -102,7 +115,7 @@ const TButton = ({ title, onPress, height, href, disabled }: Props) => {
 					</TText>
 				</LinearGradient>
 			</Box>
-		</TouchableOpacity>
+		</Pressable>
 	);
 };
 
@@ -117,7 +130,7 @@ const styles = StyleSheet.create({
 	button: {
 		minHeight: 50,
 		height: 50,
-		minWidth:200,
+		minWidth: 200,
 		marginVertical: 15,
 		elevation: 20,
 		shadowColor: "hsla(219, 76%, 31%, 63)",
