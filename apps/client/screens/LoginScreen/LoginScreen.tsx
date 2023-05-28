@@ -2,17 +2,18 @@ import { Platform, Pressable, StyleSheet, View } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
 import { useTheme } from "@shopify/restyle";
+import { useSendIntent } from "../../hooks/useSendIntent";
+import { useEffect } from "react";
+import { Formik } from "formik";
 
 import TScreen from "../../components/TScreen";
 import { Box, TText } from "../../theme";
 import TInput from "../../components/TInput";
 import TButton from "../../components/TButton";
-import { useSendIntent } from "../../hooks/useSendIntent";
-import { useEffect } from "react";
-import { Formik } from "formik";
 import loginSchema from "../../validators/loginSchema";
 import { useAuth } from "../../hooks/useAuth";
 import AuthHeader from "../../components/AuthHeader";
+import { GoodCookie } from "../../assets/svg";
 
 type Props = {};
 
@@ -23,6 +24,16 @@ const LoginScreen = (props: Props) => {
 	return (
 		<TScreen setTopInset={true}>
 			<AuthHeader headerName="Log In" />
+			<Box
+				height={{ phone: 180, largeScreen: 150 }}
+				alignItems={"center"}
+				width={"100%"}
+			>
+				<GoodCookie height={"100%"} />
+			</Box>
+			<TText marginTop={"l"} textAlign={"center"} variant={"header"} color={"text"}>
+				COOKIED
+			</TText>
 			<Box
 				flex={1}
 				backgroundColor={"background"}

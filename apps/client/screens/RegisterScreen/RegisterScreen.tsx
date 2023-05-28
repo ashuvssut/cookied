@@ -1,6 +1,7 @@
 import { Button, StyleSheet, View } from "react-native";
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Link } from "expo-router";
 
 import TButton from "../../components/TButton";
 import TInput from "../../components/TInput";
@@ -9,6 +10,7 @@ import ScrollScreen from "../../components/ScrollScreen";
 import registerSchema from "../../validators/registerSchema";
 import { useAuth } from "../../hooks/useAuth";
 import AuthHeader from "../../components/AuthHeader";
+import { GoodCookie } from "../../assets/svg";
 
 type Props = {};
 
@@ -16,26 +18,25 @@ const RegisterScreen = (props: Props) => {
 	const { register } = useAuth();
 	return (
 		<ScrollScreen setTopInset={true}>
-			<AuthHeader headerName="Sign Up"/>
+			<AuthHeader headerName="Sign Up" />
+			<TText marginTop={"l"} textAlign={"center"} variant={"header"} color={"text"}>
+				COOKIED
+			</TText>
 			<Box
 				flex={1}
 				backgroundColor={"background"}
-				justifyContent={"center"}
-				alignItems={"center"}
+				paddingHorizontal={"m"}
+				// flexDirection={{ largeScreen: "row" }}
 				position={"relative"}
 			>
-				<Box
-					backgroundColor={{ phone: "background" }}
-					justifyContent={"center"}
-					alignItems={"center"}
-					width={{ phone: "80%", largeScreen: "30%" }}
-					height={{ phone: "70%", largeScreen: "60%" }}
-					borderRadius={20}
-					elevation={30}
-					shadowColor={"surface"}
-				>
-					<TText marginBottom={"s"} variant={"header"} color={"text"}>
-						REGISTER
+				<Box alignItems={{ largeScreen: "center" }} flex={1}>
+					<TText
+						marginTop={"l"}
+						marginBottom={"s"}
+						variant={"subHeader"}
+						color={"textSecondary"}
+					>
+						Register with Name , Email and Password
 					</TText>
 					<Formik
 						initialValues={{
@@ -65,6 +66,14 @@ const RegisterScreen = (props: Props) => {
 							touched,
 						}) => (
 							<>
+								<TText
+									marginTop={{phone:"xl",largeScreen:"s"}}
+									marginBottom={"s"}
+									variant={"label"}
+									color={"text"}
+								>
+									Name
+								</TText>
 								<TInput
 									value={values.name}
 									onChangeText={handleChange("name")}
@@ -77,6 +86,14 @@ const RegisterScreen = (props: Props) => {
 										{errors.name}
 									</TText>
 								)}
+								<TText
+									marginTop={"s"}
+									marginBottom={"s"}
+									variant={"label"}
+									color={"text"}
+								>
+									Email
+								</TText>
 								<TInput
 									value={values.email}
 									onChangeText={handleChange("email")}
@@ -89,6 +106,14 @@ const RegisterScreen = (props: Props) => {
 										{errors.email}
 									</TText>
 								)}
+								<TText
+									marginTop={"s"}
+									marginBottom={"s"}
+									variant={"label"}
+									color={"text"}
+								>
+									Password
+								</TText>
 								<TInput
 									value={values.password}
 									onChangeText={handleChange("password")}
@@ -104,6 +129,14 @@ const RegisterScreen = (props: Props) => {
 											{errors.password}
 										</TText>
 									)}
+								<TText
+									marginTop={"s"}
+									marginBottom={"s"}
+									variant={"label"}
+									color={"text"}
+								>
+									Confirm Password
+								</TText>
 								<TInput
 									value={values.confirmPassword}
 									onChangeText={handleChange("confirmPassword")}
@@ -127,14 +160,24 @@ const RegisterScreen = (props: Props) => {
 							</>
 						)}
 					</Formik>
-					<TText variant={"body"} color={"text"}>
-						OR
+					<TText
+						textAlign={"center"}
+						fontWeight={{ phone: "200", largeScreen: "400" }}
+						color={"textSecondary"}
+						variant={"link"}
+					>
+						Already have an account ?{" "}
+						<Link href="/login">
+							<TText
+								textAlign={"center"}
+								fontWeight={{ phone: "200", largeScreen: "400" }}
+								color={"text"}
+								variant={"body"}
+							>
+								Log In
+							</TText>
+						</Link>
 					</TText>
-					<TButton
-						href="/login"
-						onPress={() => console.log("hello")}
-						title="LOGIN"
-					/>
 				</Box>
 			</Box>
 		</ScrollScreen>
