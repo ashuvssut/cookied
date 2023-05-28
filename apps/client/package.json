@@ -3,10 +3,10 @@
 	"version": "1.0.0",
 	"main": "index.ts",
 	"scripts": {
-		"dev": "MODE=\"dev\" expo start --dev-client",
-		"android": "MODE=\"dev\" expo run:android",
-		"ios": "MODE=\"dev\" expo run:ios",
-		"web": "MODE=\"dev\" expo start --web",
+		"dev": "MODE=dev expo start --dev-client",
+		"android": "MODE=dev expo run:android",
+		"ios": "MODE=dev expo run:ios",
+		"web": "MODE=dev expo start --web",
 		"reset-cache": "expo start --dev-client --clear",
 		"gradle-clean": "cd ./android && ./gradlew clean"
 	},
