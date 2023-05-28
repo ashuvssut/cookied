@@ -66,14 +66,11 @@ export function useAuth() {
 					if (sessionData) {
 						setUser(JSON.parse(sessionData));
 					}
-					console.log("User Data", userData, sessionData);
 					setIsAuthenticated(true);
 					setIsLoading(false);
 					return;
 				}
 			}
-			console.log("User Data", userData, sessionData);
-
 			setIsAuthenticated(false);
 			setIsLoading(false);
 		} catch (e) {
@@ -84,8 +81,6 @@ export function useAuth() {
 	}, []);
 
 	useEffect(() => {
-		console.log("Is Authenticated", JSON.stringify(isAuthenticated));
-
 		loadUser();
 	}, []);
 

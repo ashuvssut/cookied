@@ -14,6 +14,7 @@ import loginSchema from "../../validators/loginSchema";
 import { useAuth } from "../../hooks/useAuth";
 import AuthHeader from "../../components/AuthHeader";
 import { GoodCookie } from "../../assets/svg";
+import ScrollScreen from "../../components/ScrollScreen";
 
 type Props = {};
 
@@ -22,7 +23,7 @@ const LoginScreen = (props: Props) => {
 	const { signIn } = useAuth();
 
 	return (
-		<TScreen setTopInset={true}>
+		<ScrollScreen setTopInset={true}>
 			<AuthHeader headerName="Log In" />
 			<Box
 				height={{ phone: 180, largeScreen: 150 }}
@@ -149,7 +150,7 @@ const LoginScreen = (props: Props) => {
 					</Formik>
 				</Box>
 			</Box>
-		</TScreen>
+		</ScrollScreen>
 	);
 };
 
