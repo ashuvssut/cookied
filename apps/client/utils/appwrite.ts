@@ -1,34 +1,24 @@
 import { Account, Client } from "appwrite";
-import Config from "react-native-config";
 import Constants from "expo-constants";
-import { Platform } from "react-native";
 
-export const ENDPOINT =
-	Platform.OS === "web" && Constants.expoConfig && Constants.expoConfig.extra
-		? Constants.expoConfig.extra.APPWRITE_ENDPOINT
-			? Constants.expoConfig.extra.APPWRITE_ENDPOINT
-			: ""
-		: (Config.APPWRITE_ENDPOINT as string);
+export const APPWRITE_ENDPOINT = Constants.expoConfig?.extra?.APPWRITE_ENDPOINT;
+if (!APPWRITE_ENDPOINT)
+	throw Error("APPWRITE_ENDPOINT is not set in .env (Refer .env.example)");
 
-export const PROJECT_ID =
-	Platform.OS === "web" && Constants.expoConfig && Constants.expoConfig.extra
-		? Constants.expoConfig.extra.APPWRITE_PROJECT_ID
-			? Constants.expoConfig.extra.APPWRITE_PROJECT_ID
-			: ""
-		: (Config.APPWRITE_PROJECT_ID as string);
+export const APPWRITE_PROJECT_ID =
+	Constants.expoConfig?.extra?.APPWRITE_PROJECT_ID;
+if (!APPWRITE_PROJECT_ID)
+	throw Error("APPWRITE_PROJECT_ID is not set in .env (Refer .env.example)");
 
-export const API_KEY =
-	Platform.OS === "web" && Constants.expoConfig && Constants.expoConfig.extra
-		? Constants.expoConfig.extra.APPWRITE_API_KEY
-			? Constants.expoConfig.extra.APPWRITE_API_KEY
-			: ""
-		: (Config.APPWRITE_API_KEY as string);
+const VERCEL_DEV_ENDPOINT = Constants.expoConfig?.extra?.VERCEL_DEV_ENDPOINT;
+if (!VERCEL_DEV_ENDPOINT)
+	throw Error("VERCEL_DEV_ENDPOINT is not set in .env (Refer .env.example)");
 
-console.log("ENDPOINT", ENDPOINT, "Project ID", PROJECT_ID,"API Key", API_KEY);
+console.log(JSON.stringify(Constants.expoConfig?.extra, null, 2));
 
 export const client = new Client()
-	.setEndpoint(ENDPOINT) // Your API Endpoint
-	.setProject(PROJECT_ID); // Your project ID
+	.setEndpoint(APPWRITE_ENDPOINT)
+	.setProject(APPWRITE_PROJECT_ID);
 
 console.log("Client", client);
 

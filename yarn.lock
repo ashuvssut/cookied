@@ -10589,11 +10589,6 @@ react-native-codegen@^0.71.5:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
-react-native-config@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.5.1.tgz#73c94f511493e9b7ff9350cdf351d203a1b05acc"
-  integrity sha512-g1xNgt1tV95FCX+iWz6YJonxXkQX0GdD3fB8xQtR1GUBEqweB9zMROW77gi2TygmYmUkBI7LU4pES+zcTyK4HA==
-
 react-native-gesture-handler@^2.10.1:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.10.1.tgz#ca5f0f09bfa8d0560f492fc599fa64a64dcdd231"

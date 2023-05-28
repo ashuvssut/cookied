@@ -5,7 +5,7 @@ import Constants from "expo-constants";
 import { Platform } from "react-native";
 import Config from "react-native-config";
 
-import { PROJECT_ID, API_KEY } from "../utils/appwrite";
+import { APPWRITE_PROJECT_ID } from "../utils/appwrite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const BASEURL = "https://cloud.appwrite.io/v1";
@@ -14,16 +14,16 @@ const axiosWithConfig = axios.create({
 	headers: {
 		"Content-Type": "application/json",
 		"X-Appwrite-Response-Format": "1.0.0",
-		"X-Appwrite-Project": PROJECT_ID,
+		"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 	},
 });
 
-const axiosWithApiKeyConfig = axios.create({
+const axiosWithJwtConfig = axios.create({
 	headers: {
 		"Content-Type": "application/json",
 		"X-Appwrite-Response-Format": "1.0.0",
-		"X-Appwrite-Project": PROJECT_ID,
-		"X-Appwrite-JWT": API_KEY,
+		"X-Appwrite-Project": APPWRITE_PROJECT_ID,
+		"X-Appwrite-JWT": "JWT goes here", // TODO: Add JWT logic here
 	},
 });
 
@@ -40,10 +40,7 @@ export const loginWithEmail = async (
 	try {
 		const res: AxiosResponse<Models.Session> = await axiosWithConfig.post(
 			`${BASEURL}/account/sessions/email`,
-			{
-				email: email,
-				password: password,
-			},
+			{ email: email, password: password },
 		);
 		return res.data;
 	} catch (e: any) {
@@ -96,9 +93,7 @@ export const createAccount = async (
  */
 export const logout = async (sessionId: string): Promise<string> => {
 	try {
-		await axiosWithApiKeyConfig.delete(
-			`${BASEURL}/account/sessions/${sessionId}`,
-		);
+		await axiosWithJwtConfig.delete(`${BASEURL}/account/sessions/${sessionId}`);
 		return "Successfully Logged Out";
 	} catch (e: any) {
 		throw new Error(e);
@@ -111,7 +106,7 @@ export const logout = async (sessionId: string): Promise<string> => {
  */
 export const logoutFromAllDevices = async (jwt: string): Promise<string> => {
 	try {
-		await axiosWithApiKeyConfig.delete(`${BASEURL}/account/sessions`);
+		await axiosWithJwtConfig.delete(`${BASEURL}/account/sessions`);
 		return "Successfully Logged Out from All Devices";
 	} catch (e: any) {
 		throw new Error(e);
@@ -133,10 +128,12 @@ export const createEmailVerification = async (): Promise<Models.Token> => {
 		REDIRECT_URL = Platform.OS === "web" ? "" : "cookied://";
 	}
 	try {
-		const tokenObj: AxiosResponse<Models.Token> =
-			await axiosWithApiKeyConfig.post(`${BASEURL}/account/verification`, {
+		const tokenObj: AxiosResponse<Models.Token> = await axiosWithJwtConfig.post(
+			`${BASEURL}/account/verification`,
+			{
 				url: REDIRECT_URL,
-			});
+			},
+		);
 		return tokenObj.data;
 	} catch (e: any) {
 		throw new Error(e);
@@ -145,18 +142,20 @@ export const createEmailVerification = async (): Promise<Models.Token> => {
 
 /**
  *
- * @returns message
+* @returns message
  */
 export const verifyEmail = async (
 	userId: string,
 	secret: string,
 ): Promise<Models.Token> => {
 	try {
-		const tokenObj: AxiosResponse<Models.Token> =
-			await axiosWithApiKeyConfig.put(`${BASEURL}/account/verification`, {
+		const tokenObj: AxiosResponse<Models.Token> = await axiosWithJwtConfig.put(
+			`${BASEURL}/account/verification`,
+			{
 				userId: userId,
 				secret: secret,
-			});
+			},
+		);
 		return tokenObj.data;
 	} catch (e: any) {
 		throw new Error(e);
