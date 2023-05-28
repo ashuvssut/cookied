@@ -178,7 +178,7 @@ export function useAuth() {
 				setUser(null);
 				setSession(null);
 				setIsLoading(false);
-				setIsAuthenticated(null);
+				setIsAuthenticated(false);
 				return msg;
 			}
 			if (session || user) {
