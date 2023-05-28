@@ -22,12 +22,7 @@ const TButton = ({ title, onPress, height, href, disabled }: Props) => {
 		return (
 			<Link href={href} style={styles.button} asChild>
 				<TouchableOpacity
-					style={{
-						width: "100%",
-						minHeight: 50,
-						height: height ? height : 50,
-						marginVertical: 15,
-					}}
+					style={styles.button}
 					onPress={onPress}
 				>
 					<Box
@@ -35,7 +30,7 @@ const TButton = ({ title, onPress, height, href, disabled }: Props) => {
 						alignItems={"center"}
 						backgroundColor="primary"
 						flex={1}
-						width={{ phone: "100%", largeScreen: "40%" }}
+						width={{ phone: "100%", largeScreen: "100%" }}
 						borderRadius={8}
 						overflow={"hidden"}
 					>
@@ -63,7 +58,7 @@ const TButton = ({ title, onPress, height, href, disabled }: Props) => {
 					justifyContent={"center"}
 					alignItems={"center"}
 					backgroundColor="background"
-					width={{ phone: "100%", largeScreen: "40%" }}
+					width={{ phone: "100%", largeScreen: "100%" }}
 					flex={1}
 					borderRadius={8}
 					overflow={"hidden"}
@@ -91,7 +86,7 @@ const TButton = ({ title, onPress, height, href, disabled }: Props) => {
 				alignItems={"center"}
 				backgroundColor="primary"
 				flex={1}
-				width={{ phone: "100%", largeScreen: "40%" }}
+				width={{ phone: "100%", largeScreen: "100%" }}
 				borderRadius={8}
 				overflow={"hidden"}
 			>
@@ -122,6 +117,7 @@ const styles = StyleSheet.create({
 	button: {
 		minHeight: 50,
 		height: 50,
+		minWidth:200,
 		marginVertical: 15,
 		elevation: 20,
 		shadowColor: "hsla(219, 76%, 31%, 63)",

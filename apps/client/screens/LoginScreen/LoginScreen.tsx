@@ -27,113 +27,116 @@ const LoginScreen = (props: Props) => {
 				flex={1}
 				backgroundColor={"background"}
 				paddingHorizontal={"m"}
+				// flexDirection={{ largeScreen: "row" }}
 				position={"relative"}
 			>
-				<TText
-					marginTop={"l"}
-					marginBottom={"s"}
-					variant={"subHeader"}
-					color={"textSecondary"}
-				>
-					Login with Email and Password
-				</TText>
-				<Formik
-					initialValues={{
-						email: "",
-						password: "",
-					}}
-					validationSchema={loginSchema}
-					validateOnMount
-					onSubmit={(value: { email: string; password: string }) => {
-						signIn(value.email, value.password);
-					}}
-				>
-					{({
-						handleChange,
-						handleBlur,
-						handleSubmit,
-						values,
-						errors,
-						isValid,
-						touched,
-					}) => (
-						<>
-							<TText
-								marginTop={"xl"}
-								marginBottom={"s"}
-								variant={"label"}
-								color={"text"}
-							>
-								Email
-							</TText>
-							<TInput
-								value={values.email}
-								onChangeText={handleChange("email")}
-								autoCorrect={false}
-								onBlur={handleBlur("email")}
-								placeholder="Enter Email"
-							/>
-							{values.email.length !== 0 && errors.email && touched.email && (
-								<TText color={"error"} variant={"body"}>
-									{errors.email}
+				<Box alignItems={{ largeScreen: "center" }} flex={1}>
+					<TText
+						marginTop={"l"}
+						marginBottom={"s"}
+						variant={"subHeader"}
+						color={"textSecondary"}
+					>
+						Login with Email and Password
+					</TText>
+					<Formik
+						initialValues={{
+							email: "",
+							password: "",
+						}}
+						validationSchema={loginSchema}
+						validateOnMount
+						onSubmit={(value: { email: string; password: string }) => {
+							signIn(value.email, value.password);
+						}}
+					>
+						{({
+							handleChange,
+							handleBlur,
+							handleSubmit,
+							values,
+							errors,
+							isValid,
+							touched,
+						}) => (
+							<>
+								<TText
+									marginTop={"xl"}
+									marginBottom={"s"}
+									variant={"label"}
+									color={"text"}
+								>
+									Email
 								</TText>
-							)}
-							<TText
-								marginTop={"s"}
-								marginBottom={"s"}
-								variant={"label"}
-								color={"text"}
-							>
-								Password
-							</TText>
-							<TInput
-								value={values.password}
-								onChangeText={handleChange("password")}
-								autoCorrect={false}
-								type="password"
-								onBlur={handleBlur("password")}
-								placeholder="Enter Password"
-							/>
-							{values.password.length !== 0 &&
-								errors.password &&
-								touched.password && (
+								<TInput
+									value={values.email}
+									onChangeText={handleChange("email")}
+									autoCorrect={false}
+									onBlur={handleBlur("email")}
+									placeholder="Enter Email"
+								/>
+								{values.email.length !== 0 && errors.email && touched.email && (
 									<TText color={"error"} variant={"body"}>
-										{errors.password}
+										{errors.email}
 									</TText>
 								)}
-							<TText
-								textDecorationLine={"underline"}
-								color={"textSecondary"}
-								variant={"link"}
-							>
-								Forgot Password ?
-							</TText>
-							{isValid ? (
-								<TButton onPress={handleSubmit} title="Log In" />
-							) : (
-								<TButton disabled title="Log In" />
-							)}
-							<TText
-								textAlign={"center"}
-								fontWeight={{ phone: "200", largeScreen: "400" }}
-								color={"textSecondary"}
-								variant={"link"}
-							>
-								Don't have an account ?{" "}
-								<Link href="/register">
-									<TText
-										textAlign={"center"}
-										fontWeight={{ phone: "200", largeScreen: "400" }}
-										color={"text"}
-										variant={"body"}
-									>
-										Sign Up
-									</TText>
-								</Link>
-							</TText>
-						</>
-					)}
-				</Formik>
+								<TText
+									marginTop={"s"}
+									marginBottom={"s"}
+									variant={"label"}
+									color={"text"}
+								>
+									Password
+								</TText>
+								<TInput
+									value={values.password}
+									onChangeText={handleChange("password")}
+									autoCorrect={false}
+									type="password"
+									onBlur={handleBlur("password")}
+									placeholder="Enter Password"
+								/>
+								{values.password.length !== 0 &&
+									errors.password &&
+									touched.password && (
+										<TText color={"error"} variant={"body"}>
+											{errors.password}
+										</TText>
+									)}
+								<TText
+									textDecorationLine={"underline"}
+									color={"textSecondary"}
+									variant={"link"}
+								>
+									Forgot Password ?
+								</TText>
+								{isValid ? (
+									<TButton onPress={handleSubmit} title="Log In" />
+								) : (
+									<TButton disabled title="Log In" />
+								)}
+								<TText
+									textAlign={"center"}
+									fontWeight={{ phone: "200", largeScreen: "400" }}
+									color={"textSecondary"}
+									variant={"link"}
+								>
+									Don't have an account ?{" "}
+									<Link href="/register">
+										<TText
+											textAlign={"center"}
+											fontWeight={{ phone: "200", largeScreen: "400" }}
+											color={"text"}
+											variant={"body"}
+										>
+											Sign Up
+										</TText>
+									</Link>
+								</TText>
+							</>
+						)}
+					</Formik>
+				</Box>
 			</Box>
 		</TScreen>
 	);
