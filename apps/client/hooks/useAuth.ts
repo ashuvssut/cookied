@@ -1,6 +1,6 @@
 import { Models } from "appwrite";
 import { atom, useAtom } from "jotai";
-import { createAccount, loginWithEmail, logout } from "../apis/appwriteAuthApi";
+import { createAccount, getUserDetails, loginWithEmail, logout } from "../apis/appwriteAuthApi";
 import { atomWithPlatformStorage } from "../utils/storage";
 import { loadingAtom } from "../components/LoadingModal";
 
@@ -22,13 +22,19 @@ export function useAuth() {
 	const [_s, setSession] = useAtom(sessionAtom);
 	const [isAuthenticated, _a] = useAtom(isAuthAtom);
 	const [cookie, setCookie] = useAtom(cookieAtom);
-	console.log(cookie)
+	console.log(cookie);
+
 	async function signIn(email: string, password: string) {
 		setIsLoading(true);
 		try {
 			const { sessionData, cookie } = await loginWithEmail(email, password);
-			// const user = await getUserDetails();
-		} catch (e: any) {}
+			const user = await getUserDetails(cookie);
+			console.log("user", JSON.stringify(user, null, 2));
+			setIsLoading(false);
+		} catch (e: any) {
+			setIsLoading(false);
+			console.error("Login Error:", e);
+		}
 	}
 	async function register(name: string, email: string, password: string) {
 		setIsLoading(true);

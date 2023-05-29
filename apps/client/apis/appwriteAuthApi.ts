@@ -31,10 +31,10 @@ export const loginWithEmail = async (email: string, password: string) => {
 	}
 };
 
-export const getUserDetails = async () => {
+export const getUserDetails = async (cookie: string) => {
 	try {
 		const res: AxiosResponse<Models.User<Models.Preferences>> =
-			await axiosWithConfig.get(`${APPWRITE_ENDPOINT}/account`);
+			await axiosWithSessionConfig(cookie).get(`${APPWRITE_ENDPOINT}/account`);
 		return res.data;
 	} catch (e: any) {
 		throw new Error(e);
