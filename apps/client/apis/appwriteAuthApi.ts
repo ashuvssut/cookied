@@ -1,72 +1,46 @@
-//Initial file structure placeholder
 import axios, { AxiosResponse } from "axios";
 import { ID, Models } from "appwrite";
-import Constants from "expo-constants";
 import { Platform } from "react-native";
-import Config from "react-native-config";
-
-import { APPWRITE_PROJECT_ID } from "../utils/appwrite";
+import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID } from "../utils/appwrite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const BASEURL = "https://cloud.appwrite.io/v1";
+const generalHeaders = {
+	"Content-Type": "application/json",
+	"X-Appwrite-Response-Format": "1.0.0",
+	"X-Appwrite-Project": APPWRITE_PROJECT_ID,
+};
+const axiosWithConfig = axios.create({ headers: generalHeaders });
 
-const axiosWithConfig = axios.create({
-	headers: {
-		"Content-Type": "application/json",
-		"X-Appwrite-Response-Format": "1.0.0",
-		"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-	},
-});
+const axiosWithSessionConfig = (cookie: string) => {
+	return axios.create({ headers: { ...generalHeaders, cookie } });
+};
 
-const axiosWithJwtConfig = axios.create({
-	headers: {
-		"Content-Type": "application/json",
-		"X-Appwrite-Response-Format": "1.0.0",
-		"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-		"X-Appwrite-JWT": "JWT goes here", // TODO: Add JWT logic here
-	},
-});
-
-/**
- *
- * @param email
- * @param password
- * @returns Session
- */
-export const loginWithEmail = async (
-	email: string,
-	password: string,
-): Promise<Models.Session> => {
+export const loginWithEmail = async (email: string, password: string) => {
 	try {
 		const res: AxiosResponse<Models.Session> = await axiosWithConfig.post(
-			`${BASEURL}/account/sessions/email`,
+			`${APPWRITE_ENDPOINT}/account/sessions/email`,
 			{ email: email, password: password },
 		);
-		return res.data;
+		const cookieStr = res.headers["x-fallback-cookies"];
+		const cookieObj = JSON.parse(cookieStr);
+		const cookieKey = `a_session_${APPWRITE_PROJECT_ID}`;
+		const reqHeaderCookieStr = `${cookieKey}=${cookieObj[cookieKey]}`;
+		return { sessionData: res.data, cookie: reqHeaderCookieStr };
 	} catch (e: any) {
 		throw new Error(e);
 	}
 };
 
-export const getUserDetails = async (): Promise<
-	Models.User<Models.Preferences>
-> => {
+export const getUserDetails = async () => {
 	try {
 		const res: AxiosResponse<Models.User<Models.Preferences>> =
-			await axiosWithConfig.get(`${BASEURL}/account`);
+			await axiosWithConfig.get(`${APPWRITE_ENDPOINT}/account`);
 		return res.data;
 	} catch (e: any) {
 		throw new Error(e);
 	}
 };
 
-/**
- *
- * @param email
- * @param password
- * @param name
- * @returns
- */
 export const createAccount = async (
 	email: string,
 	password: string,
@@ -74,7 +48,7 @@ export const createAccount = async (
 ): Promise<Models.User<Models.Preferences>> => {
 	try {
 		const res: AxiosResponse<Models.User<Models.Preferences>> =
-			await axiosWithConfig.post(`${BASEURL}/account`, {
+			await axiosWithConfig.post(`${APPWRITE_ENDPOINT}/account`, {
 				userId: ID.unique(),
 				email: email,
 				password: password,
@@ -86,38 +60,31 @@ export const createAccount = async (
 	}
 };
 
-/**
- *
- * @param sessionId
- * @returns message
- */
-export const logout = async (sessionId: string): Promise<string> => {
+export const logout = async (cookie: string, sessionId: string) => {
 	try {
-		await axiosWithJwtConfig.delete(`${BASEURL}/account/sessions/${sessionId}`);
-		return "Successfully Logged Out";
+		await axiosWithSessionConfig(cookie).delete(
+			`${APPWRITE_ENDPOINT}/account/sessions/${sessionId}`,
+		);
+		return;
 	} catch (e: any) {
 		throw new Error(e);
 	}
 };
 
-/**
- *
- * @returns message
- */
-export const logoutFromAllDevices = async (jwt: string): Promise<string> => {
+export const logoutFromAllDevices = async (cookie: string) => {
 	try {
-		await axiosWithJwtConfig.delete(`${BASEURL}/account/sessions`);
-		return "Successfully Logged Out from All Devices";
+		await axiosWithSessionConfig(cookie).delete(
+			`${APPWRITE_ENDPOINT}/account/sessions`,
+		);
+		return;
 	} catch (e: any) {
 		throw new Error(e);
 	}
 };
 
-/**
- *
- * @returns
- */
-export const createEmailVerification = async (): Promise<Models.Token> => {
+export const createEmailVerification = async (
+	cookie: string,
+): Promise<Models.Token> => {
 	let REDIRECT_URL = "";
 	if (__DEV__) {
 		// Code to run in development mode
@@ -128,56 +95,47 @@ export const createEmailVerification = async (): Promise<Models.Token> => {
 		REDIRECT_URL = Platform.OS === "web" ? "" : "cookied://";
 	}
 	try {
-		const tokenObj: AxiosResponse<Models.Token> = await axiosWithJwtConfig.post(
-			`${BASEURL}/account/verification`,
-			{
-				url: REDIRECT_URL,
-			},
-		);
+		const tokenObj: AxiosResponse<Models.Token> = //
+			await axiosWithSessionConfig(cookie) //
+				.post(`${APPWRITE_ENDPOINT}/account/verification`, {
+					url: REDIRECT_URL,
+				});
 		return tokenObj.data;
 	} catch (e: any) {
 		throw new Error(e);
 	}
 };
 
-/**
- *
-* @returns message
- */
 export const verifyEmail = async (
+	cookie: string,
 	userId: string,
 	secret: string,
 ): Promise<Models.Token> => {
 	try {
-		const tokenObj: AxiosResponse<Models.Token> = await axiosWithJwtConfig.put(
-			`${BASEURL}/account/verification`,
-			{
-				userId: userId,
-				secret: secret,
-			},
-		);
+		const tokenObj: AxiosResponse<Models.Token> = await axiosWithSessionConfig(
+			cookie,
+		).put(`${APPWRITE_ENDPOINT}/account/verification`, {
+			userId: userId,
+			secret: secret,
+		});
 		return tokenObj.data;
 	} catch (e: any) {
 		throw new Error(e);
 	}
 };
 
-/**
- *
- * @returns
- */
-export const createJwtSession = async (): Promise<Models.Jwt> => {
-	try {
-		const res: AxiosResponse<Models.Jwt> = await axiosWithConfig.post(
-			`${BASEURL}/account/jwt`,
-		);
-		if (Platform.OS === "web") {
-			localStorage.setItem("jwt", res.data.jwt);
-		} else {
-			await AsyncStorage.setItem("jwt", res.data.jwt);
-		}
-		return res.data;
-	} catch (e) {
-		throw new Error(e);
-	}
-};
+// export const createJwtSession = async () => {
+// 	try {
+// 		const res: AxiosResponse<Models.Jwt> = await axiosWithConfig.post(
+// 			`${APPWRITE_ENDPOINT}/account/jwt`,
+// 		);
+// 		if (Platform.OS === "web") {
+// 			localStorage.setItem("jwt", res.data.jwt);
+// 		} else {
+// 			await AsyncStorage.setItem("jwt", res.data.jwt);
+// 		}
+// 		return res.data;
+// 	} catch (e) {
+// 		throw new Error(e);
+// 	}
+// };

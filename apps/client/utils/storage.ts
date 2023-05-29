@@ -1,45 +1,22 @@
+"use strict";
+import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { atom } from "jotai";
+import { Platform } from "react-native";
 
-const atomWithLocalStorage = (key: string, initialValue) => {
-	const getInitialValue = () => {
-		const item = localStorage.getItem(key);
-		if (item !== null) {
-			return JSON.parse(item);
-		}
-		return initialValue;
-	};
-	const baseAtom = atom(getInitialValue());
-	const derivedAtom = atom(
-		get => get(baseAtom),
-		(get, set, update) => {
-			const nextValue =
-				typeof update === "function" ? update(get(baseAtom)) : update;
-			set(baseAtom, nextValue);
-			localStorage.setItem(key, JSON.stringify(nextValue));
-		},
-	);
-	return derivedAtom;
-};
+// content: anything JSON serializable
+export function atomWithAsyncStorage<T>(key: string, content: T) {
+	const storage = createJSONStorage<T>(() => AsyncStorage);
+	return atomWithStorage(key, content, storage);
+}
 
-const atomWithAsyncStorage = (key: string, initialValue) => {
-	const baseAtom = atom(initialValue);
-	baseAtom.onMount = setValue => {
-		(async () => {
-			const item = await AsyncStorage.getItem(key);
-			if (item) {
-				setValue(JSON.parse(item));
-			}
-		})();
-	};
-	const derivedAtom = atom(
-		get => get(baseAtom),
-		(get, set, update) => {
-			const nextValue =
-				typeof update === "function" ? update(get(baseAtom)) : update;
-			set(baseAtom, nextValue);
-			AsyncStorage.setItem(key, JSON.stringify(nextValue));
-		},
-	);
-	return derivedAtom;
-};
+export function atomWithLocalStorage<T>(key: string, content: T) {
+	const storage = createJSONStorage<T>(() => localStorage);
+	return atomWithStorage(key, content, storage);
+}
+
+export function atomWithPlatformStorage<T>(key: string, content: T) {
+	if (Platform.OS === "web") return atomWithLocalStorage(key, content);
+	else return atomWithAsyncStorage(key, content);
+}
+
+const textAtom = atomWithStorage("text", "hello");
