@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { atom, useAtom } from "jotai";
+import React from "react";
 import { View, Modal, ActivityIndicator, StyleSheet } from "react-native";
 
-type Props = {
-	isLoading: boolean;
-};
+export const loadingAtom = atom(false);
 
-const LoadingModal = ({ isLoading }: Props) => {
+const LoadingModal = () => {
+	const [isLoading] = useAtom(loadingAtom);
 	return (
 		<Modal
 			transparent
