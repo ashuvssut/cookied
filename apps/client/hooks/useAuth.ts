@@ -1,6 +1,11 @@
 import { Models } from "appwrite";
-import { atom, useAtom } from "jotai";
-import { createAccount, getUserDetails, loginWithEmail, logout } from "../apis/appwriteAuthApi";
+import { atom, createStore, useAtom } from "jotai";
+import {
+	createAccount,
+	getUserDetails,
+	loginWithEmail,
+	logout,
+} from "../apis/appwriteAuthApi";
 import { atomWithPlatformStorage } from "../utils/storage";
 import { loadingAtom } from "../components/LoadingModal";
 
@@ -12,8 +17,11 @@ export const userAtom =
 export const isVerifiedAtom = //
 	atom(get => get(userAtom)?.emailVerification || false); // read-only
 
-export const cookieAtom = //
-	atomWithPlatformStorage<string | null>("cookie", null);
+export const cookieAtom = atomWithPlatformStorage("cookie", "");
+// const store = createStore();
+// store.set(cookieAtom, "");
+// console.log(store.get(cookieAtom)); // reading outside react tree
+
 export const isAuthAtom = atom(get => !!get(cookieAtom)); // read-only
 
 export function useAuth() {
