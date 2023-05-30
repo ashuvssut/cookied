@@ -14,12 +14,10 @@ const VERCEL_DEV_ENDPOINT = Constants.expoConfig?.extra?.VERCEL_DEV_ENDPOINT;
 if (!VERCEL_DEV_ENDPOINT)
 	throw Error("VERCEL_DEV_ENDPOINT isn't set in env.js (Refer env.example.js)");
 
-console.log(JSON.stringify(Constants.expoConfig?.extra, null, 2));
+// console.log(JSON.stringify(Constants.expoConfig?.extra, null, 2));
 
 export const client = new Client()
 	.setEndpoint(APPWRITE_ENDPOINT)
 	.setProject(APPWRITE_PROJECT_ID);
-
-console.log("Client", client);
 
 export const account = new Account(client);

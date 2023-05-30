@@ -1,14 +1,15 @@
 import { useRouter, useSegments } from "expo-router";
 import React, { useEffect } from "react";
 import { FCC } from "../types/IReact";
-import { useAuth } from "../hooks/useAuth";
-import { TText } from "../theme";
+import { isAuthAtom, isVerifiedAtom } from "../hooks/useAuth";
+import { useAtom } from "jotai";
 
 // This hook will protect the route access based on user authentication.
 function useProtectedRoute() {
 	const segments = useSegments();
 	const router = useRouter();
-	const { isAuthenticated, isVerified } = useAuth();
+	const [isAuthenticated] = useAtom(isAuthAtom);
+	const [isVerified] = useAtom(isVerifiedAtom);
 
 	useEffect(() => {
 		const inAuthGroup = segments[0] === "(auth)";

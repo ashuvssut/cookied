@@ -19,7 +19,7 @@ const RegisterScreen = (props: Props) => {
 	return (
 		<ScrollScreen setTopInset={true}>
 			<AuthHeader headerName="Sign Up" />
-			<TText marginTop={"l"} textAlign={"center"} variant={"header"} color={"text"}>
+			<TText marginTop="l" textAlign="center" variant="header" color="text">
 				COOKIED
 			</TText>
 			<Box
@@ -67,7 +67,7 @@ const RegisterScreen = (props: Props) => {
 						}) => (
 							<>
 								<TText
-									marginTop={{phone:"xl",largeScreen:"s"}}
+									marginTop={{ phone: "xl", largeScreen: "s" }}
 									marginBottom={"s"}
 									variant={"label"}
 									color={"text"}

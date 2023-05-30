@@ -20,9 +20,10 @@ export const loginWithEmail = async (email: string, password: string) => {
 		const res: AxiosResponse<Models.Session> = await axiosWithConfig.post(
 			`${APPWRITE_ENDPOINT}/account/sessions/email`,
 			{ email: email, password: password },
+			// {withCredentials: true}
 		);
 		const cookieStr = res.headers["x-fallback-cookies"];
-		const cookieObj = JSON.parse(cookieStr);
+		const cookieObj = JSON.parse(cookieStr) as { [key: string]: string };
 		const cookieKey = `a_session_${APPWRITE_PROJECT_ID}`;
 		const reqHeaderCookieStr = `${cookieKey}=${cookieObj[cookieKey]}`;
 		return { sessionData: res.data, cookie: reqHeaderCookieStr };
@@ -34,7 +35,10 @@ export const loginWithEmail = async (email: string, password: string) => {
 export const getUserDetails = async (cookie: string) => {
 	try {
 		const res: AxiosResponse<Models.User<Models.Preferences>> =
-			await axiosWithSessionConfig(cookie).get(`${APPWRITE_ENDPOINT}/account`);
+			await axiosWithSessionConfig(cookie).get(
+				`${APPWRITE_ENDPOINT}/account`, //
+				{ withCredentials: true },
+			);
 		return res.data;
 	} catch (e: any) {
 		throw new Error(e);
