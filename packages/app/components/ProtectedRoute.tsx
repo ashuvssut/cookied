@@ -1,7 +1,7 @@
 import { useRouter, useSegments } from "expo-router";
 import React, { useEffect } from "react";
 import { FCC } from "../types/IReact";
-import { isAuthAtom, isVerifiedAtom } from "../hooks/useAuth";
+import { isAuthAtom, isVerifiedAtom } from "../hooks/useRestAuth";
 import { useAtom } from "jotai";
 
 // This hook will protect the route access based on user authentication.

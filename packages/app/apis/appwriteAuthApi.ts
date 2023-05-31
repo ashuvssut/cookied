@@ -2,22 +2,23 @@ import axios, { AxiosResponse } from "axios";
 import { ID, Models } from "appwrite";
 import { Platform } from "react-native";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID } from "../utils/appwrite";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { cookieAtom, cookieStore } from "app/hooks/useRestAuth";
 
 const generalHeaders = {
 	"Content-Type": "application/json",
 	"X-Appwrite-Response-Format": "1.0.0",
 	"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 };
-const axiosWithConfig = axios.create({ headers: generalHeaders });
+const axiosWithConfig = () => axios.create({ headers: generalHeaders });
 
-const axiosWithSessionConfig = (cookie: string) => {
+const axiosWithSessionConfig = () => {
+	const cookie = cookieStore.get(cookieAtom);
 	return axios.create({ headers: { ...generalHeaders, cookie } });
 };
 
 export const loginWithEmail = async (email: string, password: string) => {
 	try {
-		const res: AxiosResponse<Models.Session> = await axiosWithConfig.post(
+		const res: AxiosResponse<Models.Session> = await axiosWithConfig().post(
 			`${APPWRITE_ENDPOINT}/account/sessions/email`,
 			{ email: email, password: password },
 			// {withCredentials: true}
@@ -32,10 +33,10 @@ export const loginWithEmail = async (email: string, password: string) => {
 	}
 };
 
-export const getUserDetails = async (cookie: string) => {
+export const getUserDetails = async () => {
 	try {
 		const res: AxiosResponse<Models.User<Models.Preferences>> =
-			await axiosWithSessionConfig(cookie).get(
+			await axiosWithSessionConfig().get(
 				`${APPWRITE_ENDPOINT}/account`, //
 				{ withCredentials: true },
 			);
@@ -49,10 +50,10 @@ export const createAccount = async (
 	email: string,
 	password: string,
 	name: string,
-): Promise<Models.User<Models.Preferences>> => {
+) => {
 	try {
 		const res: AxiosResponse<Models.User<Models.Preferences>> =
-			await axiosWithConfig.post(`${APPWRITE_ENDPOINT}/account`, {
+			await axiosWithConfig().post(`${APPWRITE_ENDPOINT}/account`, {
 				userId: ID.unique(),
 				email: email,
 				password: password,
@@ -64,9 +65,9 @@ export const createAccount = async (
 	}
 };
 
-export const logout = async (cookie: string, sessionId: string) => {
+export const logout = async (sessionId: string) => {
 	try {
-		await axiosWithSessionConfig(cookie).delete(
+		await axiosWithSessionConfig().delete(
 			`${APPWRITE_ENDPOINT}/account/sessions/${sessionId}`,
 		);
 		return;
@@ -75,9 +76,9 @@ export const logout = async (cookie: string, sessionId: string) => {
 	}
 };
 
-export const logoutFromAllDevices = async (cookie: string) => {
+export const logoutFromAllDevices = async () => {
 	try {
-		await axiosWithSessionConfig(cookie).delete(
+		await axiosWithSessionConfig().delete(
 			`${APPWRITE_ENDPOINT}/account/sessions`,
 		);
 		return;
@@ -86,9 +87,7 @@ export const logoutFromAllDevices = async (cookie: string) => {
 	}
 };
 
-export const createEmailVerification = async (
-	cookie: string,
-): Promise<Models.Token> => {
+export const createEmailVerification = async () => {
 	let REDIRECT_URL = "";
 	if (__DEV__) {
 		// Code to run in development mode
@@ -100,7 +99,7 @@ export const createEmailVerification = async (
 	}
 	try {
 		const tokenObj: AxiosResponse<Models.Token> = //
-			await axiosWithSessionConfig(cookie) //
+			await axiosWithSessionConfig() //
 				.post(`${APPWRITE_ENDPOINT}/account/verification`, {
 					url: REDIRECT_URL,
 				});
@@ -110,18 +109,13 @@ export const createEmailVerification = async (
 	}
 };
 
-export const verifyEmail = async (
-	cookie: string,
-	userId: string,
-	secret: string,
-): Promise<Models.Token> => {
+export const verifyEmail = async (userId: string, secret: string) => {
 	try {
-		const tokenObj: AxiosResponse<Models.Token> = await axiosWithSessionConfig(
-			cookie,
-		).put(`${APPWRITE_ENDPOINT}/account/verification`, {
-			userId: userId,
-			secret: secret,
-		});
+		const tokenObj: AxiosResponse<Models.Token> =
+			await axiosWithSessionConfig().put(
+				`${APPWRITE_ENDPOINT}/account/verification`,
+				{ userId, secret },
+			);
 		return tokenObj.data;
 	} catch (e: any) {
 		throw new Error(e);

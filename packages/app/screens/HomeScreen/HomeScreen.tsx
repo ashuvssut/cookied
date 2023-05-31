@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, Pressable } from "react-native";
-import { useAuth } from '../../hooks/useAuth'
+import { useAuth } from '../../hooks/useRestAuth'
 import { Account, ID, Client } from "appwrite";
 
 export default function HomeScreen() {

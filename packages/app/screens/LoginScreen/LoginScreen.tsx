@@ -9,7 +9,7 @@ import { Box, TText } from "../../theme";
 import TInput from "../../components/TInput";
 import TButton from "../../components/TButton";
 import loginSchema from "../../validators/loginSchema";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useRestAuth";
 import AuthHeader from "../../components/AuthHeader";
 import { GoodCookie } from "../../assets/svg";
 import ScrollScreen from "../../components/ScrollScreen";

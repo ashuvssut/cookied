@@ -18,9 +18,11 @@ export const isVerifiedAtom = //
 export const isAuthAtom = atom(get => !!get(sessionAtom)?.$id);
 
 export const cookieAtom = atomWithPlatformStorage("cookie", ""); // Bad idea
-// const store = createStore();
-// store.set(cookieAtom, "");
+export const cookieStore = createStore();
+cookieStore.set(cookieAtom, "");
 // console.log(store.get(cookieAtom)); // reading outside react tree
+
+// !deprecate
 // export const isAuthAtom = atom(get => !!get(cookieAtom)); // read-only
 
 export function useAuth() {
@@ -33,10 +35,10 @@ export function useAuth() {
 		setIsLoading(true);
 		try {
 			const { sessionData, cookie } = await loginWithEmail(email, password);
-			const user = await getUserDetails(cookie);
+			const user = await getUserDetails();
 			setUser(user);
 			setSession(sessionData);
-			// setCookie(cookie);
+			setCookie(cookie);
 			setIsLoading(false);
 		} catch (e: any) {
 			setIsLoading(false);
@@ -53,7 +55,7 @@ export function useAuth() {
 			// console.log(JSON.stringify(cookie, null, 2));
 			setUser(user);
 			setSession(sessionData);
-			// setCookie(cookie);
+			setCookie(cookie);
 			setIsLoading(false);
 			return user;
 		} catch (e: any) {
@@ -67,10 +69,10 @@ export function useAuth() {
 		if (!cookie) return;
 		setIsLoading(true);
 		try {
-			await logout(cookie, "current");
+			await logout("current");
 			setUser(null);
 			setSession(null);
-			// setCookie("");
+			setCookie("");
 			setIsLoading(false);
 		} catch (e: any) {
 			setIsLoading(false);
