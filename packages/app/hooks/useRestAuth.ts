@@ -8,6 +8,8 @@ import {
 } from "../apis/appwriteAuthApi";
 import { atomWithPlatformStorage } from "../utils/storage";
 import { loadingAtom } from "../components/LoadingModal";
+import { useEffect } from "react";
+
 export const sessionAtom = //
 	atomWithPlatformStorage<Models.Session | null>("session", null);
 
@@ -17,19 +19,16 @@ export const isVerifiedAtom = //
 	atom(get => get(userAtom)?.emailVerification || false); // read-only
 export const isAuthAtom = atom(get => !!get(sessionAtom)?.$id);
 
-export const cookieAtom = atomWithPlatformStorage("cookie", ""); // Bad idea
+export const cookieAtom = atomWithPlatformStorage("cookie", "");
 export const cookieStore = createStore();
-cookieStore.set(cookieAtom, "");
-// console.log(store.get(cookieAtom)); // reading outside react tree
-
-// !deprecate
-// export const isAuthAtom = atom(get => !!get(cookieAtom)); // read-only
 
 export function useAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);
 	const [user, setUser] = useAtom(userAtom);
 	const [_s, setSession] = useAtom(sessionAtom);
 	const [cookie, setCookie] = useAtom(cookieAtom);
+
+	useEffect(() => void cookieStore.set(cookieAtom, cookie || ""), [cookie]);
 
 	async function signIn(email: string, password: string) {
 		setIsLoading(true);
@@ -50,9 +49,6 @@ export function useAuth() {
 		try {
 			const user = await createAccount(email, password, name);
 			const { sessionData, cookie } = await loginWithEmail(email, password);
-			// console.log(JSON.stringify(user, null, 2));
-			// console.log(JSON.stringify(sessionData, null, 2));
-			// console.log(JSON.stringify(cookie, null, 2));
 			setUser(user);
 			setSession(sessionData);
 			setCookie(cookie);
