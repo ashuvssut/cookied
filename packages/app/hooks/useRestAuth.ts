@@ -1,26 +1,13 @@
-import { Models } from "appwrite";
-import { atom, createStore, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import {
 	createAccount,
 	getUserDetails,
 	loginWithEmail,
 	logout,
 } from "../apis/appwriteAuthApi";
-import { atomWithPlatformStorage } from "../utils/storage";
 import { loadingAtom } from "../components/LoadingModal";
 import { useEffect } from "react";
-
-export const sessionAtom = //
-	atomWithPlatformStorage<Models.Session | null>("session", null);
-
-export const userAtom =
-	atomWithPlatformStorage<Models.User<Models.Preferences> | null>("user", null);
-export const isVerifiedAtom = //
-	atom(get => get(userAtom)?.emailVerification || false); // read-only
-export const isAuthAtom = atom(get => !!get(sessionAtom)?.$id);
-
-export const cookieAtom = atomWithPlatformStorage("cookie", "");
-export const cookieStore = createStore();
+import { cookieAtom, cookieStore, sessionAtom, userAtom } from "app/store/auth";
 
 export function useAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);
