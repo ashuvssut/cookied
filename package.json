@@ -19,7 +19,7 @@
   "scripts": {
     "native": "yarn workspace native start",
     "native:android": "yarn workspace native android",
-    "web": "cd apps/web && yarn next",
+    "web": "yarn workspace web dev",
     "ext": "yarn workspace ext dev",
     "fx:new": "yarn workspace fx new",
     "fx:deploy": "yarn workspace fx deploy",
