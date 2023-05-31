@@ -18,5 +18,3 @@ export function atomWithPlatformStorage<T>(key: string, content: T) {
 	if (Platform.OS === "web") return atomWithLocalStorage(key, content);
 	else return atomWithAsyncStorage(key, content);
 }
-
-const textAtom = atomWithStorage("text", "hello");

@@ -8,3 +8,8 @@ node_modules
 
 # Local Netlify folder
 .netlify
+
+# Post solito migration
+.yarn
+apps/expo
+apps/web
