@@ -1,0 +1,11 @@
+{
+  "name": "app",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "dripsy": "^4.3.3",
+    "moti": "latest",
+    "solito": "^3.2.6"
+  },
+  "sideEffects": false
+}

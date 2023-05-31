@@ -1,33 +1,33 @@
-import React from "react";
-import "./style.css";
+import React from 'react'
+import './style.css'
 
 const Newtab = () => {
-	return (
-		<main>
-			<img
-				src="https://raw.githubusercontent.com/ashuvssut/cookied/dev/apps/client/assets/svg/good-cookie-square.svg"
-				className="App-logo"
-				alt="logo"
-			/>
-			<h1>Cookied!!</h1>
-			<code className="himitsu-da">
-				Your are looking at the Vercel API Endpoint for Cookied
-			</code>
-			<h2>
-				Cookied is a Bookmarks app that uses AppWrite BaaS, React and React
-				Native.
-			</h2>
-			<p>
-				Cookied has a React chrome extension and a React Native Webapp and React
-				Native a Android app.
-				<br />
-				Aaannnd.. it's open source!{" "}
-				<a target="_blank" href="https://github.com/ashuvssut/cookied">
-					Checkout the repo.
-				</a>
-			</p>
-			<hr />
-			<h2 style={{ margin: "2rem auto 0.5rem" }}>Help Wanted!</h2>
+  return (
+    <main>
+      <img
+        src="https://raw.githubusercontent.com/ashuvssut/cookied/dev/apps/client/assets/svg/good-cookie-square.svg"
+        className="App-logo"
+        alt="logo"
+      />
+      <h1>Cookied!!</h1>
+      <code className="himitsu-da">
+        Your are looking at the Vercel API Endpoint for Cookied
+      </code>
+      <h2>
+        Cookied is a Bookmarks app that uses AppWrite BaaS, React and React
+        Native.
+      </h2>
+      <p>
+        Cookied has a React chrome extension and a React Native Webapp and React
+        Native a Android app.
+        <br />
+        Aaannnd.. it's open source!{' '}
+        <a target="_blank" href="https://github.com/ashuvssut/cookied">
+          Checkout the repo.
+        </a>
+      </p>
+      <hr />
+      {/* <h2 style={{ margin: "2rem auto 0.5rem" }}>Help Wanted!</h2>
 			<p>
 				AppWrite rejects requests sent from <em>Chrome extension</em> because it
 				does allow chrome extension origin (extension://&#60;extension-id&#62;).
@@ -42,9 +42,9 @@ const Newtab = () => {
 					GitHub Issue
 				</a>
 				.
-			</p>
-		</main>
-	);
-};
+			</p> */}
+    </main>
+  )
+}
 
-export default Newtab;
+export default Newtab

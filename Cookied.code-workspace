@@ -1,12 +1,16 @@
 {
 	"folders": [
 		{
-			"name": "cookied | Root",
-			"path": "."
+			"name": "app | shared package",
+			"path": "packages/app"
 		},
 		{
-			"name": "client | Expo dev build",
-			"path": "apps/client"
+			"name": "native | Expo dev build",
+			"path": "apps/expo"
+		},
+		{
+			"name": "web | Next.js webapp",
+			"path": "apps/web"
 		},
 		{
 			"name": "ext | Chrome Extension",
@@ -17,9 +21,13 @@
 			"path": "apps/api"
 		},
 		{
-			"name": "fx | AppWrite Functions",
+			"name": "fx | Appwrite Functions",
 			"path": "apps/fx"
-		}
+		},
+		{
+			"name": "cookied | Root",
+			"path": "."
+		},
 	],
 	"settings": {
 		"svg.preview.background": "dark-transparent",

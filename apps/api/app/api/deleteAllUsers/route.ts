@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Client, Users } from "node-appwrite";
 
-// curl --location --request POST 'http://localhost:3000/api/deleteAllUsers'
+// curl --location --request POST 'http://localhost:2023/api/deleteAllUsers'
 export async function POST() {
 	const client = new Client()
 		.setEndpoint(process.env.APPWRITE_ENDPOINT!)
