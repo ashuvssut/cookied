@@ -5,8 +5,16 @@
 			"path": "."
 		},
 		{
-			"name": "client | Expo dev build",
-			"path": "apps/client"
+			"name": "app | shared package",
+			"path": "packages/app"
+		},
+		{
+			"name": "native | Expo dev build",
+			"path": "apps/expo"
+		},
+		{
+			"name": "web | Next.js webapp",
+			"path": "apps/web"
 		},
 		{
 			"name": "ext | Chrome Extension",

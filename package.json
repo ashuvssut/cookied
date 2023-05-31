@@ -1,28 +1,41 @@
 {
-	"name": "cookied",
-	"version": "0.1.0",
-	"description": "Cookied Monorepo",
-	"main": "index.js",
-	"repository": "https://github.com/ashuvssut/cookied",
-	"author": "Team Cookied",
-	"private": true,
-	"scripts": {
-		"ext": "yarn workspace ext dev",
-		"fx-new": "yarn workspace fx new",
-		"fx-deploy": "yarn workspace fx deploy",
-		"client": "yarn workspace client dev",
-		"web": "yarn workspace client web",
-		"android": "yarn workspace client android",
-		"api": "yarn workspace api dev",
-		"apk": "cd ./apps/client/android && ./gradlew assembleRelease",
-		"apk-install": "adb install ./apps/client/android/app/build/outputs/apk/release/app-release.apk",
-		"reset-cache": "yarn workspace client reset-cache",
-		"gradle-clean": "yarn workspace client gradle-clean"
-	},
-	"workspaces": [
-		"packages/*",
-		"apps/*",
-		"apps/fx/functions/*"
-	],
-	"dependencies": {}
+  "name": "cookied",
+  "description": "Cookied Monorepo",
+  "repository": "https://github.com/ashuvssut/cookied",
+  "author": "Team Cookied",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "apps/fx/functions/*"
+  ],
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-native": "^0.69.5",
+    "eslint": "^8.21.0",
+    "turbo": "^1.4.2",
+    "typescript": "^4.7.4"
+  },
+  "scripts": {
+    "native": "yarn workspace native start",
+    "native:android": "yarn workspace native android",
+    "web": "cd apps/web && yarn next",
+    "ext": "yarn workspace ext dev",
+    "fx:new": "yarn workspace fx new",
+    "fx:deploy": "yarn workspace fx deploy",
+    "api": "yarn workspace api dev",
+    "apk": "cd ./apps/expo/android && ./gradlew assembleRelease",
+    "apk:install": "adb install ./apps/expo/android/app/build/outputs/apk/release/app-release.apk",
+    "reset-cache": "yarn workspace native reset-cache",
+    "gradle-clean": "yarn workspace clinet gradle-clean"
+  },
+  "resolutions": {
+    "metro": "0.76.0",
+    "metro-resolver": "0.76.0"
+  },
+  "nohoist": [
+    "**/expo-router",
+    "**/expo-router/**"
+  ],
+  "packageManager": "yarn@3.4.1"
 }

@@ -11,6 +11,5 @@
 	},
 	"workspaces": [
 		"functions/*"
-	],
-	"dependencies": {}
+	]
 }
