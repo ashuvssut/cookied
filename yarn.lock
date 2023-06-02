@@ -2010,6 +2010,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expo-google-fonts/poppins@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "@expo-google-fonts/poppins@npm:0.2.3"
+  checksum: 65f5dc450f27ec035db25eccae4bf90b6625d464bad0996f1518a4cd0f04850f65fc582c6ef5e5eb7f5c8d56bb7e975aad1a3a0b223713a41cfec7657685afd2
+  languageName: node
+  linkType: hard
+
 "@expo/bunyan@npm:4.0.0, @expo/bunyan@npm:^4.0.0":
   version: 4.0.0
   resolution: "@expo/bunyan@npm:4.0.0"
@@ -7959,6 +7966,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-font@npm:^11.1.1":
+  version: 11.2.0
+  resolution: "expo-font@npm:11.2.0"
+  dependencies:
+    fontfaceobserver: ^2.1.0
+  peerDependencies:
+    expo: "*"
+  checksum: 6a0e5cfa14529e8fc52ae5b0e4054e639e6150876c0e13170e9916c77e88d1e92055dc7de52362b909ab64d1ee1a58b3953dd5fb0259a9b45213eec1633f6adb
+  languageName: node
+  linkType: hard
+
 "expo-font@npm:~11.1.1":
   version: 11.1.1
   resolution: "expo-font@npm:11.1.1"
@@ -8116,7 +8134,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-splash-screen@npm:~0.18.2":
+"expo-splash-screen@npm:^0.18.2":
   version: 0.18.2
   resolution: "expo-splash-screen@npm:0.18.2"
   dependencies:
@@ -12116,6 +12134,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.20.0
     "@babel/plugin-proposal-export-namespace-from": ^7.18.9
+    "@expo-google-fonts/poppins": ^0.2.3
     "@react-native-async-storage/async-storage": ^1.18.1
     "@types/react": ~18.0.27
     "@types/react-native": ~0.69.1
@@ -12126,11 +12145,12 @@ __metadata:
     expo: ~48.0.18
     expo-constants: ^14.2.1
     expo-dev-client: ^2.2.1
+    expo-font: ^11.1.1
     expo-image: ^1.2.3
     expo-linear-gradient: ^12.1.2
     expo-linking: ^4.0.1
     expo-router: ^1.5.3
-    expo-splash-screen: ~0.18.2
+    expo-splash-screen: ^0.18.2
     expo-status-bar: ^1.4.4
     formik: ^2.4.0
     jotai: ^2.1.0

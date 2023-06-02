@@ -2,6 +2,15 @@ const { withExpo } = require("@expo/next-adapter");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	// webpack(config) {
+	// 	config.module.rules.push({
+	// 		// resolve fonts
+	// 		test: /\.(woff|woff2|eot|ttf|otf)$/,
+	// 		type: "asset/resource",
+	// 	});
+	// 	return config;
+	// },
+	
 	// reanimated (and thus, Moti) doesn't work with strict mode currently...
 	// https://github.com/nandorojo/moti/issues/224
 	// https://github.com/necolas/react-native-web/pull/2330

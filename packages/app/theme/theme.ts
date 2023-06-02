@@ -1,12 +1,13 @@
+import { customFontConfig } from "app/theme/typography";
 import { makeTheme } from "dripsy";
 
 export const darkTheme = makeTheme({
-  
-})
+	...customFontConfig,
+});
 
 export const lightTheme = makeTheme({
-  
-})
+	...customFontConfig,
+});
 
 // !Example theme-ui Theme
 // export const theme = makeTheme({
