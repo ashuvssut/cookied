@@ -4,8 +4,6 @@ import { Link } from "expo-router";
 import { Formik } from "formik";
 
 import TScreen from "../../components/TScreen";
-import TInput from "../../components/TInput";
-import TButton from "../../components/TButton";
 import loginSchema from "../../validators/loginSchema";
 import { useAuth } from "../../hooks/useRestAuth";
 import AuthHeader from "../../components/AuthHeader";
@@ -24,9 +22,6 @@ const LoginScreen = (props: Props) => {
 		<ScrollScreen setTopInset={true}>
 			<AuthHeader headerName="Log In" />
 			<View
-				// height={{ phone: 180, largeScreen: 150 }}
-				// alignItems={"center"}
-				// width={"100%"}
 				sx={{ height: [180, null, 150], alignItems: "center", width: "100%" }}
 			>
 				<Svg Svg={GoodCookie} nativeSvgProps={{ height: "100%" }} />

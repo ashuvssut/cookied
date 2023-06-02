@@ -46,5 +46,3 @@ const AuthHeader = (props: Props) => {
 };
 
 export default AuthHeader;
-
-const styles = StyleSheet.create({});
