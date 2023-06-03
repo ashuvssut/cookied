@@ -1,14 +1,27 @@
 import { customFontConfig } from "app/theme/typography";
-import { makeTheme } from "dripsy";
+import { DripsyBaseTheme, makeTheme } from "dripsy";
+
+const commonConfig: DripsyBaseTheme = {
+	space: {
+		$0: 0,
+		$1: 4,
+		$2: 8,
+		$3: 16,
+		$4: 32,
+		$5: 64,
+	},
+};
 
 export const darkTheme = makeTheme({
 	...customFontConfig,
+	...commonConfig,
 });
 
-type CookiedTheme = typeof darkTheme;
+export type CookiedTheme = typeof darkTheme;
 
 export const lightTheme: CookiedTheme = makeTheme({
 	...customFontConfig,
+	...commonConfig,
 });
 
 declare module "dripsy" {

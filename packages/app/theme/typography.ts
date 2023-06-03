@@ -1,3 +1,4 @@
+import { DripsyBaseTheme } from "dripsy";
 import { Platform } from "react-native";
 
 export const fontsMap = {
@@ -38,11 +39,10 @@ let platformFontsMap = Object.entries(fontsMap).reduce(
 	}),
 	{} as Record<TFontVariant, string>,
 );
-console.log(JSON.stringify(platformFontsMap, null, 2));
 
 export { platformFontsMap };
 
-export const customFontConfig = {
+export const customFontConfig: DripsyBaseTheme = {
 	customFonts: { [fontName]: platformFontsMap },
 	fonts: { root: fontName },
 	text: {
