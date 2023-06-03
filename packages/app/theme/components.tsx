@@ -9,6 +9,7 @@ const _TextInput = props => {
 		<TextInput
 			variant="layout.textInput"
 			placeholderTextColor={colors.placeholder}
+			style={{color:"white"}}
 			{...props}
 		/>
 	);

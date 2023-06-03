@@ -19,11 +19,11 @@ const RegisterScreen = (props: Props) => {
 	const { register } = useAuth();
 	const inset = useSafeArea();
 	return (
-		<View sx={{ bg: "primary", pt: inset.top, height: "100%" }}>
+		<View sx={{ bg: "primary", pt: inset.top, height: "100%",alignItems: "center", }}>
 			<StatusBar style="light" />
 			<H1 sx={{ textAlign: "center" }}>COOKIED</H1>
 			<View sx={{ px: 30 }}>
-				<View sx={{ alignItems: "center", justifyContent: "center" }}>
+				<View sx={{ alignItems: "center", justifyContent: "center" , width: [null, 600, 700]}}>
 					<Svg
 						Svg={GoodCookie}
 						webSvgProps={{ style: { height: 200 } }}
@@ -97,6 +97,13 @@ const RegisterScreen = (props: Props) => {
 								onBlur={handleBlur("password")}
 								placeholder="Enter Password"
 							/>
+							{
+								<Text sx={{ color: "error" }}>
+									{!!values.password.length && errors.password && touched.password
+										? errors.password
+										: " "}
+								</Text>
+							}
 							<Text variant="label">Confirm Password</Text>
 							<Th.TextInput
 								value={values.confirmPassword}
@@ -121,7 +128,7 @@ const RegisterScreen = (props: Props) => {
 							) : (
 								<Th.ButtonPrimary disabled>Sign Up</Th.ButtonPrimary>
 							)}
-							<Text sx={{ textAlign: "center", py: 10 }}>
+							<Text sx={{ textAlign: "center", py: "$2" }}>
 								Already have an account?{" "}
 								<TextLink href="/login">
 									<Text variant="link">Log In</Text>
