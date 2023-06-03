@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "main": "index.ts",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "dripsy": "^4.3.3",
     "moti": "latest",
+    "react-redux": "^8.0.7",
+    "redux-persist": "^6.0.0",
     "solito": "^3.2.6"
   },
   "sideEffects": false
