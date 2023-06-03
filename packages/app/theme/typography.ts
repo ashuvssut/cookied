@@ -1,3 +1,4 @@
+import { makeTheme } from "dripsy";
 import { Platform } from "react-native";
 
 export const fontsMap = {
@@ -41,7 +42,7 @@ let platformFontsMap = Object.entries(fontsMap).reduce(
 
 export { platformFontsMap };
 
-export const customFontConfig = {
+export const customFontConfig = makeTheme({
 	customFonts: { [fontName]: platformFontsMap },
 	fonts: { root: fontName },
 	text: {
@@ -76,4 +77,4 @@ export const customFontConfig = {
 			fontFamily: getFontFamStr("r600"),
 		},
 	},
-};
+});

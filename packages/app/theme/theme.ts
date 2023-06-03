@@ -1,7 +1,8 @@
 import { customFontConfig } from "app/theme/typography";
 import { makeTheme } from "dripsy";
 
-const commonConfig = {
+const commonConfig = makeTheme({
+	...customFontConfig,
 	space: {
 		$0: 0,
 		$1: 4,
@@ -10,22 +11,44 @@ const commonConfig = {
 		$4: 32,
 		$5: 64,
 	},
-};
+});
 
 export const darkTheme = makeTheme({
-	...customFontConfig,
 	...commonConfig,
 	colors: {
 		primary: "#000000",
 		onPrimary: "#FFFFFF",
+		secondary: "#1D1B1B",
+		active: "#262626",
+		onActive: "#A3A3A3",
+		surface: "#191919",
+		surfaceHigh: "#232323",
+		placeholder: "#565454",
+	},
+	// textShadows: {
+	// 	onSomeContainer: {
+	// 		textShadowOffset: { width: 1, height: 1 },
+	// 		textShadowRadius: 5,
+	// 		textShadowColor: "#00000099",
+	// 	},
+	// },
+	linearGradients: {
+		primaryButtonBg: ["#B313DB", "#FF00B894"],
+	},
+	buttons: {
+		primary: {
+			bg: "primaryButtonBg",
+		},
+		secondary: {
+			bg: "#2E3232",
+		},
 	},
 });
 
 export type CookiedTheme = typeof darkTheme;
 
-export const lightTheme: Partial<CookiedTheme> = makeTheme({
-	// TODO: create light theme and remove Partial<>
-	...customFontConfig,
+export const lightTheme: any = makeTheme({
+	// TODO: create light theme and then change from any to CookiedTheme
 	...commonConfig,
 });
 
