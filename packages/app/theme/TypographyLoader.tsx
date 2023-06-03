@@ -1,4 +1,5 @@
-import { expoFontMap } from "app/theme/fonts";
+import * as p from "@expo-google-fonts/poppins";
+import { platformFontsMap } from "app/theme/typography";
 import { FCC } from "app/types/IReact";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -16,13 +17,16 @@ const TypographyLoader: FCC = ({ children }) => {
 	if (!fontsLoaded) {
 		return null;
 	}
-	return (
-		<View onLayout={onLayoutRootView}>
-			<Text style={{ fontFamily: "Poppins", fontSize: 30 }}>Inter Black</Text>
-			<Text style={{ fontSize: 30 }}>Platform Default</Text>
-			{children}
-		</View>
-	);
+	return <View onLayout={onLayoutRootView}>{children}</View>;
 };
+
+// load font for native
+export const expoFontMap = Object.entries(platformFontsMap).reduce(
+	(acc, [key, fontName]) => ({
+		...acc,
+		[key]: p[fontName],
+	}),
+	{},
+);
 
 export default TypographyLoader;

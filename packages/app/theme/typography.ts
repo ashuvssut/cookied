@@ -1,7 +1,5 @@
 import { Platform } from "react-native";
 
-const fontName = "Poppins";
-
 export const fontsMap = {
 	// r100: "Poppins_100Thin",
 	// i100: "Poppins_100Thin_Italic",
@@ -12,7 +10,7 @@ export const fontsMap = {
 	r400: "Poppins_400Regular",
 	i400: "Poppins_400Regular_Italic",
 	r500: "Poppins_500Medium",
-	// i500: "Poppins_500Medium_Italic",
+	i500: "Poppins_500Medium_Italic",
 	r600: "Poppins_600SemiBold",
 	// i600: "Poppins_600SemiBold_Italic",
 	// r700: "Poppins_700Bold",
@@ -22,23 +20,57 @@ export const fontsMap = {
 	// r900: "Poppins_900Black",
 	// i900: "Poppins_900Black_Italic",
 };
+type TFontVariant = keyof typeof fontsMap;
 
 // convert fontMap to platform font map to create font config for dripsy
-const platformFont = (font: string) =>
-	Platform.select({
-		web: `${font}, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, Inter-serif`,
-		default: font,
-	});
-
-const platformFontsMap = Object.entries(fontsMap).reduce(
+const fontName = "Poppins";
+const getFontFamStr = (font: TFontVariant) => {
+	const fontFam =
+		Platform.OS === "web"
+			? `${fontName}, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, Inter-serif`
+			: font;
+	return fontFam;
+};
+let platformFontsMap = Object.entries(fontsMap).reduce(
 	(acc, [key, fontName]) => ({
 		...acc,
-		[key]: platformFont(fontName),
+		[key]: getFontFamStr(fontName as TFontVariant),
 	}),
-	{} as Record<string, string>,
+	{} as Record<TFontVariant, string>,
 );
+console.log(JSON.stringify(platformFontsMap, null, 2));
+
+export { platformFontsMap };
 
 export const customFontConfig = {
 	customFonts: { [fontName]: platformFontsMap },
 	fonts: { root: fontName },
+	text: {
+		body: {
+			fontWeight: "400",
+			fontFamily: getFontFamStr("r400"),
+		},
+		regular: {
+			fontWeight: "400",
+			fontFamily: getFontFamStr("r400"),
+		},
+		regularItalic: {
+			fontWeight: "400",
+			fontStyle: "italic",
+			fontFamily: getFontFamStr("i400"),
+		},
+		medium: {
+			fontWeight: "500",
+			fontFamily: getFontFamStr("r500"),
+		},
+		mediumItalic: {
+			fontWeight: "500",
+			fontStyle: "italic",
+			fontFamily: getFontFamStr("i500"),
+		},
+		semibold: {
+			fontWeight: "600",
+			fontFamily: getFontFamStr("r600"),
+		},
+	},
 };

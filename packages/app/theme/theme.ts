@@ -5,9 +5,15 @@ export const darkTheme = makeTheme({
 	...customFontConfig,
 });
 
-export const lightTheme = makeTheme({
+type CookiedTheme = typeof darkTheme;
+
+export const lightTheme: CookiedTheme = makeTheme({
 	...customFontConfig,
 });
+
+declare module "dripsy" {
+	interface DripsyCustomTheme extends CookiedTheme {}
+}
 
 // !Example theme-ui Theme
 // export const theme = makeTheme({
