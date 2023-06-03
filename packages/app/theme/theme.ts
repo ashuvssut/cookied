@@ -11,7 +11,26 @@ const commonConfig = makeTheme({
 		$4: 32,
 		$5: 64,
 	},
+	layout: {
+		textInput: {
+			bg: "secondary",
+			py: 15,
+			px: 20,
+			borderRadius: 5,
+		},
+		buttonContainer: {
+			py: 15,
+			px: 20,
+			borderRadius: 5,
+		},
+	},
 });
+
+const commonColors = {
+	error: "#B00020",
+	warning: "#FFA000",
+	success: "#4CAF50",
+};
 
 export const darkTheme = makeTheme({
 	...commonConfig,
@@ -24,6 +43,8 @@ export const darkTheme = makeTheme({
 		surface: "#191919",
 		surfaceHigh: "#232323",
 		placeholder: "#565454",
+		link: "#B313DB",
+		...commonColors,
 	},
 	// textShadows: {
 	// 	onSomeContainer: {
@@ -33,12 +54,10 @@ export const darkTheme = makeTheme({
 	// 	},
 	// },
 	linearGradients: {
+		// TODO: linear gradients not working for <Gradient/> but works for <LinearGradient/>
 		primaryButtonBg: ["#B313DB", "#FF00B894"],
 	},
 	buttons: {
-		primary: {
-			bg: "primaryButtonBg",
-		},
 		secondary: {
 			bg: "#2E3232",
 		},
