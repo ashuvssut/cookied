@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 import { Link } from "solito/link";
 import { Formik } from "formik";
 import loginSchema from "../../validators/loginSchema";
-import { useAuth } from "../../hooks/useRestAuth";
 import { GoodCookie } from "../../assets/svg";
 import { Svg } from "app/components/Svg";
 import { H1, Text, View } from "dripsy";
@@ -11,11 +10,12 @@ import { StatusBar } from "app/components/StatusBar";
 import { useSafeArea } from "app/components/SafeArea/useSafeArea";
 import { Th } from "app/theme/components";
 import { TextLink } from "solito/link";
+import { usePlatformAuth } from "app/hooks/usePlatformAuth";
 
 type Props = {};
 
 const LoginScreen = (props: Props) => {
-	const { signIn } = useAuth();
+	const { signIn } = usePlatformAuth();
 	console.log(GoodCookie);
 	const inset = useSafeArea();
 	return (

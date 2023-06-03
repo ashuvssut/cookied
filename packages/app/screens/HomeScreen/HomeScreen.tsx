@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, Pressable } from "react-native";
-import { useAuth } from '../../hooks/useRestAuth'
 import { Account, ID, Client } from "appwrite";
+import { usePlatformAuth } from "app/hooks/usePlatformAuth";
 
 export default function HomeScreen() {
-	const { signOut } = useAuth()
+	const { signOut } = usePlatformAuth()
 	return (
 		<Pressable
 			// onPress={() => signOut()}

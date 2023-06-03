@@ -9,7 +9,7 @@ import { loadingAtom } from "../components/LoadingModal";
 import { useEffect } from "react";
 import { cookieAtom, cookieStore, sessionAtom, userAtom } from "app/store/auth";
 
-export function useAuth() {
+export function useRestAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);
 	const [user, setUser] = useAtom(userAtom);
 	const [_s, setSession] = useAtom(sessionAtom);
