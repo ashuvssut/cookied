@@ -1,9 +1,8 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import { Formik } from "formik";
 
-import TScreen from "../../components/TScreen";
 import loginSchema from "../../validators/loginSchema";
 import { useAuth } from "../../hooks/useRestAuth";
 import AuthHeader from "../../components/AuthHeader";
@@ -19,14 +18,14 @@ const LoginScreen = (props: Props) => {
 	const { signIn } = useAuth();
 	console.log(GoodCookie);
 	return (
-		<ScrollScreen setTopInset={true}>
+		// <ScrollScreen setTopInset={true}>
 			<AuthHeader headerName="Log In" />
-			<View
-				sx={{ height: [180, null, 150], alignItems: "center", width: "100%" }}
-			>
-				<Svg Svg={GoodCookie} nativeSvgProps={{ height: "100%" }} />
-			</View>
-			{/* <Text
+			// <View
+			// 	sx={{ height: [180, null, 150], alignItems: "center", width: "100%" }}
+			// >
+			// 	<Svg Svg={GoodCookie} nativeSvgProps={{ height: "100%" }} />
+			// </View>
+			/* <Text
 				marginTop={"l"}
 				textAlign={"center"}
 				variant={"header"}
@@ -148,8 +147,8 @@ const LoginScreen = (props: Props) => {
 						)}
 					</Formik>
 				</Box>
-			</Box> */}
-		</ScrollScreen>
+			</Box> */
+		// </ScrollScreen>
 	);
 };
 

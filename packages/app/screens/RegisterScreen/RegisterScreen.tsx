@@ -17,15 +17,7 @@ const RegisterScreen = (props: Props) => {
 	return (
 		<ScrollScreen setTopInset={true}>
 			<AuthHeader headerName="Sign Up" />
-			<Text
-				sx={{
-					mt: "$4",
-					textAlign: "center",
-					color: "text",
-				}}
-			>
-				COOKIED
-			</Text>
+			<Text sx={{ mt: "$4", textAlign: "center", color: "text" }}>COOKIED</Text>
 			{/* <Box
 				flex={1}
 				backgroundColor={"background"}

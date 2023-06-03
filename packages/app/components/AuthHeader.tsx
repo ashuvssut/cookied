@@ -1,8 +1,6 @@
 import React from "react";
-import { Pressable, StyleSheet, Text } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-// import { Box, TText } from "../theme";
 import { useSafeArea } from "app/components/SafeArea/useSafeArea";
+import { Text } from "dripsy";
 
 type Props = { headerName: string };
 
@@ -10,7 +8,7 @@ const AuthHeader = (props: Props) => {
 	const inset = useSafeArea();
 
 	return (
-		<Text>AuthHeader</Text>
+		<></>
 		// <Box
 		// 	// style={{ paddingTop: inset.top }}
 		// 	height={"10%"}

@@ -1,7 +1,7 @@
 import { customFontConfig } from "app/theme/typography";
-import { DripsyBaseTheme, makeTheme } from "dripsy";
+import { makeTheme } from "dripsy";
 
-const commonConfig: DripsyBaseTheme = {
+const commonConfig = {
 	space: {
 		$0: 0,
 		$1: 4,
