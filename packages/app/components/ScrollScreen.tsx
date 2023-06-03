@@ -1,51 +1,31 @@
-import {
-	ScrollView,
-	StyleSheet,
-	Text,
-	View,
-	useWindowDimensions,
-} from "react-native";
-import React from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import { Box } from "../theme";
+import { ScrollView, useWindowDimensions } from "react-native";
+import { View } from "dripsy";
+import { useSafeArea } from "app/components/SafeArea/useSafeArea";
+import { ReactNode } from "react";
 
 type Props = {
-	children?: React.ReactNode;
+	children?: ReactNode;
 	setTopInset?: boolean;
-	justifyCenter?: boolean;
-	alignCenter?: boolean;
 };
 
-const ScrollScreen = ({
-	children,
-	setTopInset,
-	justifyCenter,
-	alignCenter,
-}: Props) => {
-	const inset = useSafeAreaInsets();
+const ScrollScreen = ({ children, setTopInset }: Props) => {
+	const inset = useSafeArea();
 	const { height } = useWindowDimensions();
 	return (
-		<ScrollView style={{ ...styles.screen }}>
-			<Box
-				flex={1}
-				paddingHorizontal={"m"}
-				style={{
-					paddingTop: setTopInset ? inset.top : 0,
+		<ScrollView style={{ flex: 1 }}>
+			<View
+				sx={{
+					flex: 1,
+					px: "$3",
+					pt: setTopInset ? inset.top : 0,
 					minHeight: setTopInset ? height + inset.top : height,
+					bg: "background",
 				}}
-				backgroundColor={"background"}
 			>
 				{children}
-			</Box>
+			</View>
 		</ScrollView>
 	);
 };
 
 export default ScrollScreen;
-
-const styles = StyleSheet.create({
-	screen: {
-		flex: 1,
-	},
-});

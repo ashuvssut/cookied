@@ -6,7 +6,6 @@ module.exports = {
 	version: "0.1.0",
 	scheme: "cookied",
 	assetBundlePatterns: ["**/*"],
-	version: "1.0.0",
 	extra: {
 		...env,
 		MODE: !!env.MODE ? env.MODE : "dev",

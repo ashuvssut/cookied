@@ -1,38 +1,38 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Link } from "expo-router";
-import { useTheme } from "@shopify/restyle";
 import { Formik } from "formik";
 
-import TScreen from "../../components/TScreen";
-import { Box, TText } from "../../theme";
-import TInput from "../../components/TInput";
-import TButton from "../../components/TButton";
 import loginSchema from "../../validators/loginSchema";
 import { useAuth } from "../../hooks/useRestAuth";
 import AuthHeader from "../../components/AuthHeader";
 import { GoodCookie } from "../../assets/svg";
 import ScrollScreen from "../../components/ScrollScreen";
+import { Svg } from "app/components/Svg";
+import { View, useDripsyTheme } from "dripsy";
 
 type Props = {};
 
 const LoginScreen = (props: Props) => {
-	const theme = useTheme();
+	const theme = useDripsyTheme();
 	const { signIn } = useAuth();
-
+	console.log(GoodCookie);
 	return (
-		<ScrollScreen setTopInset={true}>
+		// <ScrollScreen setTopInset={true}>
 			<AuthHeader headerName="Log In" />
-			<Box
-				height={{ phone: 180, largeScreen: 150 }}
-				alignItems={"center"}
-				width={"100%"}
+			// <View
+			// 	sx={{ height: [180, null, 150], alignItems: "center", width: "100%" }}
+			// >
+			// 	<Svg Svg={GoodCookie} nativeSvgProps={{ height: "100%" }} />
+			// </View>
+			/* <Text
+				marginTop={"l"}
+				textAlign={"center"}
+				variant={"header"}
+				color={"text"}
 			>
-				<GoodCookie height={"100%"} />
-			</Box>
-			<TText marginTop={"l"} textAlign={"center"} variant={"header"} color={"text"}>
 				COOKIED
-			</TText>
+			</Text>
 			<Box
 				flex={1}
 				backgroundColor={"background"}
@@ -147,8 +147,8 @@ const LoginScreen = (props: Props) => {
 						)}
 					</Formik>
 				</Box>
-			</Box>
-		</ScrollScreen>
+			</Box> */
+		// </ScrollScreen>
 	);
 };
 

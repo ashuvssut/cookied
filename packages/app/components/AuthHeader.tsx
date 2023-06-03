@@ -1,51 +1,46 @@
 import React from "react";
-import { Pressable, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { Box, TText } from "../theme";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSafeArea } from "app/components/SafeArea/useSafeArea";
+import { Text } from "dripsy";
 
-type Props = {
-	headerName: string;
-};
+type Props = { headerName: string };
 
 const AuthHeader = (props: Props) => {
-	const inset = useSafeAreaInsets();
+	const inset = useSafeArea();
 
 	return (
-		<Box
-			// style={{ paddingTop: inset.top }}
-			height={"10%"}
-			// backgroundColor={"accent"}
-			alignItems={"center"}
-			// paddingHorizontal={{ phone: "m", largeScreen: "xl" }}
-			flexDirection={"row"}
-		>
-			<Pressable
-				hitSlop={30}
-				style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
-			>
-				<Box
-					backgroundColor={"background"}
-					borderRadius={{ phone: 10, largeScreen: 8 }}
-					width={{ phone: 40, largeScreen: 30 }}
-					height={{ phone: 40, largeScreen: 30 }}
-					marginRight={{ phone: "m", largeScreen: "m" }}
-					justifyContent={"center"}
-					alignItems={"center"}
-					borderColor={"whiteBorder"}
-					borderWidth={1}
-				>
-					<Ionicons name="chevron-back" size={24} color="white" />
-				</Box>
-			</Pressable>
+		<></>
+		// <Box
+		// 	// style={{ paddingTop: inset.top }}
+		// 	height={"10%"}
+		// 	// backgroundColor={"accent"}
+		// 	alignItems={"center"}
+		// 	// paddingHorizontal={{ phone: "m", largeScreen: "xl" }}
+		// 	flexDirection={"row"}
+		// >
+		// 	<Pressable
+		// 		hitSlop={30}
+		// 		style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
+		// 	>
+		// 		<Box
+		// 			backgroundColor={"background"}
+		// 			borderRadius={{ phone: 10, largeScreen: 8 }}
+		// 			width={{ phone: 40, largeScreen: 30 }}
+		// 			height={{ phone: 40, largeScreen: 30 }}
+		// 			marginRight={{ phone: "m", largeScreen: "m" }}
+		// 			justifyContent={"center"}
+		// 			alignItems={"center"}
+		// 			borderColor={"whiteBorder"}
+		// 			borderWidth={1}
+		// 		>
+		// 			{/* <Ionicons name="chevron-back" size={24} color="white" /> */}
+		// 		</Box>
+		// 	</Pressable>
 
-			<TText variant={"header"} color={"text"}>
-				{props.headerName}
-			</TText>
-		</Box>
+		// 	<TText variant={"header"} color={"text"}>
+		// 		{props.headerName}
+		// 	</TText>
+		// </Box>
 	);
 };
 
 export default AuthHeader;
-
-const styles = StyleSheet.create({});

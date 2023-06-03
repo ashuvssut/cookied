@@ -3,14 +3,12 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Link } from "expo-router";
 
-import TButton from "../../components/TButton";
-import TInput from "../../components/TInput";
-import { Box, TText } from "../../theme";
 import ScrollScreen from "../../components/ScrollScreen";
 import registerSchema from "../../validators/registerSchema";
 import { useAuth } from "../../hooks/useRestAuth";
 import AuthHeader from "../../components/AuthHeader";
 import { GoodCookie } from "../../assets/svg";
+import { Text } from "dripsy";
 
 type Props = {};
 
@@ -19,10 +17,8 @@ const RegisterScreen = (props: Props) => {
 	return (
 		<ScrollScreen setTopInset={true}>
 			<AuthHeader headerName="Sign Up" />
-			<TText marginTop="l" textAlign="center" variant="header" color="text">
-				COOKIED
-			</TText>
-			<Box
+			<Text sx={{ mt: "$4", textAlign: "center", color: "text" }}>COOKIED</Text>
+			{/* <Box
 				flex={1}
 				backgroundColor={"background"}
 				paddingHorizontal={"m"}
@@ -179,7 +175,7 @@ const RegisterScreen = (props: Props) => {
 						</Link>
 					</TText>
 				</Box>
-			</Box>
+			</Box> */}
 		</ScrollScreen>
 	);
 };
