@@ -1,15 +1,7 @@
 import { FCC } from "app/types/IReact";
 import { Text, TextInput, View, styled, useDripsyTheme } from "dripsy";
 import { LinearGradient } from "expo-linear-gradient";
-import { Pressable, PressableProps } from "react-native";
-
-const _Pressable = props => (
-	<Pressable
-		hitSlop={30}
-		style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
-		{...props}
-	/>
-);
+import { Pressable, PressableProps, StyleSheet } from "react-native";
 
 const _TextInput = props => {
 	const colors = useDripsyTheme().theme.colors;
@@ -25,7 +17,7 @@ const _TextInput = props => {
 const ButtonPrimary: FCC<PressableProps> = props => {
 	const linearGradients = useDripsyTheme().theme.linearGradients;
 	return (
-		<_Pressable {...props} style={{ overflow: "hidden", borderRadius: 5 }}>
+		<Pressable {...props} style={ss.pressable}>
 			<LinearGradient
 				colors={linearGradients.primaryButtonBg}
 				start={[0, 0.5]}
@@ -35,11 +27,20 @@ const ButtonPrimary: FCC<PressableProps> = props => {
 			<View variant="layout.buttonContainer">
 				<Text sx={{ textAlign: "center" }}>{props.children}</Text>
 			</View>
-		</_Pressable>
+		</Pressable>
 	);
 };
 
 export const Th = () => null;
-Th.Pressable = styled(_Pressable)({});
+Th.Pressable = styled(Pressable)({});
 Th.TextInput = _TextInput;
 Th.ButtonPrimary = ButtonPrimary;
+
+const ss = StyleSheet.create({
+	pressable: {
+		overflow: "hidden",
+		borderRadius: 5,
+		marginBottom: 4,
+		marginTop: 20,
+	},
+});
