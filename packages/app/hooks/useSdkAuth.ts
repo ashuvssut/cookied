@@ -4,7 +4,7 @@ import { isAuthAtom, sessionAtom, userAtom } from "app/store/auth";
 import { Account } from "appwrite";
 import { client } from "app/utils/appwrite";
 
-export function useAuth() {
+export function useSdkAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);
 	const [user, setUser] = useAtom(userAtom);
 	const [_s, setSession] = useAtom(sessionAtom);

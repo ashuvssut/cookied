@@ -1,4 +1,4 @@
-import { Account, Models, ID, Functions } from "appwrite";
+import { Account, Models, ID } from "appwrite";
 import { useAtom } from "jotai";
 import { client } from "../utils/appwrite";
 import { atomWithStorage } from "jotai/utils";

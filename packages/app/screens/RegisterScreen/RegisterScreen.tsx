@@ -5,18 +5,18 @@ import { Link } from "expo-router";
 import { H1, Text, View } from "dripsy";
 
 import registerSchema from "../../validators/registerSchema";
-import { useAuth } from "../../hooks/useRestAuth";
 import { GoodCookie } from "../../assets/svg";
 import { Svg } from "app/components/Svg";
 import { Th } from "app/theme/components";
 import { StatusBar } from "app/components/StatusBar";
 import { useSafeArea } from "app/components/SafeArea/useSafeArea";
 import { TextLink } from "solito/link";
+import { usePlatformAuth } from "app/hooks/usePlatformAuth";
 
 type Props = {};
 
 const RegisterScreen = (props: Props) => {
-	const { register } = useAuth();
+	const { register } = usePlatformAuth();
 	const inset = useSafeArea();
 	return (
 		<View sx={{ bg: "primary", pt: inset.top, height: "100%",alignItems: "center", }}>
