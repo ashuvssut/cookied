@@ -6,7 +6,6 @@ import { Link } from "expo-router";
 import ScrollScreen from "../../components/ScrollScreen";
 import registerSchema from "../../validators/registerSchema";
 import { useAuth } from "../../hooks/useRestAuth";
-import AuthHeader from "../../components/AuthHeader";
 import { GoodCookie } from "../../assets/svg";
 import { Text } from "dripsy";
 

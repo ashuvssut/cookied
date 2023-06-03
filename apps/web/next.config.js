@@ -30,6 +30,7 @@ const nextConfig = {
 		"react-native-gesture-handler",
 		"expo-modules-core",
 		"expo-constants",
+		"expo-linear-gradient",
 	],
 };
 

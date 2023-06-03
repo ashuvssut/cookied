@@ -49,10 +49,27 @@ export const customFontConfig = makeTheme({
 		body: {
 			fontWeight: "400",
 			fontFamily: getFontFamStr("r400"),
+			color: "onPrimary",
 		},
-		header: {
+		h1: {
 			fontSize: 24,
+			fontWeight: "600",
 			fontFamily: getFontFamStr("r600"),
+			color: "onPrimary",
+		},
+		label: {
+			fontSize: 16,
+			fontWeight: "500",
+			fontFamily: getFontFamStr("r500"),
+			color: "onPrimary",
+			py: 4,
+		},
+		link: {
+			fontSize: 16,
+			fontWeight: "500",
+			fontFamily: getFontFamStr("r500"),
+			color: "link",
+			textDecorationLine: "underline",
 		},
 		regular: {
 			fontWeight: "400",
