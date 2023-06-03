@@ -1,7 +1,8 @@
 import { customFontConfig } from "app/theme/typography";
 import { makeTheme } from "dripsy";
 
-const commonConfig = {
+const commonConfig = makeTheme({
+	...customFontConfig,
 	space: {
 		$0: 0,
 		$1: 4,
@@ -10,17 +11,44 @@ const commonConfig = {
 		$4: 32,
 		$5: 64,
 	},
-};
+});
 
 export const darkTheme = makeTheme({
-	...customFontConfig,
 	...commonConfig,
+	colors: {
+		primary: "#000000",
+		onPrimary: "#FFFFFF",
+		secondary: "#1D1B1B",
+		active: "#262626",
+		onActive: "#A3A3A3",
+		surface: "#191919",
+		surfaceHigh: "#232323",
+		placeholder: "#565454",
+	},
+	// textShadows: {
+	// 	onSomeContainer: {
+	// 		textShadowOffset: { width: 1, height: 1 },
+	// 		textShadowRadius: 5,
+	// 		textShadowColor: "#00000099",
+	// 	},
+	// },
+	linearGradients: {
+		primaryButtonBg: ["#B313DB", "#FF00B894"],
+	},
+	buttons: {
+		primary: {
+			bg: "primaryButtonBg",
+		},
+		secondary: {
+			bg: "#2E3232",
+		},
+	},
 });
 
 export type CookiedTheme = typeof darkTheme;
 
-export const lightTheme: CookiedTheme = makeTheme({
-	...customFontConfig,
+export const lightTheme: any = makeTheme({
+	// TODO: create light theme and then change from any to CookiedTheme
 	...commonConfig,
 });
 
@@ -162,21 +190,21 @@ declare module "dripsy" {
 // 	},
 // };
 // const theme = createTheme({
-// 	colors: {
-// 		primary: "#7286D3",
-// 		text: "#1F1F1F",
-// 		textSecondary: "#1F1F1F",
-// 		background: "#FFFFFF",
-// 		surface: "#F5F5F5",
-// 		accent: "#FFC107",
-// 		error: "#B00020",
-// 		warning: "#FFA000",
-// 		success: "#4CAF50",
-// 		menuText: "#FFFFFF",
-// 		white: "hsla(0, 0%, 100%, 1)",
-// 		paragraph: "#43C3EC",
-// 		whiteBorder: "hsla(0, 0%, 35%, 0.64)",
-// 	},
+// colors: {
+// 	primary: "#7286D3",
+// 	text: "#1F1F1F",
+// 	textSecondary: "#1F1F1F",
+// 	background: "#FFFFFF",
+// 	surface: "#F5F5F5",
+// 	accent: "#FFC107",
+// 	error: "#B00020",
+// 	warning: "#FFA000",
+// 	success: "#4CAF50",
+// 	menuText: "#FFFFFF",
+// 	white: "hsla(0, 0%, 100%, 1)",
+// 	paragraph: "#43C3EC",
+// 	whiteBorder: "hsla(0, 0%, 35%, 0.64)",
+// },
 // 	spacing: {
 // 		xs: 4, //* scale
 // 		s: 8, //* scale
