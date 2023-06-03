@@ -9,7 +9,7 @@ import AuthHeader from "../../components/AuthHeader";
 import { GoodCookie } from "../../assets/svg";
 import ScrollScreen from "../../components/ScrollScreen";
 import { Svg } from "app/components/Svg";
-import { View, useDripsyTheme } from "dripsy";
+import { useDripsyTheme } from "dripsy";
 
 type Props = {};
 
@@ -19,13 +19,15 @@ const LoginScreen = (props: Props) => {
 	console.log(GoodCookie);
 	return (
 		// <ScrollScreen setTopInset={true}>
+		<>
 			<AuthHeader headerName="Log In" />
-			// <View
-			// 	sx={{ height: [180, null, 150], alignItems: "center", width: "100%" }}
-			// >
-			// 	<Svg Svg={GoodCookie} nativeSvgProps={{ height: "100%" }} />
-			// </View>
-			/* <Text
+		</>
+		// <View
+		// 	sx={{ height: [180, null, 150], alignItems: "center", width: "100%" }}
+		// >
+		// 	<Svg Svg={GoodCookie} nativeSvgProps={{ height: "100%" }} />
+		// </View>
+		/* <Text
 				marginTop={"l"}
 				textAlign={"center"}
 				variant={"header"}

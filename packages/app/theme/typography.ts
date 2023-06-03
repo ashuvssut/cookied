@@ -1,4 +1,3 @@
-import { DripsyBaseTheme } from "dripsy";
 import { Platform } from "react-native";
 
 export const fontsMap = {
@@ -42,13 +41,17 @@ let platformFontsMap = Object.entries(fontsMap).reduce(
 
 export { platformFontsMap };
 
-export const customFontConfig: DripsyBaseTheme = {
+export const customFontConfig = {
 	customFonts: { [fontName]: platformFontsMap },
 	fonts: { root: fontName },
 	text: {
 		body: {
 			fontWeight: "400",
 			fontFamily: getFontFamStr("r400"),
+		},
+		header: {
+			fontSize: 24,
+			fontFamily: getFontFamStr("r600"),
 		},
 		regular: {
 			fontWeight: "400",

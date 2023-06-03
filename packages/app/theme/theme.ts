@@ -15,11 +15,16 @@ const commonConfig = {
 export const darkTheme = makeTheme({
 	...customFontConfig,
 	...commonConfig,
+	colors: {
+		primary: "#000000",
+		onPrimary: "#FFFFFF",
+	},
 });
 
 export type CookiedTheme = typeof darkTheme;
 
-export const lightTheme: CookiedTheme = makeTheme({
+export const lightTheme: Partial<CookiedTheme> = makeTheme({
+	// TODO: create light theme and remove Partial<>
 	...customFontConfig,
 	...commonConfig,
 });
@@ -162,21 +167,21 @@ declare module "dripsy" {
 // 	},
 // };
 // const theme = createTheme({
-// 	colors: {
-// 		primary: "#7286D3",
-// 		text: "#1F1F1F",
-// 		textSecondary: "#1F1F1F",
-// 		background: "#FFFFFF",
-// 		surface: "#F5F5F5",
-// 		accent: "#FFC107",
-// 		error: "#B00020",
-// 		warning: "#FFA000",
-// 		success: "#4CAF50",
-// 		menuText: "#FFFFFF",
-// 		white: "hsla(0, 0%, 100%, 1)",
-// 		paragraph: "#43C3EC",
-// 		whiteBorder: "hsla(0, 0%, 35%, 0.64)",
-// 	},
+// colors: {
+// 	primary: "#7286D3",
+// 	text: "#1F1F1F",
+// 	textSecondary: "#1F1F1F",
+// 	background: "#FFFFFF",
+// 	surface: "#F5F5F5",
+// 	accent: "#FFC107",
+// 	error: "#B00020",
+// 	warning: "#FFA000",
+// 	success: "#4CAF50",
+// 	menuText: "#FFFFFF",
+// 	white: "hsla(0, 0%, 100%, 1)",
+// 	paragraph: "#43C3EC",
+// 	whiteBorder: "hsla(0, 0%, 35%, 0.64)",
+// },
 // 	spacing: {
 // 		xs: 4, //* scale
 // 		s: 8, //* scale

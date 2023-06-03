@@ -1,6 +1,8 @@
 import React from "react";
 import { useSafeArea } from "app/components/SafeArea/useSafeArea";
-import { Text } from "dripsy";
+import { Text, View } from "dripsy";
+import { Th } from "app/theme/components";
+import { StatusBar } from "expo-status-bar";
 
 type Props = { headerName: string };
 
@@ -8,38 +10,37 @@ const AuthHeader = (props: Props) => {
 	const inset = useSafeArea();
 
 	return (
-		<></>
-		// <Box
-		// 	// style={{ paddingTop: inset.top }}
-		// 	height={"10%"}
-		// 	// backgroundColor={"accent"}
-		// 	alignItems={"center"}
-		// 	// paddingHorizontal={{ phone: "m", largeScreen: "xl" }}
-		// 	flexDirection={"row"}
-		// >
-		// 	<Pressable
-		// 		hitSlop={30}
-		// 		style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
-		// 	>
-		// 		<Box
-		// 			backgroundColor={"background"}
-		// 			borderRadius={{ phone: 10, largeScreen: 8 }}
-		// 			width={{ phone: 40, largeScreen: 30 }}
-		// 			height={{ phone: 40, largeScreen: 30 }}
-		// 			marginRight={{ phone: "m", largeScreen: "m" }}
-		// 			justifyContent={"center"}
-		// 			alignItems={"center"}
-		// 			borderColor={"whiteBorder"}
-		// 			borderWidth={1}
-		// 		>
-		// 			{/* <Ionicons name="chevron-back" size={24} color="white" /> */}
-		// 		</Box>
-		// 	</Pressable>
-
-		// 	<TText variant={"header"} color={"text"}>
-		// 		{props.headerName}
-		// 	</TText>
-		// </Box>
+		<View
+			sx={{
+				paddingTop: inset.top,
+				backgroundColor: "accent",
+				alignItems: "center",
+				px: ["$3", null, "$5"],
+				flexDirection: "row",
+			}}
+		>
+			<StatusBar style="dark" />
+			<Th.Pressable>
+				<View
+					sx={{
+						bg: "background",
+						borderRadius: [10, null, 8],
+						width: [40, null, 30],
+						height: [40, null, 30],
+						mr: ["$3", null, "$3"],
+						justifyContent: "center",
+						alignItems: "center",
+						borderColor: "whiteBorder",
+						borderWidth: 1,
+					}}
+				>
+					{/* <Ionicons name="chevron-back" size={24} color="white" /> */}
+				</View>
+			</Th.Pressable>
+			<Text variant="header" sx={{ color: "onPrimary" }}>
+				{props.headerName}
+			</Text>
+		</View>
 	);
 };
 
