@@ -65,7 +65,6 @@ export const customFontConfig = makeTheme({
 			py: 4,
 		},
 		link: {
-			fontSize: 16,
 			fontWeight: "500",
 			fontFamily: getFontFamStr("r500"),
 			color: "link",
