@@ -16,12 +16,12 @@ const commonConfig = makeTheme({
 			bg: "secondary",
 			py: 15,
 			px: 20,
-			borderRadius: 5,
+			borderRadius: 4,
 		},
 		buttonContainer: {
 			py: 15,
 			px: 20,
-			borderRadius: 5,
+			borderRadius: 4,
 		},
 	},
 });

@@ -1,7 +1,6 @@
-import { Button, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { Link } from "expo-router";
 import { H1, Text, View } from "dripsy";
 
 import registerSchema from "../../validators/registerSchema";
@@ -19,11 +18,24 @@ const RegisterScreen = (props: Props) => {
 	const { register } = usePlatformAuth();
 	const inset = useSafeArea();
 	return (
-		<View sx={{ bg: "primary", pt: inset.top, height: "100%",alignItems: "center", }}>
+		<View
+			sx={{
+				bg: "primary",
+				pt: inset.top,
+				height: "100%",
+				alignItems: "center",
+			}}
+		>
 			<StatusBar style="light" />
 			<H1 sx={{ textAlign: "center" }}>COOKIED</H1>
 			<View sx={{ px: 30 }}>
-				<View sx={{ alignItems: "center", justifyContent: "center" , width: [null, 600, 700]}}>
+				<View
+					sx={{
+						alignItems: "center",
+						justifyContent: "center",
+						width: [null, 600, 700],
+					}}
+				>
 					<Svg
 						Svg={GoodCookie}
 						webSvgProps={{ style: { height: 200 } }}
@@ -99,7 +111,9 @@ const RegisterScreen = (props: Props) => {
 							/>
 							{
 								<Text sx={{ color: "error" }}>
-									{!!values.password.length && errors.password && touched.password
+									{!!values.password.length &&
+									errors.password &&
+									touched.password
 										? errors.password
 										: " "}
 								</Text>
@@ -115,7 +129,9 @@ const RegisterScreen = (props: Props) => {
 							/>
 							{
 								<Text sx={{ color: "error" }}>
-									{!!values.confirmPassword.length && errors.confirmPassword && touched.confirmPassword
+									{!!values.confirmPassword.length &&
+									errors.confirmPassword &&
+									touched.confirmPassword
 										? errors.confirmPassword
 										: " "}
 								</Text>

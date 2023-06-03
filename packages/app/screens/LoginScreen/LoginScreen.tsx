@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Link } from "solito/link";
 import { Formik } from "formik";
 import loginSchema from "../../validators/loginSchema";
 import { GoodCookie } from "../../assets/svg";
@@ -29,7 +28,7 @@ const LoginScreen = (props: Props) => {
 		>
 			<StatusBar style="light" />
 			<H1 sx={{ textAlign: "center" }}>COOKIED</H1>
-			<View sx={{ px: 30, flex: 1, maxWidth: 700, width: [null, 600, 700] }}>
+			<View sx={{ px: "$4", flex: 1, maxWidth: 700, width: [null, 600, 700] }}>
 				<View
 					sx={{ alignItems: "center", justifyContent: "center", flex: 0.4 }}
 				>
@@ -105,12 +104,12 @@ const LoginScreen = (props: Props) => {
 								)}
 								<View
 									sx={{
-										my: 10,
+										my: "$2",
 										flexDirection: "row",
 										justifyContent: "center",
 									}}
 								>
-									<Text sx={{ textAlign: "center", py: 10 }}>
+									<Text sx={{ textAlign: "center", py: "$2" }}>
 										Don have an account?{" "}
 										<TextLink href="/register">
 											<Text variant="link">Sign Up</Text>
