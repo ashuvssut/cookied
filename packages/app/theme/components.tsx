@@ -24,6 +24,21 @@ const _TextInput = props => {
 
 const ButtonPrimary: FCC<PressableProps> = props => {
 	const linearGradients = useDripsyTheme().theme.linearGradients;
+	if (props.disabled) {
+		return (
+			<_Pressable {...props} style={{ overflow: "hidden", borderRadius: 5 }}>
+				<LinearGradient
+					colors={linearGradients.disabledButtonBg}
+					start={[0, 0.5]}
+					end={[1, 0.5]}
+					style={{ height: "100%", width: "100%", position: "absolute" }}
+				/>
+				<View variant="layout.buttonContainer">
+					<Text sx={{ textAlign: "center" }}>{props.children}</Text>
+				</View>
+			</_Pressable>
+		);
+	}
 	return (
 		<_Pressable {...props} style={{ overflow: "hidden", borderRadius: 5 }}>
 			<LinearGradient

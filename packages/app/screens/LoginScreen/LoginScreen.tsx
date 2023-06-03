@@ -10,6 +10,7 @@ import { H1, Text, View } from "dripsy";
 import { StatusBar } from "app/components/StatusBar";
 import { useSafeArea } from "app/components/SafeArea/useSafeArea";
 import { Th } from "app/theme/components";
+import { TextLink } from "solito/link";
 
 type Props = {};
 
@@ -96,9 +97,10 @@ const LoginScreen = (props: Props) => {
 								<Th.ButtonPrimary disabled>Log in</Th.ButtonPrimary>
 							)}
 							<Text sx={{ textAlign: "center", py: 10 }}>
-								Don't have an account? {/* <Link href="/register"> */}
-								<Text variant="link">Sign Up</Text>
-								{/* </Link> */}
+								Don have an account?{" "}
+								<TextLink href="/register">
+									<Text variant="link">Sign Up</Text>
+								</TextLink>
 							</Text>
 						</>
 					)}
