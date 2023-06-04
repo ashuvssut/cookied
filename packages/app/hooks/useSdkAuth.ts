@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { loadingAtom } from "../components/LoadingModal";
-import { isAuthAtom, sessionAtom, userAtom } from "app/store/auth";
+import { isAuthAtom, sessionAtom, userAtom } from "app/store/slices/auth";
 import { Account, ID } from "appwrite";
 import { client } from "app/utils/appwrite";
 

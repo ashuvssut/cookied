@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { ID, Models } from "appwrite";
 import { Platform } from "react-native";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID } from "../utils/appwrite";
-import { cookieAtom, cookieStore } from "app/store/auth";
+import { cookieAtom, cookieStore } from "app/store/slices/auth";
 
 const generalHeaders = {
 	"Content-Type": "application/json",

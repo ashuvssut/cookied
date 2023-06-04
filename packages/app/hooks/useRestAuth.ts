@@ -7,7 +7,7 @@ import {
 } from "../apis/appwriteAuthApi";
 import { loadingAtom } from "../components/LoadingModal";
 import { useEffect } from "react";
-import { cookieAtom, cookieStore, sessionAtom, userAtom } from "app/store/auth";
+import { cookieAtom, cookieStore, sessionAtom, userAtom } from "app/store/slices/auth";
 
 export function useRestAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);

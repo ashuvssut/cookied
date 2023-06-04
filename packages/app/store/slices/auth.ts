@@ -1,6 +1,6 @@
 import { Models } from "appwrite";
 import { atom, createStore } from "jotai";
-import { atomWithPlatformStorage } from "../utils/storage";
+import { atomWithPlatformStorage } from "../../utils/storage";
 
 export const sessionAtom = //
 	atomWithPlatformStorage<Models.Session | null>("session", null);
