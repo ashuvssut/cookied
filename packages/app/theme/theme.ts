@@ -39,7 +39,7 @@ export const darkTheme = makeTheme({
 		onPrimary: "#FFFFFF",
 		secondary: "#1D1B1B",
 		active: "#262626",
-		onActive: "#A3A3A3",
+		onInActive: "#A3A3A3",
 		surface: "#191919",
 		surfaceHigh: "#232323",
 		placeholder: "#565454",
