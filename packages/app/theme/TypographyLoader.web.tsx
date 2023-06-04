@@ -1,23 +1,22 @@
-import Head from "next/head";
 import { FCC } from "app/types/IReact";
 import { fontsMap } from "app/theme/typography";
 
 const TypographyLoader: FCC = ({ children }) => {
 	// loadWebFonts();
-	const fontsLink = getFontsLink();
+	return <>{children}</>;
+};
 
+export const FontStyleSheetHeader = () => {
+	const fontsLink = getFontsLink();
 	return (
 		<>
-			<Head>
-				<link rel="preconnect" href="https://fonts.googleapis.com" />
-				<link
-					rel="preconnect"
-					href="https://fonts.gstatic.com"
-					crossOrigin="anonymous"
-				/>
-				<link href={fontsLink} rel="stylesheet" />
-			</Head>
-			{children}
+			<link rel="preconnect" href="https://fonts.googleapis.com" />
+			<link
+				rel="preconnect"
+				href="https://fonts.gstatic.com"
+				crossOrigin="anonymous"
+			/>
+			<link href={fontsLink} rel="stylesheet" />
 		</>
 	);
 };
