@@ -4,10 +4,8 @@ import "setimmediate";
 import Head from "next/head";
 import React from "react";
 import type { SolitoAppProps } from "solito";
-import { Provider } from "react-redux";
-
+import { ReduxProvider } from "app/store/ReduxProvider";
 import { DripsyTheme } from "app/theme";
-import { webStore } from "app/redux/store";
 
 function MyApp({ Component, pageProps }: SolitoAppProps) {
 	return (
@@ -17,11 +15,11 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
 				<meta name="description" content="Cookied | Bookmarks manager app" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<Provider store={webStore}>
-				<DripsyTheme>
+			<DripsyTheme>
+				<ReduxProvider>
 					<Component {...pageProps} />
-				</DripsyTheme>
-			</Provider>
+				</ReduxProvider>
+			</DripsyTheme>
 		</>
 	);
 }
