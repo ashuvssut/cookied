@@ -15,7 +15,7 @@ import { Snackbar } from "@src/components/Snackbar";
 
 type TFormProps = { toggleForm: () => void };
 export function SignupForm({ toggleForm }: TFormProps) {
-	const { registerUser } = useAuth();
+	const { register } = useAuth();
 	const [message, setMessage] = useState("");
 	// const formData = useRef({ name: "", email: "", password: "" });
 	const formData = useRef({
@@ -28,7 +28,8 @@ export function SignupForm({ toggleForm }: TFormProps) {
 		e.preventDefault();
 		try {
 			validateLoginData(formData.current);
-			const user = await registerUser(formData.current);
+			const { name, email, password } = formData.current;
+			const user = await register(name, email, password);
 		} catch (e) {
 			console.error(e);
 			setMessage(String(e));

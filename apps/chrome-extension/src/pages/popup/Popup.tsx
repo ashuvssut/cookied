@@ -7,6 +7,7 @@ import { theme } from "@src/theme";
 import { useAuth } from "@src/hooks/useAuth";
 import Header from "@src/pages/popup/Header";
 import { Auth } from "@src/pages/popup/Auth";
+import LoadingModal from "@src/components/LoadingModal";
 
 const Popup = () => {
 	const { user, signIn, signOut } = useAuth();
@@ -19,6 +20,7 @@ const Popup = () => {
 					{user ? <BookmarkForm /> : <Auth />}
 				</Paper>
 			</Box>
+			<LoadingModal />
 		</ThemeProvider>
 	);
 };

@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { loadingAtom } from "../components/LoadingModal";
 import { isAuthAtom, sessionAtom, userAtom } from "app/store/auth";
-import { Account } from "appwrite";
+import { Account, ID } from "appwrite";
 import { client } from "app/utils/appwrite";
 
 export function useSdkAuth() {
@@ -28,7 +28,7 @@ export function useSdkAuth() {
 	async function register(name: string, email: string, password: string) {
 		setIsLoading(true);
 		try {
-			const user = await account.create(email, password, name);
+			const user = await account.create(ID.unique(), email, password, name);
 			const sessionData = await account.createEmailSession(email, password);
 			setUser(user);
 			setSession(sessionData);

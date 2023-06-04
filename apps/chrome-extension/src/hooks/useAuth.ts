@@ -1,81 +1,59 @@
-import { Account, Models, ID } from "appwrite";
 import { useAtom } from "jotai";
-import { client } from "../utils/appwrite";
-import { atomWithStorage } from "jotai/utils";
-
-type TUser = Models.User<Models.Preferences>;
-export const currentUser = atomWithStorage<TUser | null>("currentUser", null);
+import { loadingAtom } from "../components/LoadingModal";
+import { isAuthAtom, sessionAtom, userAtom } from "../store/auth";
+import { Account, ID } from "appwrite";
+import { client } from "@src/utils/appwrite";
 
 export function useAuth() {
-	const [user, setUser] = useAtom(currentUser);
+	const [_l, setIsLoading] = useAtom(loadingAtom);
+	const [user, setUser] = useAtom(userAtom);
+	const [_s, setSession] = useAtom(sessionAtom);
+	const [isAuth] = useAtom(isAuthAtom);
+
 	const account = new Account(client);
 
-	async function registerUser({ email, password, name }: TRegisterUser) {
+	async function signIn(email: string, password: string) {
+		setIsLoading(true);
 		try {
-			const user = await account.create(ID.unique(), email, password, name);
-			return user;
-		} catch (e) {
-			console.error(e);
-			return null;
+			const sessionData = await account.createEmailSession(email, password);
+			const user = await account.get();
+			setSession(sessionData);
+			setUser(user);
+			setIsLoading(false);
+		} catch (e: any) {
+			setIsLoading(false);
+			console.error("Login Error:", e);
 		}
 	}
-
-	async function signIn() {
+	async function register(name: string, email: string, password: string) {
+		setIsLoading(true);
 		try {
-			const user = await account.get();
+			const user = await account.create(ID.unique(), email, password, name);
+			const sessionData = await account.createEmailSession(email, password);
 			setUser(user);
+			setSession(sessionData);
+			setIsLoading(false);
 			return user;
-		} catch (e) {
-			console.error(e);
-			setUser(null);
-			return null;
+		} catch (e: any) {
+			setIsLoading(false);
+			console.log("Register Error", e);
+			throw new Error(e);
 		}
 	}
 
 	async function signOut() {
+		if (!isAuth) return;
+		setIsLoading(true);
 		try {
-			// https://appwrite.io/docs/client/account?sdk=web-default#accountDeleteSession
-			const response = await account.deleteSession("current");
-			console.log("Session deleted", response);
-
+			await account.deleteSession("current");
 			setUser(null);
-		} catch (e) {
-			console.error(e);
+			setSession(null);
+			setIsLoading(false);
+		} catch (e: any) {
+			setIsLoading(false);
+			throw new Error(e);
 		}
 	}
 
-	return { user, registerUser, signIn, signOut };
+	return { user, register, signIn, signOut };
 }
-
-export type LoginUser = { email: string; password: string };
-export type TRegisterUser = LoginUser & { name: string };
-
-// async function registerUser(userData: TRegisterUser) {
-// 	try {
-// 		const user = await axios.post(
-// 			`${VERCEL_PROD_URL}/registerUser`,
-// 			userData,
-// 		);
-// 		console.log("user from registerUser", user);
-// 		return user;
-// 	} catch (e) {
-// 		console.error(e);
-// 		throw new Error(String(e));
-// 	}
-// }
-//
-// async function registerUser(userData: TRegisterUser) {
-// 	const functions = new Functions(client);
-// 	try {
-// 		const res = await functions.createExecution(
-// 			REGISTER_USER_FX_ID,
-// 			JSON.stringify(userData),
-// 			true,
-// 		);
-// 		console.log("res", res);
-// 		return res;
-// 	} catch (e) {
-// 		console.error(e);
-// 		throw new Error(String(e));
-// 	}
-// }
