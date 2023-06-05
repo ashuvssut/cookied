@@ -38,7 +38,7 @@ const RegisterScreen = (props: Props) => {
 				>
 					<Svg
 						Svg={GoodCookie}
-						webSvgProps={{ style: { height: 200 } }}
+						webSvgProps={{ style: { height: 100 } }}
 						nativeSvgProps={{ height: 200 }}
 					/>
 				</View>

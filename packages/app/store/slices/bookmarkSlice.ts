@@ -1,12 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface IBookmarkState {
-	// someState: number;
+export interface IBookmark {
+	id: string;
+	title: string;
+	url: string;
+	createdAt: string;
+	updatedAt: string;
+	path: string;
 }
+
+export interface IFolder {
+	name: string;
+	id: string;
+	bookmarks: IBookmark[];
+	folders: IFolder[]
+}
+
+type IBookmarkState = {	folders: IFolder[]}
 type PA<T extends keyof IBookmarkState> = PayloadAction<IBookmarkState[T]>;
 
 const initialState: IBookmarkState = {
-	// someState: 1,
+	folders: []
 };
 
 export const bookmarkSlice = createSlice({
@@ -21,3 +34,30 @@ export const bookmarkSlice = createSlice({
 });
 
 export default bookmarkSlice.reducer;
+
+// folders=[
+// 	{
+// 	 name:"fav",
+// 	 id:"1",
+// 	 bookmarks:[{},{},{}],
+// 	 subFolders:[{
+// 		name:"fav",
+// 		id:"1",
+// 		bookmarks:[{},{},{}],
+// 		subFolders:[{},{},{}]
+// 		},
+// 		{ }, { }]
+// 	},
+// 	{
+// 		name:"fav",
+// 		id:"1",
+// 		bookmarks:[{},{},{}],
+// 		subFolders:[{
+// 		name:"fav",
+// 		id:"1",
+// 		bookmarks:[{},{},{}],
+// 		subFolders:[{},{},{}]
+// 		},{},{}]
+// 	},
+// 	{}
+// 	]
