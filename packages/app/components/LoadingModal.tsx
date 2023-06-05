@@ -1,5 +1,4 @@
 import { atom, useAtom } from "jotai";
-import React from "react";
 import { View, Modal, ActivityIndicator, StyleSheet } from "react-native";
 
 export const loadingAtom = atom(false);

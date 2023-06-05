@@ -7,6 +7,7 @@ import type { SolitoAppProps } from "solito";
 import { ReduxProvider } from "app/store/ReduxProvider";
 import { DripsyTheme } from "app/theme";
 import { ProtectedRoute } from "app/components/ProtectedRoute";
+import LoadingModal from "app/components/LoadingModal";
 
 function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 	return (
@@ -20,6 +21,7 @@ function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 				<ReduxProvider>
 					<ProtectedRoute>
 						<Component {...pageProps} />
+						<LoadingModal />
 					</ProtectedRoute>
 				</ReduxProvider>
 			</DripsyTheme>
