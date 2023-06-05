@@ -7,7 +7,12 @@ import {
 } from "../apis/appwriteAuthApi";
 import { loadingAtom } from "../components/LoadingModal";
 import { useEffect } from "react";
-import { cookieAtom, cookieStore, sessionAtom, userAtom } from "app/store/slices/auth";
+import {
+	cookieAtom,
+	cookieStore,
+	sessionAtom,
+	userAtom,
+} from "app/store/slices/auth";
 
 export function useRestAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);
@@ -43,7 +48,7 @@ export function useRestAuth() {
 			return user;
 		} catch (e: any) {
 			setIsLoading(false);
-			console.log("Register Error", e);
+			console.error("Register Error", JSON.stringify(e));
 			throw new Error(e);
 		}
 	}

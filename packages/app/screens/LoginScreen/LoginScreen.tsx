@@ -66,6 +66,8 @@ const LoginScreen = (props: Props) => {
 										autoCorrect={false}
 										onBlur={handleBlur("email")}
 										placeholder="Enter Email"
+										textContentType="emailAddress"
+										keyboardType="email-address"
 									/>
 									{
 										<Text sx={{ color: "error" }}>
@@ -82,6 +84,7 @@ const LoginScreen = (props: Props) => {
 										keyboardType="visible-password"
 										onBlur={handleBlur("password")}
 										placeholder="Enter Password"
+										textContentType="password"
 									/>
 									<View
 										sx={{

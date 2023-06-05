@@ -36,7 +36,7 @@ export function useSdkAuth() {
 			return user;
 		} catch (e: any) {
 			setIsLoading(false);
-			console.log("Register Error", e);
+			console.error("Register Error", e);
 			throw new Error(e);
 		}
 	}

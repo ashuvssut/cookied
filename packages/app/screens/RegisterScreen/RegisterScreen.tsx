@@ -78,6 +78,7 @@ const RegisterScreen = (props: Props) => {
 									autoCorrect={false}
 									onBlur={handleBlur("name")}
 									placeholder="Enter Name"
+									textContentType="username"
 								/>
 								{
 									<Text sx={{ color: "error" }}>
@@ -93,6 +94,8 @@ const RegisterScreen = (props: Props) => {
 									autoCorrect={false}
 									onBlur={handleBlur("email")}
 									placeholder="Enter Email"
+									textContentType="emailAddress"
+									keyboardType="email-address"
 								/>
 								{
 									<Text sx={{ color: "error" }}>
@@ -109,6 +112,7 @@ const RegisterScreen = (props: Props) => {
 									keyboardType="visible-password"
 									onBlur={handleBlur("password")}
 									placeholder="Enter Password"
+									textContentType="password"
 								/>
 								{
 									<Text sx={{ color: "error" }}>
@@ -127,6 +131,7 @@ const RegisterScreen = (props: Props) => {
 									keyboardType="visible-password"
 									onBlur={handleBlur("confirmPassword")}
 									placeholder="Confirm Password"
+									textContentType="password"
 								/>
 								{
 									<Text sx={{ color: "error" }}>
