@@ -6,8 +6,9 @@ import React from "react";
 import type { SolitoAppProps } from "solito";
 import { ReduxProvider } from "app/store/ReduxProvider";
 import { DripsyTheme } from "app/theme";
+import { ProtectedRoute } from "app/components/ProtectedRoute";
 
-function MyApp({ Component, pageProps }: SolitoAppProps) {
+function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 	return (
 		<>
 			<Head>
@@ -17,11 +18,13 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
 			</Head>
 			<DripsyTheme>
 				<ReduxProvider>
-					<Component {...pageProps} />
+					<ProtectedRoute>
+						<Component {...pageProps} />
+					</ProtectedRoute>
 				</ReduxProvider>
 			</DripsyTheme>
 		</>
 	);
 }
 
-export default MyApp;
+export default CookiedApp;
