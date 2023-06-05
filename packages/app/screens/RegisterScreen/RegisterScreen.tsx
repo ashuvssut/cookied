@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { H1, Text, View } from "dripsy";
 
@@ -19,8 +18,15 @@ const RegisterScreen = (props: Props) => {
 	const { register } = usePlatformAuth();
 	const inset = useSafeArea();
 	return (
-		<View sx={{ pt: inset.top, height: "100%", bg: "primary" }}>
-			<KeyboardUsingScreen keyboardShouldPersistTaps="never">
+		<View
+			sx={{
+				pt: inset.top,
+				height: "100%",
+				bg: "primary",
+				alignItems: "center",
+			}}
+		>
+			<KeyboardUsingScreen keyboardShouldPersistTaps="always">
 				<StatusBar style="light" />
 				<H1 sx={{ textAlign: "center" }}>COOKIED</H1>
 				<View sx={{ px: 30 }}>
