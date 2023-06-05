@@ -13,6 +13,7 @@ import {
 	sessionAtom,
 	userAtom,
 } from "app/store/slices/auth";
+import logr from "app/utils/logger";
 
 export function useRestAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);
@@ -33,7 +34,7 @@ export function useRestAuth() {
 			setIsLoading(false);
 		} catch (e: any) {
 			setIsLoading(false);
-			console.error("Login Error:", e);
+			logr.err("Login Error:", e);
 		}
 	}
 	async function register(name: string, email: string, password: string) {
@@ -48,7 +49,7 @@ export function useRestAuth() {
 			return user;
 		} catch (e: any) {
 			setIsLoading(false);
-			console.error("Register Error", JSON.stringify(e));
+			logr.err("Register Error", e);
 			throw new Error(e);
 		}
 	}

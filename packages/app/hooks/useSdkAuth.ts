@@ -3,6 +3,7 @@ import { loadingAtom } from "../components/LoadingModal";
 import { isAuthAtom, sessionAtom, userAtom } from "app/store/slices/auth";
 import { Account, ID } from "appwrite";
 import { client } from "app/utils/appwrite";
+import logr from "app/utils/logger";
 
 export function useSdkAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);
@@ -22,7 +23,7 @@ export function useSdkAuth() {
 			setIsLoading(false);
 		} catch (e: any) {
 			setIsLoading(false);
-			console.error("Login Error:", e);
+			logr.err("Login Error:", e);
 		}
 	}
 	async function register(name: string, email: string, password: string) {
@@ -36,7 +37,7 @@ export function useSdkAuth() {
 			return user;
 		} catch (e: any) {
 			setIsLoading(false);
-			console.error("Register Error", e);
+			logr.err("Register Error", e);
 			throw new Error(e);
 		}
 	}
