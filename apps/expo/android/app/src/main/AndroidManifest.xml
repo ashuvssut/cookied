@@ -30,6 +30,7 @@
         <data android:scheme="com.cookied"/>
         <data android:scheme="exp+cookied"/>
       </intent-filter>
+      <!-- !! Added for send intent -->
       <intent-filter>
         <action android:name="android.intent.action.SEND" />
         <category android:name="android.intent.category.DEFAULT" />
