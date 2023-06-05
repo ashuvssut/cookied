@@ -5204,6 +5204,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"asyncstorage-inspector-flipper@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "asyncstorage-inspector-flipper@npm:1.0.2"
+  dependencies:
+    react-native-flipper: ^0.87.0
+  peerDependencies:
+    "@react-native-async-storage/async-storage": 1.x.x
+    react-native: ">=0.64.0"
+    react-native-flipper: ">=0.87.0"
+  checksum: 91c7b56a79a8d7ed8b23b2714ae8e07d51a6ad48ca34edd9a15085fc0721612a98219222f77ac74c70b8ef5a96db966b9f6090017b793bb680561da18dbd4898
+  languageName: node
+  linkType: hard
+
 "at-least-node@npm:^1.0.0":
   version: 1.0.0
   resolution: "at-least-node@npm:1.0.0"
@@ -12214,6 +12227,7 @@ __metadata:
     "@types/react-native-share-menu": ^5.0.2
     app: "*"
     appwrite: ^11.0.0
+    asyncstorage-inspector-flipper: ^1.0.2
     axios: ^1.4.0
     expo: ~48.0.18
     expo-build-properties: ^0.6.0
@@ -13722,6 +13736,16 @@ __metadata:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-native: ">0.62.0"
   checksum: d927caa65a245d70ce119b9f191836680bee27a02523062ea774acb8e20e6445a0cb84178a17943ed9d6656b076101a26a380f4a4a9b61bf87e6bf11bcc38dff
+  languageName: node
+  linkType: hard
+
+"react-native-flipper@npm:^0.87.0":
+  version: 0.87.0
+  resolution: "react-native-flipper@npm:0.87.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0
+    react-native: ">0.62.0"
+  checksum: d8998f62d1da6fb57a1bcff79916f59619ca740a255f492e1aa9c2d39bed7e2c02c8a11e5dd0670ea6407b17e417c8ecf948af4c4e961fe5c84aeb1f177793d3
   languageName: node
   linkType: hard
 

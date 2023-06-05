@@ -7,6 +7,7 @@
     "@react-native-async-storage/async-storage": "^1.18.1",
     "app": "*",
     "appwrite": "^11.0.0",
+    "asyncstorage-inspector-flipper": "^1.0.2",
     "axios": "^1.4.0",
     "expo": "~48.0.18",
     "expo-build-properties": "^0.6.0",

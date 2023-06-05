@@ -1,14 +1,15 @@
 import { FCC } from "app/types/IReact";
-import { Text, TextInput, View, styled, useDripsyTheme } from "dripsy";
+import { Text, TextInput, Pressable, View, useDripsyTheme } from "dripsy";
 import { LinearGradient } from "expo-linear-gradient";
-import { Pressable, PressableProps, StyleSheet } from "react-native";
+import { PressableProps, StyleSheet, TextInputProps } from "react-native";
 
-const _TextInput = props => {
-	const colors = useDripsyTheme().theme.colors;
+const _TextInput = (props: TextInputProps) => {
+	const placeholder = useDripsyTheme().theme.colors.placeholder;
 	return (
+		// @ts-ignore
 		<TextInput
-			variant="layout.textInput"
-			placeholderTextColor={colors.placeholder}
+			variant={"layout.textInput" as any}
+			placeholderTextColor={placeholder as any}
 			style={{ color: "white" }}
 			{...props}
 		/>
@@ -38,7 +39,6 @@ const ButtonPrimary: FCC<PressableProps> = props => {
 };
 
 export const Th = () => null;
-Th.Pressable = styled(Pressable)({});
 Th.TextInput = _TextInput;
 Th.ButtonPrimary = ButtonPrimary;
 
