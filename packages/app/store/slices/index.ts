@@ -1,8 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import bookmarkReducer from "./bookmarkSlice";
+import folderReducer from "./folderSlice";
 
 const combinedReducer = combineReducers({
-	bookmark: bookmarkReducer,
+	bookmarks: bookmarkReducer,
+	folders: folderReducer,
 });
 export type TRootReducer = typeof combinedReducer;
 
