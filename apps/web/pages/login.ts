@@ -1,3 +1,1 @@
-import LoginScreen from "app/screens/LoginScreen";
-
-export default LoginScreen;
+export { default } from "app/screens/LoginScreen";

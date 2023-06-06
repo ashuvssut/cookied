@@ -1,3 +1,1 @@
-import RegisterScreen from "app/screens/RegisterScreen";
-
-export default RegisterScreen;
+export { default } from "app/screens/RegisterScreen";
