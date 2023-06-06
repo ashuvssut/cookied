@@ -3,24 +3,28 @@ import {
 	createSlice,
 	PayloadAction,
 } from "@reduxjs/toolkit";
+
 export interface IBookmark {
 	id: string;
+	parentId: string;
 	title: string;
 	url: string;
 	createdAt: string;
 	updatedAt: string;
-	path: string;
-	folderId: string;
 }
 
 export interface IFolder {
 	id: string;
-	name: string;
+	parentId: string;
+	level: number;
 	bookmarks: IBookmark[];
 	folders: IFolder[];
+	name: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
-type IBookmarkState = { folders: IFolder[] };
+export type IBookmarkState = { folders: IFolder[] };
 type PA<T extends keyof IBookmarkState> = PayloadAction<IBookmarkState[T]>;
 
 const bookmarksAdapter = createEntityAdapter({
