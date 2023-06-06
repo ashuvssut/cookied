@@ -1,23 +1,78 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface IBookmarkState {
-	// someState: number;
+import {
+	createEntityAdapter,
+	createSlice,
+	PayloadAction,
+} from "@reduxjs/toolkit";
+export interface IBookmark {
+	id: string;
+	title: string;
+	url: string;
+	createdAt: string;
+	updatedAt: string;
+	path: string;
+	folderId: string;
 }
+
+export interface IFolder {
+	id: string;
+	name: string;
+	bookmarks: IBookmark[];
+	folders: IFolder[];
+}
+
+type IBookmarkState = { folders: IFolder[] };
 type PA<T extends keyof IBookmarkState> = PayloadAction<IBookmarkState[T]>;
 
-const initialState: IBookmarkState = {
-	// someState: 1,
-};
+const bookmarksAdapter = createEntityAdapter({
+	selectId: (bookmark: IBookmark) => bookmark.id,
+	sortComparer: (a, b) => a.title.localeCompare(b.title),
+});
+
+const initialState = bookmarksAdapter.getInitialState();
 
 export const bookmarkSlice = createSlice({
-	name: "bookmark",
+	name: "bookmarks",
 	initialState,
 	reducers: {
-		// setSomeState(state, action: PA<"someState">) {
-		// 	state.someState = action.payload;
-		// },
+		addBookmark: bookmarksAdapter.addOne,
+		removeBookmark: bookmarksAdapter.removeOne,
+		removeSelectedBookmark: bookmarksAdapter.removeMany,
+		updateBookmark: bookmarksAdapter.updateOne,
 	},
 	extraReducers: builder => {},
 });
 
+export const {
+	addBookmark,
+	removeBookmark,
+	removeSelectedBookmark,
+	updateBookmark,
+} = bookmarkSlice.actions;
 export default bookmarkSlice.reducer;
+
+// folders=[
+// 	{
+// 	 name:"fav",
+// 	 id:"1",
+// 	 bookmarks:[{},{},{}],
+// 	 subFolders:[{
+// 		name:"fav",
+// 		id:"1",
+// 		bookmarks:[{},{},{}],
+// 		subFolders:[{},{},{}]
+// 		},
+// 		{ }, { }]
+// 	},
+// 	{
+// 		name:"fav",
+// 		id:"1",
+// 		bookmarks:[{},{},{}],
+// 		subFolders:[{
+// 		name:"fav",
+// 		id:"1",
+// 		bookmarks:[{},{},{}],
+// 		subFolders:[{},{},{}]
+// 		},{},{}]
+// 	},
+// 	{}
+// 	]

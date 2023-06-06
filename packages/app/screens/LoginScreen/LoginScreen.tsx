@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik } from "formik";
 import loginSchema from "../../validators/loginSchema";
 import { GoodCookie } from "../../assets/svg";
@@ -10,12 +10,20 @@ import { Th } from "app/theme/components";
 import { TextLink } from "solito/link";
 import { usePlatformAuth } from "app/hooks/usePlatformAuth";
 import { KeyboardUsingScreen } from "app/components/KeyboardUsingScreen";
+import { useDispatch } from "react-redux";
+import { fetchFolderbyUserId } from "app/store/slices/folderSlice";
+import { AppDispatch } from "app/store/types";
 
 type Props = {};
 
 const LoginScreen = (props: Props) => {
 	const { signIn } = usePlatformAuth();
 	const inset = useSafeArea();
+	const dispatch = useDispatch<AppDispatch>();
+	useEffect(() => {
+		dispatch(fetchFolderbyUserId());
+	}, [dispatch]);
+
 	return (
 		<View
 			sx={{

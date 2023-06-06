@@ -4979,6 +4979,7 @@ __metadata:
     "@reduxjs/toolkit": ^1.9.5
     dripsy: ^4.3.3
     moti: latest
+    nanoid: ^4.0.2
     react-redux: ^8.0.7
     redux-persist: ^6.0.0
     solito: ^3.2.6
@@ -12200,6 +12201,15 @@ __metadata:
   bin:
     nanoid: bin/nanoid.cjs
   checksum: 2fddd6dee994b7676f008d3ffa4ab16035a754f4bb586c61df5a22cf8c8c94017aadd360368f47d653829e0569a92b129979152ff97af23a558331e47e37cd9c
+  languageName: node
+  linkType: hard
+
+"nanoid@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "nanoid@npm:4.0.2"
+  bin:
+    nanoid: bin/nanoid.js
+  checksum: 747c399cea4664dd0be1d0ec498ffd1ef8f1f5221676fc8b577e3f46f66d9afcddb9595d63d19a2e78d0bc6cc33984f65e66bf1682c850b9e26288883d96b53f
   languageName: node
   linkType: hard
 

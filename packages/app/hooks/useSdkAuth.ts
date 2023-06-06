@@ -43,6 +43,7 @@ export function useSdkAuth() {
 	}
 
 	async function signOut() {
+		console.log("Is Auth",isAuth)
 		if (!isAuth) return;
 		setIsLoading(true);
 		try {

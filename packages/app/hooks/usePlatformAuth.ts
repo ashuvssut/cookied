@@ -3,6 +3,9 @@ import { useSdkAuth } from "app/hooks/useSdkAuth";
 import { Platform } from "react-native";
 
 export const usePlatformAuth = () => {
-	if (Platform.OS === "web") return useSdkAuth();
-	else return useRestAuth();
+	const sdkAuth = useSdkAuth();
+	const restAuth = useRestAuth();
+
+	if (Platform.OS === "web") return sdkAuth;
+	return restAuth;
 };

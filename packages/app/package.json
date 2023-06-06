@@ -6,6 +6,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "dripsy": "^4.3.3",
     "moti": "latest",
+    "nanoid": "^4.0.2",
     "react-redux": "^8.0.7",
     "redux-persist": "^6.0.0",
     "solito": "^3.2.6"
