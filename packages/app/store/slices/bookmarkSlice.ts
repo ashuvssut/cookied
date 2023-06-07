@@ -6,22 +6,28 @@ import {
 import { RootState } from "../types";
 export interface IBookmark {
 	id: string;
+	parentId: string;
+	pathId: string;
+	level: number;
 	title: string;
 	url: string;
 	createdAt: string;
 	updatedAt: string;
-	path: string;
-	folderId: string;
 }
 
 export interface IFolder {
 	id: string;
-	name: string;
+	parentId: string;
+	pathId: string;
+	level: number;
 	bookmarks: IBookmark[];
 	folders: IFolder[];
+	title: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
-type IBookmarkState = { folders: IFolder[] };
+export type IBookmarkState = { folders: IFolder[] };
 type PA<T extends keyof IBookmarkState> = PayloadAction<IBookmarkState[T]>;
 
 export const bookmarksAdapter = createEntityAdapter({
