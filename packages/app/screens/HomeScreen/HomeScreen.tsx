@@ -1,21 +1,76 @@
-import React from "react";
 import { Text, Pressable, View } from "dripsy";
-import { Account, ID, Client } from "appwrite";
 import { usePlatformAuth } from "app/hooks/usePlatformAuth";
-import { selectFoldersWithBookmarks } from "app/store/slices/folderSlice";
-import { useSelector } from "react-redux";
-import TreeView from "app/components/TreeView";
+import { FC } from "react";
+import { bookmarkState } from "app/mock/bookmark";
+import {
+	IBookmark,
+	IBookmarkState,
+	IFolder,
+} from "app/store/slices/bookmarkSlice";
+import { useAppDispatch } from "app/store/hooks";
 
 export default function HomeScreen() {
 	const { signOut } = usePlatformAuth();
-	const bookmarkData = useSelector(selectFoldersWithBookmarks);
-	console.log(bookmarkData)
+	const dispatch = useAppDispatch();
+	const getSelector = () => {};
 	return (
-		<View sx={{ bg: "primary",height:"100%" }}>
-			{/* <Pressable onPress={() => signOut()}>
+		<View sx={{ bg: "primary" }}>
+			<Pressable onPress={() => signOut()}>
 				<Text>Sign Out</Text>
-			</Pressable> */}
-			<TreeView data={bookmarkData} />
+			</Pressable>
+			<TreeView
+				data={bookmarkState}
+				nodeArrKey="folders"
+				leafArrKey="bookmarks"
+			/>
 		</View>
 	);
 }
+
+interface ITreeView {
+	data: IBookmarkState;
+	/** Nodes Array key */
+	nodeArrKey: string;
+	/** Leaf Nodes Array key */
+	leafArrKey: string;
+}
+export const TreeView: FC<ITreeView> = ({
+	data: treeData,
+	nodeArrKey,
+	leafArrKey,
+}) => {
+	const renderTree = (tree: IFolder[]) => {
+		return tree.map(node => {
+			return (
+				<View key={node.id}>
+					<Text
+						variant="semibold"
+						sx={{
+							borderWidth: 1,
+							borderColor: "secondary",
+							pl: node.level * 30,
+						}}
+					>
+						<Text variant="label">FL </Text>
+						{node.title}
+					</Text>
+					{node[nodeArrKey] && renderTree(node[nodeArrKey])}
+					{node[leafArrKey] && renderLeaf(node[leafArrKey])}
+				</View>
+			);
+		});
+	};
+	const renderLeaf = (leaf: IBookmark[]) => {
+		return leaf.map(node => {
+			return (
+				<View key={node.id}>
+					<Text variant="semibold" sx={{ pl: (node.level + 1) * 30 }}>
+						<Text variant="label">BM </Text>
+						{node.title}
+					</Text>
+				</View>
+			);
+		});
+	};
+	return <View>{renderTree(treeData.folders)}</View>;
+};
