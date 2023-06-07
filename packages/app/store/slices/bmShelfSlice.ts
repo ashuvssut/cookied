@@ -1,3 +1,4 @@
+// Bookmark Shelf Slice
 import {
 	createEntityAdapter,
 	createSelector,
@@ -5,6 +6,7 @@ import {
 	PayloadAction,
 } from "@reduxjs/toolkit";
 import { RootState } from "../types";
+
 export interface IBookmark {
 	type: "bookmark";
 	id: string;

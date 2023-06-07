@@ -4,7 +4,7 @@ import {
 	IBookmark,
 	IFolder,
 	bmShelfAction,
-} from "app/store/slices/bookmarkSlice";
+} from "app/store/slices/bmShelfSlice";
 import { useAppDispatch } from "app/store/hooks";
 import {
 	addBookmarkInAppwrite,

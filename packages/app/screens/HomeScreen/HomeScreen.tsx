@@ -6,7 +6,7 @@ import {
 	selectAllBookmarks,
 	selectAllFolders,
 	selectFoldersWithBookmarks,
-} from "app/store/slices/bookmarkSlice";
+} from "app/store/slices/bmShelfSlice";
 import { useAppSelector } from "app/store/hooks";
 import { resetReduxPersist_reload } from "app/utils/storage";
 import { FolderActions, TreeView } from "app/screens/HomeScreen/TreeView";

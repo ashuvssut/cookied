@@ -9,7 +9,7 @@ import {
 	generateRandomBookmark,
 	generateRandomFolder,
 } from "app/mock/bookmark";
-import { IFolder } from "app/store/slices/bookmarkSlice";
+import { IFolder } from "app/store/slices/bmShelfSlice";
 
 export const addFolderInAppwrite = async (node: IFolder | null) => {
 	if (!node) return generateRandomFolder("root", 0, ["root"], true);

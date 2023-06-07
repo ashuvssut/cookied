@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { IBookmark, IFolder } from "app/store/slices/bookmarkSlice";
+import { IBookmark, IFolder } from "app/store/slices/bmShelfSlice";
 
 // function getPathId(type: string, level: number, parentId: string) {
 // 	return `${type}#${level}#${parentId}`;
