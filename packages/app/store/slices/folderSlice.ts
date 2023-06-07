@@ -144,7 +144,7 @@ export const folderSlice = createSlice({
 			})
 			.addCase(fetchFolderFromApi.rejected, state => {
 				state.loading = "failed";
-			}) 
+			})
 			.addCase(addNewFolderApi.pending, state => {
 				state.loading = "loading";
 			})
@@ -233,30 +233,3 @@ export const selectFoldersWithBookmarks = createSelector(
 		};
 	},
 );
-
-// folders=[
-// 	{
-// 	 name:"fav",
-// 	 id:"1",
-// 	 bookmarks:[{},{},{}],
-// 	 subFolders:[{
-// 		name:"fav",
-// 		id:"1",
-// 		bookmarks:[{},{},{}],
-// 		subFolders:[{},{},{}]
-// 		},
-// 		{ }, { }]
-// 	},
-// 	{
-// 		name:"fav",
-// 		id:"1",
-// 		bookmarks:[{},{},{}],
-// 		subFolders:[{
-// 		name:"fav",
-// 		id:"1",
-// 		bookmarks:[{},{},{}],
-// 		subFolders:[{},{},{}]
-// 		},{},{}]
-// 	},
-// 	{}
-// 	]
