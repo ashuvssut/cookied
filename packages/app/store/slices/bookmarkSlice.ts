@@ -3,6 +3,7 @@ import {
 	createSlice,
 	PayloadAction,
 } from "@reduxjs/toolkit";
+import { RootState } from "../types";
 export interface IBookmark {
 	id: string;
 	title: string;
@@ -23,7 +24,7 @@ export interface IFolder {
 type IBookmarkState = { folders: IFolder[] };
 type PA<T extends keyof IBookmarkState> = PayloadAction<IBookmarkState[T]>;
 
-const bookmarksAdapter = createEntityAdapter({
+export const bookmarksAdapter = createEntityAdapter({
 	selectId: (bookmark: IBookmark) => bookmark.id,
 	sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
@@ -38,6 +39,7 @@ export const bookmarkSlice = createSlice({
 		removeBookmark: bookmarksAdapter.removeOne,
 		removeSelectedBookmark: bookmarksAdapter.removeMany,
 		updateBookmark: bookmarksAdapter.updateOne,
+		setAllBookmarks: bookmarksAdapter.setAll,
 	},
 	extraReducers: builder => {},
 });
@@ -47,32 +49,12 @@ export const {
 	removeBookmark,
 	removeSelectedBookmark,
 	updateBookmark,
+	setAllBookmarks,
 } = bookmarkSlice.actions;
 export default bookmarkSlice.reducer;
 
-// folders=[
-// 	{
-// 	 name:"fav",
-// 	 id:"1",
-// 	 bookmarks:[{},{},{}],
-// 	 subFolders:[{
-// 		name:"fav",
-// 		id:"1",
-// 		bookmarks:[{},{},{}],
-// 		subFolders:[{},{},{}]
-// 		},
-// 		{ }, { }]
-// 	},
-// 	{
-// 		name:"fav",
-// 		id:"1",
-// 		bookmarks:[{},{},{}],
-// 		subFolders:[{
-// 		name:"fav",
-// 		id:"1",
-// 		bookmarks:[{},{},{}],
-// 		subFolders:[{},{},{}]
-// 		},{},{}]
-// 	},
-// 	{}
-// 	]
+export const selectBookmarks = (state: RootState) => state.bookmarks;
+
+const bookmarksSelector = bookmarksAdapter.getSelectors(selectBookmarks);
+export const { selectIds, selectById, selectEntities, selectTotal, selectAll } =
+	bookmarksSelector;

@@ -10,9 +10,13 @@ import { Th } from "app/theme/components";
 import { TextLink } from "solito/link";
 import { usePlatformAuth } from "app/hooks/usePlatformAuth";
 import { KeyboardUsingScreen } from "app/components/KeyboardUsingScreen";
-import { useDispatch } from "react-redux";
-import { fetchFolderbyUserId } from "app/store/slices/folderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	fetchFolderFromApi,
+	selectFoldersWithBookmarks,
+} from "app/store/slices/folderSlice";
 import { AppDispatch } from "app/store/types";
+import { MotiView } from "moti/build";
 
 type Props = {};
 
@@ -20,8 +24,10 @@ const LoginScreen = (props: Props) => {
 	const { signIn } = usePlatformAuth();
 	const inset = useSafeArea();
 	const dispatch = useDispatch<AppDispatch>();
+
+	// console.log("Bookmark Data",bookmarkData);
 	useEffect(() => {
-		dispatch(fetchFolderbyUserId());
+		dispatch(fetchFolderFromApi());
 	}, [dispatch]);
 
 	return (

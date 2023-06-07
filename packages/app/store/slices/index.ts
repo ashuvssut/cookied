@@ -3,8 +3,8 @@ import bookmarkReducer from "./bookmarkSlice";
 import folderReducer from "./folderSlice";
 
 const combinedReducer = combineReducers({
-	bookmarks: bookmarkReducer,
 	folders: folderReducer,
+	bookmarks:bookmarkReducer
 });
 export type TRootReducer = typeof combinedReducer;
 
