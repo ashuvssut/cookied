@@ -5,7 +5,7 @@ import { IBookmark, IFolder } from "app/store/slices/bookmarkSlice";
 // 	return `${type}#${level}#${parentId}`;
 // }
 
-function generateRandomBookmark(
+export function generateRandomBookmark(
 	parentId: string,
 	level: number,
 	path: string[],
@@ -20,15 +20,18 @@ function generateRandomBookmark(
 		title: faker.word.words({ count: { min: 3, max: 5 } }),
 		// title: `bm ${level} ${id} - ${parentId}`,
 		url: faker.internet.url(),
-		createdAt: faker.date.past().toISOString(),
-		updatedAt: faker.date.recent().toISOString(),
+		// createdAt: faker.date.past().toISOString(),
+		// updatedAt: faker.date.recent().toISOString(),
+		createdAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString(),
 	};
 }
 
-function generateRandomFolder(
+export function generateRandomFolder(
 	parentId: string,
-	level: number,
+	newLevel: number,
 	path: string[],
+	gen1 = false,
 ): IFolder {
 	const id = faker.string.uuid();
 	return {
@@ -36,13 +39,15 @@ function generateRandomFolder(
 		parentId: parentId || "",
 		type: "folder",
 		path: [...path, id],
-		level,
-		bookmarks: generateBookmarks(id, level, path),
-		folders: generateFolders(id, level + 1, path),
-		title: faker.word.words({ count: { min: 3, max: 5 } }),
+		level: newLevel,
+		bookmarks: gen1 ? [] : generateBookmarks(id, newLevel, path),
+		folders: gen1 ? [] : generateFolders(id, newLevel + 1, path),
 		// title: `fl ${level} ${id} - ${parentId}`,
-		createdAt: faker.date.past().toISOString(),
-		updatedAt: faker.date.recent().toISOString(),
+		title: faker.word.words({ count: { min: 3, max: 5 } }),
+		// createdAt: faker.date.past().toISOString(),
+		// updatedAt: faker.date.recent().toISOString(),
+		createdAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString(),
 	};
 }
 
@@ -76,7 +81,6 @@ function generateFolders(
 }
 
 function generateBookmarkState() {
-	const level = 0;
-	return { folders: generateFolders("root", level, []) };
+	return { folders: generateFolders("root", 0, []) };
 }
 export const bookmarkState = generateBookmarkState();

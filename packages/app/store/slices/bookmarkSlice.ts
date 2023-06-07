@@ -1,5 +1,6 @@
 import {
 	createEntityAdapter,
+	createSelector,
 	createSlice,
 	PayloadAction,
 } from "@reduxjs/toolkit";
@@ -31,21 +32,21 @@ export interface IFolder {
 
 const foldersAdapter = createEntityAdapter<IFolder>({
 	selectId: folder => folder.id,
-	sortComparer: (a, b) => a.title.localeCompare(b.title),
+	// sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
 const bookmarksAdapter = createEntityAdapter<IBookmark>({
 	selectId: bookmark => bookmark.id,
-	sortComparer: (a, b) => a.title.localeCompare(b.title),
+	// sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
 const initialState = {
 	bookmarks: bookmarksAdapter.getInitialState(),
 	folders: foldersAdapter.getInitialState(),
 };
-export type IBookmarkShelf = typeof initialState;
-export const bookmarkShelfSlice = createSlice({
-	name: "bookmarkShelf",
+export type TBmShelf = typeof initialState;
+export const bmShelfSlice = createSlice({
+	name: "bmShelf",
 	initialState,
 	reducers: {
 		addFolder: {
@@ -64,9 +65,30 @@ export const bookmarkShelfSlice = createSlice({
 	extraReducers: builder => {},
 });
 
-export const {} = bookmarkShelfSlice.actions;
-export default bookmarkShelfSlice.reducer;
+export const { actions: bmShelfAction } = bmShelfSlice;
+export default bmShelfSlice.reducer;
 
 export const {} = bookmarksAdapter.getSelectors<RootState>(
 	state => state.bmShelf.bookmarks,
+);
+
+export const { selectAll: selectAllFolders } =
+	foldersAdapter.getSelectors<RootState>(state => state.bmShelf.folders);
+export const { selectAll: selectAllBookmarks } =
+	bookmarksAdapter.getSelectors<RootState>(state => state.bmShelf.bookmarks);
+
+export const selectFoldersWithBookmarks = createSelector(
+	(state: RootState) => state.bmShelf.bookmarks,
+	(state: RootState) => state.bmShelf.folders,
+	(bookmarks: TBmShelf["bookmarks"], folders: TBmShelf["folders"]) => {
+		const bookmarkEntities = bookmarks.entities;
+		const folderEntities = folders.entities;
+		console.log("bookmarkEntities", bookmarkEntities);
+		console.log("folderEntities", folderEntities);
+
+
+
+		return [];
+		// de-normalize the data for the UI
+	},
 );
