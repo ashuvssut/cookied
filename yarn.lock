@@ -7488,17 +7488,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"escape-string-regexp@npm:2.0.0, escape-string-regexp@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "escape-string-regexp@npm:2.0.0"
+  checksum: 9f8a2d5743677c16e85c810e3024d54f0c8dea6424fad3c79ef6666e81dd0846f7437f5e729dfcdac8981bc9e5294c39b4580814d114076b8d36318f46ae4395
+  languageName: node
+  linkType: hard
+
 "escape-string-regexp@npm:^1.0.5":
   version: 1.0.5
   resolution: "escape-string-regexp@npm:1.0.5"
   checksum: 6092fda75c63b110c706b6a9bfde8a612ad595b628f0bd2147eea1d3406723020810e591effc7db1da91d80a71a737a313567c5abb3813e8d9c71f4aa595b410
-  languageName: node
-  linkType: hard
-
-"escape-string-regexp@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "escape-string-regexp@npm:2.0.0"
-  checksum: 9f8a2d5743677c16e85c810e3024d54f0c8dea6424fad3c79ef6666e81dd0846f7437f5e729dfcdac8981bc9e5294c39b4580814d114076b8d36318f46ae4395
   languageName: node
   linkType: hard
 
@@ -9578,7 +9578,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"invariant@npm:*, invariant@npm:^2.2.4":
+"invariant@npm:*, invariant@npm:2.2.4, invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
   dependencies:
@@ -12267,6 +12267,7 @@ __metadata:
     react-native: 0.71.8
     react-native-flipper: ^0.192.0
     react-native-gesture-handler: ^2.10.1
+    react-native-modalize: ^2.1.1
     react-native-reanimated: 3.0.2
     react-native-safe-area-context: ^4.5.3
     react-native-screens: ^3.20.0
@@ -12276,6 +12277,7 @@ __metadata:
     react-native-svg: ^13.9.0
     react-native-svg-transformer: ^1.0.0
     react-native-web: ~0.18.11
+    react-native-webview: 12.1.0
     redux-flipper: ^2.0.2
     typescript: ^4.9.4
     yup: ^1.2.0
@@ -13792,6 +13794,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-modalize@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "react-native-modalize@npm:2.1.1"
+  peerDependencies:
+    react: "> 15.0.0"
+    react-native: "> 0.50.0"
+    react-native-gesture-handler: "> 1.0.0"
+  checksum: c383c79d9397d72e285b67eb8c50e0743037bb72f0d12dc5a743ae45d092a4aa87e6fba0cd8cb8bef4ce675ffe784adb24bc996c137b4a30d9b8a882e7610c30
+  languageName: node
+  linkType: hard
+
 "react-native-reanimated@npm:3.0.2":
   version: 3.0.2
   resolution: "react-native-reanimated@npm:3.0.2"
@@ -13900,6 +13913,19 @@ __metadata:
     react: ^17.0.2 || ^18.0.0
     react-dom: ^17.0.2 || ^18.0.0
   checksum: 69f0ebafafc4b04b845105646d0efc0cee10ed378377c621ac67a487d5508bb0dbd1c0ff3ea8d17f5cff0c0fb8d6355916f52f19ad3dad842b99b75c65ff4973
+  languageName: node
+  linkType: hard
+
+"react-native-webview@npm:12.1.0":
+  version: 12.1.0
+  resolution: "react-native-webview@npm:12.1.0"
+  dependencies:
+    escape-string-regexp: 2.0.0
+    invariant: 2.2.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: adcaeda773944412cb8676320dab793315ec18b2d6ae797e196f931d2ff86e6859345799dba70ac2bd794b799c6c79b839a798723c00856bbca21e021203d9e3
   languageName: node
   linkType: hard
 

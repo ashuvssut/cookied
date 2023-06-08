@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { resetReduxPersist_reload } from "app/utils/storage";
 import Screen from "app/components/Screen";
 import { Header } from "app/components/Header";
-import { View } from "dripsy";
+import { View, Text } from "dripsy";
 import { TreePanel } from "app/screens/HomeScreen/TreePanel";
 import { WebpageView } from "app/screens/HomeScreen/WebpageView";
 
