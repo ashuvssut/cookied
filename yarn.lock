@@ -6332,6 +6332,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cookied@workspace:."
   dependencies:
+    "@faker-js/faker": ^8.0.2
     "@types/react": ^18.0.17
     "@types/react-native": ^0.69.5
     eslint: ^8.21.0

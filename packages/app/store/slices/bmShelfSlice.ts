@@ -9,12 +9,12 @@ import { RootState } from "../types";
 import { convertToDenormalized } from "app/store/utils/bmShelfUtils";
 
 const foldersAdapter = createEntityAdapter<IFolder>({
-	selectId: folder => folder.id,
+	selectId: folder => folder.$id,
 	sortComparer: (a, b) => a.title.localeCompare(b.title), // TODO: expt:- check if changin title to something else using jotai to something gives us sort ability or not (else create selectors)
 });
 
 const bookmarksAdapter = createEntityAdapter<IBookmark>({
-	selectId: bookmark => bookmark.id,
+	selectId: bookmark => bookmark.$id,
 	sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
@@ -62,25 +62,25 @@ export const selectFoldersWithBookmarks = createSelector(
 /** TS Types */
 export interface IBookmark {
 	type: "bookmark";
-	id: string;
+	$id: string;
 	parentId: string;
 	path: string[];
 	level: number;
 	title: string;
 	url: string;
-	createdAt: string;
-	updatedAt: string;
+	$createdAt: string;
+	$updatedAt: string;
 }
 
 export interface IFolder {
 	type: "folder";
-	id: string;
+	$id: string;
 	parentId: string;
 	path: string[];
 	level: number;
 	bookmarks: IBookmark[];
 	folders: IFolder[];
 	title: string;
-	createdAt: string;
-	updatedAt: string;
+	$createdAt: string;
+	$updatedAt: string;
 }
