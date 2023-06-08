@@ -6,10 +6,12 @@ import { useAppSelector } from "app/store/hooks";
 import { resetReduxPersist_reload } from "app/utils/storage";
 import { FolderActions, TreeView } from "app/components/TreeView";
 import Screen from "app/components/Screen";
+import { Header } from "app/components/Header";
 
 export default function HomeScreen() {
 	const { signOut } = usePlatformAuth();
 	const foldersWithBookmarks = useAppSelector(selectFoldersWithBookmarks);
+	
 	useEffect(() => {
 		window["reset"] = resetReduxPersist_reload;
 		// window["addMany"] = execAddMany;
@@ -19,9 +21,7 @@ export default function HomeScreen() {
 
 	return (
 		<Screen>
-			<Pressable onPress={() => signOut()}>
-				<Text>Sign Out</Text>
-			</Pressable>
+			<Header />
 			<FolderActions node={null} />
 			<TreeView
 				treeData={{ nodes: foldersWithBookmarks.folders, rootLeafs: [] }}

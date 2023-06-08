@@ -2,32 +2,23 @@ import { Formik } from "formik";
 import loginSchema from "../../validators/loginSchema";
 import { GoodCookie } from "../../assets/svg";
 import { Svg } from "app/components/Svg";
-import { H1, Text, View } from "dripsy";
+import { Text, View } from "dripsy";
 import { StatusBar } from "app/components/StatusBar";
-import { useSafeArea } from "app/components/SafeArea/useSafeArea";
 import { Th } from "app/theme/components";
 import { TextLink } from "solito/link";
 import { usePlatformAuth } from "app/hooks/usePlatformAuth";
 import { KeyboardUsingScreen } from "app/components/KeyboardUsingScreen";
+import { Header } from "app/components/Header";
+import Screen from "app/components/Screen";
 
-type Props = {};
-
-const LoginScreen = (props: Props) => {
+const LoginScreen = () => {
 	const { signIn } = usePlatformAuth();
-	const inset = useSafeArea();
 
 	return (
-		<View
-			sx={{
-				bg: "primary",
-				pt: inset.top,
-				height: "100%",
-				alignItems: "center",
-			}}
-		>
+		<Screen>
 			<KeyboardUsingScreen keyboardShouldPersistTaps="never">
 				<StatusBar style="light" />
-				<H1 sx={{ textAlign: "center" }}>COOKIED</H1>
+				<Header />
 				<View
 					sx={{ px: "$4", flex: 1, maxWidth: 700, width: [null, 600, 700] }}
 				>
@@ -130,7 +121,7 @@ const LoginScreen = (props: Props) => {
 					</View>
 				</View>
 			</KeyboardUsingScreen>
-		</View>
+		</Screen>
 	);
 };
 

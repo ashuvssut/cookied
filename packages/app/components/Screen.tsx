@@ -11,7 +11,16 @@ const Screen: FCC<Props> = ({ children, top = 0, sx, ...rest }) => {
 	const inset = useSafeArea();
 	const insetTop = !!top ? top : inset.top;
 	return (
-		<View sx={{ pt: insetTop, bg: "primary", ...sx }} {...rest}>
+		<View
+			sx={{
+				pt: insetTop,
+				bg: "primary",
+				height: "100%",
+				alignItems: "center",
+				...sx,
+			}}
+			{...rest}
+		>
 			{!!insetTop ? <View>{children}</View> : children}
 		</View>
 	);

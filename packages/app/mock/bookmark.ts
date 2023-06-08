@@ -20,8 +20,8 @@ export function generateRandomBookmark(
 		title: faker.word.words({ count: { min: 3, max: 5 } }),
 		// title: `bm ${level} ${id} - ${parentId}`,
 		url: faker.internet.url(),
-		// createdAt: faker.date.past().toISOString(),
-		// updatedAt: faker.date.recent().toISOString(),
+		// $createdAt: faker.date.past().toISOString(),
+		// $updatedAt: faker.date.recent().toISOString(),
 		$createdAt: new Date().toISOString(),
 		$updatedAt: new Date().toISOString(),
 	};
@@ -44,8 +44,8 @@ export function generateRandomFolder(
 		folders: gen1 ? [] : generateFolders(id, newLevel + 1, path),
 		// title: `fl ${level} ${id} - ${parentId}`,
 		title: faker.word.words({ count: { min: 3, max: 5 } }),
-		// createdAt: faker.date.past().toISOString(),
-		// updatedAt: faker.date.recent().toISOString(),
+		// $createdAt: faker.date.past().toISOString(),
+		// $updatedAt: faker.date.recent().toISOString(),
 		$createdAt: new Date().toISOString(),
 		$updatedAt: new Date().toISOString(),
 	};
