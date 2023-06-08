@@ -32,7 +32,9 @@ const ButtonPrimary: FCC<PressableProps> = props => {
 				style={{ height: "100%", width: "100%", position: "absolute" }}
 			/>
 			<View variant="layout.buttonContainer">
-				<Text sx={{ textAlign: "center" }}>{props.children}</Text>
+				<Text sx={{ textAlign: "center", color: "onInactive" }}>
+					{props.children}
+				</Text>
 			</View>
 		</Pressable>
 	);

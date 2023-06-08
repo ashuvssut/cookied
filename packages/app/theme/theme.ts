@@ -12,6 +12,10 @@ const commonConfig = makeTheme({
 		$5: 64,
 	},
 	layout: {
+		center: {
+			alignItems: "center",
+			justifyContent: "center",
+		},
 		textInput: {
 			bg: "secondary",
 			py: 15,
@@ -39,7 +43,7 @@ export const darkTheme = makeTheme({
 		onPrimary: "#FFFFFF",
 		secondary: "#1D1B1B",
 		active: "#262626",
-		onInActive: "#A3A3A3",
+		onInactive: "#A3A3A3",
 		surface: "#191919",
 		surfaceHigh: "#232323",
 		placeholder: "#565454",
@@ -49,7 +53,7 @@ export const darkTheme = makeTheme({
 	linearGradients: {
 		// TODO: linear gradients not working for <Gradient/> but works for <LinearGradient/>
 		primaryButtonBg: ["#B313DB", "#FF00B894"],
-		disabledButtonBg:["#8B939A","#5B6467"]
+		disabledButtonBg: ["#3B939A", "#2B6467"],
 	},
 	buttons: {
 		secondary: {

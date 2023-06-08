@@ -1,42 +1,26 @@
-import { StyleSheet } from "react-native";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import { H1, Text, View } from "dripsy";
+import { Formik, FormikProps } from "formik";
+import { Text, View } from "dripsy";
 
 import registerSchema from "../../validators/registerSchema";
 import { GoodCookie } from "../../assets/svg";
 import { Svg } from "app/components/Svg";
 import { Th } from "app/theme/components";
 import { StatusBar } from "app/components/StatusBar";
-import { useSafeArea } from "app/components/SafeArea/useSafeArea";
 import { TextLink } from "solito/link";
 import { usePlatformAuth } from "app/hooks/usePlatformAuth";
 import { KeyboardUsingScreen } from "app/components/KeyboardUsingScreen";
+import { Header } from "app/components/Header";
+import Screen from "app/components/Screen";
 
-type Props = {};
-
-const RegisterScreen = (props: Props) => {
+const RegisterScreen = () => {
 	const { register } = usePlatformAuth();
-	const inset = useSafeArea();
 	return (
-		<View
-			sx={{
-				pt: inset.top,
-				height: "100%",
-				bg: "primary",
-				alignItems: "center",
-			}}
-		>
+		<Screen>
 			<KeyboardUsingScreen keyboardShouldPersistTaps="always">
 				<StatusBar style="light" />
-				<H1 sx={{ textAlign: "center" }}>COOKIED</H1>
+				<Header />
 				<View sx={{ px: 30 }}>
-					<View
-						sx={{
-							alignItems: "center",
-							justifyContent: "center",
-							width: [null, 600, 700],
-						}}
-					>
+					<View variant="layout.center" sx={{ width: [null, 600, 700] }}>
 						<Svg
 							Svg={GoodCookie}
 							webSvgProps={{ style: { height: 200 } }}
@@ -52,104 +36,79 @@ const RegisterScreen = (props: Props) => {
 						}}
 						validationSchema={registerSchema}
 						validateOnMount
-						onSubmit={(value: {
-							name: string;
-							email: string;
-							password: string;
-							confirmPassword: string;
-						}) => {
+						onSubmit={(value: IFormIntitalState) => {
 							register(value.name, value.email, value.password);
 						}}
 					>
-						{({
-							handleChange,
-							handleBlur,
-							handleSubmit,
-							values,
-							errors,
-							isValid,
-							touched,
-						}) => (
+						{p => (
 							<>
 								<Text variant="label">Name</Text>
 								<Th.TextInput
-									value={values.name}
-									onChangeText={handleChange("name")}
+									value={p.values.name}
+									onChangeText={p.handleChange("name")}
 									autoCorrect={false}
-									onBlur={handleBlur("name")}
+									onBlur={p.handleBlur("name")}
 									placeholder="Enter Name"
 									textContentType="username"
 								/>
 								{
 									<Text sx={{ color: "error" }}>
-										{!!values.name.length && errors.name && touched.name
-											? errors.name
-											: " "}
+										{checkError(p, "name") ? p.errors.name : " "}
 									</Text>
 								}
 								<Text variant="label">Email</Text>
 								<Th.TextInput
-									value={values.email}
-									onChangeText={handleChange("email")}
+									value={p.values.email}
+									onChangeText={p.handleChange("email")}
 									autoCorrect={false}
-									onBlur={handleBlur("email")}
+									onBlur={p.handleBlur("email")}
 									placeholder="Enter Email"
 									textContentType="emailAddress"
 									keyboardType="email-address"
 								/>
 								{
 									<Text sx={{ color: "error" }}>
-										{!!values.email.length && errors.email && touched.email
-											? errors.email
-											: " "}
+										{checkError(p, "email") ? p.errors.email : " "}
 									</Text>
 								}
 								<Text variant="label">Password</Text>
 								<Th.TextInput
-									value={values.password}
-									onChangeText={handleChange("password")}
+									value={p.values.password}
+									onChangeText={p.handleChange("password")}
 									autoCorrect={false}
 									keyboardType="visible-password"
-									onBlur={handleBlur("password")}
+									onBlur={p.handleBlur("password")}
 									placeholder="Enter Password"
 									textContentType="password"
 								/>
 								{
 									<Text sx={{ color: "error" }}>
-										{!!values.password.length &&
-										errors.password &&
-										touched.password
-											? errors.password
-											: " "}
+										{checkError(p, "password") ? p.errors.password : " "}
 									</Text>
 								}
 								<Text variant="label">Confirm Password</Text>
 								<Th.TextInput
-									value={values.confirmPassword}
-									onChangeText={handleChange("confirmPassword")}
+									value={p.values.confirmPassword}
+									onChangeText={p.handleChange("confirmPassword")}
 									autoCorrect={false}
 									keyboardType="visible-password"
-									onBlur={handleBlur("confirmPassword")}
+									onBlur={p.handleBlur("confirmPassword")}
 									placeholder="Confirm Password"
 									textContentType="password"
 								/>
 								{
 									<Text sx={{ color: "error" }}>
-										{!!values.confirmPassword.length &&
-										errors.confirmPassword &&
-										touched.confirmPassword
-											? errors.confirmPassword
+										{checkError(p, "confirmPassword")
+											? p.errors.confirmPassword
 											: " "}
 									</Text>
 								}
-								{isValid ? (
-									// @ts-ignore
-									<Th.ButtonPrimary onPress={handleSubmit}>
-										Sign Up
-									</Th.ButtonPrimary>
-								) : (
-									<Th.ButtonPrimary disabled>Sign Up</Th.ButtonPrimary>
-								)}
+								<Th.ButtonPrimary // @ts-ignore
+									onPress={p.isValid ? p.handleSubmit : () => {}}
+									disabled={!p.isValid}
+								>
+									Sign Up
+								</Th.ButtonPrimary>
 								<Text sx={{ textAlign: "center", py: "$2" }}>
 									Already have an account?{" "}
 									<TextLink href="/login">
@@ -161,10 +120,27 @@ const RegisterScreen = (props: Props) => {
 					</Formik>
 				</View>
 			</KeyboardUsingScreen>
-		</View>
+		</Screen>
 	);
 };
 
 export default RegisterScreen;
 
-const styles = StyleSheet.create({});
+function checkError(
+	formikProps: FormikProps<IFormIntitalState>,
+	fieldKey: keyof IFormIntitalState,
+) {
+	const p = formikProps;
+	return !!(
+		!!p.values[fieldKey].length &&
+		p.errors[fieldKey] &&
+		p.touched[fieldKey]
+	);
+}
+
+interface IFormIntitalState {
+	name: string;
+	email: string;
+	password: string;
+	confirmPassword: string;
+}

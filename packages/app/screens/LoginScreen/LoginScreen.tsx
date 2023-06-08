@@ -1,4 +1,4 @@
-import { Formik } from "formik";
+import { Formik, FormikProps } from "formik";
 import loginSchema from "../../validators/loginSchema";
 import { GoodCookie } from "../../assets/svg";
 import { Svg } from "app/components/Svg";
@@ -36,44 +36,34 @@ const LoginScreen = () => {
 							initialValues={{ email: "", password: "" }}
 							validationSchema={loginSchema}
 							validateOnMount
-							onSubmit={(value: { email: string; password: string }) => {
+							onSubmit={(value: IFormIntitalState) => {
 								signIn(value.email, value.password);
 							}}
 						>
-							{({
-								handleChange,
-								handleBlur,
-								handleSubmit,
-								values,
-								errors,
-								isValid,
-								touched,
-							}) => (
+							{p => (
 								<>
 									<Text variant="label">Email</Text>
 									<Th.TextInput
-										value={values.email}
-										onChangeText={handleChange("email")}
+										value={p.values.email}
+										onChangeText={p.handleChange("email")}
 										autoCorrect={false}
-										onBlur={handleBlur("email")}
+										onBlur={p.handleBlur("email")}
 										placeholder="Enter Email"
 										textContentType="emailAddress"
 										keyboardType="email-address"
 									/>
 									{
 										<Text sx={{ color: "error" }}>
-											{!!values.email.length && errors.email && touched.email
-												? errors.email
-												: " "}
+											{checkError(p, "email") ? p.errors.email : " "}
 										</Text>
 									}
 									<Text variant="label">Password</Text>
 									<Th.TextInput
-										value={values.password}
-										onChangeText={handleChange("password")}
+										value={p.values.password}
+										onChangeText={p.handleChange("password")}
 										autoCorrect={false}
 										keyboardType="visible-password"
-										onBlur={handleBlur("password")}
+										onBlur={p.handleBlur("password")}
 										placeholder="Enter Password"
 										textContentType="password"
 									/>
@@ -84,23 +74,17 @@ const LoginScreen = () => {
 										}}
 									>
 										<Text sx={{ color: "error", width: "50%" }}>
-											{!!values.password.length &&
-											errors.password &&
-											touched.password
-												? errors.password
-												: " "}
+											{checkError(p, "password") ? p.errors.password : " "}
 										</Text>
 
 										<Text variant="link">Forgot Password ?</Text>
 									</View>
-									{isValid ? (
-										// @ts-ignore
-										<Th.ButtonPrimary onPress={handleSubmit}>
-											Log In
-										</Th.ButtonPrimary>
-									) : (
-										<Th.ButtonPrimary disabled>Log in</Th.ButtonPrimary>
-									)}
+									<Th.ButtonPrimary // @ts-ignore
+										onPress={p.isValid ? p.handleSubmit : () => {}}
+										disabled={!p.isValid}
+									>
+										Log In
+									</Th.ButtonPrimary>
 									<View
 										sx={{
 											my: "$2",
@@ -126,3 +110,20 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
+
+interface IFormIntitalState {
+	email: string;
+	password: string;
+}
+
+function checkError(
+	formikProps: FormikProps<IFormIntitalState>,
+	fieldKey: keyof IFormIntitalState,
+) {
+	const p = formikProps;
+	return !!(
+		!!p.values[fieldKey].length &&
+		p.errors[fieldKey] &&
+		p.touched[fieldKey]
+	);
+}
