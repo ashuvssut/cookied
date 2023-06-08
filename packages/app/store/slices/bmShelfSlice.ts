@@ -34,12 +34,12 @@ export interface IFolder {
 
 const foldersAdapter = createEntityAdapter<IFolder>({
 	selectId: folder => folder.id,
-	// sortComparer: (a, b) => a.title.localeCompare(b.title),
+	sortComparer: (a, b) => a.title.localeCompare(b.title), // TODO: expt:- chech if changin title to something else using jotai to something gives us sort ability or not (else create selectors)
 });
 
 const bookmarksAdapter = createEntityAdapter<IBookmark>({
 	selectId: bookmark => bookmark.id,
-	// sortComparer: (a, b) => a.title.localeCompare(b.title),
+	sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
 const initialState = {
@@ -63,6 +63,12 @@ export const bmShelfSlice = createSlice({
 			},
 			prepare: (bookmark: IBookmark) => ({ payload: bookmark }),
 		},
+		addManyBm: (state, action: PayloadAction<IBookmark[]>) => {
+			bookmarksAdapter.addMany(state.bookmarks, action.payload);
+		},
+		addManyFl: (state, action: PayloadAction<IFolder[]>) => {
+			foldersAdapter.addMany(state.folders, action.payload);
+		},
 	},
 	extraReducers: builder => {},
 });
@@ -80,17 +86,53 @@ export const { selectAll: selectAllBookmarks } =
 	bookmarksAdapter.getSelectors<RootState>(state => state.bmShelf.bookmarks);
 
 export const selectFoldersWithBookmarks = createSelector(
-	(state: RootState) => state.bmShelf.bookmarks,
-	(state: RootState) => state.bmShelf.folders,
-	(bookmarks: TBmShelf["bookmarks"], folders: TBmShelf["folders"]) => {
-		const bookmarkEntities = bookmarks.entities;
-		const folderEntities = folders.entities;
-		console.log("bookmarkEntities", bookmarkEntities);
-		console.log("folderEntities", folderEntities);
+	(state: RootState) => state.bmShelf,
+	(shelf: TBmShelf) => {
+		const bookmarkEntities = shelf.bookmarks.entities;
+		const folderEntities = shelf.folders.entities;
+		console.log("bookmarkEntities", JSON.stringify(bookmarkEntities, null, 2));
+		console.log("folderEntities", JSON.stringify(folderEntities, null, 2));
 
+		function getBookmarksByPathId(parentId: string) {
+			const result: IBookmark[] = [];
+			for (const bmId in bookmarkEntities) {
+				const bm = bookmarkEntities[bmId]!;
+				if (bm.parentId === parentId) result.push(bm);
+			}
+			return result;
+		}
 
+		function convertToDenormalized(
+			flEntities: typeof folderEntities,
+			parentId = "root",
+			visitedIds = new Set(),
+			pathId: string[] = [],
+		) {
+			const result: IFolder[] = [];
+			for (const flId in flEntities) {
+				const fl = flEntities[flId]!;
+				if (fl.parentId === parentId && !visitedIds.has(fl.id)) {
+					visitedIds.add(fl.id);
+					const newFl = { ...fl };
+					const newPathId = [...pathId, fl.id];
+					const children = convertToDenormalized(
+						flEntities,
+						fl.id,
+						visitedIds,
+						newPathId,
+					);
+					if (children.length > 0) {
+						newFl.folders = children;
+					}
 
-		return [];
-		// de-normalize the data for the UI
+					newFl.bookmarks = getBookmarksByPathId(newFl.id);
+					newFl.path = ["root", ...newPathId];
+					result.push(newFl);
+				}
+			}
+
+			return result;
+		}
+		return { folders: convertToDenormalized(folderEntities) }; // denormalizedJson;
 	},
 );
