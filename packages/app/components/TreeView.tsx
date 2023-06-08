@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import { Text, Pressable, View } from "dripsy";
-import { FC, memo } from "react";
+import { FC, memo, useEffect } from "react";
 import {
 	IBookmark,
 	IFolder,
@@ -10,6 +10,7 @@ import { useAppDispatch } from "app/store/hooks";
 import {
 	addBookmarkInAppwrite,
 	addFolderInAppwrite,
+	getFoldersInAppwrite,
 } from "app/apis/appwriteBookmarkApi";
 import { sessionAtom } from "app/store/slices/auth";
 import { useAtom } from "jotai";
@@ -93,6 +94,11 @@ interface IFolderActions {
 export const FolderActions: FC<IFolderActions> = ({ node }) => {
 	const dispatch = useAppDispatch();
 	const [session] = useAtom(sessionAtom);
+	useEffect(() => {
+		if (session?.userId) {
+			getFoldersInAppwrite(session?.userId);
+		}
+	}, []);
 	return (
 		<View
 			sx={{ position: "absolute", right: 0, flexDirection: "row", gap: 10 }}
@@ -100,8 +106,15 @@ export const FolderActions: FC<IFolderActions> = ({ node }) => {
 			{node && (
 				<Pressable
 					onPress={async () => {
-						const newBookmark = await addBookmarkInAppwrite(node);
-						dispatch(bmShelfAction.addBookmark(newBookmark));
+						if (session?.userId) {
+							const newBookmark = await addBookmarkInAppwrite(
+								node,
+								session?.userId,
+							);
+							if (newBookmark !== undefined) {
+								dispatch(bmShelfAction.addBookmark(newBookmark));
+							}
+						}
 					}}
 					sx={{ bg: "secondary" }}
 				>
