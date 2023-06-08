@@ -13,9 +13,8 @@ export async function POST() {
 	try {
 		const userListObj = await users.list();
 		const userList = userListObj.users;
-		userList.forEach(async user => {
-			await users.delete(user.$id);
-		});
+		await Promise.all(userList.map(user => users.delete(user.$id)));
+
 		return NextResponse.json({ success: true });
 	} catch (e: any) {
 		console.error(e);
