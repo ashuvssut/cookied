@@ -6,6 +6,7 @@ import {
 	PayloadAction,
 } from "@reduxjs/toolkit";
 import { RootState } from "../types";
+import { convertToDenormalized } from "app/store/utils/bmShelfUtils";
 
 export interface IBookmark {
 	type: "bookmark";
@@ -34,12 +35,12 @@ export interface IFolder {
 
 const foldersAdapter = createEntityAdapter<IFolder>({
 	selectId: folder => folder.$id,
-	// sortComparer: (a, b) => a.title.localeCompare(b.title),
+	sortComparer: (a, b) => a.title.localeCompare(b.title), // TODO: expt:- chech if changin title to something else using jotai to something gives us sort ability or not (else create selectors)
 });
 
 const bookmarksAdapter = createEntityAdapter<IBookmark>({
 	selectId: bookmark => bookmark.$id,
-	// sortComparer: (a, b) => a.title.localeCompare(b.title),
+	sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
 const initialState = {
@@ -51,18 +52,14 @@ export const bmShelfSlice = createSlice({
 	name: "bmShelf",
 	initialState,
 	reducers: {
-		addFolder: {
-			reducer: (state, action: PayloadAction<IFolder>) => {
-				foldersAdapter.addOne(state.folders, action.payload);
-			},
-			prepare: (folder: IFolder) => ({ payload: folder }),
-		},
-		addBookmark: {
-			reducer: (state, action: PayloadAction<IBookmark>) => {
-				bookmarksAdapter.addOne(state.bookmarks, action.payload);
-			},
-			prepare: (bookmark: IBookmark) => ({ payload: bookmark }),
-		},
+		addFolder: (state, action: PayloadAction<IFolder>) =>
+			void foldersAdapter.addOne(state.folders, action.payload),
+		addBookmark: (state, action: PayloadAction<IBookmark>) =>
+			void bookmarksAdapter.addOne(state.bookmarks, action.payload),
+		addManyBm: (state, action: PayloadAction<IBookmark[]>) =>
+			void bookmarksAdapter.addMany(state.bookmarks, action.payload),
+		addManyFl: (state, action: PayloadAction<IFolder[]>) =>
+			void foldersAdapter.addMany(state.folders, action.payload),
 	},
 	extraReducers: builder => {},
 });
@@ -74,21 +71,22 @@ export const {} = bookmarksAdapter.getSelectors<RootState>(
 	state => state.bmShelf.bookmarks,
 );
 
-export const { selectAll: selectAllFolders } =
-	foldersAdapter.getSelectors<RootState>(state => state.bmShelf.folders);
-export const { selectAll: selectAllBookmarks } =
-	bookmarksAdapter.getSelectors<RootState>(state => state.bmShelf.bookmarks);
+/** Selectors */
+
+// export const { selectAll: selectAllFolders } =
+// 	foldersAdapter.getSelectors<RootState>(state => state.bmShelf.folders);
+
+// export const { selectAll: selectAllBookmarks } =
+// 	bookmarksAdapter.getSelectors<RootState>(state => state.bmShelf.bookmarks);
 
 export const selectFoldersWithBookmarks = createSelector(
-	(state: RootState) => state.bmShelf.bookmarks,
-	(state: RootState) => state.bmShelf.folders,
-	(bookmarks: TBmShelf["bookmarks"], folders: TBmShelf["folders"]) => {
-		const bookmarkEntities = bookmarks.entities;
-		const folderEntities = folders.entities;
-		console.log("bookmarkEntities", bookmarkEntities);
-		console.log("folderEntities", folderEntities);
+	(state: RootState) => state.bmShelf,
+	(shelf: TBmShelf) => {
+		const bookmarkEntities = shelf.bookmarks.entities;
+		const folderEntities = shelf.folders.entities;
+		console.log("bookmarkEntities", JSON.stringify(bookmarkEntities, null, 2));
+		console.log("folderEntities", JSON.stringify(folderEntities, null, 2));
 
-		return [];
-		// de-normalize the data for the UI
+		return { folders: convertToDenormalized(folderEntities, bookmarkEntities) }; // denormalizedJson;
 	},
 );
