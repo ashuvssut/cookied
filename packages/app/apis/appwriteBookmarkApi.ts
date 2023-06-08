@@ -4,7 +4,7 @@
 // 1. use useQuery hook in useBmShelfStorage hook and return useQuery's loading and error states from the useBmShelfStorage hook to use them in any screen.
 // 2. use jotai's LoadingModal useAtom
 // 3. use React Native SnackBar from this hook only to show error messages
-import { Client, Databases, ID } from "appwrite";
+import { Client, Databases, ID,Query } from "appwrite";
 
 import {
 	client,
@@ -21,7 +21,11 @@ import { bookmarkFactory, folderFactory } from "app/utils/factoryFunctions";
 
 const databases = new Databases(client);
 
-export const addFolderInAppwrite = async (node: IFolder | null, userId: string) => {
+// CRUD FOLDERS
+export const addFolderInAppwrite = async (
+	node: IFolder | null,
+	userId: string,
+) => {
 	try {
 		// It means there is no tree node created yet
 		if (!node) {
@@ -55,7 +59,7 @@ export const addFolderInAppwrite = async (node: IFolder | null, userId: string) 
 			type: randomFolder.type,
 			path: randomFolder.path,
 			level: randomFolder.level,
-			title:randomFolder.title
+			title: randomFolder.title,
 		};
 		// return randomFolder
 		const response = await databases.createDocument(
@@ -70,9 +74,28 @@ export const addFolderInAppwrite = async (node: IFolder | null, userId: string) 
 	}
 };
 
-export const addBookmarkInAppwrite = async (node: IFolder,userId:string) => {
+export const getFoldersInAppwrite = async (userId: string) => {
 	try {
-		const randomBookmark = generateRandomBookmark(node.$id, node.level, node.path);
+		const allFolders = await databases.listDocuments(
+			APPWRITE_DATABASE_ID,
+			APPWRITE_FOLDER_COLLECTION_ID,
+			[Query.equal("userId", [userId])],
+		);
+		console.log("GET ALL FOLDERS", allFolders);
+		return allFolders;
+	} catch (e) {
+		console.log("Error in getting all folders", e);
+	}
+};
+
+// CRUD BOOKMARKS
+export const addBookmarkInAppwrite = async (node: IFolder, userId: string) => {
+	try {
+		const randomBookmark = generateRandomBookmark(
+			node.$id,
+			node.level,
+			node.path,
+		);
 		const bookmarkObject = {
 			userId,
 			parentId: randomBookmark.parentId,
@@ -81,7 +104,7 @@ export const addBookmarkInAppwrite = async (node: IFolder,userId:string) => {
 			level: randomBookmark.level,
 			url: randomBookmark.url,
 			title: randomBookmark.title,
-		}
+		};
 		const response = await databases.createDocument(
 			APPWRITE_DATABASE_ID,
 			APPWRITE_BOOKMARK_COLLECTION_ID,
