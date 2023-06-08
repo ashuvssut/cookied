@@ -1,15 +1,18 @@
 import { Text, Pressable, View } from "dripsy";
 import { FC } from "react";
-import {
-	IBookmark,
-	IFolder,
-	bmShelfAction,
-} from "app/store/slices/bmShelfSlice";
+import { useAtom } from "jotai";
+
 import { useAppDispatch } from "app/store/hooks";
 import {
 	addBookmarkInAppwrite,
 	addFolderInAppwrite,
 } from "app/apis/appwriteBookmarkApi";
+import { sessionAtom } from "app/store/slices/auth";
+import {
+	IBookmark,
+	IFolder,
+	bmShelfAction,
+} from "app/store/slices/bmShelfSlice";
 
 interface ITreeView {
 	treeData: { nodes: IFolder[]; rootLeafs: IBookmark[] }; // TODO: infer automatically
@@ -24,7 +27,7 @@ export const TreeView: FC<ITreeView> = ({
 	const renderTree = (tree: (typeof treeData)["nodes"]) => {
 		return tree.map(node => {
 			return (
-				<View key={node.id}>
+				<View key={node.$id}>
 					<Node node={node} />
 					{node[nodeArrKey] && renderTree(node[nodeArrKey])}
 					{node[leafArrKey] && renderLeaf(node[leafArrKey])}
@@ -33,7 +36,7 @@ export const TreeView: FC<ITreeView> = ({
 		});
 	};
 	const renderLeaf = (leaf: (typeof treeData)["rootLeafs"]) => {
-		return leaf.map(node => <LeafNode key={node.id} node={node} />);
+		return leaf.map(node => <LeafNode key={node.$id} node={node} />);
 	};
 	// console.log("treeData", treeData);
 	return <View>{renderTree(treeData["nodes"])}</View>;
@@ -49,7 +52,7 @@ const Node: FC<INode> = ({ node }) => {
 			>
 				<Text variant="label">FL </Text>
 				{/* {node.title} */}
-				{node.level} {node.id}
+				{node.level} {node.$id}
 				<br /> {node.parentId}
 			</Text>
 			<FolderActions node={node} />
@@ -61,11 +64,11 @@ interface ILeafNode {
 }
 const LeafNode: FC<ILeafNode> = ({ node }) => {
 	return (
-		<View key={node.id}>
+		<View key={node.$id}>
 			<Text sx={{ pl: (node.level + 1) * 30 }}>
 				<Text variant="label">BM </Text>
 				{/* {node.title} */}
-				{node.level} {node.id}
+				{node.level} {node.$id}
 				<br /> {node.parentId}
 			</Text>
 		</View>
@@ -77,6 +80,7 @@ interface IFolderActions {
 }
 export const FolderActions: FC<IFolderActions> = ({ node }) => {
 	const dispatch = useAppDispatch();
+	const [session] = useAtom(sessionAtom);
 	return (
 		<View
 			sx={{ position: "absolute", right: 0, flexDirection: "row", gap: 10 }}
@@ -94,8 +98,10 @@ export const FolderActions: FC<IFolderActions> = ({ node }) => {
 			)}
 			<Pressable
 				onPress={async () => {
-					const newFolder = await addFolderInAppwrite(node);
-					dispatch(bmShelfAction.addFolder(newFolder));
+					if (session?.$id) {
+						const newFolder = await addFolderInAppwrite(node, session.$id);
+						dispatch(bmShelfAction.addFolder(newFolder));
+					}
 				}}
 				sx={{ bg: "secondary" }}
 			>

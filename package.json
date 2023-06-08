@@ -10,6 +10,7 @@
     "apps/fx/functions/*"
   ],
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@types/react": "^18.0.17",
     "@types/react-native": "^0.69.5",
     "eslint": "^8.21.0",
@@ -28,7 +29,7 @@
     "apk:install": "adb install ./apps/expo/android/app/build/outputs/apk/release/app-release.apk",
     "reset-cache": "yarn workspace native reset-cache",
     "gradle-clean": "yarn workspace native gradle-clean",
-    "db":"json-server --watch db.json --port 3004"
+    "db": "json-server --watch db.json --port 3004"
   },
   "resolutions": {
     "metro": "0.76.0",

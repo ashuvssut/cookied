@@ -9,36 +9,36 @@ import { RootState } from "../types";
 
 export interface IBookmark {
 	type: "bookmark";
-	id: string;
+	$id: string;
 	parentId: string;
 	path: string[];
 	level: number;
 	title: string;
 	url: string;
-	createdAt: string;
-	updatedAt: string;
+	$createdAt: string;
+	$updatedAt: string;
 }
 
 export interface IFolder {
 	type: "folder";
-	id: string;
+	$id: string;
 	parentId: string;
 	path: string[];
 	level: number;
 	bookmarks: IBookmark[];
 	folders: IFolder[];
 	title: string;
-	createdAt: string;
-	updatedAt: string;
+	$createdAt: string;
+	$updatedAt: string;
 }
 
 const foldersAdapter = createEntityAdapter<IFolder>({
-	selectId: folder => folder.id,
+	selectId: folder => folder.$id,
 	// sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
 const bookmarksAdapter = createEntityAdapter<IBookmark>({
-	selectId: bookmark => bookmark.id,
+	selectId: bookmark => bookmark.$id,
 	// sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
@@ -87,8 +87,6 @@ export const selectFoldersWithBookmarks = createSelector(
 		const folderEntities = folders.entities;
 		console.log("bookmarkEntities", bookmarkEntities);
 		console.log("folderEntities", folderEntities);
-
-
 
 		return [];
 		// de-normalize the data for the UI

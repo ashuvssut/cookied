@@ -15,6 +15,24 @@ export const APPWRITE_PROJECT_ID = isWeb
 if (!APPWRITE_PROJECT_ID)
 	throw Error("APPWRITE_PROJECT_ID isn't set in env.js/.env.local");
 
+export const APPWRITE_BOOKMARK_COLLECTION_ID = isWeb
+	? process.env.NEXT_PUBLIC_APPWRITE_BOOKMARK_COLLECTION_ID
+	: Constants.expoConfig?.extra?.APPWRITE_BOOKMARK_COLLECTION_ID;
+if (!APPWRITE_BOOKMARK_COLLECTION_ID)
+	throw Error("APPWRITE_BOOKMARK_COLLECTION_ID isn't set in env.js/.env.local");
+	
+export const APPWRITE_FOLDER_COLLECTION_ID = isWeb
+	? process.env.NEXT_PUBLIC_APPWRITE_FOLDER_COLLECTION_ID
+	: Constants.expoConfig?.extra?.APPWRITE_FOLDER_COLLECTION_ID;
+if (!APPWRITE_FOLDER_COLLECTION_ID)
+	throw Error("APPWRITE_FOLDER_COLLECTION_ID isn't set in env.js/.env.local");	
+
+export const APPWRITE_DATABASE_ID = isWeb
+	? process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID
+	: Constants.expoConfig?.extra?.APPWRITE_DATABASE_ID;
+if (!APPWRITE_DATABASE_ID)
+	throw Error("APPWRITE_DATABASE_ID isn't set in env.js/.env.local");	
+
 // const VERCEL_DEV_ENDPOINT = isWeb
 // 	? process.env.VERCEL_DEV_ENDPOINT
 // 	: Constants.expoConfig?.extra?.VERCEL_DEV_ENDPOINT;

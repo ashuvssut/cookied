@@ -12,7 +12,7 @@ export function generateRandomBookmark(
 ): IBookmark {
 	const id = faker.string.uuid();
 	return {
-		id,
+		$id: id,
 		parentId: parentId || "",
 		type: "bookmark",
 		path: [...path, id],
@@ -22,8 +22,8 @@ export function generateRandomBookmark(
 		url: faker.internet.url(),
 		// createdAt: faker.date.past().toISOString(),
 		// updatedAt: faker.date.recent().toISOString(),
-		createdAt: new Date().toISOString(),
-		updatedAt: new Date().toISOString(),
+		$createdAt: new Date().toISOString(),
+		$updatedAt: new Date().toISOString(),
 	};
 }
 
@@ -35,7 +35,7 @@ export function generateRandomFolder(
 ): IFolder {
 	const id = faker.string.uuid();
 	return {
-		id,
+		$id: id,
 		parentId: parentId || "",
 		type: "folder",
 		path: [...path, id],
@@ -46,8 +46,8 @@ export function generateRandomFolder(
 		title: faker.word.words({ count: { min: 3, max: 5 } }),
 		// createdAt: faker.date.past().toISOString(),
 		// updatedAt: faker.date.recent().toISOString(),
-		createdAt: new Date().toISOString(),
-		updatedAt: new Date().toISOString(),
+		$createdAt: new Date().toISOString(),
+		$updatedAt: new Date().toISOString(),
 	};
 }
 
