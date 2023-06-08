@@ -20,7 +20,7 @@ import { IBookmark, IFolder } from "app/store/slices/bmShelfSlice";
 import {
 	cleanResponse,
 	cleanResponseIterative,
-} from "app/apis/utils/factoryFunctions";
+} from "app/utils/factoryFunctions";
 
 const databases = new Databases(client);
 

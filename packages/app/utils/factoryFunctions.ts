@@ -1,6 +1,5 @@
 import { Models } from "appwrite";
 
-
 export function cleanResponse<T extends Models.Document>(response: T) {
 	const { $collectionId, $permissions, $userId, $databaseId, ...rest } =
 		response;
