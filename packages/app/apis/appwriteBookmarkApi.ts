@@ -86,10 +86,15 @@ export const addFolderInAppwrite = async (node: IFolder | null, id: string) => {
 			$updatedAt: response.$updatedAt,
 		};
 	} catch (e) {
-		console.log("Error in calling Db", e);
+		console.log("Error in creating new folder", e);
 	}
 };
 
 export const addBookmarkInAppwrite = async (node: IFolder) => {
+	try {
+		
+	 } catch (e) {
+		
+	}
 	return generateRandomBookmark(node.$id, node.level, node.path);
 };
