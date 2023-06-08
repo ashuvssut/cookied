@@ -5,6 +5,7 @@ import { selectFoldersWithBookmarks } from "app/store/slices/bmShelfSlice";
 import { useAppSelector } from "app/store/hooks";
 import { resetReduxPersist_reload } from "app/utils/storage";
 import { FolderActions, TreeView } from "app/components/TreeView";
+import Screen from "app/components/Screen";
 export default function HomeScreen() {
 	const { signOut } = usePlatformAuth();
 	const foldersWithBookmarks = useAppSelector(selectFoldersWithBookmarks);
@@ -16,7 +17,7 @@ export default function HomeScreen() {
 	}, []);
 
 	return (
-		<View sx={{ bg: "primary" }}>
+		<Screen>
 			<Pressable onPress={() => signOut()}>
 				<Text>Sign Out</Text>
 			</Pressable>
@@ -27,6 +28,6 @@ export default function HomeScreen() {
 				nodeArrKey="folders"
 				leafArrKey="bookmarks"
 			/>
-		</View>
+		</Screen>
 	);
 }

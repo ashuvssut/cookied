@@ -8,34 +8,9 @@ import {
 import { RootState } from "../types";
 import { convertToDenormalized } from "app/store/utils/bmShelfUtils";
 
-export interface IBookmark {
-	type: "bookmark";
-	id: string;
-	parentId: string;
-	path: string[];
-	level: number;
-	title: string;
-	url: string;
-	createdAt: string;
-	updatedAt: string;
-}
-
-export interface IFolder {
-	type: "folder";
-	id: string;
-	parentId: string;
-	path: string[];
-	level: number;
-	bookmarks: IBookmark[];
-	folders: IFolder[];
-	title: string;
-	createdAt: string;
-	updatedAt: string;
-}
-
 const foldersAdapter = createEntityAdapter<IFolder>({
 	selectId: folder => folder.id,
-	sortComparer: (a, b) => a.title.localeCompare(b.title), // TODO: expt:- chech if changin title to something else using jotai to something gives us sort ability or not (else create selectors)
+	sortComparer: (a, b) => a.title.localeCompare(b.title), // TODO: expt:- check if changin title to something else using jotai to something gives us sort ability or not (else create selectors)
 });
 
 const bookmarksAdapter = createEntityAdapter<IBookmark>({
@@ -67,11 +42,7 @@ export const bmShelfSlice = createSlice({
 export const { actions: bmShelfAction } = bmShelfSlice;
 export default bmShelfSlice.reducer;
 
-export const {} = bookmarksAdapter.getSelectors<RootState>(
-	state => state.bmShelf.bookmarks,
-);
-
-/** Selectors */
+/** Selectors **/
 
 // export const { selectAll: selectAllFolders } =
 // 	foldersAdapter.getSelectors<RootState>(state => state.bmShelf.folders);
@@ -84,9 +55,32 @@ export const selectFoldersWithBookmarks = createSelector(
 	(shelf: TBmShelf) => {
 		const bookmarkEntities = shelf.bookmarks.entities;
 		const folderEntities = shelf.folders.entities;
-		console.log("bookmarkEntities", JSON.stringify(bookmarkEntities, null, 2));
-		console.log("folderEntities", JSON.stringify(folderEntities, null, 2));
-
 		return { folders: convertToDenormalized(folderEntities, bookmarkEntities) }; // denormalizedJson;
 	},
 );
+
+/** TS Types */
+export interface IBookmark {
+	type: "bookmark";
+	id: string;
+	parentId: string;
+	path: string[];
+	level: number;
+	title: string;
+	url: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
+export interface IFolder {
+	type: "folder";
+	id: string;
+	parentId: string;
+	path: string[];
+	level: number;
+	bookmarks: IBookmark[];
+	folders: IFolder[];
+	title: string;
+	createdAt: string;
+	updatedAt: string;
+}
