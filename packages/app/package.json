@@ -11,5 +11,8 @@
     "redux-persist": "^6.0.0",
     "solito": "^3.2.6"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2"
+  }
 }

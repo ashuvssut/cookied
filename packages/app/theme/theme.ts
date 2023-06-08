@@ -46,13 +46,6 @@ export const darkTheme = makeTheme({
 		link: "#C1C1C1",
 		...commonColors,
 	},
-	// textShadows: {
-	// 	onSomeContainer: {
-	// 		textShadowOffset: { width: 1, height: 1 },
-	// 		textShadowRadius: 5,
-	// 		textShadowColor: "#00000099",
-	// 	},
-	// },
 	linearGradients: {
 		// TODO: linear gradients not working for <Gradient/> but works for <LinearGradient/>
 		primaryButtonBg: ["#B313DB", "#FF00B894"],
@@ -63,6 +56,13 @@ export const darkTheme = makeTheme({
 			bg: "#2E3232",
 		},
 	},
+	// textShadows: {
+	// 	onSomeContainer: {
+	// 		textShadowOffset: { width: 1, height: 1 },
+	// 		textShadowRadius: 5,
+	// 		textShadowColor: "#00000099",
+	// 	},
+	// },
 });
 
 export type CookiedTheme = typeof darkTheme;

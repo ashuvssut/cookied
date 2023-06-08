@@ -1,21 +1,34 @@
-import { Text, Pressable, View } from "dripsy";
+import { Text, Pressable } from "dripsy";
 import { usePlatformAuth } from "app/hooks/usePlatformAuth";
 import { useEffect } from "react";
-import { bookmarkState } from "app/mock/bookmark";
+import { selectFoldersWithBookmarks } from "app/store/slices/bmShelfSlice";
+import { useAppSelector } from "app/store/hooks";
+import { resetReduxPersist_reload } from "app/utils/storage";
+import { FolderActions, TreeView } from "app/components/TreeView";
+import Screen from "app/components/Screen";
 
 export default function HomeScreen() {
 	const { signOut } = usePlatformAuth();
+	const foldersWithBookmarks = useAppSelector(selectFoldersWithBookmarks);
 	useEffect(() => {
-		console.log(bookmarkState);
+		window["reset"] = resetReduxPersist_reload;
+		// window["addMany"] = execAddMany;
+		// window["addMany2"] = execAddManyFl;
+		// console.log(JSON.stringify(bookmarkState, null, 2));
 	}, []);
+
 	return (
-		<View sx={{ bg: "primary" }}>
+		<Screen>
 			<Pressable onPress={() => signOut()}>
 				<Text>Sign Out</Text>
-				<Text
-				sx={{fontSize:10}}
-				>{JSON.stringify(bookmarkState, null, 5)}</Text>
 			</Pressable>
-		</View>
+			<FolderActions node={null} />
+			<TreeView
+				treeData={{ nodes: foldersWithBookmarks.folders, rootLeafs: [] }}
+				// treeData={{ nodes: bookmarkState.folders, rootLeafs: [] }}
+				nodeArrKey="folders"
+				leafArrKey="bookmarks"
+			/>
+		</Screen>
 	);
 }

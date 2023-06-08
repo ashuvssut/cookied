@@ -4976,6 +4976,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app@workspace:packages/app"
   dependencies:
+    "@faker-js/faker": ^8.0.2
     "@reduxjs/toolkit": ^1.9.5
     dripsy: ^4.3.3
     moti: latest
@@ -12239,6 +12240,7 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/plugin-proposal-export-namespace-from": ^7.18.9
     "@expo-google-fonts/poppins": ^0.2.3
+    "@faker-js/faker": ^8.0.2
     "@react-native-async-storage/async-storage": ^1.18.1
     "@types/react": ~18.0.27
     "@types/react-native": ~0.69.1
