@@ -15,7 +15,7 @@ import Screen from "app/components/Screen";
 const RegisterScreen = () => {
 	const { register } = usePlatformAuth();
 	return (
-		<Screen>
+		<Screen sx={{ alignItems: "center" }}>
 			<KeyboardUsingScreen keyboardShouldPersistTaps="always">
 				<StatusBar style="light" />
 				<Header />

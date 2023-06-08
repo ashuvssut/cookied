@@ -36,9 +36,10 @@ export const addFolderInAppwrite = async (
 			const { $id, level, path } = node;
 			return generateRandomFolder($id, level + 1, [...path, $id], true);
 		}
-		const { $updatedAt, $createdAt, $id, ...folderData } = getFolderObj();
+		const { $updatedAt, $createdAt, $id, bookmarks, folders, ...folderData } =
+			getFolderObj();
 		const folderObject = { userId, ...folderData };
-		const response = await databases.createDocument<Models.Document & IFolder>(
+		const response = await databases.createDocument<TFolderDocument>(
 			APPWRITE_DATABASE_ID,
 			APPWRITE_FOLDER_COLLECTION_ID,
 			ID.unique(),
@@ -58,10 +59,10 @@ export const getFoldersInAppwrite = async (userId: string) => {
 			APPWRITE_FOLDER_COLLECTION_ID,
 			[Query.equal("userId", [userId])],
 		);
-		console.log("GET ALL FOLDERS", allFolders);
+		// console.log("GET ALL FOLDERS", allFolders);
 		return cleanResponseIterative(allFolders);
 	} catch (e) {
-		console.log("Error in getting all folders", e);
+		console.error("Error in getting all folders", e);
 	}
 };
 
@@ -76,9 +77,9 @@ export const updateFolderInAppwrite = async (
 			id,
 			JSON.stringify(updateData),
 		);
-		console.log("Updated Data", updatedData);
+		// console.log("Updated Data", updatedData);
 	} catch (e) {
-		console.log("Error in updating folder", e);
+		console.error("Error in updating folder", e);
 	}
 };
 
@@ -96,9 +97,9 @@ export const addBookmarkInAppwrite = async (node: IFolder, userId: string) => {
 			ID.unique(),
 			bookmarkData,
 		);
-		console.log("RandomBookmark", randomBookmark);
+		// console.log("RandomBookmark", randomBookmark);
 		return cleanResponse(response);
 	} catch (e) {
-		console.log("Error in creating new bookmark", e);
+		console.error("Error in creating new bookmark", e);
 	}
 };

@@ -59,7 +59,7 @@ export const selectFoldersWithBookmarks = createSelector(
 	},
 );
 
-/** TS Types */
+// TS Types
 export interface IBookmark {
 	type: "bookmark";
 	$id: string;

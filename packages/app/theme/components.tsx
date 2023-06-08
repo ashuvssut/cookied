@@ -18,7 +18,7 @@ const _TextInput = (props: TextInputProps) => {
 
 const ButtonPrimary: FCC<PressableProps> = props => {
 	const linearGradients = useDripsyTheme().theme.linearGradients;
-
+	const color = props.disabled ? "onInactive" : "onPrimary";
 	return (
 		<Pressable {...props} style={ss.pressable}>
 			<LinearGradient
@@ -32,9 +32,7 @@ const ButtonPrimary: FCC<PressableProps> = props => {
 				style={{ height: "100%", width: "100%", position: "absolute" }}
 			/>
 			<View variant="layout.buttonContainer">
-				<Text sx={{ textAlign: "center", color: "onInactive" }}>
-					{props.children}
-				</Text>
+				<Text sx={{ textAlign: "center", color }}>{props.children}</Text>
 			</View>
 		</Pressable>
 	);

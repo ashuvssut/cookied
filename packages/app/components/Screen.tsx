@@ -16,7 +16,6 @@ const Screen: FCC<Props> = ({ children, top = 0, sx, ...rest }) => {
 				pt: insetTop,
 				bg: "primary",
 				height: "100%",
-				alignItems: "center",
 				...sx,
 			}}
 			{...rest}

@@ -15,7 +15,7 @@ const LoginScreen = () => {
 	const { signIn } = usePlatformAuth();
 
 	return (
-		<Screen>
+		<Screen sx={{ alignItems: "center" }}>
 			<KeyboardUsingScreen keyboardShouldPersistTaps="never">
 				<StatusBar style="light" />
 				<Header />
