@@ -100,8 +100,15 @@ export const FolderActions: FC<IFolderActions> = ({ node }) => {
 			{node && (
 				<Pressable
 					onPress={async () => {
-						const newBookmark = await addBookmarkInAppwrite(node);
-						dispatch(bmShelfAction.addBookmark(newBookmark));
+						if (session?.userId) {
+							const newBookmark = await addBookmarkInAppwrite(
+								node,
+								session?.userId,
+							);
+							if (newBookmark !== undefined) {
+								dispatch(bmShelfAction.addBookmark(newBookmark));
+							}
+						}
 					}}
 					sx={{ bg: "secondary" }}
 				>
