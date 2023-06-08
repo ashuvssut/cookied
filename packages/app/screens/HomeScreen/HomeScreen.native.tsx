@@ -78,6 +78,12 @@ const HomeScreen = forwardRef((_, ref) => {
 		modalizeRef.current?.open();
 	};
 
+	const handleClose = () => {
+		if (modalizeRef.current) {
+			modalizeRef.current.close();
+		}
+	};
+
 	const handleLoad = status => {
 		setMounted(true);
 
@@ -169,6 +175,104 @@ const HomeScreen = forwardRef((_, ref) => {
 		// console.log(JSON.stringify(bookmarkState, null, 2));
 	}, []);
 
+	const renderHeader = () => (
+		<View
+			sx={{
+				height: 44,
+				borderBottomColor: "#c1c4c7",
+				borderBottomWidth: 1,
+				borderTopLeftRadius: 12,
+				borderTopRightRadius: 12,
+				overflow: "hidden",
+			}}
+		>
+			<View
+				style={{
+					flexDirection: "row",
+					alignItems: "center",
+					zIndex: 2,
+					paddingHorizontal: 12,
+					height: "100%",
+				}}
+			>
+				<TouchableOpacity
+					style={{ marginRight: 25 }}
+					onPress={handleClose}
+					activeOpacity={0.75}
+				>
+					{/* <Image source={require("../../assets/cross.png")} /> */}
+				</TouchableOpacity>
+
+				<TouchableOpacity
+					style={{ opacity: back ? 1 : 0.2 }}
+					onPress={handleBack}
+					disabled={!back}
+					activeOpacity={0.75}
+				>
+					{/* <Image source={require("../../assets/arrow.png")} /> */}
+				</TouchableOpacity>
+
+				<View
+					sx={{
+						flexDirection: "row",
+						alignItems: "center",
+						marginLeft: "auto",
+					}}
+				>
+					{secured && (<></>
+						// <Image
+						// 	sx={{ tintColor: "#31a14c" }}
+						// 	source={require("../../assets/lock.png")}
+						// />
+					)}
+					<Text
+						sx={{
+							marginLeft: 4,
+							fontSize: 16,
+							fontWeight: "500",
+							color: secured ? "#31a14c" : "#5a6266",
+						}}
+						numberOfLines={1}
+					>
+						{url}
+					</Text>
+				</View>
+
+				<TouchableOpacity
+					style={{ opacity: forward ? 1 : 0.2 }}
+					onPress={handleForward}
+					disabled={!forward}
+					activeOpacity={0.75}
+				>
+					{/* <Image source={require("../../assets/arrow.png")} /> */}
+				</TouchableOpacity>
+
+				<TouchableOpacity disabled>
+					{/* <Image source={require("../../assets/dots.png")} /> */}
+				</TouchableOpacity>
+			</View>
+
+			<Animated.View
+				style={
+					{
+						transform: [
+							{
+								translateX: progress.interpolate({
+									inputRange: [0, 0.2, 0.5, 1, 2],
+									outputRange: [-width, -width + 80, -width + 220, 0, 0],
+								}),
+							},
+						],
+						opacity: progress.interpolate({
+							inputRange: [0, 0.1, 1, 2],
+							outputRange: [0, 1, 1, 0],
+						}),
+					}
+				}
+			/>
+		</View>
+	);
+
 	return (
 		<>
 			<Screen>
@@ -182,11 +286,7 @@ const HomeScreen = forwardRef((_, ref) => {
 				</TouchableOpacity>
 			</Screen>
 			<Modalize
-				HeaderComponent={
-					<View>
-						<Text>Header</Text>
-					</View>
-				}
+				HeaderComponent={renderHeader()}
 				// modalHeight={100}
 				// snapPoint={100}
 				// modalTopOffset={200}
