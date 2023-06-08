@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { Text, Pressable, View } from "dripsy";
 import { FC, memo } from "react";
 import {
@@ -10,6 +11,8 @@ import {
 	addBookmarkInAppwrite,
 	addFolderInAppwrite,
 } from "app/apis/appwriteBookmarkApi";
+import { sessionAtom } from "app/store/slices/auth";
+import { useAtom } from "jotai";
 
 interface ITreeView {
 	treeData: { nodes: IFolder[]; rootLeafs: IBookmark[] }; // TODO: infer automatically
@@ -24,7 +27,7 @@ export const TreeView: FC<ITreeView> = ({
 	const renderTree = (tree: (typeof treeData)["nodes"]) => {
 		return tree.map(node => {
 			return (
-				<View key={node.id}>
+				<View key={node.$id}>
 					<Node node={node} />
 					{node[nodeArrKey] && renderTree(node[nodeArrKey])}
 					{node[leafArrKey] && renderLeaf(node[leafArrKey])}
@@ -33,7 +36,7 @@ export const TreeView: FC<ITreeView> = ({
 		});
 	};
 	const renderLeaf = (leaf: (typeof treeData)["rootLeafs"]) => {
-		return leaf.map(node => <LeafNode key={node.id} node={node} />);
+		return leaf.map(node => <LeafNode key={node.$id} node={node} />);
 	};
 	return (
 		<View>
@@ -71,7 +74,7 @@ interface ILeafNode {
 const LeafNode: FC<ILeafNode> = memo(
 	({ node }) => {
 		return (
-			<View key={node.id}>
+			<View key={node.$id}>
 				<Text sx={{ pl: (node.level + 1) * p }}>
 					<Text variant="label">BM </Text>
 					{node.title}
@@ -89,6 +92,7 @@ interface IFolderActions {
 }
 export const FolderActions: FC<IFolderActions> = ({ node }) => {
 	const dispatch = useAppDispatch();
+	const [session] = useAtom(sessionAtom);
 	return (
 		<View
 			sx={{ position: "absolute", right: 0, flexDirection: "row", gap: 10 }}
@@ -106,8 +110,12 @@ export const FolderActions: FC<IFolderActions> = ({ node }) => {
 			)}
 			<Pressable
 				onPress={async () => {
-					const newFolder = await addFolderInAppwrite(node);
-					dispatch(bmShelfAction.addFolder(newFolder));
+					if (session?.userId) {
+						const newFolder = await addFolderInAppwrite(node, session?.userId);
+						if (newFolder !== undefined) {
+							dispatch(bmShelfAction.addFolder(newFolder));
+						}
+					}
 				}}
 				sx={{ bg: "secondary" }}
 			>
