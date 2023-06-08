@@ -3,30 +3,19 @@ import { makeTheme } from "dripsy";
 
 const commonConfig = makeTheme({
 	...customFontConfig,
-	space: {
-		$0: 0,
-		$1: 4,
-		$2: 8,
-		$3: 16,
-		$4: 32,
-		$5: 64,
-	},
+	space: { $0: 0, $1: 4, $2: 8, $3: 16, $4: 32, $5: 64 },
 	layout: {
-		center: {
-			alignItems: "center",
-			justifyContent: "center",
+		center: { alignItems: "center", justifyContent: "center" },
+		textInput: { bg: "secondary", py: 15, px: 20, borderRadius: 4 },
+		buttonContainer: { py: 15, px: 20, borderRadius: 4 },
+		narrowTile: {
+			borderTopWidth: 1,
+			borderBottomWidth: 1,
+			borderColor: "#333",
+			px: "$2",
+			py: "$1",
 		},
-		textInput: {
-			bg: "secondary",
-			py: 15,
-			px: 20,
-			borderRadius: 4,
-		},
-		buttonContainer: {
-			py: 15,
-			px: 20,
-			borderRadius: 4,
-		},
+		row: { flexDirection: "row", alignItems: "center" },
 	},
 });
 
@@ -56,9 +45,7 @@ export const darkTheme = makeTheme({
 		disabledButtonBg: ["#3B939A", "#2B6467"],
 	},
 	buttons: {
-		secondary: {
-			bg: "#2E3232",
-		},
+		secondary: { bg: "#2E3232" },
 	},
 	// textShadows: {
 	// 	onSomeContainer: {

@@ -8,7 +8,7 @@ interface IHeader {}
 export const Header: FC<IHeader> = ({}) => {
 	return (
 		<View sx={{ flexDirection: "row", justifyContent: "center" }}>
-			<View sx={{ alignItems: "center", flexDirection: "row", gap: 5 }}>
+			<View variant="layout.row" sx={{ gap: 5 }}>
 				<Svg
 					Svg={GoodCookie}
 					commonSvgProps={{ height: 30, width: 30, style: { top: -2 } }}

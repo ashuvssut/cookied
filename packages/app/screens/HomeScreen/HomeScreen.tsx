@@ -1,11 +1,9 @@
 import { useEffect } from "react";
-import { selectFoldersWithBookmarks } from "app/store/slices/bmShelfSlice";
-import { useAppSelector } from "app/store/hooks";
 import { resetReduxPersist_reload } from "app/utils/storage";
-import { FolderActions, TreeView } from "app/components/TreeView";
 import Screen from "app/components/Screen";
 import { Header } from "app/components/Header";
 import { View } from "dripsy";
+import { TreePanel } from "app/screens/HomeScreen/TreePanel";
 import { WebpageView } from "app/screens/HomeScreen/WebpageView";
 
 export default function HomeScreen() {
@@ -24,20 +22,5 @@ export default function HomeScreen() {
 				<WebpageView />
 			</View>
 		</Screen>
-	);
-}
-
-function TreePanel() {
-	const foldersWithBookmarks = useAppSelector(selectFoldersWithBookmarks);
-	return (
-		<View sx={{ flex: 1 }}>
-			<FolderActions node={null} />
-			<TreeView
-				treeData={{ nodes: foldersWithBookmarks.folders, rootLeafs: [] }}
-				// treeData={{ nodes: bookmarkState.folders, rootLeafs: [] }}
-				nodeArrKey="folders"
-				leafArrKey="bookmarks"
-			/>
-		</View>
 	);
 }

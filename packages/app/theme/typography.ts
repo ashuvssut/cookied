@@ -92,5 +92,11 @@ export const customFontConfig = makeTheme({
 			fontWeight: "600",
 			fontFamily: getFontFamStr("r600"),
 		},
+		overline: {
+			fontWeight: "600",
+			fontFamily: getFontFamStr("r600"),
+			textTransform: "uppercase",
+			fontSize: 12,
+		},
 	},
 });
