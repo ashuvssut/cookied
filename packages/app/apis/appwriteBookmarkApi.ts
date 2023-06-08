@@ -4,7 +4,7 @@
 // 1. use useQuery hook in useBmShelfStorage hook and return useQuery's loading and error states from the useBmShelfStorage hook to use them in any screen.
 // 2. use jotai's LoadingModal useAtom
 // 3. use React Native SnackBar from this hook only to show error messages
-import { Client, Databases, ID,Query } from "appwrite";
+import { Client, Databases, ID, Query } from "appwrite";
 
 import {
 	client,
@@ -38,6 +38,7 @@ export const addFolderInAppwrite = async (
 				type: rootNode.type,
 				path: rootNode.path,
 				level: rootNode.level,
+				title: rootNode.title,
 			};
 			console.log("DB ID", APPWRITE_DATABASE_ID, APPWRITE_FOLDER_COLLECTION_ID);
 			const response = await databases.createDocument(
@@ -85,6 +86,20 @@ export const getFoldersInAppwrite = async (userId: string) => {
 		return allFolders;
 	} catch (e) {
 		console.log("Error in getting all folders", e);
+	}
+};
+
+export const updateFolderInAppwrite = async (id: string, updateData) => {
+	try {
+		const updatedData = await databases.updateDocument(
+			APPWRITE_DATABASE_ID,
+			APPWRITE_FOLDER_COLLECTION_ID,
+			id,
+			JSON.stringify(updateData),
+		);
+		console.log("Updated Data", updatedData);
+	} catch (e) {
+		console.log("Error in updating folder", e);
 	}
 };
 
