@@ -11,6 +11,7 @@ type Props = {
 	title: string;
 	type: TModal;
 	onClose: () => void;
+	initialUrl?: string;
 };
 
 const ActionModal = (props: Props) => {
@@ -27,7 +28,10 @@ const ActionModal = (props: Props) => {
 	return (
 		<View sx={{ marginHorizontal: "$4", marginVertical: "$4" }}>
 			<Formik
-				initialValues={{ title: "", url: "" }}
+				initialValues={{
+					title: "",
+					url: props.initialUrl ? props.initialUrl : "",
+				}}
 				// validationSchema={loginSchema}
 				// validateOnMount
 				onSubmit={value => handleSubmit(value)}

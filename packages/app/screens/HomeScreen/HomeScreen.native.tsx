@@ -96,8 +96,11 @@ const HomeScreen = forwardRef((_, ref) => {
 	useFocusEffect(
 		useCallback(() => {
 			if (sharedData) {
-				console.log("I am running inside focused Effect", JSON.stringify(sharedData));
-				onOpen("add-bookmark")
+				console.log(
+					"I am running inside focused Effect",
+					JSON.stringify(sharedData),
+				);
+				onOpen("add-bookmark");
 			}
 		}, [sharedData]),
 	);
@@ -136,7 +139,23 @@ const HomeScreen = forwardRef((_, ref) => {
 				/>
 			);
 		}
-		return <ActionModal onClose={handleClose} type={modalType} title="Add Folder" />;
+		if (sharedData) {
+			return (
+				<ActionModal
+					initialUrl={sharedData as string}
+					onClose={handleClose}
+					type={modalType}
+					title="Add Folder"
+				/>
+			);
+		}
+		return (
+			<ActionModal
+				onClose={handleClose}
+				type={modalType}
+				title="Add Folder"
+			/>
+		);
 	};
 
 	const handleLoad = status => {
