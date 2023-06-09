@@ -1,4 +1,3 @@
-import { TModal } from "app/screens/HomeScreen/HomeScreen.native";
 import { View, Text, Image } from "dripsy";
 import {
 	Animated,
@@ -10,6 +9,12 @@ import {
 
 const { width, height: initialHeight } = Dimensions.get("window");
 
+export type TModal =
+	| "web-view"
+	| "add-bookmark"
+	| "edit-bookmark"
+	| "add-folder"
+	| "edit-folder";
 export interface IModalHeaderProps {
 	type: TModal;
 	url?: string;
@@ -62,9 +67,7 @@ const ModalHeader = (props: IModalHeaderProps) => {
 				>
 					<TouchableOpacity
 						hitSlop={30}
-						style={{
-							marginRight: 25,
-						}}
+						style={{ marginRight: 25 }}
 						onPress={props.handleClose}
 						activeOpacity={0.75}
 					>
@@ -73,9 +76,7 @@ const ModalHeader = (props: IModalHeaderProps) => {
 
 					<TouchableOpacity
 						hitSlop={30}
-						style={{
-							opacity: props.back ? 1 : 0.2,
-						}}
+						style={{ opacity: props.back ? 1 : 0.2 }}
 						onPress={props.handleBack}
 						disabled={!props.back}
 						activeOpacity={0.75}
