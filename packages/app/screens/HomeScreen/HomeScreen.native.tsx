@@ -5,8 +5,9 @@ import Screen from "app/components/Screen";
 import { Header } from "app/components/Header";
 import { View, Text, Image } from "dripsy";
 import { TreePanel } from "app/screens/HomeScreen/TreePanel";
-import { WebpageView } from "app/screens/HomeScreen/WebpageView";
 import { Modalize } from "react-native-modalize";
+import { useFocusEffect } from "expo-router";
+
 import {
 	Animated,
 	Dimensions,
@@ -17,6 +18,7 @@ import {
 import { WebView as RNWebView } from "react-native-webview";
 import ActionModal from "app/components/ActionModal";
 import ModalHeader from "app/components/ModalHeader";
+import { useSendIntent } from "app/hooks/useSendIntent";
 
 const { width, height: initialHeight } = Dimensions.get("window");
 const isAndroid = Platform.OS === "android";
@@ -82,6 +84,7 @@ const HomeScreen = forwardRef((_, ref) => {
 	const [documentHeight, setDocumentHeight] = useState(initialHeight);
 	const [modalType, setModalType] = useState<TModal>("web-view");
 	const height = isAndroid ? documentHeight : layoutHeight;
+	const { sharedData, sharedMimeType, sharedExtraData } = useSendIntent();
 
 	useEffect(() => {
 		window["reset"] = resetReduxPersist_reload;
@@ -90,8 +93,19 @@ const HomeScreen = forwardRef((_, ref) => {
 		// console.log(JSON.stringify(bookmarkState, null, 2));
 	}, []);
 
+	useFocusEffect(
+		useCallback(() => {
+			if (sharedData) {
+				console.log("I am running inside focused Effect", JSON.stringify(sharedData));
+				onOpen("add-bookmark")
+			}
+		}, [sharedData]),
+	);
+
 	const onOpen = (type: TModal) => {
-		setModalType("web-view");
+		if (type) {
+			setModalType(type);
+		}
 		modalizeRef.current?.open();
 	};
 
@@ -122,7 +136,7 @@ const HomeScreen = forwardRef((_, ref) => {
 				/>
 			);
 		}
-		return <ActionModal type={modalType} title="Add Folder" />;
+		return <ActionModal onClose={handleClose} type={modalType} title="Add Folder" />;
 	};
 
 	const handleLoad = status => {
