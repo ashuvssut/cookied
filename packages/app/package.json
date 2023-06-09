@@ -4,6 +4,7 @@
   "main": "index.ts",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
+    "@tanstack/react-query": "^4.29.12",
     "dripsy": "^4.3.3",
     "lodash": "^4.17.21",
     "moti": "latest",

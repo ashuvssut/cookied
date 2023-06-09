@@ -3651,6 +3651,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/netinfo@npm:^9.3.10":
+  version: 9.3.10
+  resolution: "@react-native-community/netinfo@npm:9.3.10"
+  peerDependencies:
+    react-native: ">=0.59"
+  checksum: b3d79a61de0b08d6174616facda21cdac35a07a8d63b7d1830212862eef208c204dec90d74b29e85a6e60adc89ea5b7adf19c612c39073cc8ad4050440b1085b
+  languageName: node
+  linkType: hard
+
 "@react-native/assets@npm:1.0.0":
   version: 1.0.0
   resolution: "@react-native/assets@npm:1.0.0"
@@ -4027,6 +4036,32 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   checksum: 71e0e27234590435e4c62b97ef5e796f88e786841a38c7116a5e27a3eafa7b9ead7cdec5249b32165902076de78446945311c973e59bddf77c1e24f33a8f272a
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-core@npm:4.29.11":
+  version: 4.29.11
+  resolution: "@tanstack/query-core@npm:4.29.11"
+  checksum: 2a17223f34e99e17d564a15206668eb79324da72e630a47cf41690f92fb091a8669bdc89e9ab1b0d8f0e3e8f579529cfb0aa6f10b4fc58ea81cc7e5caede9229
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^4.29.12":
+  version: 4.29.12
+  resolution: "@tanstack/react-query@npm:4.29.12"
+  dependencies:
+    "@tanstack/query-core": 4.29.11
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-native: "*"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: aea231af648688c5eafdbbda0667034221cca8b77e00690ab54950b7cc0296d14646931aee44fc5f18d5ce4d683b5d234b053eed5c0a5c340bbbacdab873a70b
   languageName: node
   linkType: hard
 
@@ -4985,6 +5020,7 @@ __metadata:
   dependencies:
     "@faker-js/faker": ^8.0.2
     "@reduxjs/toolkit": ^1.9.5
+    "@tanstack/react-query": ^4.29.12
     dripsy: ^4.3.3
     lodash: ^4.17.21
     moti: latest
@@ -12252,6 +12288,7 @@ __metadata:
     "@expo-google-fonts/poppins": ^0.2.3
     "@faker-js/faker": ^8.0.2
     "@react-native-async-storage/async-storage": ^1.18.1
+    "@react-native-community/netinfo": ^9.3.10
     "@types/react": ~18.0.27
     "@types/react-native": ~0.69.1
     "@types/react-native-share-menu": ^5.0.2
@@ -16505,7 +16542,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.0.0":
+"use-sync-external-store@npm:^1.0.0, use-sync-external-store@npm:^1.2.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:
