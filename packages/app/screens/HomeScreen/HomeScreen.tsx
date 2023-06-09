@@ -1,25 +1,28 @@
-import { useEffect } from "react";
-import { resetReduxPersist_reload } from "app/utils/storage";
 import Screen from "app/components/Screen";
 import { Header } from "app/components/Header";
-import { View, Text } from "dripsy";
 import { TreePanel } from "app/screens/HomeScreen/TreePanel";
+import { View } from "dripsy";
 import { WebpageView } from "app/screens/HomeScreen/WebpageView";
+import { Platform } from "react-native";
 
 export default function HomeScreen() {
-	useEffect(() => {
-		window["reset"] = resetReduxPersist_reload;
-		// window["addMany"] = execAddMany;
-		// window["addMany2"] = execAddManyFl;
-		// console.log(JSON.stringify(bookmarkState, null, 2));
-	}, []);
-
 	return (
 		<Screen>
-			<Header />
-			<View sx={{ flexDirection: "row" }}>
-				<TreePanel />
-				<WebpageView />
+			<View sx={{ height: "100%" }}>
+				<Header />
+				<View sx={{ flex: 1 }}>
+					{Platform.OS === "web" ? (
+						<View sx={{ flexDirection: "row" }}>
+							<TreePanel />
+							<WebpageView />
+						</View>
+					) : (
+						<>
+							<TreePanel />
+							<WebpageView />
+						</>
+					)}
+				</View>
 			</View>
 		</Screen>
 	);

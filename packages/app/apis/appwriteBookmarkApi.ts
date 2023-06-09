@@ -87,10 +87,7 @@ export const updateFolderInAppwrite = async (
 
 // CRUD BOOKMARKS
 type TBookmarkDocument = Models.Document & IBookmark;
-export const addBookmarkInAppwrite = async (
-	node: IFolder,
-	userId: string,
-): Promise<IBookmark> => {
+export const addBookmarkInAppwrite = async (node: IFolder, userId: string) => {
 	try {
 		const { $id: parentId, level, path } = node;
 		const bmObject = generateRandomBookmark(parentId, level, path);
