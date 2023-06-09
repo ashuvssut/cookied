@@ -15,14 +15,16 @@ export const MdOutlineBookmarkBorder = MdIcon("bookmark-border");
 // Typed Factory Functions
 type MdcProps = ComponentProps<typeof MaterialCommunityIcons>;
 function MdcIcon(name: MdcProps["name"]) {
-	return (props: Omit<MdcProps, "name">) => {
+	const _MdcIcon = (props: Omit<MdcProps, "name">) => {
 		return <MaterialCommunityIcons name={name} {...props} />;
 	};
+	return _MdcIcon;
 }
 
 type MdProps = ComponentProps<typeof MaterialIcons>;
 function MdIcon(name: MdProps["name"]) {
-	return (props: Omit<MdProps, "name">) => {
+	const _MdIcon = (props: Omit<MdProps, "name">) => {
 		return <MaterialIcons name={name} {...props} />;
 	};
+	return _MdIcon;
 }

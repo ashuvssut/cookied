@@ -29,7 +29,7 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 	const { onPrimary } = useDripsyTheme().theme.colors;
 	return (
 		<View {...props} sx={{ position: "absolute", right: "$3", ...props.sx }}>
-			<View sx={{ gap: 0, flexDirection: "row" }}>
+			<View sx={{ flexDirection: "row" }}>
 				{node && (
 					<Th.IconButton
 						onPress={async ({}) => {
