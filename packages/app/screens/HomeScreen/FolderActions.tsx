@@ -1,4 +1,4 @@
-import { Text, Pressable, View } from "dripsy";
+import { Text, Pressable, View, useDripsyTheme } from "dripsy";
 import { FC, useEffect } from "react";
 import { IFolder, bmShelfAction } from "app/store/slices/bmShelfSlice";
 import { useAppDispatch } from "app/store/hooks";
@@ -9,6 +9,10 @@ import {
 } from "app/apis/appwriteBookmarkApi";
 import { sessionAtom } from "app/store/slices/auth";
 import { useAtom } from "jotai";
+import {
+	MdOutlineBookmarkAdd,
+	MdOutlineCreateNewFolder,
+} from "app/assets/icons";
 
 interface IFolderActions {
 	node: IFolder | null;
@@ -21,39 +25,45 @@ export const FolderActions: FC<IFolderActions> = ({ node }) => {
 			getFoldersInAppwrite(session?.userId);
 		}
 	}, []);
+	const { onPrimary } = useDripsyTheme().theme.colors;
 	return (
-		<View variant="layout.row" sx={{ gap: 10 }}>
-			{node && (
+		<View sx={{ position: "absolute", right: "$3" }}>
+			<View sx={{ gap: 10, flexDirection: "row" }}>
+				{node && (
+					<Pressable
+						onPress={async () => {
+							if (session?.userId) {
+								const newBookmark = await addBookmarkInAppwrite(
+									node,
+									session?.userId,
+								);
+								if (newBookmark !== undefined) {
+									dispatch(bmShelfAction.addBookmark(newBookmark));
+								}
+							}
+						}}
+						sx={{ bg: "secondary", pr: "$3" }}
+					>
+						<MdOutlineBookmarkAdd size={16} color={onPrimary} />
+					</Pressable>
+				)}
 				<Pressable
 					onPress={async () => {
 						if (session?.userId) {
-							const newBookmark = await addBookmarkInAppwrite(
+							const newFolder = await addFolderInAppwrite(
 								node,
 								session?.userId,
 							);
-							if (newBookmark !== undefined) {
-								dispatch(bmShelfAction.addBookmark(newBookmark));
+							if (newFolder !== undefined) {
+								dispatch(bmShelfAction.addFolder(newFolder));
 							}
 						}
 					}}
-					sx={{ bg: "secondary" }}
+					sx={{ bg: "secondary", pr: "$3" }}
 				>
-					<Text>Add BM</Text>
+					<MdOutlineCreateNewFolder size={16} color={onPrimary} />
 				</Pressable>
-			)}
-			<Pressable
-				onPress={async () => {
-					if (session?.userId) {
-						const newFolder = await addFolderInAppwrite(node, session?.userId);
-						if (newFolder !== undefined) {
-							dispatch(bmShelfAction.addFolder(newFolder));
-						}
-					}
-				}}
-				sx={{ bg: "secondary" }}
-			>
-				<Text>Add FL</Text>
-			</Pressable>
+			</View>
 		</View>
 	);
 };

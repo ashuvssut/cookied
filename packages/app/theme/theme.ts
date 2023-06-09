@@ -3,10 +3,14 @@ import { makeTheme } from "dripsy";
 
 const commonConfig = makeTheme({
 	...customFontConfig,
-	// space: { $0: 0, $1: 4, $2: 8, $3: 16, $4: 32, $5: 64 },
-	// mathematical relationship between keys and values is: value = 2**key
 	space: { $0: 0, $1: 2, $2: 4, $3: 8, $4: 16, $5: 32 },
 	layout: {
+		secondary: {
+			bg: "secondary",
+			p: "$2",
+			borderWidth: 1,
+			borderColor: "#333",
+		},
 		center: { alignItems: "center", justifyContent: "center" },
 		textInput: { bg: "secondary", py: "$4", px: 20, borderRadius: 4 },
 		buttonContainer: { py: 15, px: 20, borderRadius: 4 },
