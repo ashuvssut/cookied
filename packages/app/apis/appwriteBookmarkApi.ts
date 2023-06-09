@@ -21,6 +21,7 @@ import {
 	cleanResponse,
 	cleanResponseIterative,
 } from "app/utils/factoryFunctions";
+import _ from "lodash";
 
 const databases = new Databases(client);
 
@@ -36,14 +37,15 @@ export const addFolderInAppwrite = async (
 			const { $id, level, path } = node;
 			return generateRandomFolder($id, level + 1, [...path, $id], true);
 		}
-		const { $updatedAt, $createdAt, $id, bookmarks, folders, ...folderData } =
-			getFolderObj();
-		const folderObject = { userId, ...folderData };
+		const folderData = _.omit(
+			getFolderObj(), //
+			["$updatedAt", "$createdAt", "$id", "bookmarks", "folders"],
+		);
 		const response = await databases.createDocument<TFolderDocument>(
 			APPWRITE_DATABASE_ID,
 			APPWRITE_FOLDER_COLLECTION_ID,
 			ID.unique(),
-			folderObject,
+			{ userId, ...folderData },
 		);
 
 		return cleanResponse(response);
@@ -85,21 +87,26 @@ export const updateFolderInAppwrite = async (
 
 // CRUD BOOKMARKS
 type TBookmarkDocument = Models.Document & IBookmark;
-export const addBookmarkInAppwrite = async (node: IFolder, userId: string) => {
+export const addBookmarkInAppwrite = async (
+	node: IFolder,
+	userId: string,
+): Promise<IBookmark> => {
 	try {
 		const { $id: parentId, level, path } = node;
-		const randomBookmark = generateRandomBookmark(parentId, level, path);
-		const bookmarkObject = { userId, ...randomBookmark };
-		const { $updatedAt, $createdAt, $id, ...bookmarkData } = bookmarkObject;
+		const bmObject = generateRandomBookmark(parentId, level, path);
+		const bookmarkData = _.omit(bmObject, ["$updatedAt", "$createdAt", "$id"]);
+
 		const response = await databases.createDocument<TBookmarkDocument>(
 			APPWRITE_DATABASE_ID,
 			APPWRITE_BOOKMARK_COLLECTION_ID,
 			ID.unique(),
-			bookmarkData,
+			{ userId, ...bookmarkData },
 		);
+
 		// console.log("RandomBookmark", randomBookmark);
 		return cleanResponse(response);
 	} catch (e) {
 		console.error("Error in creating new bookmark", e);
+		throw new Error("Error in creating new bookmark");
 	}
 };
