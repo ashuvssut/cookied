@@ -176,31 +176,19 @@ const ModalHeader = (props: IModalHeaderProps) => {
 					height: "100%",
 				}}
 			>
-				<TouchableOpacity
-					hitSlop={30}
-					style={{
-						marginRight: 25,
-					}}
-					onPress={props.handleClose}
-					activeOpacity={0.75}
-				>
-					<Image alt="Cross" source={require("app/assets/png/cross.png")} />
-				</TouchableOpacity>
 				<View
 					sx={{
 						flex: 1,
 						flexDirection: "row",
 						alignItems: "center",
-						marginRight: 40,
 						justifyContent: "center",
 					}}
 				>
 					<Text
 						sx={{
-							marginLeft: 4,
 							fontSize: 16,
 							textAlign: "center",
-							fontWeight: "300",
+							fontWeight: "500",
 							color: "#000000",
 						}}
 						numberOfLines={1}
@@ -208,6 +196,7 @@ const ModalHeader = (props: IModalHeaderProps) => {
 						{displayTitle()}
 					</Text>
 				</View>
+
 			</View>
 		</View>
 	);

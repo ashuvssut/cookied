@@ -122,18 +122,7 @@ const HomeScreen = forwardRef((_, ref) => {
 				/>
 			);
 		}
-		if (modalType === "add-folder") {
-			return <ActionModal title="Add Folder" />;
-		}
-		if (modalType === "edit-folder") {
-			return <ActionModal title="Edit Folder" />;
-		}
-		if (modalType === "add-bookmark") {
-			return <ActionModal title="Add Bookmark" />;
-		}
-		if (modalType === "edit-bookmark") {
-			return <ActionModal title="Edit Bookmark" />;
-		}
+		return <ActionModal type={modalType} title="Add Folder" />;
 	};
 
 	const handleLoad = status => {
@@ -219,8 +208,6 @@ const HomeScreen = forwardRef((_, ref) => {
 		setLayoutHeight(layout.height);
 	};
 
-	
-
 	const renderHeader = () => (
 		<ModalHeader
 			type={modalType}
@@ -232,7 +219,7 @@ const HomeScreen = forwardRef((_, ref) => {
 			handleClose={handleClose}
 			handleBack={handleBack}
 			handleForward={handleForward}
-		></ModalHeader>
+		/>
 	);
 
 	return (
