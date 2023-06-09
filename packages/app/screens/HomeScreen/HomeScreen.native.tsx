@@ -91,7 +91,7 @@ const HomeScreen = forwardRef((_, ref) => {
 	}, []);
 
 	const onOpen = (type: TModal) => {
-		setModalType("add-bookmark");
+		setModalType("web-view");
 		modalizeRef.current?.open();
 	};
 
@@ -107,7 +107,7 @@ const HomeScreen = forwardRef((_, ref) => {
 				<RNWebView
 					ref={webViewRef}
 					source={{
-						uri: "https://google.com",
+						uri: "https://blog.logrocket.com/best-practices-react-iframes/",
 					}}
 					onLoadStart={() => handleLoad("start")}
 					onLoadProgress={() => handleLoad("progress")}
@@ -115,8 +115,8 @@ const HomeScreen = forwardRef((_, ref) => {
 					onNavigationStateChange={handleNavigationStateChange}
 					onMessage={handleMessage}
 					startInLoadingState={true}
-					showsVerticalScrollIndicator={false}
-					scrollEnabled={false}
+					showsVerticalScrollIndicator={true}
+					scrollEnabled={true}
 					containerStyle={{ paddingBottom: 10 }}
 					style={{ height }}
 				/>
@@ -228,7 +228,6 @@ const HomeScreen = forwardRef((_, ref) => {
 				<Header />
 				<View sx={{ flexDirection: "row" }}>
 					<TreePanel />
-					<WebpageView />
 				</View>
 				<TouchableOpacity
 					activeOpacity={0.75}

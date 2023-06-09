@@ -17,8 +17,10 @@ export default function HomeScreen() {
 	return (
 		<Screen>
 			<Header />
-			<View sx={{ flexDirection: "row" }}>
-				<TreePanel />
+			<View sx={{ flexDirection: "row",flex:1 }}>
+				<View sx={{ flex: 3 }}>
+					<TreePanel />
+				</View>
 				<WebpageView />
 			</View>
 		</Screen>
