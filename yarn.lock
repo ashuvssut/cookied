@@ -4257,6 +4257,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4.14.195":
+  version: 4.14.195
+  resolution: "@types/lodash@npm:4.14.195"
+  checksum: 39b75ca635b3fa943d17d3d3aabc750babe4c8212485a4df166fe0516e39288e14b0c60afc6e21913cc0e5a84734633c71e617e2bd14eaa1cf51b8d7799c432e
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*":
   version: 18.15.5
   resolution: "@types/node@npm:18.15.5"
@@ -4979,6 +4986,7 @@ __metadata:
     "@faker-js/faker": ^8.0.2
     "@reduxjs/toolkit": ^1.9.5
     dripsy: ^4.3.3
+    lodash: ^4.17.21
     moti: latest
     nanoid: ^4.0.2
     react-icons: ^4.9.0
@@ -6334,6 +6342,7 @@ __metadata:
   resolution: "cookied@workspace:."
   dependencies:
     "@faker-js/faker": ^8.0.2
+    "@types/lodash": ^4.14.195
     "@types/react": ^18.0.17
     "@types/react-native": ^0.69.5
     eslint: ^8.21.0
