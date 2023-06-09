@@ -5,5 +5,5 @@ export {
 	MdOutlineBookmarkRemove,
 	MdFolder,
 	MdFolderOpen,
-	MdOutlineBookmark,
+	MdOutlineBookmarkBorder
 } from "react-icons/md";

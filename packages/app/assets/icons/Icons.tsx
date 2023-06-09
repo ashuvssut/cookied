@@ -10,7 +10,7 @@ export const MdOutlineCreateNewFolder = MdcIcon("folder-plus-outline");
 export const MdChevronRight = MdIcon("chevron-right");
 export const MdFolder = MdIcon("folder");
 export const MdFolderOpen = MdIcon("folder-open");
-export const MdOutlineBookmark = MdIcon("bookmark-outline");
+export const MdOutlineBookmarkBorder = MdIcon("bookmark-border");
 
 // Typed Factory Functions
 type MdcProps = ComponentProps<typeof MaterialCommunityIcons>;

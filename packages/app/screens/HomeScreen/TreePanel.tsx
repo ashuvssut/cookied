@@ -10,7 +10,11 @@ import { Text, View, useDripsyTheme } from "dripsy";
 import { userAtom } from "app/store/slices/auth";
 import { useAtom } from "jotai";
 import { FolderActions } from "app/screens/HomeScreen/FolderActions";
-import { MdFolder, MdFolderOpen, MdOutlineBookmark } from "app/assets/icons";
+import {
+	MdFolder,
+	MdFolderOpen,
+	MdOutlineBookmarkBorder,
+} from "app/assets/icons";
 import { bookmarkState } from "app/mock/bookmark";
 
 export function TreePanel() {
@@ -41,16 +45,11 @@ const TreePanelHeader = () => {
 	const whosBms = user[0]?.name ? `${user[0]?.name}'s` : "Your";
 	return (
 		<View
-			variants={["layout.narrowHzTile", "layout.row"]}
-			sx={{
-				borderTopWidth: 1,
-				borderBottomWidth: 1,
-				borderColor: "#333",
-				bg: "secondary",
-			}}
+			variants={["layout.narrowHzTile", "layout.row", "layout.secondary"]}
+			sx={{ borderLeftWidth: 0, borderRightWidth: 0, mb: "$2" }}
 		>
 			<Text variant="overline">{whosBms} Bookmarks</Text>
-			<FolderActions node={null} />
+			<FolderActions node={null} sx={{ py: "$0" }} />
 		</View>
 	);
 };
@@ -72,7 +71,7 @@ const Node: FC<INode> = memo(
 						<MdFolder size={16} color={onPrimary} />
 						{/* <MdFolderOpen size={14} color={onPrimary} /> */}
 					</View>
-					<Text>{node.title}</Text>
+					<Text sx={{ top: "$1" }}>{node.title}</Text>
 				</View>
 				<FolderActions node={node} />
 			</View>
@@ -94,9 +93,9 @@ const LeafNode: FC<ILeafNode> = memo(
 			>
 				<View variant="layout.row" sx={{ pl: node.level * p }}>
 					<View sx={{ pr: "$3" }}>
-						<MdOutlineBookmark size={16} color={onPrimary} />
+						<MdOutlineBookmarkBorder size={16} color={onPrimary} />
 					</View>
-					<Text>{node.title}</Text>
+					<Text sx={{ top: "$1" }}>{node.title}</Text>
 				</View>
 			</View>
 		);

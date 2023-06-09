@@ -1,5 +1,5 @@
-import { Text, Pressable, View, useDripsyTheme } from "dripsy";
-import { FC, useEffect } from "react";
+import { View, useDripsyTheme } from "dripsy";
+import { ComponentProps, FC, useEffect } from "react";
 import { IFolder, bmShelfAction } from "app/store/slices/bmShelfSlice";
 import { useAppDispatch } from "app/store/hooks";
 import {
@@ -13,11 +13,12 @@ import {
 	MdOutlineBookmarkAdd,
 	MdOutlineCreateNewFolder,
 } from "app/assets/icons";
+import { Th } from "app/theme/components";
 
-interface IFolderActions {
+interface IFolderActions extends ComponentProps<typeof View> {
 	node: IFolder | null;
 }
-export const FolderActions: FC<IFolderActions> = ({ node }) => {
+export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 	const dispatch = useAppDispatch();
 	const [session] = useAtom(sessionAtom);
 	useEffect(() => {
@@ -27,11 +28,11 @@ export const FolderActions: FC<IFolderActions> = ({ node }) => {
 	}, []);
 	const { onPrimary } = useDripsyTheme().theme.colors;
 	return (
-		<View sx={{ position: "absolute", right: "$3" }}>
-			<View sx={{ gap: 10, flexDirection: "row" }}>
+		<View {...props} sx={{ position: "absolute", right: "$3", ...props.sx }}>
+			<View sx={{ gap: 0, flexDirection: "row" }}>
 				{node && (
-					<Pressable
-						onPress={async () => {
+					<Th.IconButton
+						onPress={async ({}) => {
 							if (session?.userId) {
 								const newBookmark = await addBookmarkInAppwrite(
 									node,
@@ -42,12 +43,11 @@ export const FolderActions: FC<IFolderActions> = ({ node }) => {
 								}
 							}
 						}}
-						sx={{ bg: "secondary", pr: "$3" }}
 					>
-						<MdOutlineBookmarkAdd size={16} color={onPrimary} />
-					</Pressable>
+						<MdOutlineBookmarkAdd size={22} color={onPrimary} />
+					</Th.IconButton>
 				)}
-				<Pressable
+				<Th.IconButton
 					onPress={async () => {
 						if (session?.userId) {
 							const newFolder = await addFolderInAppwrite(
@@ -59,10 +59,9 @@ export const FolderActions: FC<IFolderActions> = ({ node }) => {
 							}
 						}
 					}}
-					sx={{ bg: "secondary", pr: "$3" }}
 				>
-					<MdOutlineCreateNewFolder size={16} color={onPrimary} />
-				</Pressable>
+					<MdOutlineCreateNewFolder size={22} color={onPrimary} />
+				</Th.IconButton>
 			</View>
 		</View>
 	);
