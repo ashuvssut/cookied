@@ -3,7 +3,7 @@ import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { resetReduxPersist_reload } from "app/utils/storage";
 import Screen from "app/components/Screen";
 import { Header } from "app/components/Header";
-import { View, Text } from "dripsy";
+import { View, Text, Image } from "dripsy";
 import { TreePanel } from "app/screens/HomeScreen/TreePanel";
 import { WebpageView } from "app/screens/HomeScreen/WebpageView";
 import { Modalize } from "react-native-modalize";
@@ -15,10 +15,18 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import { WebView as RNWebView } from "react-native-webview";
-import { useCombinedRefs } from "app/hooks/useCombinedRef";
+import ActionModal from "app/components/ActionModal";
+import ModalHeader from "app/components/ModalHeader";
 
 const { width, height: initialHeight } = Dimensions.get("window");
 const isAndroid = Platform.OS === "android";
+
+export type TModal =
+	| "web-view"
+	| "add-bookmark"
+	| "edit-bookmark"
+	| "add-folder"
+	| "edit-folder";
 
 const extractHostname = url => {
 	let hostname;
@@ -72,15 +80,59 @@ const HomeScreen = forwardRef((_, ref) => {
 	const progress = useRef(new Animated.Value(0)).current;
 	const [layoutHeight, setLayoutHeight] = useState(initialHeight);
 	const [documentHeight, setDocumentHeight] = useState(initialHeight);
+	const [modalType, setModalType] = useState<TModal>("web-view");
 	const height = isAndroid ? documentHeight : layoutHeight;
 
-	const onOpen = () => {
+	useEffect(() => {
+		window["reset"] = resetReduxPersist_reload;
+		// window["addMany"] = execAddMany;
+		// window["addMany2"] = execAddManyFl;
+		// console.log(JSON.stringify(bookmarkState, null, 2));
+	}, []);
+
+	const onOpen = (type: TModal) => {
+		setModalType("add-bookmark");
 		modalizeRef.current?.open();
 	};
 
 	const handleClose = () => {
 		if (modalizeRef.current) {
 			modalizeRef.current.close();
+		}
+	};
+
+	const renderModal = () => {
+		if (modalType === "web-view") {
+			return (
+				<RNWebView
+					ref={webViewRef}
+					source={{
+						uri: "https://google.com",
+					}}
+					onLoadStart={() => handleLoad("start")}
+					onLoadProgress={() => handleLoad("progress")}
+					onLoadEnd={() => handleLoad("end")}
+					onNavigationStateChange={handleNavigationStateChange}
+					onMessage={handleMessage}
+					startInLoadingState={true}
+					showsVerticalScrollIndicator={false}
+					scrollEnabled={false}
+					containerStyle={{ paddingBottom: 10 }}
+					style={{ height }}
+				/>
+			);
+		}
+		if (modalType === "add-folder") {
+			return <ActionModal title="Add Folder" />;
+		}
+		if (modalType === "edit-folder") {
+			return <ActionModal title="Edit Folder" />;
+		}
+		if (modalType === "add-bookmark") {
+			return <ActionModal title="Add Bookmark" />;
+		}
+		if (modalType === "edit-bookmark") {
+			return <ActionModal title="Edit Bookmark" />;
 		}
 	};
 
@@ -146,7 +198,6 @@ const HomeScreen = forwardRef((_, ref) => {
 				if (data.documentHeight !== 0) {
 					setDocumentHeight(data.documentHeight);
 				}
-
 				break;
 			}
 		}
@@ -168,109 +219,20 @@ const HomeScreen = forwardRef((_, ref) => {
 		setLayoutHeight(layout.height);
 	};
 
-	useEffect(() => {
-		window["reset"] = resetReduxPersist_reload;
-		// window["addMany"] = execAddMany;
-		// window["addMany2"] = execAddManyFl;
-		// console.log(JSON.stringify(bookmarkState, null, 2));
-	}, []);
+	
 
 	const renderHeader = () => (
-		<View
-			sx={{
-				height: 44,
-				borderBottomColor: "#c1c4c7",
-				borderBottomWidth: 1,
-				borderTopLeftRadius: 12,
-				borderTopRightRadius: 12,
-				overflow: "hidden",
-			}}
-		>
-			<View
-				style={{
-					flexDirection: "row",
-					alignItems: "center",
-					zIndex: 2,
-					paddingHorizontal: 12,
-					height: "100%",
-				}}
-			>
-				<TouchableOpacity
-					style={{ marginRight: 25 }}
-					onPress={handleClose}
-					activeOpacity={0.75}
-				>
-					{/* <Image source={require("../../assets/cross.png")} /> */}
-				</TouchableOpacity>
-
-				<TouchableOpacity
-					style={{ opacity: back ? 1 : 0.2 }}
-					onPress={handleBack}
-					disabled={!back}
-					activeOpacity={0.75}
-				>
-					{/* <Image source={require("../../assets/arrow.png")} /> */}
-				</TouchableOpacity>
-
-				<View
-					sx={{
-						flexDirection: "row",
-						alignItems: "center",
-						marginLeft: "auto",
-					}}
-				>
-					{secured && (<></>
-						// <Image
-						// 	sx={{ tintColor: "#31a14c" }}
-						// 	source={require("../../assets/lock.png")}
-						// />
-					)}
-					<Text
-						sx={{
-							marginLeft: 4,
-							fontSize: 16,
-							fontWeight: "500",
-							color: secured ? "#31a14c" : "#5a6266",
-						}}
-						numberOfLines={1}
-					>
-						{url}
-					</Text>
-				</View>
-
-				<TouchableOpacity
-					style={{ opacity: forward ? 1 : 0.2 }}
-					onPress={handleForward}
-					disabled={!forward}
-					activeOpacity={0.75}
-				>
-					{/* <Image source={require("../../assets/arrow.png")} /> */}
-				</TouchableOpacity>
-
-				<TouchableOpacity disabled>
-					{/* <Image source={require("../../assets/dots.png")} /> */}
-				</TouchableOpacity>
-			</View>
-
-			<Animated.View
-				style={
-					{
-						transform: [
-							{
-								translateX: progress.interpolate({
-									inputRange: [0, 0.2, 0.5, 1, 2],
-									outputRange: [-width, -width + 80, -width + 220, 0, 0],
-								}),
-							},
-						],
-						opacity: progress.interpolate({
-							inputRange: [0, 0.1, 1, 2],
-							outputRange: [0, 1, 1, 0],
-						}),
-					}
-				}
-			/>
-		</View>
+		<ModalHeader
+			type={modalType}
+			url={url}
+			secured={secured}
+			back={back}
+			forward={forward}
+			progress={progress}
+			handleClose={handleClose}
+			handleBack={handleBack}
+			handleForward={handleForward}
+		></ModalHeader>
 	);
 
 	return (
@@ -281,7 +243,10 @@ const HomeScreen = forwardRef((_, ref) => {
 					<TreePanel />
 					<WebpageView />
 				</View>
-				<TouchableOpacity activeOpacity={0.75} onPress={onOpen}>
+				<TouchableOpacity
+					activeOpacity={0.75}
+					onPress={() => onOpen("web-view")}
+				>
 					<Text>Open the modal</Text>
 				</TouchableOpacity>
 			</Screen>
@@ -293,22 +258,7 @@ const HomeScreen = forwardRef((_, ref) => {
 				adjustToContentHeight={true}
 				ref={modalizeRef}
 			>
-				<RNWebView
-					ref={webViewRef}
-					source={{
-						uri: "https://google.com",
-					}}
-					onLoadStart={() => handleLoad("start")}
-					onLoadProgress={() => handleLoad("progress")}
-					onLoadEnd={() => handleLoad("end")}
-					onNavigationStateChange={handleNavigationStateChange}
-					onMessage={handleMessage}
-					startInLoadingState={true}
-					showsVerticalScrollIndicator={false}
-					scrollEnabled={false}
-					containerStyle={{ paddingBottom: 10 }}
-					style={{ height }}
-				/>
+				{renderModal()}
 			</Modalize>
 		</>
 	);
