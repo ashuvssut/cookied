@@ -11,16 +11,12 @@ export const WebpageView: FC<IProps> = ({}) => {
 	// screen size switching: panel mode vs modal mode
 	return (
 		<View sx={{ backgroundColor: "active", flex: 7 }}>
-			<iframe style={{flex:1,border:"none",backgroundColor:"yellow"}} loading='eager' sandbox='allow-scripts allow-modal' src="https://blog.logrocket.com/best-practices-react-iframes/"></iframe>
+			<iframe
+				style={{ flex: 1, border: "none", backgroundColor: "yellow" }}
+				loading="eager"
+				sandbox="allow-scripts allow-modal"
+				src="https://blog.logrocket.com/best-practices-react-iframes/"
+			></iframe>
 		</View>
 	);
-};
-
-const WebpageViewModal: FC<IProps> = ({}) => {
-	// modal design
-	return <></>;
-};
-const WebpageViewPanel: FC<IProps> = ({}) => {
-	// panel design
-	return <></>;
 };

@@ -1,11 +1,9 @@
 /* eslint-disable react/display-name */
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
-import { resetReduxPersist_reload } from "app/utils/storage";
 import Screen from "app/components/Screen";
 import { Header } from "app/components/Header";
 import { View, Text, Image } from "dripsy";
 import { TreePanel } from "app/screens/HomeScreen/TreePanel";
-import { WebpageView } from "app/screens/HomeScreen/WebpageView";
 import { Modalize } from "react-native-modalize";
 import {
 	Animated,
@@ -69,7 +67,7 @@ const documentHeightCallbackScript = `
   });
 `;
 
-const HomeScreen = forwardRef((_, ref) => {
+export const WebpageView = forwardRef((_, ref) => {
 	const modalizeRef = useRef<Modalize>(null);
 	const webViewRef = useRef<RNWebView>(null);
 	const [url, setUrl] = useState("");
@@ -83,15 +81,8 @@ const HomeScreen = forwardRef((_, ref) => {
 	const [modalType, setModalType] = useState<TModal>("web-view");
 	const height = isAndroid ? documentHeight : layoutHeight;
 
-	useEffect(() => {
-		window["reset"] = resetReduxPersist_reload;
-		// window["addMany"] = execAddMany;
-		// window["addMany2"] = execAddManyFl;
-		// console.log(JSON.stringify(bookmarkState, null, 2));
-	}, []);
-
 	const onOpen = (type: TModal) => {
-		setModalType("web-view");
+		setModalType(type);
 		modalizeRef.current?.open();
 	};
 
@@ -122,7 +113,18 @@ const HomeScreen = forwardRef((_, ref) => {
 				/>
 			);
 		}
-		return <ActionModal type={modalType} title="Add Folder" />;
+		if (modalType === "add-folder") {
+			return <ActionModal title="Add Folder" type="add-folder" />;
+		}
+		if (modalType === "edit-folder") {
+			return <ActionModal title="Edit Folder" type="edit-folder" />;
+		}
+		if (modalType === "add-bookmark") {
+			return <ActionModal title="Add Bookmark" type="add-bookmark" />;
+		}
+		if (modalType === "edit-bookmark") {
+			return <ActionModal title="Edit Bookmark" type="edit-bookmark" />;
+		}
 	};
 
 	const handleLoad = status => {
@@ -221,21 +223,16 @@ const HomeScreen = forwardRef((_, ref) => {
 			handleForward={handleForward}
 		/>
 	);
-
 	return (
 		<>
-			<Screen>
-				<Header />
-				<View sx={{ flexDirection: "row" }}>
-					<TreePanel />
-				</View>
-				<TouchableOpacity
-					activeOpacity={0.75}
-					onPress={() => onOpen("web-view")}
-				>
-					<Text>Open the modal</Text>
-				</TouchableOpacity>
-			</Screen>
+			<TouchableOpacity
+				activeOpacity={0.75}
+				onPress={() => onOpen("web-view")}
+				style={{ position: "absolute", top: 100 }}
+			>
+				<Text>Open the modal</Text>
+			</TouchableOpacity>
+
 			<Modalize
 				HeaderComponent={renderHeader()}
 				// modalHeight={100}
@@ -249,5 +246,3 @@ const HomeScreen = forwardRef((_, ref) => {
 		</>
 	);
 });
-
-export default HomeScreen;
