@@ -40,15 +40,37 @@ const _ButtonPrimary: FCC<PressableProps> = props => {
 	);
 };
 
+const _ButtonSecondary: FCC<PressableProps> = props => {
+	const linearGradients = useDripsyTheme().theme.linearGradients;
+	const color = props.disabled ? "onInactive" : "onPrimary";
+	return (
+		<Pressable {...props} style={ss.pressable}>
+			<LinearGradient
+				colors={linearGradients.secondaryButtonBg}
+				start={[0, 0.5]}
+				end={[1, 0.5]}
+				style={{ height: "100%", width: "100%", position: "absolute" }}
+			/>
+			<View variant="layout.buttonContainer">
+				<Text sx={{ textAlign: "center", color }}>{props.children}</Text>
+			</View>
+		</Pressable>
+	);
+};
+
 export const Th = () => null;
 Th.TextInput = _TextInput;
 Th.ButtonPrimary = _ButtonPrimary;
+Th.ButtonSecondary = _ButtonSecondary;
 
 const ss = StyleSheet.create({
 	pressable: {
 		overflow: "hidden",
 		borderRadius: 4,
 		marginBottom: 4,
+		justifyContent: "center",
+		alignItems: "center",
+		maxHeight: 50,
 		marginTop: 16,
 	},
 });

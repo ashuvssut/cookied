@@ -91,7 +91,7 @@ const HomeScreen = forwardRef((_, ref) => {
 	}, []);
 
 	const onOpen = (type: TModal) => {
-		setModalType("add-bookmark");
+		setModalType("web-view");
 		modalizeRef.current?.open();
 	};
 
@@ -107,7 +107,7 @@ const HomeScreen = forwardRef((_, ref) => {
 				<RNWebView
 					ref={webViewRef}
 					source={{
-						uri: "https://google.com",
+						uri: "https://blog.logrocket.com/best-practices-react-iframes/",
 					}}
 					onLoadStart={() => handleLoad("start")}
 					onLoadProgress={() => handleLoad("progress")}
@@ -115,25 +115,14 @@ const HomeScreen = forwardRef((_, ref) => {
 					onNavigationStateChange={handleNavigationStateChange}
 					onMessage={handleMessage}
 					startInLoadingState={true}
-					showsVerticalScrollIndicator={false}
-					scrollEnabled={false}
+					showsVerticalScrollIndicator={true}
+					scrollEnabled={true}
 					containerStyle={{ paddingBottom: 10 }}
 					style={{ height }}
 				/>
 			);
 		}
-		if (modalType === "add-folder") {
-			return <ActionModal title="Add Folder" />;
-		}
-		if (modalType === "edit-folder") {
-			return <ActionModal title="Edit Folder" />;
-		}
-		if (modalType === "add-bookmark") {
-			return <ActionModal title="Add Bookmark" />;
-		}
-		if (modalType === "edit-bookmark") {
-			return <ActionModal title="Edit Bookmark" />;
-		}
+		return <ActionModal type={modalType} title="Add Folder" />;
 	};
 
 	const handleLoad = status => {
@@ -219,8 +208,6 @@ const HomeScreen = forwardRef((_, ref) => {
 		setLayoutHeight(layout.height);
 	};
 
-	
-
 	const renderHeader = () => (
 		<ModalHeader
 			type={modalType}
@@ -232,7 +219,7 @@ const HomeScreen = forwardRef((_, ref) => {
 			handleClose={handleClose}
 			handleBack={handleBack}
 			handleForward={handleForward}
-		></ModalHeader>
+		/>
 	);
 
 	return (
@@ -241,7 +228,6 @@ const HomeScreen = forwardRef((_, ref) => {
 				<Header />
 				<View sx={{ flexDirection: "row" }}>
 					<TreePanel />
-					<WebpageView />
 				</View>
 				<TouchableOpacity
 					activeOpacity={0.75}
