@@ -16,7 +16,7 @@ const ScrollScreen = ({ children, setTopInset }: Props) => {
 			<View
 				sx={{
 					flex: 1,
-					px: "$3",
+					px: "$4",
 					pt: setTopInset ? inset.top : 0,
 					minHeight: setTopInset ? height + inset.top : height,
 					bg: "background",

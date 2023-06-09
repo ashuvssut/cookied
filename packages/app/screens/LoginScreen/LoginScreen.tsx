@@ -20,7 +20,7 @@ const LoginScreen = () => {
 				<StatusBar style="light" />
 				<Header />
 				<View
-					sx={{ px: "$4", flex: 1, maxWidth: 700, width: [null, 600, 700] }}
+					sx={{ px: "$5", flex: 1, maxWidth: 700, width: [null, 600, 700] }}
 				>
 					<View
 						sx={{ alignItems: "center", justifyContent: "center", flex: 0.4 }}
@@ -87,12 +87,12 @@ const LoginScreen = () => {
 									</Th.ButtonPrimary>
 									<View
 										sx={{
-											my: "$2",
+											my: "$3",
 											flexDirection: "row",
 											justifyContent: "center",
 										}}
 									>
-										<Text sx={{ textAlign: "center", py: "$2" }}>
+										<Text sx={{ textAlign: "center", py: "$3" }}>
 											Don have an account?{" "}
 											<TextLink href="/register">
 												<Text variant="link">Sign Up</Text>

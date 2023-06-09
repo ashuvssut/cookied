@@ -109,7 +109,7 @@ const RegisterScreen = () => {
 								>
 									Sign Up
 								</Th.ButtonPrimary>
-								<Text sx={{ textAlign: "center", py: "$2" }}>
+								<Text sx={{ textAlign: "center", py: "$3" }}>
 									Already have an account?{" "}
 									<TextLink href="/login">
 										<Text variant="link">Log In</Text>
