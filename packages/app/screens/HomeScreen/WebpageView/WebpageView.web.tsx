@@ -17,7 +17,7 @@ export const WebpageView: FC = ({}) => {
 					height: "100%",
 				}}
 				loading="eager"
-				sandbox="allow-scripts allow-modal"
+				sandbox="allow-modals"
 				src="https://blog.logrocket.com/best-practices-react-iframes/"
 			/>
 		</View>
