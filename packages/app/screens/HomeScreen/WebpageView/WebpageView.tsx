@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { forwardRef, useRef, useState } from "react";
+import { forwardRef, useCallback, useRef, useState } from "react";
 import { Text } from "dripsy";
 import { Modalize } from "react-native-modalize";
 import { Animated, TouchableOpacity } from "react-native";
@@ -7,6 +7,8 @@ import ActionModal from "app/components/ActionModal";
 import ModalHeader, { TModal } from "app/components/ModalHeader";
 import { RNWebView } from "app/components/WebView";
 import { IRNWebViewRefProps } from "app/components/WebView/WebView.native";
+import { useSendIntent } from "app/hooks/useSendIntent";
+import { useFocusEffect } from "expo-router";
 
 export const WebpageView = forwardRef((_, ref) => {
 	const modalizeRef = useRef<Modalize>(null);
@@ -16,6 +18,21 @@ export const WebpageView = forwardRef((_, ref) => {
 	const [forward, setForward] = useState(false);
 	const [modalType, setModalType] = useState<TModal>("web-view");
 	const progress = useRef(new Animated.Value(0));
+
+	const onOpen = (type: TModal) => {
+		setModalType(type);
+		modalizeRef.current?.open();
+	};
+	const closeModal = () => {
+		modalizeRef.current?.close();
+	};
+
+	const { sharedData } = useSendIntent();
+	useFocusEffect(
+		useCallback(() => {
+			if (sharedData) onOpen("add-bookmark");
+		}, [sharedData]),
+	);
 
 	const webViewRef = useRef<IRNWebViewRefProps>(null);
 	const renderModal = () => {
@@ -34,35 +51,65 @@ export const WebpageView = forwardRef((_, ref) => {
 				/>
 			);
 		}
-		if (modalType === "add-folder") {
-			return <ActionModal title="Add Folder" type="add-folder" />;
+		if (modalType === "add-bookmark") {
+			if (sharedData) {
+				return (
+					<ActionModal
+						initialUrl={sharedData as string}
+						title="Add Bookmark"
+						type={modalType}
+						onClose={closeModal}
+					/>
+				);
+			}
+			return (
+				<ActionModal
+					title="Add Bookmark"
+					type={modalType}
+					onClose={closeModal}
+				/>
+			);
 		}
 		if (modalType === "edit-folder") {
-			return <ActionModal title="Edit Folder" type="edit-folder" />;
+			return (
+				<ActionModal
+					title="Edit Folder"
+					type="edit-folder"
+					onClose={closeModal}
+				/>
+			);
 		}
-		if (modalType === "add-bookmark") {
-			return <ActionModal title="Add Bookmark" type="add-bookmark" />;
+		if (modalType === "add-folder") {
+			return (
+				<ActionModal
+					title="Add Folder"
+					type="add-folder"
+					onClose={closeModal}
+				/>
+			);
 		}
 		if (modalType === "edit-bookmark") {
-			return <ActionModal title="Edit Bookmark" type="edit-bookmark" />;
+			return (
+				<ActionModal
+					title="Edit Bookmark"
+					type="edit-bookmark"
+					onClose={closeModal}
+				/>
+			);
 		}
 	};
 
-	const onOpen = (type: TModal) => {
-		setModalType(type);
-		modalizeRef.current?.open();
-	};
 	const renderHeader = () => (
 		<ModalHeader
 			type={modalType}
 			url={url}
 			secured={secured}
 			back={back}
-			forward={forward}
-			progress={progress.current}
-			handleClose={modalizeRef.current?.close}
 			handleBack={webViewRef.current?.goBack}
+			forward={forward}
 			handleForward={webViewRef.current?.goForward}
+			progress={progress.current}
+			handleClose={closeModal}
 		/>
 	);
 	return (
@@ -76,13 +123,13 @@ export const WebpageView = forwardRef((_, ref) => {
 			</TouchableOpacity>
 
 			<Modalize
+				ref={modalizeRef}
+				HeaderComponent={renderHeader()}
+				adjustToContentHeight={true}
 				// modalHeight={100}
 				// snapPoint={100}
 				// modalTopOffset={200}
-				HeaderComponent={renderHeader()}
-				adjustToContentHeight={true}
-				ref={modalizeRef}
-y			>
+			>
 				{renderModal()}
 			</Modalize>
 		</>
