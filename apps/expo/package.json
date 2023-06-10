@@ -6,6 +6,7 @@
     "@expo-google-fonts/poppins": "^0.2.3",
     "@react-native-async-storage/async-storage": "^1.18.1",
     "@react-native-community/netinfo": "^9.3.10",
+    "@react-navigation/drawer": "^6.6.2",
     "app": "*",
     "appwrite": "^11.0.0",
     "asyncstorage-inspector-flipper": "^1.0.2",

@@ -27,7 +27,7 @@ function useProtectedRoute() {
 			// router.replace("/verify");
 			solitoRouter.replace({ pathname: "/" });
 		}
-	}, [isAuthenticated, segments]);
+	}, [isAuthenticated, segments, solitoRouter]);
 }
 
 export const ProtectedRoute: FCC = ({ children }) => {
