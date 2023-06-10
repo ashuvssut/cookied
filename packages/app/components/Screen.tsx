@@ -1,4 +1,4 @@
-import { useSafeArea } from "./SafeArea/useSafeArea";
+import { useSafeArea } from "./SafeArea";
 import { FCC } from "app/types/IReact";
 import { View } from "dripsy";
 import { ComponentProps } from "react";

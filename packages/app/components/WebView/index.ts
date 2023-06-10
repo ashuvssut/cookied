@@ -1,1 +1,1 @@
-export { RNWebView } from "./WebView.native";
+export { RNWebView, IRNWebViewRefProps } from "./WebView";

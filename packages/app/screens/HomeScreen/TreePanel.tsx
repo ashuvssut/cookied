@@ -25,7 +25,7 @@ export function TreePanel() {
 	return (
 		<View sx={{ flex: 1, minWidth: 400, maxWidth: 500 }}>
 			<TreePanelHeader />
-			<ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
+			<ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
 				<TreeView
 					// treeData={{
 					// 	nodes: foldersWithBookmarks.folders,

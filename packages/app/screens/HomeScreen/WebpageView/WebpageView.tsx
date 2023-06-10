@@ -6,7 +6,7 @@ import { Animated, TouchableOpacity } from "react-native";
 import ActionModal from "app/components/ActionModal";
 import ModalHeader, { TModal } from "app/components/ModalHeader";
 import { RNWebView } from "app/components/WebView";
-import { IRNWebViewRefProps } from "app/components/WebView/WebView.native";
+import { IRNWebViewRefProps } from "app/components/WebView";
 import { useSendIntent } from "app/hooks/useSendIntent";
 import { useFocusEffect } from "expo-router";
 
