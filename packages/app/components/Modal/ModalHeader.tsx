@@ -1,13 +1,7 @@
 import { View, Text, Image } from "dripsy";
-import {
-	Animated,
-	Dimensions,
-	Easing,
-	Platform,
-	TouchableOpacity,
-} from "react-native";
+import { Animated, Dimensions, TouchableOpacity } from "react-native";
 
-const { width, height: initialHeight } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export type TModal =
 	| "web-view"
@@ -27,7 +21,7 @@ export interface IModalHeaderProps {
 	handleForward?: () => void;
 }
 
-const ModalHeader = (props: IModalHeaderProps) => {
+export const ModalHeader = (props: IModalHeaderProps) => {
 	const displayTitle = () => {
 		if (props.type === "add-folder") {
 			return "ADD FOLDER";
@@ -197,4 +191,3 @@ const ModalHeader = (props: IModalHeaderProps) => {
 		</View>
 	);
 };
-export default ModalHeader;
