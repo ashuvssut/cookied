@@ -12,7 +12,7 @@ export default function HomeScreen() {
 				<Header />
 				<View sx={{ flex: 1 }}>
 					{Platform.OS === "web" ? (
-						<View sx={{ flexDirection: "row" }}>
+						<View sx={{ flexDirection: "row", height: "100vh" }}>
 							<TreePanel />
 							<WebpageView />
 						</View>

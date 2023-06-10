@@ -2,7 +2,7 @@ import { View } from "dripsy";
 import React from "react";
 import { Formik } from "formik";
 import { Th } from "app/theme/components";
-import { TModal } from "app/screens/HomeScreen/HomeScreen.native";
+import { TModal } from "app/components/ModalHeader";
 
 type Props = {
 	title: string;

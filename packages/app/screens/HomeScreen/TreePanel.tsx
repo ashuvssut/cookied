@@ -23,7 +23,7 @@ import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
 export function TreePanel() {
 	const foldersWithBookmarks = useAppSelector(selectFoldersWithBookmarks);
 	return (
-		<View sx={{ flex: 1, minWidth: 400 }}>
+		<View sx={{ flex: 1, minWidth: 400, maxWidth: 500 }}>
 			<TreePanelHeader />
 			<ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
 				<TreeView

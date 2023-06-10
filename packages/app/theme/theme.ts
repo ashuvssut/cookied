@@ -28,15 +28,20 @@ const commonColors = {
 export const darkTheme = makeTheme({
 	...commonConfig,
 	colors: {
+		// background colors
 		primary: "#000000",
-		onPrimary: "#FFFFFF",
-		secondary: "#1D1B1B",
-		active: "#262626",
-		onInactive: "#A3A3A3",
 		surface: "#191919",
 		surfaceHigh: "#232323",
+		secondary: "#1D1B1B",
+
+		// text colors
+		onPrimary: "#FFFFFF",
+		onInactive: "#A3A3A3",
 		placeholder: "#565454",
 		link: "#C1C1C1",
+
+		// border and other highlight colors
+		outline: "#0078d4",
 		...commonColors,
 	},
 	linearGradients: {

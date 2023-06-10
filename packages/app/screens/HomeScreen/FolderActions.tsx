@@ -46,7 +46,10 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 						<MdOutlineBookmarkAdd size={22} color={onPrimary} />
 					</IconButton>
 				)}
-				<IconButton onPress={() => addFl(node)}>
+				<IconButton
+					onPress={() => addFl(node)}
+					sx={{ borderColor: !node ? "outline" : undefined }}
+				>
 					<MdOutlineCreateNewFolder size={22} color={onPrimary} />
 				</IconButton>
 			</View>
