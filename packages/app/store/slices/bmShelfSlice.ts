@@ -8,6 +8,7 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../types";
 import { convertToDenormalized } from "app/store/utils/bmShelfUtils";
+import logr from "app/utils/logr";
 
 const foldersAdapter = createEntityAdapter<IFolder>({
 	selectId: folder => folder.$id,
@@ -73,12 +74,41 @@ export default bmShelfSlice.reducer;
 // export const { selectAll: selectAllBookmarks } =
 // 	bookmarksAdapter.getSelectors<RootState>(state => state.bmShelf.bookmarks);
 
-export const selectFoldersWithBookmarks = createSelector(
+export const selectDenormalizedBmShelf = createSelector(
 	(state: RootState) => state.bmShelf,
-	(shelf: TBmShelf) => {
+	shelf => {
 		const bookmarkEntities = shelf.bookmarks.entities;
 		const folderEntities = shelf.folders.entities;
 		return { folders: convertToDenormalized(folderEntities, bookmarkEntities) }; // denormalizedJson;
+	},
+);
+
+export const selectFlPaths = createSelector(
+	(state: RootState) => state.bmShelf.folders,
+	folders => {
+		const folderEntities = folders.entities;
+		const flPaths = Object.values(folderEntities).map(folder => {
+			if (!folder) logr.warn("selectFlPaths: folder is undefined");
+			return folder?.path || [];
+		});
+		return flPaths;
+	},
+);
+
+export const selectFlPathsWithTitles = createSelector(
+	selectFlPaths,
+	(state: RootState) => state.bmShelf.folders,
+	(paths, folders) => {
+		const folderEntities = folders.entities;
+		// convert path id array to their respective path title array
+		const flPathsWithTitles = paths.map(path =>
+			path.map(id => {
+				const folder = folderEntities[id];
+				if (!folder) logr.warn("selectFlPathsWithTitles: folder is undefined");
+				return folder?.title || "";
+			}),
+		);
+		return flPathsWithTitles.join("/");
 	},
 );
 

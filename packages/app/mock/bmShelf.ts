@@ -2,10 +2,6 @@ import { faker } from "@faker-js/faker";
 import { IBookmark, IFolder } from "app/store/slices/bmShelfSlice";
 import _ from "lodash";
 
-// function getPathId(type: string, level: number, parentId: string) {
-// 	return `${type}#${level}#${parentId}`;
-// }
-
 export function generateRandomBookmark(
 	parentId: string,
 	level: number,
@@ -93,8 +89,13 @@ export function generateFolderForApi(node: IFolder | null) {
 		const { $id, level, path } = node;
 		return generateRandomFolder($id, level + 1, [...path, $id], true);
 	}
+
+	const flData = getFolderObj();
+	const pathCopy = [...flData.path];
+	pathCopy.pop();
+	flData.path = pathCopy;
 	const folderData = _.omit(
-		getFolderObj(), //
+		flData, //
 		["$updatedAt", "$createdAt", "$id", "bookmarks", "folders"],
 	);
 
@@ -104,6 +105,9 @@ export function generateFolderForApi(node: IFolder | null) {
 export function generateBookmarkForApi(node: IFolder) {
 	const { $id: parentId, level, path } = node;
 	const bmObject = generateRandomBookmark(parentId, level, path);
+	const pathCopy = [...path];
+	pathCopy.pop();
+	bmObject.path = pathCopy;
 	const bookmarkData = _.omit(bmObject, ["$updatedAt", "$createdAt", "$id"]);
 	return bookmarkData;
 }
