@@ -49,6 +49,7 @@ export const darkTheme = makeTheme({
 		primaryButtonBg: ["#B313DB", "#FF00B8"],
 		secondaryButtonBg: ["#3B939A", "#2B6467"],
 		disabledButtonBg: ["#3B939A", "#2B6467"],
+		menuBackground:['#647DEE','#7F53AC']
 	},
 	buttons: {
 		secondary: { bg: "#2E3232" },
