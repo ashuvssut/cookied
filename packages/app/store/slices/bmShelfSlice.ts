@@ -89,7 +89,9 @@ export const selectFlPaths = createSelector(
 		const folderEntities = folders.entities;
 		const flPaths = Object.values(folderEntities).map(folder => {
 			if (!folder) logr.warn("selectFlPaths: folder is undefined");
-			return folder?.path || [];
+			const folderPath = folder?.path || [];
+			if (folder?.$id) folderPath.push(folder.$id);
+			return folderPath;
 		});
 		return flPaths;
 	},
@@ -101,14 +103,17 @@ export const selectFlPathsWithTitles = createSelector(
 	(paths, folders) => {
 		const folderEntities = folders.entities;
 		// convert path id array to their respective path title array
-		const flPathsWithTitles = paths.map(path =>
-			path.map(id => {
+		const flPathsWithTitles = paths.map(path => {
+			const pathCopy = [...path].slice(1); // slice(1) removes "root" from path array
+			const titlePath = pathCopy.map(id => {
 				const folder = folderEntities[id];
 				if (!folder) logr.warn("selectFlPathsWithTitles: folder is undefined");
 				return folder?.title || "";
-			}),
-		);
-		return flPathsWithTitles.join("/");
+			});
+			const id = path[path.length - 1]!; // last folder's id
+			return { path: titlePath.join(" > "), id, pathArr: pathCopy };
+		});
+		return flPathsWithTitles;
 	},
 );
 

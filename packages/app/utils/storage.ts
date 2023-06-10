@@ -28,6 +28,11 @@ export function resetPersistedStorages() {
 	persistStore(store).purge();
 }
 
+export function logout() {
+	resetPersistedStorages();
+	store.dispatch({ type: "USER_LOGOUT" });
+}
+
 export function resetReduxPersist_reload() {
 	persistStore(store).purge();
 	if (Platform.OS === "web") location.reload();

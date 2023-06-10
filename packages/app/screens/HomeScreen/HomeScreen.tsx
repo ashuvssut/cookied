@@ -11,7 +11,6 @@ const { width } = Dimensions.get("window");
 
 export default function HomeScreen() {
 	// const fadeInDown = useFadeInDown();
-
 	const scaleIn = useAnimationState({
 		to: { opacity: 1 },
 		from: { opacity: 0.9 },
