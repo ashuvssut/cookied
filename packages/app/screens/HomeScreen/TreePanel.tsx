@@ -1,9 +1,9 @@
 /* eslint-disable react/display-name */
-import { FC, createContext, memo, useState } from "react";
+import { FC, memo } from "react";
 import {
 	IBookmark,
 	IFolder,
-	selectFoldersWithBookmarks,
+	selectDenormalizedBmShelf,
 } from "app/store/slices/bmShelfSlice";
 import { useAppSelector } from "app/store/hooks";
 import { TreeView } from "app/components/TreeView";
@@ -21,7 +21,7 @@ import { ScrollView } from "react-native";
 import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
 
 export function TreePanel() {
-	const foldersWithBookmarks = useAppSelector(selectFoldersWithBookmarks);
+	const foldersWithBookmarks = useAppSelector(selectDenormalizedBmShelf);
 	return (
 		<View sx={{ flex: 1, minWidth: 400, maxWidth: 500 }}>
 			<TreePanelHeader />

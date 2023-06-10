@@ -4,7 +4,7 @@ import { ActivityIndicator, View } from "dripsy";
 export const WebpageView: FC = ({}) => {
 	// screen size switching: panel mode vs modal mode
 	return (
-		<View variant="layout.center" sx={{ bg: "surface", flex: 1 }}>
+		<View variants={["layout.center", "layout.secondary"]} sx={{ flex: 1 }}>
 			<ActivityIndicator size="large" />
 			<iframe
 				style={{

@@ -16,27 +16,26 @@ export function convertToDenormalized(
 		}
 		return result;
 	}
-
 	const result: IFolder[] = [];
 	for (const flId in flEntities) {
 		const fl = flEntities[flId]!;
 		if (fl.parentId === parentId && !visitedIds.has(fl.$id)) {
 			visitedIds.add(fl.$id);
 			const newFl = { ...fl };
-			const newPathId = [...pathId, fl.$id];
 			const children = convertToDenormalized(
 				flEntities,
 				bmEntities,
 				fl.$id,
 				visitedIds,
-				newPathId,
+				[...pathId, fl.$id],
 			);
 			if (children.length > 0) {
 				newFl.folders = children;
 			}
 
 			newFl.bookmarks = getBookmarksByPathId(newFl.$id);
-			newFl.path = ["root", ...newPathId];
+			// newFl.path = ["root", ...pathId, newFl.$id];
+			newFl.path = ["root", ...pathId];
 			result.push(newFl);
 		}
 	}
