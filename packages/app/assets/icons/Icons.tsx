@@ -9,7 +9,7 @@ export const MdOutlineCreateNewFolder = MdcIcon("folder-plus-outline");
 
 export const MdChevronRight = MdIcon("chevron-right");
 export const MdFolder = MdIcon("folder");
-export const MdMenu= MdIcon("menu");
+export const MdMenu = MdIcon("menu");
 export const MdFolderOpen = MdIcon("folder-open");
 export const MdOutlineBookmarkBorder = MdIcon("bookmark-border");
 

@@ -1,11 +1,16 @@
+import { FCC } from "app/types/IReact";
 import { View } from "dripsy";
-import React from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 
 interface ITreeView<N, L> {
-	treeData: { nodes: N[]; rootLeafs: L[] }; // TODO: infer automatically
+	treeData: { nodes: N[]; rootLeafs: L[] };
+	isCollapsed: boolean;
 	nodeArrKey: string;
 	leafArrKey: string;
-	renderNode: (node: N) => JSX.Element;
+	renderNode: (
+		node: N,
+		setCollapse: Dispatch<SetStateAction<boolean>>,
+	) => JSX.Element;
 	renderLeaf: (node: L) => JSX.Element;
 }
 
@@ -17,11 +22,13 @@ export const TreeView = <N extends TWithId, L extends TWithId>(
 	const _renderTree = (tree: (typeof treeData)["nodes"]) => {
 		return tree.map(node => {
 			return (
-				<React.Fragment key={node.$id}>
-					{renderNode && renderNode(node)}
-					{node[nodeArrKey] && _renderTree(node[nodeArrKey])}
-					{node[leafArrKey] && _renderLeaf(node[leafArrKey])}
-				</React.Fragment>
+				<TreeWrapper
+					isCollapsed={props.isCollapsed}
+					key={node.$id}
+					node={setCollapse => renderNode && renderNode(node, setCollapse)}
+					childNodes={node[nodeArrKey] && _renderTree(node[nodeArrKey])}
+					childLeafs={node[leafArrKey] && _renderLeaf(node[leafArrKey])}
+				/>
 			);
 		});
 	};
@@ -38,6 +45,30 @@ export const TreeView = <N extends TWithId, L extends TWithId>(
 		<View>
 			{_renderTree(treeData["nodes"])}
 			{_renderLeaf(treeData["rootLeafs"])}
+		</View>
+	);
+};
+
+interface ITreeWrapper {
+	isCollapsed: boolean;
+	node: (setCollapse: Dispatch<SetStateAction<boolean>>) => JSX.Element;
+	childNodes: JSX.Element[];
+	childLeafs: JSX.Element[];
+}
+const TreeWrapper: FCC<ITreeWrapper> = props => {
+	const { node, childNodes, childLeafs, isCollapsed } = props;
+	const [wrapperMinHt, setWrapperMinHt] = useState(0);
+	const [collapse, setCollapse] = useState(isCollapsed);
+	const allowCollapse = collapse && !!wrapperMinHt;
+	const wrapperHt = allowCollapse ? wrapperMinHt : "auto";
+	// TODO: animate height change
+	return (
+		<View style={{ height: wrapperHt, overflow: "hidden" }}>
+			<View onLayout={e => setWrapperMinHt(e.nativeEvent.layout.height)}>
+				{node(setCollapse)}
+			</View>
+			{childNodes}
+			{childLeafs}
 		</View>
 	);
 };

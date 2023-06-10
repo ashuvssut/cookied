@@ -1,25 +1,18 @@
 import Screen from "app/components/Screen";
 import { Header } from "app/components/Header";
 import { TreePanel } from "app/screens/HomeScreen/TreePanel";
-import { View, Text, Pressable } from "dripsy";
+import { View, Pressable } from "dripsy";
 import { WebpageView } from "app/screens/HomeScreen/WebpageView";
 import { Dimensions, Platform } from "react-native";
 import { View as MotiView, useAnimationState } from "moti";
-import { MotiPressable, useMotiPressable } from "moti/interactions";
 import { MdMenu } from "app/assets/icons";
 
 const { width } = Dimensions.get("window");
 
 const useFadeInDown = () => {
 	return useAnimationState({
-		from: {
-			scale: 1,
-			translateX: 0,
-		},
-		to: {
-			scale: 0.8,
-			translateX: -width / 2,
-		},
+		from: { scale: 1, translateX: 0 },
+		to: { scale: 0.8, translateX: -width / 2 },
 	});
 };
 
@@ -29,16 +22,8 @@ export default function HomeScreen() {
 	const scaleIn = useAnimationState({
 		to: { opacity: 1 },
 		from: { opacity: 0.9 },
-		open: {
-			scale: 0.8,
-			translateX: -width / 2,
-			borderRadius: 20,
-		},
-		close: {
-			scale: 1,
-			translateX: 0,
-			borderRadius: 0,
-		},
+		open: { scale: 0.8, translateX: -width / 2, borderRadius: 20 },
+		close: { scale: 1, translateX: 0, borderRadius: 0 },
 	});
 
 	const onPress = () => {
@@ -52,10 +37,7 @@ export default function HomeScreen() {
 
 	return (
 		<MotiView
-			transition={{
-				type: "timing",
-				duration: 350,
-			}}
+			transition={{ type: "timing", duration: 350 }}
 			style={{ overflow: "hidden" }}
 			state={scaleIn}
 		>

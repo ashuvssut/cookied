@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { FC, memo } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import {
 	IBookmark,
 	IFolder,
@@ -35,9 +35,12 @@ export function TreePanel() {
 					// 	nodes: bookmarkState.folders,
 					// 	rootLeafs: [] as IBookmark[],
 					// }}
+					isCollapsed
 					nodeArrKey="folders"
 					leafArrKey="bookmarks"
-					renderNode={node => <Node node={node} />}
+					renderNode={(node, setCollapse) => (
+						<Node node={node} setCollapse={setCollapse} />
+					)}
 					renderLeaf={node => <LeafNode node={node} />}
 				/>
 			</ScrollView>
@@ -61,22 +64,41 @@ const TreePanelHeader = () => {
 
 interface INode {
 	node: IFolder;
+	setCollapse: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const p = 15;
 const Node: FC<INode> = memo(
-	({ node }) => {
+	({ node, setCollapse }) => {
 		const style = usePressabilityApiStyles();
 		const { onPrimary } = useDripsyTheme().theme.colors;
+		const [close, setClose] = useState(false);
+
+		useEffect(() => {
+			setCollapse(isCollapsed => {
+				setClose(isCollapsed);
+				return isCollapsed;
+			});
+		}, []);
+
 		return (
 			<Pressable
 				key={"fl" + node.$id}
 				variants={["layout.narrowHzTile", "layout.row"]}
 				style={style}
+				onPress={() => {
+					setCollapse(isCollapsed => {
+						setClose(!isCollapsed);
+						return !isCollapsed;
+					});
+				}}
 			>
 				<View variant="layout.row" sx={{ pl: node.level * p, width: "100%" }}>
 					<View sx={{ pr: "$3" }}>
-						<MdFolder size={16} color={onPrimary} />
-						{/* <MdFolderOpen size={14} color={onPrimary} /> */}
+						{close ? (
+							<MdFolder size={16} color={onPrimary} />
+						) : (
+							<MdFolderOpen size={16} color={onPrimary} />
+						)}
 					</View>
 					<Text sx={{ top: "$1", py: "$2" }} numberOfLines={1}>
 						{node.title}
