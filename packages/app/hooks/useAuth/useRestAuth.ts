@@ -47,7 +47,8 @@ export function useRestAuth() {
 	}
 
 	async function signOut() {
-		if (!cookie) return;
+		// TODO : Not Persisting
+		// if (!cookie) return;
 		setIsLoading(true);
 		try {
 			await logout("current");

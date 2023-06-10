@@ -60,7 +60,7 @@ export default function HomeScreen() {
 			state={scaleIn}
 		>
 			<Screen>
-				<View
+				{Platform.OS!=="web"&&(<View
 					sx={{
 						position: "absolute",
 						top: 10,
@@ -85,7 +85,7 @@ export default function HomeScreen() {
 					>
 						<MdMenu size={30} color="white" />
 					</Pressable>
-				</View>
+				</View>)}
 				<View sx={{ height: "100%" }}>
 					<Header />
 					<View sx={{ flex: 1 }}>

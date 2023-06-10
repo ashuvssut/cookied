@@ -126,9 +126,6 @@ export const WebpageView = forwardRef((_, ref) => {
 				ref={modalizeRef}
 				HeaderComponent={renderHeader()}
 				adjustToContentHeight={true}
-				// modalHeight={100}
-				// snapPoint={100}
-				// modalTopOffset={200}
 			>
 				{renderModal()}
 			</Modalize>
