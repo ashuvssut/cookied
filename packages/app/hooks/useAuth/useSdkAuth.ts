@@ -1,9 +1,9 @@
 import { useAtom } from "jotai";
-import { loadingAtom } from "../components/LoadingModal";
 import { isAuthAtom, sessionAtom, userAtom } from "app/store/slices/auth";
 import { Account, ID } from "appwrite";
 import { client } from "app/utils/appwrite";
-import logr from "app/utils/logger";
+import logr from "app/utils/logr";
+import { loadingAtom } from "app/components/LoadingModal";
 
 export function useSdkAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);
@@ -43,7 +43,7 @@ export function useSdkAuth() {
 	}
 
 	async function signOut() {
-		console.log("Is Auth",isAuth)
+		console.log("Is Auth", isAuth);
 		if (!isAuth) return;
 		setIsLoading(true);
 		try {

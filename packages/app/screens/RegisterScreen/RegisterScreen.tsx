@@ -7,7 +7,7 @@ import { Svg } from "app/components/Svg";
 import { Th } from "app/theme/components";
 import { StatusBar } from "app/components/StatusBar";
 import { TextLink } from "solito/link";
-import { usePlatformAuth } from "app/hooks/usePlatformAuth";
+import { usePlatformAuth } from "app/hooks/useAuth";
 import { KeyboardUsingScreen } from "app/components/KeyboardUsingScreen";
 import { Header } from "app/components/Header";
 import Screen from "app/components/Screen";

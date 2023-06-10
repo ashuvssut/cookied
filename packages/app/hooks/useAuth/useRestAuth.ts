@@ -4,8 +4,7 @@ import {
 	getUserDetails,
 	loginWithEmail,
 	logout,
-} from "../apis/appwriteAuthApi";
-import { loadingAtom } from "../components/LoadingModal";
+} from "app/apis/appwriteAuthApi";
 import { useEffect } from "react";
 import {
 	cookieAtom,
@@ -13,7 +12,8 @@ import {
 	sessionAtom,
 	userAtom,
 } from "app/store/slices/auth";
-import logr from "app/utils/logger";
+import logr from "app/utils/logr";
+import { loadingAtom } from "app/components/LoadingModal";
 
 export function useRestAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);

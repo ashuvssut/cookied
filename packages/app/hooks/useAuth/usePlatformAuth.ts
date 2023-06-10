@@ -1,5 +1,5 @@
-import { useRestAuth } from "app/hooks/useRestAuth";
-import { useSdkAuth } from "app/hooks/useSdkAuth";
+import { useRestAuth } from "./useRestAuth";
+import { useSdkAuth } from "./useSdkAuth";
 import { Platform } from "react-native";
 
 export const usePlatformAuth = () => {
