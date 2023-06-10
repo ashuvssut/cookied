@@ -8,6 +8,7 @@ import {
 import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
 import { useBmShelfDB } from "app/hooks/useBmShelfDB/useBmShelfDB";
 import { generateBookmarkForApi, generateFolderForApi } from "app/mock/bmShelf";
+import { useModal } from "app/components/Modal";
 
 interface IFolderActions extends ComponentProps<typeof View> {
 	node: IFolder | null;
@@ -15,9 +16,11 @@ interface IFolderActions extends ComponentProps<typeof View> {
 export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 	const { addFolder, addBookmark } = useBmShelfDB();
 	const { onPrimary } = useDripsyTheme().theme.colors;
+	const {onOpen}=useModal()
 	const addBm = async (parentFl: IFolder) => {
-		const randomBm = generateBookmarkForApi(parentFl);
-		await addBookmark(randomBm);
+onOpen("add-bookmark")
+		// const randomBm = generateBookmarkForApi(parentFl);
+		// await addBookmark(randomBm);
 	};
 	const addFl = async (node: IFolder | null) => {
 		const randomFl = generateFolderForApi(node);

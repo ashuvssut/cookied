@@ -3,6 +3,8 @@ import React from "react";
 import { Formik } from "formik";
 import { Th } from "app/theme/components";
 import { TModal } from "app/components/Modal";
+import { useSelector } from "react-redux";
+import { selectFlPathsWithTitles } from "app/store/slices/bmShelfSlice";
 
 type Props = {
 	title: string;
@@ -12,6 +14,8 @@ type Props = {
 };
 
 const ActionModal = (props: Props) => {
+	const foldersSelector = useSelector(selectFlPathsWithTitles);
+	console.log("Folder Selector",JSON.stringify(foldersSelector))
 	const handleSubmit = value => {
 		if (props.type === "add-bookmark") {
 		}
