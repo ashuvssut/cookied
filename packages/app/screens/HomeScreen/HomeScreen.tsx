@@ -42,32 +42,34 @@ export default function HomeScreen() {
 			state={scaleIn}
 		>
 			<Screen>
-				<View
-					sx={{
-						position: "absolute",
-						top: 10,
-						right: 20,
-						zIndex: 5,
-						elevation: 2,
-					}}
-				>
-					<Pressable
-						hitSlop={30}
-						onPress={onPress}
+				{Platform.OS !== "web" && (
+					<View
 						sx={{
-							width: 35,
-							height: 35,
-							elevation: 5,
-							borderRadius: 5,
-							borderWidth: 1,
-							borderColor: "white",
-							justifyContent: "center",
-							alignItems: "center",
+							position: "absolute",
+							top: 10,
+							right: 20,
+							zIndex: 5,
+							elevation: 2,
 						}}
 					>
-						<MdMenu size={30} color="white" />
-					</Pressable>
-				</View>
+						<Pressable
+							hitSlop={30}
+							onPress={onPress}
+							sx={{
+								width: 35,
+								height: 35,
+								elevation: 5,
+								borderRadius: 5,
+								borderWidth: 1,
+								borderColor: "white",
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+						>
+							<MdMenu size={30} color="white" />
+						</Pressable>
+					</View>
+				)}
 				<View sx={{ height: "100%" }}>
 					<Header />
 					<View sx={{ flex: 1 }}>

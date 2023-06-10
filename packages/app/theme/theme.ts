@@ -47,9 +47,10 @@ export const darkTheme = makeTheme({
 	linearGradients: {
 		// TODO: linear gradients not working for <Gradient/> but works for <LinearGradient/>
 		primaryButtonBg: ["#B313DB", "#FF00B8"],
-		secondaryButtonBg: ["#3B939A", "#2B6467"],
+		secondaryButtonBg: ["#000000", "#4D4855"],
+		surfaceGradientBg: ["#1c1c1c", "#1e1e1e"],
 		disabledButtonBg: ["#3B939A", "#2B6467"],
-		menuBackground:['#647DEE','#7F53AC']
+		menuBackground: ["#647DEE", "#7F53AC"],
 	},
 	buttons: {
 		secondary: { bg: "#2E3232" },
