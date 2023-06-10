@@ -16,7 +16,7 @@ import {
 	MdFolderOpen,
 	MdOutlineBookmarkBorder,
 } from "app/assets/icons";
-import { bookmarkState } from "app/mock/bookmark";
+import { bookmarkState } from "app/mock/bmShelf";
 import { ScrollView } from "react-native";
 import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
 
