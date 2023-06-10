@@ -9,13 +9,6 @@ import { MdMenu } from "app/assets/icons";
 
 const { width } = Dimensions.get("window");
 
-const useFadeInDown = () => {
-	return useAnimationState({
-		from: { scale: 1, translateX: 0 },
-		to: { scale: 0.8, translateX: -width / 2 },
-	});
-};
-
 export default function HomeScreen() {
 	// const fadeInDown = useFadeInDown();
 
@@ -46,7 +39,7 @@ export default function HomeScreen() {
 					<View
 						sx={{
 							position: "absolute",
-							top: 10,
+							top: 14,
 							right: 20,
 							zIndex: 5,
 							elevation: 2,
@@ -60,8 +53,6 @@ export default function HomeScreen() {
 								height: 35,
 								elevation: 5,
 								borderRadius: 5,
-								borderWidth: 1,
-								borderColor: "white",
 								justifyContent: "center",
 								alignItems: "center",
 							}}

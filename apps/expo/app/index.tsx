@@ -69,7 +69,7 @@ const HomeScreenWithDrawer = () => {
 					<View sx={{ flex: 1 }} />
 					<Th.ButtonPrimary
 						onPress={() => signOut()}
-						sx={{ flex: 1, marginBottom: "$5", elevation: 10, zIndex: 5 }}
+						sx={{ flex: 1, marginBottom: "$5", }}
 					>
 						LOGOUT
 					</Th.ButtonPrimary>
