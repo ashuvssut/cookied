@@ -76,8 +76,8 @@ const LoginScreen = () => {
 										<Text sx={{ color: "error", width: "50%" }}>
 											{checkError(p, "password") ? p.errors.password : " "}
 										</Text>
-
-										<Text variant="link">Forgot Password ?</Text>
+										{/* TODO : Implement Forgot Password  */}
+										{/* <Text variant="link">Forgot Password ?</Text> */}
 									</View>
 									<Th.ButtonPrimary // @ts-ignore
 										onPress={p.isValid ? p.handleSubmit : () => {}}
