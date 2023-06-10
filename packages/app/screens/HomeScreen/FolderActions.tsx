@@ -1,42 +1,27 @@
 import { Pressable, View, useDripsyTheme } from "dripsy";
-import { ComponentProps, FC, useEffect } from "react";
-import { IFolder, bmShelfAction } from "app/store/slices/bmShelfSlice";
-import { useAppDispatch } from "app/store/hooks";
-import {
-	addBookmarkInAppwrite,
-	addFolderInAppwrite,
-	getFoldersInAppwrite,
-} from "app/apis/appwriteBookmarkApi";
-import { sessionAtom } from "app/store/slices/auth";
-import { useAtom } from "jotai";
+import { ComponentProps, FC } from "react";
+import { IFolder } from "app/store/slices/bmShelfSlice";
 import {
 	MdOutlineBookmarkAdd,
 	MdOutlineCreateNewFolder,
 } from "app/assets/icons";
 import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
+import { useBmShelfDB } from "app/hooks/useBmShelfDB/useBmShelfDB";
+import { generateBookmarkForApi, generateFolderForApi } from "app/mock/bmShelf";
 
 interface IFolderActions extends ComponentProps<typeof View> {
 	node: IFolder | null;
 }
 export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
-	const dispatch = useAppDispatch();
-	const [session] = useAtom(sessionAtom);
-	useEffect(() => {
-		if (session?.userId) {
-			getFoldersInAppwrite(session?.userId);
-		}
-	}, []);
+	const { addFolder, addBookmark } = useBmShelfDB();
 	const { onPrimary } = useDripsyTheme().theme.colors;
-	const addBm = async (node: IFolder) => {
-		if (!session?.userId) return;
-		const newBookmark = await addBookmarkInAppwrite(node, session?.userId);
-		if (newBookmark !== undefined)
-			dispatch(bmShelfAction.addBookmark(newBookmark));
+	const addBm = async (parentFl: IFolder) => {
+		const randomBm = generateBookmarkForApi(parentFl);
+		await addBookmark(randomBm);
 	};
 	const addFl = async (node: IFolder | null) => {
-		if (!session?.userId) return;
-		const newFolder = await addFolderInAppwrite(node, session?.userId);
-		if (newFolder !== undefined) dispatch(bmShelfAction.addFolder(newFolder));
+		const randomFl = generateFolderForApi(node);
+		await addFolder(randomFl);
 	};
 	return (
 		<View {...props} sx={{ position: "absolute", right: "$3", ...props.sx }}>

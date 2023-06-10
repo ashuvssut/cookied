@@ -12,4 +12,4 @@ export const isVerifiedAtom = //
 export const isAuthAtom = atom(get => !!get(sessionAtom)?.$id);
 
 export const cookieAtom = atomWithPlatformStorage("cookie", "");
-export const cookieStore = createStore();
+export const authStore = createStore();

@@ -3,7 +3,8 @@ import {
 	createEntityAdapter,
 	createSelector,
 	createSlice,
-	PayloadAction,
+	PayloadAction as PA,
+	Update,
 } from "@reduxjs/toolkit";
 import { RootState } from "../types";
 import { convertToDenormalized } from "app/store/utils/bmShelfUtils";
@@ -27,14 +28,36 @@ export const bmShelfSlice = createSlice({
 	name: "bmShelf",
 	initialState,
 	reducers: {
-		addFolder: (state, action: PayloadAction<IFolder>) =>
-			void foldersAdapter.addOne(state.folders, action.payload),
-		addBookmark: (state, action: PayloadAction<IBookmark>) =>
+		// Folder CRUD
+		addFl: {
+			reducer: (state, action: PA<IFolder>) =>
+				void foldersAdapter.addOne(state.folders, action.payload),
+			prepare: (folder: Omit<IFolder, "bookmarks" | "folders">) => ({
+				payload: { ...folder, bookmarks: [], folders: [] },
+			}),
+		},
+		addManyFl: {
+			reducer: (state, action: PA<IFolder[]>) =>
+				void foldersAdapter.addMany(state.folders, action.payload),
+			prepare: (folders: Omit<IFolder, "bookmarks" | "folders">[]) => ({
+				payload: folders //
+					.map(folder => ({ ...folder, bookmarks: [], folders: [] })),
+			}),
+		},
+		updateFl: (state, action: PA<Update<IFolder>>) =>
+			void foldersAdapter.updateOne(state.folders, action.payload),
+		removeFl: (state, action: PA<IFolder>) =>
+			void foldersAdapter.removeOne(state.folders, action.payload.$id),
+
+		// Bookmark CRUD
+		addBm: (state, action: PA<IBookmark>) =>
 			void bookmarksAdapter.addOne(state.bookmarks, action.payload),
-		addManyBm: (state, action: PayloadAction<IBookmark[]>) =>
+		addManyBm: (state, action: PA<IBookmark[]>) =>
 			void bookmarksAdapter.addMany(state.bookmarks, action.payload),
-		addManyFl: (state, action: PayloadAction<IFolder[]>) =>
-			void foldersAdapter.addMany(state.folders, action.payload),
+		updateBm: (state, action: PA<Update<IBookmark>>) =>
+			void bookmarksAdapter.updateOne(state.bookmarks, action.payload),
+		removeBm: (state, action: PA<IBookmark>) =>
+			void bookmarksAdapter.removeOne(state.bookmarks, action.payload.$id),
 	},
 	extraReducers: builder => {},
 });

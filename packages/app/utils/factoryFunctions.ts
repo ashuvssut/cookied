@@ -1,17 +1,16 @@
 import { Models } from "appwrite";
 import _ from "lodash";
 
-export function cleanResponse<T extends {}>(response: T) {
-	// const { $collectionId, $permissions, $userId, $databaseId, ...rest } =
-	// 	response;
-	const lodashOmit = ["$collectionId", "$permissions", "$userId", "$databaseId"] 
-	const cleanRes = _.omit(response, lodashOmit) 
-	type TCleanRes = Required<typeof cleanRes>;
-	return cleanRes as TCleanRes;
+export function cleanResponse<T extends Models.Document>(response: T) {
+	const cleanRes = _.omit(
+		response, //
+		["$collectionId", "$permissions", "$userId", "$databaseId"],
+	);
+	return cleanRes as T;
 }
 
-export function cleanResponseIterative<
-	T extends Models.DocumentList<Models.Document>,
->(response: T) {
-	return response.documents.map(res => cleanResponse(res));
+export function cleanResponseIterative<T extends Models.Document[]>(
+	response: T,
+) {
+	return response.map((res: T[number]) => cleanResponse(res));
 }

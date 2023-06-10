@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { IBookmark, IFolder } from "app/store/slices/bmShelfSlice";
+import _ from "lodash";
 
 // function getPathId(type: string, level: number, parentId: string) {
 // 	return `${type}#${level}#${parentId}`;
@@ -84,3 +85,25 @@ function generateBookmarkState() {
 	return { folders: generateFolders("root", 0, []) };
 }
 export const bookmarkState = generateBookmarkState();
+
+// Random Generators for APIs
+export function generateFolderForApi(node: IFolder | null) {
+	function getFolderObj() {
+		if (!node) return generateRandomFolder("root", 0, ["root"], true);
+		const { $id, level, path } = node;
+		return generateRandomFolder($id, level + 1, [...path, $id], true);
+	}
+	const folderData = _.omit(
+		getFolderObj(), //
+		["$updatedAt", "$createdAt", "$id", "bookmarks", "folders"],
+	);
+
+	return folderData;
+}
+
+export function generateBookmarkForApi(node: IFolder) {
+	const { $id: parentId, level, path } = node;
+	const bmObject = generateRandomBookmark(parentId, level, path);
+	const bookmarkData = _.omit(bmObject, ["$updatedAt", "$createdAt", "$id"]);
+	return bookmarkData;
+}

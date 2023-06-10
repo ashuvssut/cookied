@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { ID, Models } from "appwrite";
 import { Platform } from "react-native";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID } from "../utils/appwrite";
-import { cookieAtom, cookieStore } from "app/store/slices/auth";
+import { cookieAtom, authStore } from "app/store/slices/auth";
 
 const generalHeaders = {
 	"Content-Type": "application/json",
@@ -12,7 +12,7 @@ const generalHeaders = {
 const axiosWithConfig = () => axios.create({ headers: generalHeaders });
 
 const axiosWithSessionConfig = () => {
-	const cookie = cookieStore.get(cookieAtom);
+	const cookie = authStore.get(cookieAtom);
 	return axios.create({ headers: { ...generalHeaders, cookie } });
 };
 

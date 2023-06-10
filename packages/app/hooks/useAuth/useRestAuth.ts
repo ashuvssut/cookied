@@ -5,13 +5,7 @@ import {
 	loginWithEmail,
 	logout,
 } from "app/apis/appwriteAuthApi";
-import { useEffect } from "react";
-import {
-	cookieAtom,
-	cookieStore,
-	sessionAtom,
-	userAtom,
-} from "app/store/slices/auth";
+import { cookieAtom, sessionAtom, userAtom } from "app/store/slices/auth";
 import logr from "app/utils/logr";
 import { loadingAtom } from "app/components/LoadingModal";
 
@@ -20,8 +14,6 @@ export function useRestAuth() {
 	const [user, setUser] = useAtom(userAtom);
 	const [_s, setSession] = useAtom(sessionAtom);
 	const [cookie, setCookie] = useAtom(cookieAtom);
-
-	useEffect(() => void cookieStore.set(cookieAtom, cookie || ""), [cookie]);
 
 	async function signIn(email: string, password: string) {
 		setIsLoading(true);
