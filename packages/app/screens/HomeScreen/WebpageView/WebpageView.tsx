@@ -76,13 +76,13 @@ export const WebpageView = forwardRef((_, ref) => {
 			</TouchableOpacity>
 
 			<Modalize
-				HeaderComponent={renderHeader()}
 				// modalHeight={100}
 				// snapPoint={100}
 				// modalTopOffset={200}
+				HeaderComponent={renderHeader()}
 				adjustToContentHeight={true}
 				ref={modalizeRef}
-			>
+y			>
 				{renderModal()}
 			</Modalize>
 		</>
