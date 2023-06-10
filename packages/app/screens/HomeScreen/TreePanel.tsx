@@ -27,14 +27,14 @@ export function TreePanel() {
 			<TreePanelHeader />
 			<ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
 				<TreeView
-					// treeData={{
-					// 	nodes: foldersWithBookmarks.folders,
-					// 	rootLeafs: [] as IBookmark[],
-					// }}
 					treeData={{
-						nodes: bookmarkState.folders,
+						nodes: foldersWithBookmarks.folders,
 						rootLeafs: [] as IBookmark[],
 					}}
+					// treeData={{
+					// 	nodes: bookmarkState.folders,
+					// 	rootLeafs: [] as IBookmark[],
+					// }}
 					nodeArrKey="folders"
 					leafArrKey="bookmarks"
 					renderNode={node => <Node node={node} />}

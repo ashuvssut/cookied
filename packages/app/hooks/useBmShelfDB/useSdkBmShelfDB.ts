@@ -79,6 +79,7 @@ export function useSdkBmShelfDB() {
 	};
 
 	const updateFolder = async (fl: Update<IFolder>) => {
+		setIsLoading(true);
 		try {
 			if (!userId) throw new Error("User not logged in");
 			const flDoc = await databases.updateDocument<TFlDocument>(
@@ -87,17 +88,20 @@ export function useSdkBmShelfDB() {
 				String(fl.id),
 				fl.changes,
 			);
+			setIsLoading(false);
 			const updatedFl = cleanResponse(flDoc);
 			const reduxUpdateDraft = { id: flDoc.$id, changes: updatedFl };
 			dispatch(bmShelfAction.updateFl(reduxUpdateDraft));
 			return updatedFl;
 		} catch (e) {
+			setIsLoading(false);
 			logr("Error in updating folder", e);
 			throw e;
 		}
 	};
 
 	const deleteFolder = async (fl: IFolder) => {
+		setIsLoading(true);
 		try {
 			if (!userId) throw new Error("User not logged in");
 			await databases.deleteDocument(
@@ -106,13 +110,16 @@ export function useSdkBmShelfDB() {
 				fl.$id,
 			);
 			dispatch(bmShelfAction.removeFl(fl));
+			setIsLoading(false);
 		} catch (e) {
+			setIsLoading(false);
 			logr("Error in deleting folder", e);
 			throw e;
 		}
 	};
 
 	const addBookmark = async (bm: TBmData) => {
+		setIsLoading(true);
 		try {
 			if (!userId) throw new Error("User not logged in");
 			const bmDoc = await databases.createDocument<TBmDocument>(
@@ -121,10 +128,12 @@ export function useSdkBmShelfDB() {
 				ID.unique(),
 				{ ...bm, userId },
 			);
+			setIsLoading(false);
 			const newBm = cleanResponse(bmDoc);
 			dispatch(bmShelfAction.addBm(newBm));
 			return newBm;
 		} catch (e) {
+			setIsLoading(false);
 			logr("Error in creating new bookmark", e);
 			throw e;
 		}
