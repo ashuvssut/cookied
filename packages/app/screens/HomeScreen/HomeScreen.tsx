@@ -40,6 +40,7 @@ export default function HomeScreen() {
 								alignItems: "center",
 							}}
 							style={style}
+							android_ripple={{ borderless: true, color: "#fff" }}
 						>
 							<MdMenu size={30} color="white" />
 						</Pressable>
