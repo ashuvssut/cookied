@@ -37,3 +37,5 @@ export function resetReduxPersist_reload() {
 	persistStore(store).purge();
 	if (Platform.OS === "web") location.reload();
 }
+
+// persistStore(store).purge();

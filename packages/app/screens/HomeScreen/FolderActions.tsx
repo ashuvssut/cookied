@@ -12,6 +12,7 @@ import { useModal } from "app/components/Modal";
 
 interface IFolderActions extends ComponentProps<typeof View> {
 	node: IFolder | null;
+	onActionComplete?: () => void;
 }
 export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 	const { addFolder, addBookmark } = useBmShelfDB();
@@ -21,10 +22,12 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 		onOpen("add-bookmark");
 		const randomBm = generateBookmarkForApi(parentFl);
 		await addBookmark(randomBm);
+		props.onActionComplete?.();
 	};
 	const addFl = async (node: IFolder | null) => {
 		const randomFl = generateFolderForApi(node);
 		await addFolder(randomFl);
+		props.onActionComplete?.();
 	};
 	return (
 		<View {...props} sx={{ position: "absolute", right: "$3", ...props.sx }}>

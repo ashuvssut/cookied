@@ -80,6 +80,11 @@ const Node: FC<INode> = memo(
 			});
 		}, []);
 
+		function openFolder() {
+			setCollapse(false);
+			setClose(false);
+		}
+
 		return (
 			<Pressable
 				key={"fl" + node.$id}
@@ -103,7 +108,7 @@ const Node: FC<INode> = memo(
 					<Text sx={{ top: "$1", py: "$2" }} numberOfLines={1}>
 						{node.title}
 					</Text>
-					<FolderActions node={node} />
+					<FolderActions node={node} onActionComplete={() => openFolder()} />
 				</View>
 			</Pressable>
 		);
