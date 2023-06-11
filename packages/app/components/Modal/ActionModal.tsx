@@ -1,13 +1,19 @@
-import { FlatList, View, Text } from "dripsy";
-import React, { useState } from "react";
+import { FlatList, View, Text, Pressable } from "dripsy";
+import { StyleSheet } from "react-native";
+import React, { useMemo, useState } from "react";
 import { Formik } from "formik";
 import { Th } from "app/theme/components";
 import { TModal } from "app/components/Modal";
-import { selectFlPathsWithTitles } from "app/store/slices/bmShelfSlice";
+import {
+	IFolder,
+	selectFlPathsWithTitles,
+} from "app/store/slices/bmShelfSlice";
 import Fuse from "fuse.js";
 import { ListRenderItemInfo, Platform } from "react-native";
 import logr from "app/utils/logr";
 import { useAppSelector } from "app/store/hooks";
+import bookmarkSchema from "app/validators/bookmarkSchema";
+import { useBmShelfDB } from "app/hooks/useBmShelfDB";
 
 type Props = {
 	title: string;
@@ -25,6 +31,11 @@ export type TSearchResults = Fuse.FuseResult<{
 const ActionModal = (props: Props) => {
 	const [searchResults, setSearchResults] = useState<TSearchResults>([]);
 	const [searchQuery, setSearchQuery] = useState("");
+	const [folder, setFolder] = useState<
+		{ path: string; id: string; pathArr: string[] } | undefined
+	>();
+	// const folders = useAppSelector(state => state.bmShelf.folders.entities);
+	const { addBookmark } = useBmShelfDB();
 
 	const handleSearch = (text: string) => {
 		setSearchQuery(text);
@@ -41,11 +52,39 @@ const ActionModal = (props: Props) => {
 		);
 	};
 
+	const getFolderDetails = (folderDetail: {
+		path: string;
+		id: string;
+		pathArr: string[];
+	}) => {
+		setSearchQuery(folderDetail.path);
+		setSearchResults([]);
+		setFolder(folderDetail);
+	};
+
 	const foldersSelector = useAppSelector(selectFlPathsWithTitles);
-	logr("Folder Selector", foldersSelector);
-	const handleSubmit = value => {
-		console.log(value);
+	// logr("Folder Selector", foldersSelector);
+
+	function addHttpsToUrl(url:string):string {
+		if (!url.startsWith('http://') && !url.startsWith('https://')) {
+			url = 'https://' + url.toLowerCase();
+		}
+		return url;
+	}
+
+	const handleSubmitForm = async(title: string, url: string) => {
+		console.log("I am running",title, addHttpsToUrl(url));
 		if (props.type === "add-bookmark") {
+			if (folder) {
+				await addBookmark({
+					type: "bookmark",
+					parentId: folder.id,
+					path: folder.pathArr,
+					url: addHttpsToUrl(url),
+					title: title,
+					level: folder.pathArr.length - 1,
+				});
+			}
 		}
 		if (props.type === "edit-bookmark") {
 		}
@@ -54,6 +93,33 @@ const ActionModal = (props: Props) => {
 		if (props.type === "edit-folder") {
 		}
 	};
+
+	const renderSearchResults = useMemo((): JSX.Element[] => {
+		return searchResults.map((result, index) => {
+			return (
+				<Pressable
+					onPress={() => getFolderDetails(result.item)}
+					key={result.item.id}
+					sx={{
+						marginTop: index === 0 ? 10 : 0,
+						height: 50,
+						borderTopRightRadius: index === 0 ? 5 : 0,
+						borderTopLeftRadius: index === 0 ? 5 : 0,
+						borderBottomRightRadius: index === searchResults.length - 1 ? 5 : 0,
+						borderBottomLeftRadius: index === searchResults.length - 1 ? 5 : 0,
+						borderBottomWidth: StyleSheet.hairlineWidth,
+						borderColor:
+							index === searchResults.length - 1 ? "transparent" : "#444",
+						backgroundColor: "surfaceHigh",
+						justifyContent: "center",
+					}}
+				>
+					<Text sx={{ color: "onPrimary", px: "$3" }}>{result.item.path}</Text>
+				</Pressable>
+			);
+		});
+	}, [searchResults]);
+
 	return (
 		<View sx={{ m: "$4" }}>
 			<Formik
@@ -61,9 +127,12 @@ const ActionModal = (props: Props) => {
 					title: "",
 					url: props.initialUrl ? props.initialUrl : "",
 				}}
-				// validationSchema={loginSchema}
-				// validateOnMount
-				onSubmit={values => handleSubmit(values)}
+				validationSchema={bookmarkSchema}
+				validateOnMount
+				onSubmit={(values: { title: string; url: string }) => {
+					console.log("I am running",values.title, values.url);
+					// handleSubmit(values.title, values.url);
+				}}
 			>
 				{p => (
 					<>
@@ -87,48 +156,14 @@ const ActionModal = (props: Props) => {
 						)}
 						{(props.type === "add-bookmark" ||
 							props.type === "edit-bookmark") && (
-							<View sx={{ height: 100, marginTop: "$4" }}>
+							<View sx={{ height: 300, marginTop: "$4" }}>
 								<Th.TextInput
 									value={searchQuery}
 									onChangeText={handleSearch}
 									autoCorrect={false}
-									// onBlur={p.handleBlur("search")}
 									placeholder="Search Folders"
 								/>
-								<FlatList
-									data={searchResults}
-									keyExtractor={(
-										item: Fuse.FuseResult<{
-											path: string;
-											id: string;
-											pathArr: string[];
-										}>,
-									) => item.item.id}
-									renderItem={({
-										item,
-										index,
-									}: ListRenderItemInfo<
-										Fuse.FuseResult<{
-											path: string;
-											id: string;
-											pathArr: string[];
-										}>
-									>) => {
-										return (
-											<View
-												sx={{
-													marginTop: 10,
-													height: 40,
-													backgroundColor: "#cccccc",
-													justifyContent: "center",
-													alignItems: "center",
-												}}
-											>
-												<Text sx={{ color: "white" }}>{item.item.path}</Text>
-											</View>
-										);
-									}}
-								/>
+								{renderSearchResults}
 							</View>
 						)}
 						<View
@@ -136,6 +171,7 @@ const ActionModal = (props: Props) => {
 								flexDirection: "row",
 								justifyContent: "space-evenly",
 								paddingBottom: Platform.OS === "web" ? 80 : 0,
+								backgroundColor: "black",
 							}}
 						>
 							<Th.ButtonSecondary
@@ -145,8 +181,8 @@ const ActionModal = (props: Props) => {
 								Cancel
 							</Th.ButtonSecondary>
 							<Th.ButtonPrimary
-								onPress={handleSubmit}
-								sx={{ flex: 1, marginLeft: "$3" }}
+								onPress={()=>handleSubmitForm(p.values.title,p.values.url)}
+								sx={{ flex: 1, marginLeft: "$3",zIndex:8,elevation:6 }}
 							>
 								Add
 							</Th.ButtonPrimary>

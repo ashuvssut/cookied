@@ -11,7 +11,7 @@ const _TextInput = (props: TextInputProps) => {
 		<TextInput
 			variant={"layout.textInput" as any}
 			placeholderTextColor={placeholder as any}
-			style={{ color: "onPrimary" }}
+			sx={{ color: "onPrimary" }}
 			{...props}
 		/>
 	);
