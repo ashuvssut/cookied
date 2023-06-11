@@ -55,8 +55,13 @@ const TreePanelHeader = () => {
 	const whosBms = user[0]?.name ? `${user[0]?.name}'s` : "Your";
 	return (
 		<View
-			variants={["layout.narrowHzTile", "layout.row", "layout.secondary"]}
-			sx={{ borderLeftWidth: 0, borderRightWidth: 0, mb: "$2" }}
+			variants={[
+				"layout.narrowHzTile",
+				"layout.row",
+				"layout.secondary",
+				"layout.noBorderX",
+			]}
+			sx={{ mb: "$2" }}
 		>
 			<Text variant="overline">{whosBms} Bookmarks</Text>
 			<FolderActions node={null} sx={{ py: "$0" }} />
@@ -64,6 +69,8 @@ const TreePanelHeader = () => {
 	);
 };
 
+const activeEntityIdAtom = atom<string | null>(null);
+const hoverFocusEntityIdAtom = atom<string | null>(null);
 interface INode {
 	node: IFolder;
 	setCollapse: React.Dispatch<React.SetStateAction<boolean>>;
@@ -74,6 +81,9 @@ const Node: FC<INode> = memo(
 		const style = usePressabilityApiStyles();
 		const { onPrimary } = useDripsyTheme().theme.colors;
 		const [close, setClose] = useState(false);
+		const [activeEntityId, setActiveEntityId] = useAtom(activeEntityIdAtom);
+		const [hfEntityId, setHoverFocusEntityId] = useAtom(hoverFocusEntityIdAtom);
+		const showActions = Platform.OS !== "web" || hfEntityId === node.$id;
 
 		useEffect(() => {
 			setCollapse(isCollapsed => {
@@ -90,9 +100,17 @@ const Node: FC<INode> = memo(
 		return (
 			<Pressable
 				key={"fl" + node.$id}
-				variants={["layout.narrowHzTile", "layout.row"]}
+				variants={["layout.narrowHzTile", "layout.row", "layout.noBorderX"]}
 				style={style}
+				sx={{
+					borderColor: activeEntityId === node.$id ? "outline" : undefined,
+					backgroundColor: activeEntityId === node.$id ? "#222a" : undefined,
+				}}
+				onHoverIn={() => setHoverFocusEntityId(node.$id)}
+				onHoverOut={() => setHoverFocusEntityId(null)}
+				// onLongPress={() => setHoverFocusEntityId(node.$id)}
 				onPress={() => {
+					setActiveEntityId(node.$id);
 					setCollapse(isCollapsed => {
 						setClose(!isCollapsed);
 						return !isCollapsed;
@@ -109,8 +127,11 @@ const Node: FC<INode> = memo(
 					</View>
 					<Text sx={{ top: "$1", py: "$2" }} numberOfLines={1}>
 						{node.title}
+						{/* {`${node.title.slice(0, 5)} - ${node.$id} - ${node.parentId}`} */}
 					</Text>
-					<FolderActions node={node} onActionComplete={() => openFolder()} />
+					{showActions && (
+						<FolderActions node={node} onActionComplete={() => openFolder()} />
+					)}
 				</View>
 			</Pressable>
 		);
@@ -128,12 +149,23 @@ const LeafNode: FC<ILeafNode> = memo(
 		const { onPrimary } = useDripsyTheme().theme.colors;
 		const style = usePressabilityApiStyles();
 		const { onOpen, setPayload } = useModal();
+		const [activeEntityId, setActiveEntityId] = useAtom(activeEntityIdAtom);
+		const [hfEntityId, setHoverFocusEntityId] = useAtom(hoverFocusEntityIdAtom);
+		const showActions = Platform.OS !== "web" || hfEntityId === node.$id;
 		return (
 			<Pressable
 				key={"bm" + node.$id}
-				variants={["layout.narrowHzTile", "layout.row"]}
+				variants={["layout.narrowHzTile", "layout.row", "layout.noBorderX"]}
 				style={style}
+				onHoverIn={() => setHoverFocusEntityId(node.$id)}
+				onHoverOut={() => setHoverFocusEntityId(null)}
+				// onLongPress={() => setHoverFocusEntityId(node.$id)}
+				sx={{
+					borderColor: activeEntityId === node.$id ? "outline" : undefined,
+					backgroundColor: activeEntityId === node.$id ? "#222a" : undefined,
+				}}
 				onPress={() => {
+					setActiveEntityId(node.$id);
 					setActiveUrl(node.url);
 					if (Platform.OS !== "web") {
 						setPayload({ src: node.url });
@@ -147,8 +179,9 @@ const LeafNode: FC<ILeafNode> = memo(
 					</View>
 					<Text sx={{ top: "$1", py: "$2" }} numberOfLines={1}>
 						{node.title}
+						{/* {`${node.title.slice(0, 5)} - ${node.$id} - ${node.parentId}`} */}
 					</Text>
-					<BookmarkActions node={node} />
+					{showActions && <BookmarkActions node={node} />}
 				</View>
 			</Pressable>
 		);

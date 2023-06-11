@@ -16,6 +16,11 @@ const commonConfig = makeTheme({
 		buttonContainer: { py: 15, px: 20, borderRadius: 4 },
 		narrowHzTile: { px: "$3", py: "$2", justifyContent: "space-between" },
 		row: { flexDirection: "row", alignItems: "center" },
+		noBorderX: {
+			borderWidth: 1,
+			borderLeftWidth: 0,
+			borderRightWidth: 0,
+		},
 		absoluteFlex: {
 			flex: 1,
 			position: "absolute",

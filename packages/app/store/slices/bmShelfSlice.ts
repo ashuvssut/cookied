@@ -8,6 +8,7 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../types";
 import { convertToDenormalized } from "app/store/utils/bmShelfUtils";
+import logr from "app/utils/logr";
 
 const foldersAdapter = createEntityAdapter<IFolder>({
 	selectId: folder => folder.$id,
