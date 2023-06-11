@@ -3,13 +3,12 @@ import { Header } from "app/components/Header";
 import { TreePanel } from "app/screens/HomeScreen/TreePanel";
 import { View, Pressable } from "dripsy";
 import { WebpageViewer } from "app/screens/HomeScreen/WebpageViewer";
-import { Dimensions, Platform } from "react-native";
+import { Platform, useWindowDimensions } from "react-native";
 import { View as MotiView, useAnimationState } from "moti";
 import { MdMenu } from "app/assets/icons";
 
-const { width } = Dimensions.get("window");
-
 export default function HomeScreen() {
+	const { width } = useWindowDimensions();
 	// const fadeInDown = useFadeInDown();
 	const scaleIn = useAnimationState({
 		to: { opacity: 1 },
@@ -19,14 +18,10 @@ export default function HomeScreen() {
 	});
 
 	const onPress = () => {
-		console.log("Hello");
-		if (scaleIn.current === "open") {
-			scaleIn.transitionTo("close");
-		} else {
-			scaleIn.transitionTo("open");
-		}
+		if (scaleIn.current === "open") scaleIn.transitionTo("close");
+		else scaleIn.transitionTo("open");
 	};
-
+	const src = "https://blog.logrocket.com/best-practices-react-iframes/";
 	return (
 		<MotiView
 			transition={{ type: "timing", duration: 350 }}
@@ -66,12 +61,12 @@ export default function HomeScreen() {
 						{Platform.OS === "web" ? (
 							<View sx={{ flexDirection: "row", height: "100vh" }}>
 								<TreePanel />
-								<WebpageViewer />
+								<WebpageViewer src={src} />
 							</View>
 						) : (
 							<>
 								<TreePanel />
-								<WebpageViewer />
+								<WebpageViewer src={src} />
 							</>
 						)}
 					</View>

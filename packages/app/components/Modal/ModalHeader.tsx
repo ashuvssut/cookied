@@ -1,7 +1,5 @@
 import { View, Text, Image } from "dripsy";
-import { Animated, Dimensions, TouchableOpacity } from "react-native";
-
-const { width } = Dimensions.get("window");
+import { Animated, TouchableOpacity, useWindowDimensions } from "react-native";
 
 export type TModal =
 	| "web-view"
@@ -22,6 +20,7 @@ export interface IModalHeaderProps {
 }
 
 export const ModalHeader = (props: IModalHeaderProps) => {
+	const { width } = useWindowDimensions();
 	const displayTitle = () => {
 		if (props.type === "add-folder") {
 			return "ADD FOLDER";

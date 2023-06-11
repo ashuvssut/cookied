@@ -8,7 +8,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { Animated, Dimensions, Easing, Platform } from "react-native";
+import { Animated, Easing, Platform, useWindowDimensions } from "react-native";
 import {
 	WebView as RNWebView,
 	WebViewMessageEvent,
@@ -18,7 +18,6 @@ import {
 	extractHostname,
 } from "app/components/WebView/utils";
 
-const { height: initialHeight } = Dimensions.get("window");
 const isAndroid = Platform.OS === "android";
 
 interface IWebpageState {
@@ -46,6 +45,8 @@ export const WebView = forwardRef(
 		const [mounted, setMounted] = useState<IWebpageState["secured"]>(false);
 		const [back, setBack] = useState<IWebpageState["back"]>(false);
 		const [forward, setForward] = useState<IWebpageState["forward"]>(false);
+
+		const { height: initialHeight } = useWindowDimensions();
 		const [layoutHeight, setLayoutHeight] = useState(initialHeight);
 		const [documentHeight, setDocumentHeight] = useState(initialHeight);
 		const height = isAndroid ? documentHeight : layoutHeight;

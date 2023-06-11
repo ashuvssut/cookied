@@ -26,11 +26,11 @@ export const Modal = () => {
 
 	const webViewRef = useRef<IWebViewRefProps>(null);
 	const renderModal = () => {
-		if (modalType === "web-view") {
+		if (modalType === "web-view" && payload.src) {
 			return (
 				<WebView
 					ref={webViewRef}
-					src="https://blog.logrocket.com/best-practices-react-iframes/"
+					src={payload.src}
 					onWebpageStateChange={state => {
 						setUrl(state.url);
 						setSecure(state.secured);

@@ -5,7 +5,7 @@ import { useSendIntent } from "app/hooks/useSendIntent";
 import { useFocusEffect } from "expo-router";
 import { useModal } from "app/components/Modal";
 
-export const WebpageViewer = () => {
+export const WebpageViewer = ({ src }: { src: string }) => {
 	const { onOpen, setPayload } = useModal();
 	const { sharedData } = useSendIntent();
 	useFocusEffect(
@@ -19,7 +19,10 @@ export const WebpageViewer = () => {
 		<>
 			<TouchableOpacity
 				activeOpacity={0.75}
-				onPress={() => onOpen("web-view")}
+				onPress={() => {
+					setPayload({ src });
+					onOpen("web-view");
+				}}
 				style={{ position: "absolute", top: 100 }}
 			>
 				<Text>Open the modal</Text>
