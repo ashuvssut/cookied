@@ -7,9 +7,9 @@ import { RNWebView } from "app/components/WebView";
 import { IRNWebViewRefProps } from "app/components/WebView";
 import { atom, useAtom } from "jotai";
 
-const modalizeRefAtom = atom<RefObject<Modalize> | null>(null);
-const setPayloadAtom = atom<any>({});
-const modalTypeAtom = atom<TModal>("web-view");
+export const modalizeRefAtom = atom<RefObject<Modalize> | null>(null);
+export const setPayloadAtom = atom<any>({});
+export const modalTypeAtom = atom<TModal>("web-view");
 
 export const Modal = () => {
 	const ref = useRef<Modalize>(null);
@@ -117,19 +117,3 @@ export const Modal = () => {
 		</Modalize>
 	);
 };
-
-export function useModal() {
-	const [ref] = useAtom(modalizeRefAtom);
-	const [modalType, setModalType] = useAtom(modalTypeAtom);
-	const [payload, setPayload] = useAtom(setPayloadAtom);
-
-	const onOpen = (type: TModal) => {
-		setModalType(type);
-		ref?.current?.open();
-	};
-	const closeModal = () => {
-		ref?.current?.close();
-	};
-
-	return { onOpen, closeModal, setModalType, setPayload, modalType, payload };
-}
