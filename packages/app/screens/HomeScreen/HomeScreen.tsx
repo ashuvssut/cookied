@@ -11,8 +11,6 @@ import { useRef } from "react";
 
 const isWeb = Platform.OS === "web";
 export default function HomeScreen() {
-	const src = "https://blog.logrocket.com/best-practices-react-iframes/";
-
 	const style = usePressabilityApiStyles();
 	const ref = useRef<ISlideInViewRefProps>(null);
 	return (
@@ -52,12 +50,12 @@ export default function HomeScreen() {
 						{isWeb ? (
 							<View sx={{ flexDirection: "row", height: "100vh" }}>
 								<TreePanel />
-								<WebpageViewer src={src} />
+								<WebpageViewer />
 							</View>
 						) : (
 							<>
 								<TreePanel />
-								<WebpageViewer src={src} />
+								<WebpageViewer />
 							</>
 						)}
 					</View>

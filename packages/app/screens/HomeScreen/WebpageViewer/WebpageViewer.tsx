@@ -4,8 +4,10 @@ import { TouchableOpacity } from "react-native";
 import { useSendIntent } from "app/hooks/useSendIntent";
 import { useFocusEffect } from "expo-router";
 import { useModal } from "app/components/Modal";
+import { useAtom } from "jotai";
+import { activeUrlAtom } from "app/screens/HomeScreen/TreePanel";
 
-export const WebpageViewer = ({ src }: { src: string }) => {
+export const WebpageViewer = () => {
 	const { onOpen, setPayload } = useModal();
 	const { sharedData } = useSendIntent();
 	useFocusEffect(
@@ -14,7 +16,7 @@ export const WebpageViewer = ({ src }: { src: string }) => {
 			if (sharedData) onOpen("add-bookmark");
 		}, [sharedData]),
 	);
-
+	const [src] = useAtom(activeUrlAtom);
 	return (
 		<>
 			<TouchableOpacity

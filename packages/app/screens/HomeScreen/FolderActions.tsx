@@ -1,14 +1,14 @@
-import { Pressable, View, useDripsyTheme } from "dripsy";
+import { View, useDripsyTheme } from "dripsy";
 import { ComponentProps, FC } from "react";
 import { IFolder } from "app/store/slices/bmShelfSlice";
 import {
 	MdOutlineBookmarkAdd,
 	MdOutlineCreateNewFolder,
 } from "app/assets/icons";
-import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
 import { useBmShelfDB } from "app/hooks/useBmShelfDB/useBmShelfDB";
 import { generateBookmarkForApi, generateFolderForApi } from "app/mock/bmShelf";
 import { useModal } from "app/components/Modal";
+import { IconButton } from "app/components/IconButton";
 
 interface IFolderActions extends ComponentProps<typeof View> {
 	node: IFolder | null;
@@ -45,25 +45,5 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 				</IconButton>
 			</View>
 		</View>
-	);
-};
-
-type PressableProps = ComponentProps<typeof Pressable>;
-const IconButton: FC<PressableProps> = ({ children, sx, ...props }) => {
-	const style = usePressabilityApiStyles();
-	return (
-		<Pressable
-			sx={{
-				p: "$2",
-				borderWidth: 1,
-				borderRadius: 5,
-				userSelect: "none",
-				...sx,
-			}}
-			{...props}
-			style={style}
-		>
-			{children}
-		</Pressable>
 	);
 };
