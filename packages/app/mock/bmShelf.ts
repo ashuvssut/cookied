@@ -105,9 +105,7 @@ export function generateFolderForApi(node: IFolder | null) {
 export function generateBookmarkForApi(node: IFolder) {
 	const { $id: parentId, level, path } = node;
 	const bmObject = generateRandomBookmark(parentId, level, path);
-	const pathCopy = [...path];
-	pathCopy.pop();
-	bmObject.path = pathCopy;
+	bmObject.path = [...path, parentId];
 	const bookmarkData = _.omit(bmObject, ["$updatedAt", "$createdAt", "$id"]);
 	return bookmarkData;
 }
