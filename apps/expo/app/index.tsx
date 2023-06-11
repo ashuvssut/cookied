@@ -15,7 +15,7 @@ const HomeScreenWithDrawer = () => {
 	const { width } = useWindowDimensions();
 
 	return (
-		<View sx={{ position: "relative", height: "100%", flexDirection: "row" }}>
+		<View sx={{ position: "relative", height: "100%" }}>
 			<LinearGradient
 				colors={linearGradients.surfaceGradientBg}
 				start={[0, 0.5]}
