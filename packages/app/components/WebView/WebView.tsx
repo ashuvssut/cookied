@@ -1,4 +1,5 @@
 import {
+	ComponentProps,
 	ForwardedRef,
 	forwardRef,
 	useCallback,
@@ -8,7 +9,10 @@ import {
 	useState,
 } from "react";
 import { Animated, Dimensions, Easing, Platform } from "react-native";
-import { WebView, WebViewMessageEvent } from "react-native-webview";
+import {
+	WebView as RNWebView,
+	WebViewMessageEvent,
+} from "react-native-webview";
 import {
 	documentHeightCallbackScript,
 	extractHostname,
@@ -25,18 +29,18 @@ interface IWebpageState {
 	progress: Animated.Value;
 }
 
-interface IRNWebView {
-	uri: string;
+interface IWebView extends ComponentProps<typeof RNWebView> {
+	src: string;
 	onWebpageStateChange?: (state: IWebpageState) => void;
 }
-export interface IRNWebViewRefProps {
+export interface IWebViewRefProps {
 	goBack: () => void;
 	goForward: () => void;
 }
-export const RNWebView = forwardRef(
-	(props: IRNWebView, ref: ForwardedRef<IRNWebViewRefProps>) => {
-		const { uri, onWebpageStateChange } = props;
-		const webViewRef = useRef<WebView>(null);
+export const WebView = forwardRef(
+	(props: IWebView, ref: ForwardedRef<IWebViewRefProps>) => {
+		const { src, onWebpageStateChange, ...restProps } = props;
+		const webViewRef = useRef<RNWebView>(null);
 		const [url, setUrl] = useState<IWebpageState["url"]>("");
 		const [secured, setSecure] = useState<IWebpageState["secured"]>(true);
 		const [mounted, setMounted] = useState<IWebpageState["secured"]>(false);
@@ -117,12 +121,10 @@ export const RNWebView = forwardRef(
 		}, [url, secured, back, forward, progress]);
 
 		return (
-			<WebView
+			<RNWebView
 				ref={webViewRef}
-				source={{ uri }}
-				onLayout={e => {
-					setLayoutHeight(e.nativeEvent.layout.height);
-				}}
+				source={{ uri: src }}
+				onLayout={e => setLayoutHeight(e.nativeEvent.layout.height)}
 				onLoadStart={() => handleLoad("start")}
 				onLoadProgress={() => handleLoad("progress")}
 				onLoadEnd={() => handleLoad("end")}
@@ -133,6 +135,7 @@ export const RNWebView = forwardRef(
 				scrollEnabled={true}
 				containerStyle={{ paddingBottom: 10 }}
 				style={{ height }}
+				{...restProps}
 			/>
 		);
 	},

@@ -16,11 +16,11 @@ interface IFolderActions extends ComponentProps<typeof View> {
 export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 	const { addFolder, addBookmark } = useBmShelfDB();
 	const { onPrimary } = useDripsyTheme().theme.colors;
-	const {onOpen}=useModal()
+	const { onOpen } = useModal();
 	const addBm = async (parentFl: IFolder) => {
-onOpen("add-bookmark")
-		// const randomBm = generateBookmarkForApi(parentFl);
-		// await addBookmark(randomBm);
+		onOpen("add-bookmark");
+		const randomBm = generateBookmarkForApi(parentFl);
+		await addBookmark(randomBm);
 	};
 	const addFl = async (node: IFolder | null) => {
 		const randomFl = generateFolderForApi(node);

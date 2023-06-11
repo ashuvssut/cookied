@@ -1,6 +1,6 @@
 import { modalTypeAtom, modalizeRefAtom, setPayloadAtom } from "./Modal";
 import { useAtom } from "jotai";
-import type { TModal } from "./";
+import type { TModal } from ".";
 
 export function useModal() {
 	const [ref] = useAtom(modalizeRefAtom);

@@ -31,6 +31,7 @@ const nextConfig = {
 		"expo-modules-core",
 		"expo-constants",
 		"expo-linear-gradient",
+		"react-native-modalize",
 	],
 };
 

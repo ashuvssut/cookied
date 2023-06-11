@@ -2,7 +2,7 @@ import Screen from "app/components/Screen";
 import { Header } from "app/components/Header";
 import { TreePanel } from "app/screens/HomeScreen/TreePanel";
 import { View, Pressable } from "dripsy";
-import { WebpageView } from "app/screens/HomeScreen/WebpageView";
+import { WebpageViewer } from "app/screens/HomeScreen/WebpageViewer";
 import { Dimensions, Platform } from "react-native";
 import { View as MotiView, useAnimationState } from "moti";
 import { MdMenu } from "app/assets/icons";
@@ -66,12 +66,12 @@ export default function HomeScreen() {
 						{Platform.OS === "web" ? (
 							<View sx={{ flexDirection: "row", height: "100vh" }}>
 								<TreePanel />
-								<WebpageView />
+								<WebpageViewer />
 							</View>
 						) : (
 							<>
 								<TreePanel />
-								<WebpageView />
+								<WebpageViewer />
 							</>
 						)}
 					</View>

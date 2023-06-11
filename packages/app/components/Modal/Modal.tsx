@@ -3,8 +3,8 @@ import { Modalize } from "react-native-modalize";
 import { Animated } from "react-native";
 import ActionModal from "./ActionModal";
 import { TModal, ModalHeader } from "./ModalHeader";
-import { RNWebView } from "app/components/WebView";
-import { IRNWebViewRefProps } from "app/components/WebView";
+import { WebView } from "app/components/WebView";
+import { IWebViewRefProps } from "app/components/WebView";
 import { atom, useAtom } from "jotai";
 
 export const modalizeRefAtom = atom<RefObject<Modalize> | null>(null);
@@ -16,9 +16,7 @@ export const Modal = () => {
 	const [_m, setModalizeRef] = useAtom(modalizeRefAtom);
 	const [payload, _s] = useAtom(setPayloadAtom);
 	const [modalType, _mt] = useAtom(modalTypeAtom);
-	useEffect(() => {
-		setModalizeRef(ref);
-	}, [ref, setModalizeRef]);
+	useEffect(() => void setModalizeRef(ref), [ref, setModalizeRef]);
 
 	const [url, setUrl] = useState("");
 	const [secured, setSecure] = useState(true);
@@ -26,13 +24,13 @@ export const Modal = () => {
 	const [forward, setForward] = useState(false);
 	const progress = useRef(new Animated.Value(0));
 
-	const webViewRef = useRef<IRNWebViewRefProps>(null);
+	const webViewRef = useRef<IWebViewRefProps>(null);
 	const renderModal = () => {
 		if (modalType === "web-view") {
 			return (
-				<RNWebView
+				<WebView
 					ref={webViewRef}
-					uri="https://blog.logrocket.com/best-practices-react-iframes/"
+					src="https://blog.logrocket.com/best-practices-react-iframes/"
 					onWebpageStateChange={state => {
 						setUrl(state.url);
 						setSecure(state.secured);

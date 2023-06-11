@@ -1,1 +1,1 @@
-export { RNWebView, IRNWebViewRefProps } from "./WebView";
+export { WebView, IWebViewRefProps } from "./WebView";

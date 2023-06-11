@@ -1,12 +1,11 @@
-/* eslint-disable react/display-name */
-import { forwardRef, useCallback } from "react";
+import { useCallback } from "react";
 import { Text } from "dripsy";
 import { TouchableOpacity } from "react-native";
 import { useSendIntent } from "app/hooks/useSendIntent";
 import { useFocusEffect } from "expo-router";
 import { useModal } from "app/components/Modal";
 
-export const WebpageView = forwardRef((_, ref) => {
+export const WebpageViewer = () => {
 	const { onOpen, setPayload } = useModal();
 	const { sharedData } = useSendIntent();
 	useFocusEffect(
@@ -27,4 +26,4 @@ export const WebpageView = forwardRef((_, ref) => {
 			</TouchableOpacity>
 		</>
 	);
-});
+};
