@@ -6,5 +6,6 @@ export {
 	MdFolder,
 	MdFolderOpen,
 	MdOutlineBookmarkBorder,
-	MdMenu
+	MdMenu,
+	MdOutlineOpenInNew,
 } from "react-icons/md";

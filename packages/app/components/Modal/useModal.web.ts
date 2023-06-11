@@ -1,10 +1,10 @@
 // no-op for web
 export function useModal() {
 	return {
-		onOpen: () => undefined,
+		onOpen: (_ = "") => undefined,
 		closeModal: () => undefined,
-		setModalTyp: () => undefined,
-		setPayload: () => undefined,
+		setModalType: () => undefined,
+		setPayload: (_ = {}) => undefined,
 		modalType: undefined,
 		payload: undefined,
 	};

@@ -16,9 +16,11 @@ import {
 	MdFolderOpen,
 	MdOutlineBookmarkBorder,
 } from "app/assets/icons";
-import { bookmarkState } from "app/mock/bmShelf";
-import { ScrollView } from "react-native";
+import { Platform, ScrollView } from "react-native";
 import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
+import { atom } from "jotai";
+import { BookmarkActions } from "app/screens/HomeScreen/BookmarkActions";
+import { useModal } from "app/components/Modal";
 
 export function TreePanel() {
 	const foldersWithBookmarks = useAppSelector(selectDenormalizedBmShelf);
@@ -116,18 +118,28 @@ const Node: FC<INode> = memo(
 	(prevProps, nextProps) => prevProps.node.title === nextProps.node.title,
 );
 
+export const activeUrlAtom = atom<string | null>(null);
 interface ILeafNode {
 	node: IBookmark;
 }
 const LeafNode: FC<ILeafNode> = memo(
 	({ node }) => {
+		const [_, setActiveUrl] = useAtom(activeUrlAtom);
 		const { onPrimary } = useDripsyTheme().theme.colors;
 		const style = usePressabilityApiStyles();
+		const { onOpen, setPayload } = useModal();
 		return (
 			<Pressable
 				key={"bm" + node.$id}
 				variants={["layout.narrowHzTile", "layout.row"]}
 				style={style}
+				onPress={() => {
+					setActiveUrl(node.url);
+					if (Platform.OS !== "web") {
+						setPayload({ src: node.url });
+						onOpen("web-view");
+					}
+				}}
 			>
 				<View variant="layout.row" sx={{ pl: node.level * p, width: "100%" }}>
 					<View sx={{ pr: "$3" }}>
@@ -136,6 +148,7 @@ const LeafNode: FC<ILeafNode> = memo(
 					<Text sx={{ top: "$1", py: "$2" }} numberOfLines={1}>
 						{node.title}
 					</Text>
+					<BookmarkActions node={node} />
 				</View>
 			</Pressable>
 		);

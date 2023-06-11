@@ -1,3 +1,4 @@
+import { View } from "dripsy";
 import { DetailedHTMLProps, FC, IframeHTMLAttributes } from "react";
 
 interface IWebView
@@ -7,20 +8,14 @@ interface IWebView
 	> {}
 export const WebView: FC<IWebView> = ({ src, style, ...props }) => {
 	return (
-		<iframe
-			style={{
-				border: "none",
-				position: "absolute",
-				top: 0,
-				left: 0,
-				width: "100%",
-				height: "100%",
-				...style,
-			}}
-			loading="eager"
-			sandbox="allow-modals"
-			src={src}
-			{...props}
-		/>
+		<View variant="layout.absoluteFlex">
+			<iframe
+				style={{ border: "none", ...style }}
+				loading="eager"
+				sandbox="allow-modals"
+				src={src}
+				{...props}
+			/>
+		</View>
 	);
 };
