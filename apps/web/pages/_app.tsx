@@ -9,6 +9,7 @@ import { DripsyTheme } from "app/theme";
 import { ProtectedRoute } from "app/components/ProtectedRoute";
 import LoadingModal from "app/components/LoadingModal";
 import { resetReduxPersist_reload } from "app/utils/storage";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 	useEffect(() => {
@@ -21,14 +22,16 @@ function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 				<meta name="description" content="Cookied | Bookmarks manager app" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<DripsyTheme>
-				<ReduxProvider>
-					<ProtectedRoute>
-						<Component {...pageProps} />
-						<LoadingModal />
-					</ProtectedRoute>
-				</ReduxProvider>
-			</DripsyTheme>
+			<GestureHandlerRootView style={{ flex: 1 }}>
+				<DripsyTheme>
+					<ReduxProvider>
+						<ProtectedRoute>
+							<Component {...pageProps} />
+							<LoadingModal />
+						</ProtectedRoute>
+					</ReduxProvider>
+				</DripsyTheme>
+			</GestureHandlerRootView>
 		</>
 	);
 }

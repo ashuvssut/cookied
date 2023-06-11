@@ -3,33 +3,22 @@ import { Header } from "app/components/Header";
 import { TreePanel } from "app/screens/HomeScreen/TreePanel";
 import { View, Pressable } from "dripsy";
 import { WebpageViewer } from "app/screens/HomeScreen/WebpageViewer";
-import { Platform, useWindowDimensions } from "react-native";
-import { View as MotiView, useAnimationState } from "moti";
+import { Platform } from "react-native";
 import { MdMenu } from "app/assets/icons";
+import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
+import { ISlideInViewRefProps, SlideInView } from "app/components/SlideInView";
+import { useRef } from "react";
 
+const isWeb = Platform.OS === "web";
 export default function HomeScreen() {
-	const { width } = useWindowDimensions();
-	// const fadeInDown = useFadeInDown();
-	const scaleIn = useAnimationState({
-		to: { opacity: 1 },
-		from: { opacity: 0.9 },
-		open: { scale: 0.8, translateX: -width / 2, borderRadius: 20 },
-		close: { scale: 1, translateX: 0, borderRadius: 0 },
-	});
-
-	const onPress = () => {
-		if (scaleIn.current === "open") scaleIn.transitionTo("close");
-		else scaleIn.transitionTo("open");
-	};
 	const src = "https://blog.logrocket.com/best-practices-react-iframes/";
+
+	const style = usePressabilityApiStyles();
+	const ref = useRef<ISlideInViewRefProps>(null);
 	return (
-		<MotiView
-			transition={{ type: "timing", duration: 350 }}
-			style={{ overflow: "hidden" }}
-			state={scaleIn}
-		>
+		<SlideInView ref={ref}>
 			<Screen>
-				{Platform.OS !== "web" && (
+				{!isWeb && (
 					<View
 						sx={{
 							position: "absolute",
@@ -41,7 +30,7 @@ export default function HomeScreen() {
 					>
 						<Pressable
 							hitSlop={30}
-							onPress={onPress}
+							onPress={ref.current?.triggerToggle}
 							sx={{
 								width: 35,
 								height: 35,
@@ -50,6 +39,7 @@ export default function HomeScreen() {
 								justifyContent: "center",
 								alignItems: "center",
 							}}
+							style={style}
 						>
 							<MdMenu size={30} color="white" />
 						</Pressable>
@@ -58,7 +48,7 @@ export default function HomeScreen() {
 				<View sx={{ height: "100%" }}>
 					<Header />
 					<View sx={{ flex: 1 }}>
-						{Platform.OS === "web" ? (
+						{isWeb ? (
 							<View sx={{ flexDirection: "row", height: "100vh" }}>
 								<TreePanel />
 								<WebpageViewer src={src} />
@@ -72,6 +62,6 @@ export default function HomeScreen() {
 					</View>
 				</View>
 			</Screen>
-		</MotiView>
+		</SlideInView>
 	);
 }
