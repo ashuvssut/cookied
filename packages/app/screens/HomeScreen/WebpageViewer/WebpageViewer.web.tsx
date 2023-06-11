@@ -5,10 +5,14 @@ import { useAtom } from "jotai";
 import { activeUrlAtom } from "app/screens/HomeScreen/TreePanel";
 import { Svg } from "app/components/Svg";
 import { OpenBookmark } from "app/assets/svg";
+import { useAppSelector } from "app/store/hooks";
+import { selectFlPathsWithTitles } from "app/store/slices/bmShelfSlice";
+import logr from "app/utils/logr";
 
 export const WebpageViewer: FC = () => {
 	const [activeUrl] = useAtom(activeUrlAtom);
-
+	const foldersSelector = useAppSelector(selectFlPathsWithTitles);
+	logr("Folder Selector", foldersSelector);
 	return (
 		<View variants={["layout.center", "layout.secondary"]} sx={{ flex: 1 }}>
 			<ActivityIndicator size="large" />
@@ -19,6 +23,7 @@ export const WebpageViewer: FC = () => {
 					variants={
 						["layout.center", "layout.absoluteFlex", "layout.secondary"] //
 					}
+					sx={{ overflow: "hidden" }}
 				>
 					<Svg
 						Svg={OpenBookmark}

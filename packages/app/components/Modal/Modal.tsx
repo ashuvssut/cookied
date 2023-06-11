@@ -6,6 +6,7 @@ import { TModal, ModalHeader } from "./ModalHeader";
 import { WebView } from "app/components/WebView";
 import { IWebViewRefProps } from "app/components/WebView";
 import { atom, useAtom } from "jotai";
+import { useDripsyTheme } from "dripsy";
 
 export const modalizeRefAtom = atom<RefObject<Modalize> | null>(null);
 export const setPayloadAtom = atom<any>({});
@@ -102,6 +103,8 @@ export const Modal = () => {
 			handleClose={ref?.current?.close}
 		/>
 	);
+
+	const primary = useDripsyTheme().theme.colors.primary;
 	return (
 		<Modalize
 			ref={ref}
@@ -110,6 +113,8 @@ export const Modal = () => {
 			// modalHeight={100}
 			// snapPoint={100}
 			// modalTopOffset={200}
+			modalStyle={{ backgroundColor: primary }}
+			rootStyle={{ backgroundColor: "#9994" }}
 		>
 			{renderModal()}
 		</Modalize>

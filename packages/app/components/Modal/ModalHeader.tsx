@@ -150,7 +150,7 @@ export const ModalHeader = (props: IModalHeaderProps) => {
 		<View
 			sx={{
 				height: 44,
-				borderBottomColor: "#c1c4c7",
+				borderBottomColor: "#333",
 				borderBottomWidth: 1,
 				borderTopLeftRadius: 12,
 				borderTopRightRadius: 12,
@@ -179,7 +179,7 @@ export const ModalHeader = (props: IModalHeaderProps) => {
 							fontSize: 16,
 							textAlign: "center",
 							fontWeight: "500",
-							color: "#000000",
+							color: "onPrimary",
 						}}
 						numberOfLines={1}
 					>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextInput, FlatList, Text, View } from "react-native";
+import { TextInput, FlatList, View } from "react-native";
 import Fuse from "fuse.js";
 
 const FuzzySearch = ({ data }) => {
@@ -14,8 +14,8 @@ const FuzzySearch = ({ data }) => {
 
 	const handleSearch = text => {
 		setSearchTerm(text);
-    const results = fuse.search(text);
-    console.log("Results",results)
+		const results = fuse.search(text);
+		console.log("Results", results);
 		// setSearchResults(results.map(result => result.item));
 	};
 

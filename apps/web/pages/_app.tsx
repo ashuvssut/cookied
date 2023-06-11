@@ -10,6 +10,7 @@ import { ProtectedRoute } from "app/components/ProtectedRoute";
 import LoadingModal from "app/components/LoadingModal";
 import { resetReduxPersist_reload } from "app/utils/storage";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Modal } from "app/components/Modal";
 
 function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 	useEffect(() => {
@@ -28,6 +29,7 @@ function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 						<ProtectedRoute>
 							<Component {...pageProps} />
 							<LoadingModal />
+							<Modal />
 						</ProtectedRoute>
 					</ReduxProvider>
 				</DripsyTheme>

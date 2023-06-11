@@ -8,7 +8,6 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../types";
 import { convertToDenormalized } from "app/store/utils/bmShelfUtils";
-import logr from "app/utils/logr";
 
 const foldersAdapter = createEntityAdapter<IFolder>({
 	selectId: folder => folder.$id,
@@ -33,9 +32,10 @@ export const bmShelfSlice = createSlice({
 		addFl: {
 			reducer: (state, action: PA<IFolder>) =>
 				void foldersAdapter.addOne(state.folders, action.payload),
-			prepare: (folder: Omit<IFolder, "bookmarks" | "folders">) => ({
-				payload: { ...folder, bookmarks: [], folders: [] },
-			}),
+			prepare: (folder: Omit<IFolder, "bookmarks" | "folders">) => {
+				const draft = { ...folder, bookmarks: [], folders: [] };
+				return { payload: draft };
+			},
 		},
 		addManyFl: {
 			reducer: (state, action: PA<IFolder[]>) =>
@@ -89,8 +89,9 @@ export const selectFlPaths = createSelector(
 		const folderEntities = folders.entities;
 		const flPaths = Object.values(folderEntities).map(folder => {
 			if (!folder) logr.warn("selectFlPaths: folder is undefined");
-			const folderPath = folder?.path || [];
-			if (folder?.$id) folderPath.push(folder.$id);
+			if (!folder) return [];
+			const folderPath = [...folder.path];
+			if (folder.$id) folderPath.push(folder.$id);
 			return folderPath;
 		});
 		return flPaths;

@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import { Th } from "app/theme/components";
 import { TModal } from "app/components/Modal";
-import { useSelector } from "react-redux";
 import { selectFlPathsWithTitles } from "app/store/slices/bmShelfSlice";
 import Fuse from "fuse.js";
-import {  ListRenderItemInfo } from "react-native";
+import { ListRenderItemInfo, Platform } from "react-native";
+import logr from "app/utils/logr";
+import { useAppSelector } from "app/store/hooks";
 
 type Props = {
 	title: string;
@@ -15,16 +16,14 @@ type Props = {
 	initialUrl?: string;
 };
 
-export type TSearchResults = {
+export type TSearchResults = Fuse.FuseResult<{
 	path: string;
 	id: string;
-	pathArray: string[];
-};
+	pathArr: string[];
+}>[];
 
 const ActionModal = (props: Props) => {
-	const [searchResults, setSearchResults] = useState<
-		Fuse.FuseResult<{ path: string; id: string; pathArr: string[] }>[]
-	>([]);
+	const [searchResults, setSearchResults] = useState<TSearchResults>([]);
 	const [searchQuery, setSearchQuery] = useState("");
 
 	const handleSearch = (text: string) => {
@@ -42,8 +41,8 @@ const ActionModal = (props: Props) => {
 		);
 	};
 
-	const foldersSelector = useSelector(selectFlPathsWithTitles);
-	console.log("Folder Selector", JSON.stringify(foldersSelector));
+	const foldersSelector = useAppSelector(selectFlPathsWithTitles);
+	logr("Folder Selector", foldersSelector);
 	const handleSubmit = value => {
 		console.log(value);
 		if (props.type === "add-bookmark") {
@@ -56,7 +55,7 @@ const ActionModal = (props: Props) => {
 		}
 	};
 	return (
-		<View sx={{ marginHorizontal: "$4", marginVertical: "$4" }}>
+		<View sx={{ m: "$4" }}>
 			<Formik
 				initialValues={{
 					title: "",
@@ -83,12 +82,12 @@ const ActionModal = (props: Props) => {
 								onChangeText={p.handleChange("url")}
 								autoCorrect={false}
 								onBlur={p.handleBlur("url")}
-								placeholder="Enter Url"
+								placeholder="Enter URL"
 							/>
 						)}
 						{(props.type === "add-bookmark" ||
 							props.type === "edit-bookmark") && (
-							<View sx={{ height: 500, marginTop: "$4" }}>
+							<View sx={{ height: 100, marginTop: "$4" }}>
 								<Th.TextInput
 									value={searchQuery}
 									onChangeText={handleSearch}
@@ -135,8 +134,8 @@ const ActionModal = (props: Props) => {
 						<View
 							sx={{
 								flexDirection: "row",
-								flex: 1,
 								justifyContent: "space-evenly",
+								paddingBottom: Platform.OS === "web" ? 80 : 0,
 							}}
 						>
 							<Th.ButtonSecondary
