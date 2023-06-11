@@ -1,19 +1,23 @@
-import { FlatList, View, Text, Pressable } from "dripsy";
+import { View, Text, Pressable, useDripsyTheme } from "dripsy";
 import { StyleSheet } from "react-native";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Formik } from "formik";
 import { Th } from "app/theme/components";
 import { TModal } from "app/components/Modal";
 import {
-	IFolder,
+	TFlPathWithTitle,
+	selectFlById,
 	selectFlPathsWithTitles,
 } from "app/store/slices/bmShelfSlice";
 import Fuse from "fuse.js";
-import { ListRenderItemInfo, Platform } from "react-native";
+import { Platform } from "react-native";
 import logr from "app/utils/logr";
 import { useAppSelector } from "app/store/hooks";
-import bookmarkSchema from "app/validators/bookmarkSchema";
+import addEditBmSchema from "app/validators/addEditBmSchema";
 import { useBmShelfDB } from "app/hooks/useBmShelfDB";
+import { useAtom } from "jotai";
+import { activeEntityIdAtom } from "app/screens/HomeScreen/TreePanel";
+import { MdArrowUpward } from "app/assets/icons";
 
 type Props = {
 	title: string;
@@ -22,68 +26,48 @@ type Props = {
 	initialUrl?: string;
 };
 
-export type TSearchResults = Fuse.FuseResult<{
-	path: string;
-	id: string;
-	pathArr: string[];
-}>[];
+export type TSearchResults = Fuse.FuseResult<TFlPathWithTitle>[];
 
 const ActionModal = (props: Props) => {
+	const colors = useDripsyTheme().theme.colors;
 	const [searchResults, setSearchResults] = useState<TSearchResults>([]);
-	const [searchQuery, setSearchQuery] = useState("");
-	const [folder, setFolder] = useState<
-		{ path: string; id: string; pathArr: string[] } | undefined
-	>();
-	// const folders = useAppSelector(state => state.bmShelf.folders.entities);
+	const [activeEntityId] = useAtom(activeEntityIdAtom);
+	const activeFl = useAppSelector(s =>
+		selectFlById(s.bmShelf.folders, activeEntityId || ""),
+	);
+	const [searchQuery, setSearchQuery] = useState(activeFl?.title || "");
+	const [folder, setFolder] = useState<TFlPathWithTitle | undefined>();
 	const { addBookmark } = useBmShelfDB();
+	const flPathsWithTitles = useAppSelector(selectFlPathsWithTitles);
 
 	const handleSearch = (text: string) => {
 		setSearchQuery(text);
-		const options = {
-			includeScore: true,
-			keys: [["path"]],
-		};
-		const fuse = new Fuse(foldersSelector, options);
+		const fuse = new Fuse(flPathsWithTitles, {
+			keys: ["path"],
+			shouldSort: true,
+			distance: 1000,
+		});
 		const results = fuse.search(text);
 		setSearchResults(results);
-		console.log(
-			"Results----------------------------------------->",
-			JSON.stringify(results),
-		);
 	};
+	useEffect(() => void handleSearch(searchQuery), []);
 
-	const getFolderDetails = (folderDetail: {
-		path: string;
-		id: string;
-		pathArr: string[];
-	}) => {
-		setSearchQuery(folderDetail.path);
-		setSearchResults([]);
-		setFolder(folderDetail);
-	};
-
-	const foldersSelector = useAppSelector(selectFlPathsWithTitles);
-	// logr("Folder Selector", foldersSelector);
-
-	function addHttpsToUrl(url:string):string {
-		if (!url.startsWith('http://') && !url.startsWith('https://')) {
-			url = 'https://' + url.toLowerCase();
-		}
-		return url;
-	}
-
-	const handleSubmitForm = async(title: string, url: string) => {
-		console.log("I am running",title, addHttpsToUrl(url));
+	const handleSubmitForm = async (fields: { title: string; url: string }) => {
 		if (props.type === "add-bookmark") {
 			if (folder) {
-				await addBookmark({
-					type: "bookmark",
-					parentId: folder.id,
-					path: folder.pathArr,
-					url: addHttpsToUrl(url),
-					title: title,
-					level: folder.pathArr.length - 1,
-				});
+				try {
+					const doc = await addBookmark({
+						type: "bookmark",
+						parentId: folder.id,
+						path: folder.pathArr,
+						level: folder.pathArr.length - 2,
+						...fields,
+					});
+					if (doc) props.onClose();
+					// TODO success & failure snackbar
+				} catch (err) {
+					logr.err(err);
+				}
 			}
 		}
 		if (props.type === "edit-bookmark") {
@@ -94,45 +78,42 @@ const ActionModal = (props: Props) => {
 		}
 	};
 
-	const renderSearchResults = useMemo((): JSX.Element[] => {
+	const renderSearchResults = useMemo(() => {
 		return searchResults.map((result, index) => {
+			if (index > 5) return null;
 			return (
 				<Pressable
-					onPress={() => getFolderDetails(result.item)}
+					onPress={() => {
+						setSearchQuery(result.item.path);
+						setSearchResults([]);
+						setFolder(result.item);
+					}}
 					key={result.item.id}
 					sx={{
-						marginTop: index === 0 ? 10 : 0,
 						height: 50,
-						borderTopRightRadius: index === 0 ? 5 : 0,
-						borderTopLeftRadius: index === 0 ? 5 : 0,
-						borderBottomRightRadius: index === searchResults.length - 1 ? 5 : 0,
-						borderBottomLeftRadius: index === searchResults.length - 1 ? 5 : 0,
 						borderBottomWidth: StyleSheet.hairlineWidth,
-						borderColor:
-							index === searchResults.length - 1 ? "transparent" : "#444",
-						backgroundColor: "surfaceHigh",
-						justifyContent: "center",
+						justifyContent: "space-between",
+						alignItems: "center",
+						flexDirection: "row",
+						px: "$4",
 					}}
+					style={({ hovered }) => ({
+						backgroundColor: hovered ? colors.secondary : colors.surfaceHigh,
+					})}
 				>
-					<Text sx={{ color: "onPrimary", px: "$3" }}>{result.item.path}</Text>
+					<Text sx={{ color: "onPrimary" }}>{result.item.path}</Text>
+					<MdArrowUpward size={25} color={colors.onPrimary} />
 				</Pressable>
 			);
 		});
 	}, [searchResults]);
-
 	return (
 		<View sx={{ m: "$4" }}>
 			<Formik
-				initialValues={{
-					title: "",
-					url: props.initialUrl ? props.initialUrl : "",
-				}}
-				validationSchema={bookmarkSchema}
+				initialValues={{ title: "", url: props.initialUrl || "", flPath: "" }}
+				validationSchema={addEditBmSchema}
 				validateOnMount
-				onSubmit={(values: { title: string; url: string }) => {
-					console.log("I am running",values.title, values.url);
-					// handleSubmit(values.title, values.url);
-				}}
+				onSubmit={({ title, url }) => handleSubmitForm({ title, url })}
 			>
 				{p => (
 					<>
@@ -159,19 +140,27 @@ const ActionModal = (props: Props) => {
 							<View sx={{ height: 300, marginTop: "$4" }}>
 								<Th.TextInput
 									value={searchQuery}
-									onChangeText={handleSearch}
+									onChangeText={(text: string) => {
+										p.handleChange("flPath")(text);
+										handleSearch(text);
+									}}
 									autoCorrect={false}
 									placeholder="Search Folders"
+									sx={{ zIndex: 1, color: "onPrimary" }}
 								/>
-								{renderSearchResults}
+								<View
+									variant="layout.noTopRadius"
+									sx={{ borderRadius: 8, overflow: "hidden", top: -2 }}
+								>
+									{renderSearchResults}
+								</View>
 							</View>
 						)}
 						<View
 							sx={{
 								flexDirection: "row",
 								justifyContent: "space-evenly",
-								paddingBottom: Platform.OS === "web" ? 80 : 0,
-								backgroundColor: "black",
+								pb: Platform.OS === "web" ? 80 : 0,
 							}}
 						>
 							<Th.ButtonSecondary
@@ -181,8 +170,8 @@ const ActionModal = (props: Props) => {
 								Cancel
 							</Th.ButtonSecondary>
 							<Th.ButtonPrimary
-								onPress={()=>handleSubmitForm(p.values.title,p.values.url)}
-								sx={{ flex: 1, marginLeft: "$3",zIndex:8,elevation:6 }}
+								onPress={() => p.handleSubmit()}
+								sx={{ flex: 1, marginLeft: "$3", zIndex: 8, elevation: 6 }}
 							>
 								Add
 							</Th.ButtonPrimary>

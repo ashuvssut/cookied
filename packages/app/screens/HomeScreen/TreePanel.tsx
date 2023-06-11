@@ -69,7 +69,7 @@ const TreePanelHeader = () => {
 	);
 };
 
-const activeEntityIdAtom = atom<string | null>(null);
+export const activeEntityIdAtom = atom<string | null>(null);
 const hoverFocusEntityIdAtom = atom<string | null>(null);
 interface INode {
 	node: IFolder;
@@ -107,7 +107,6 @@ const Node: FC<INode> = memo(
 					backgroundColor: activeEntityId === node.$id ? "#222a" : undefined,
 				}}
 				onHoverIn={() => setHoverFocusEntityId(node.$id)}
-				onHoverOut={() => setHoverFocusEntityId(null)}
 				// onLongPress={() => setHoverFocusEntityId(node.$id)}
 				onPress={() => {
 					setActiveEntityId(node.$id);
@@ -158,7 +157,6 @@ const LeafNode: FC<ILeafNode> = memo(
 				variants={["layout.narrowHzTile", "layout.row", "layout.noBorderX"]}
 				style={style}
 				onHoverIn={() => setHoverFocusEntityId(node.$id)}
-				onHoverOut={() => setHoverFocusEntityId(null)}
 				// onLongPress={() => setHoverFocusEntityId(node.$id)}
 				sx={{
 					borderColor: activeEntityId === node.$id ? "outline" : undefined,

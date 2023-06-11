@@ -8,4 +8,5 @@ export {
 	MdOutlineBookmarkBorder,
 	MdMenu,
 	MdOutlineOpenInNew,
+	MdArrowUpward,
 } from "react-icons/md";

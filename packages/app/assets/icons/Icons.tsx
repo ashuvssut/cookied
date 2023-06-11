@@ -13,6 +13,7 @@ export const MdFolder = MdIcon("folder");
 export const MdMenu = MdIcon("menu");
 export const MdFolderOpen = MdIcon("folder-open");
 export const MdOutlineBookmarkBorder = MdIcon("bookmark-border");
+export const MdArrowUpward = MdIcon("arrow-upward");
 
 // Typed Factory Functions
 type MdcProps = ComponentProps<typeof MaterialCommunityIcons>;

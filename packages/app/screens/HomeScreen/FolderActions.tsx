@@ -9,6 +9,8 @@ import { useBmShelfDB } from "app/hooks/useBmShelfDB/useBmShelfDB";
 import { generateBookmarkForApi, generateFolderForApi } from "app/mock/bmShelf";
 import { useModal } from "app/components/Modal";
 import { IconButton } from "app/components/IconButton";
+import { useAtom } from "jotai";
+import { activeEntityIdAtom } from "app/screens/HomeScreen/TreePanel";
 
 interface IFolderActions extends ComponentProps<typeof View> {
 	node: IFolder | null;
@@ -29,16 +31,25 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 		await addFolder(randomFl);
 		props.onActionComplete?.();
 	};
+	const [_, setActiveEntityId] = useAtom(activeEntityIdAtom);
 	return (
 		<View {...props} sx={{ position: "absolute", right: "$3", ...props.sx }}>
 			<View sx={{ gap: 5, flexDirection: "row" }}>
 				{node && (
-					<IconButton onPress={() => addBm(node)}>
+					<IconButton
+						onPress={() => {
+							setActiveEntityId(node.$id);
+							addBm(node);
+						}}
+					>
 						<MdOutlineBookmarkAdd size={22} color={onPrimary} />
 					</IconButton>
 				)}
 				<IconButton
-					onPress={() => addFl(node)}
+					onPress={() => {
+						setActiveEntityId(node?.$id ?? null);
+						addFl(node);
+					}}
 					sx={{ borderColor: !node ? "outline" : undefined }}
 				>
 					<MdOutlineCreateNewFolder size={22} color={onPrimary} />

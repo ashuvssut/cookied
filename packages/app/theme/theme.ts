@@ -21,6 +21,7 @@ const commonConfig = makeTheme({
 			borderLeftWidth: 0,
 			borderRightWidth: 0,
 		},
+		noTopRadius: { borderTopLeftRadius: 0, borderTopRightRadius: 0 },
 		absoluteFlex: {
 			flex: 1,
 			position: "absolute",

@@ -5,17 +5,22 @@ import { MdOutlineOpenInNew } from "app/assets/icons";
 import { openURL } from "expo-linking";
 import { IconButton } from "app/components/IconButton";
 import { Platform } from "react-native";
+import { useAtom } from "jotai";
+import { activeEntityIdAtom } from "app/screens/HomeScreen/TreePanel";
 
 interface IBookmarkActions extends ComponentProps<typeof View> {
 	node: IBookmark;
 }
 export const BookmarkActions: FC<IBookmarkActions> = ({ node, ...props }) => {
 	const { onPrimary } = useDripsyTheme().theme.colors;
+	const [_, setActiveEntityId] = useAtom(activeEntityIdAtom);
+
 	return (
 		<View {...props} sx={{ position: "absolute", right: "$3", ...props.sx }}>
 			<View sx={{ gap: 5, flexDirection: "row" }}>
 				<IconButton
 					onPress={() => {
+						setActiveEntityId(node.$id);
 						if (Platform.OS === "web") {
 							window.open(node.url, "_blank");
 							return;

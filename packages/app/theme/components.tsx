@@ -2,9 +2,9 @@ import { FCC } from "app/types/IReact";
 import { Text, TextInput, Pressable, View, useDripsyTheme } from "dripsy";
 import { LinearGradient } from "expo-linear-gradient";
 import { ComponentProps } from "react";
-import { StyleSheet, TextInputProps } from "react-native";
+import { StyleSheet } from "react-native";
 
-const _TextInput = (props: TextInputProps) => {
+const _TextInput = (props: ComponentProps<typeof TextInput>) => {
 	const placeholder = useDripsyTheme().theme.colors.placeholder;
 	return (
 		// @ts-ignore

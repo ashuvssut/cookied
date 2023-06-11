@@ -75,6 +75,8 @@ export default bmShelfSlice.reducer;
 // export const { selectAll: selectAllBookmarks } =
 // 	bookmarksAdapter.getSelectors<RootState>(state => state.bmShelf.bookmarks);
 
+export const { selectById: selectFlById } = foldersAdapter.getSelectors();
+
 export const selectDenormalizedBmShelf = createSelector(
 	(state: RootState) => state.bmShelf,
 	shelf => {
@@ -99,10 +101,15 @@ export const selectFlPaths = createSelector(
 	},
 );
 
+export type TFlPathWithTitle = {
+	path: string;
+	id: string;
+	pathArr: string[];
+};
 export const selectFlPathsWithTitles = createSelector(
 	selectFlPaths,
 	(state: RootState) => state.bmShelf.folders,
-	(paths, folders) => {
+	(paths, folders): TFlPathWithTitle[] => {
 		const folderEntities = folders.entities;
 		// convert path id array to their respective path title array
 		const flPathsWithTitles = paths.map(path => {
@@ -113,7 +120,8 @@ export const selectFlPathsWithTitles = createSelector(
 				return folder?.title || "";
 			});
 			const id = path[path.length - 1]!; // last folder's id
-			return { path: titlePath.join(" > "), id, pathArr: pathCopy };
+			pathCopy.unshift("root"); // add "root" to beginning of array
+			return { path: titlePath.join("/"), id, pathArr: pathCopy };
 		});
 		return flPathsWithTitles;
 	},

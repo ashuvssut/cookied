@@ -119,7 +119,6 @@ export function useSdkBmShelfDB() {
 	};
 
 	const addBookmark = async (bm: TBmData) => {
-		// console.log("Bookmarksssssssss----->",JSON.stringify(bm))
 		setIsLoading(true);
 		try {
 			if (!userId) throw new Error("User not logged in");
