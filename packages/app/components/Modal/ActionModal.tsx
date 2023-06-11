@@ -1,10 +1,12 @@
-import { View } from "dripsy";
-import React from "react";
+import { FlatList, View, Text } from "dripsy";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import { Th } from "app/theme/components";
 import { TModal } from "app/components/Modal";
 import { useSelector } from "react-redux";
 import { selectFlPathsWithTitles } from "app/store/slices/bmShelfSlice";
+import Fuse from "fuse.js";
+import {  ListRenderItemInfo } from "react-native";
 
 type Props = {
 	title: string;
@@ -13,10 +15,37 @@ type Props = {
 	initialUrl?: string;
 };
 
+export type TSearchResults = {
+	path: string;
+	id: string;
+	pathArray: string[];
+};
+
 const ActionModal = (props: Props) => {
+	const [searchResults, setSearchResults] = useState<
+		Fuse.FuseResult<{ path: string; id: string; pathArr: string[] }>[]
+	>([]);
+	const [searchQuery, setSearchQuery] = useState("");
+
+	const handleSearch = (text: string) => {
+		setSearchQuery(text);
+		const options = {
+			includeScore: true,
+			keys: [["path"]],
+		};
+		const fuse = new Fuse(foldersSelector, options);
+		const results = fuse.search(text);
+		setSearchResults(results);
+		console.log(
+			"Results----------------------------------------->",
+			JSON.stringify(results),
+		);
+	};
+
 	const foldersSelector = useSelector(selectFlPathsWithTitles);
-	console.log("Folder Selector",JSON.stringify(foldersSelector))
+	console.log("Folder Selector", JSON.stringify(foldersSelector));
 	const handleSubmit = value => {
+		console.log(value);
 		if (props.type === "add-bookmark") {
 		}
 		if (props.type === "edit-bookmark") {
@@ -35,7 +64,7 @@ const ActionModal = (props: Props) => {
 				}}
 				// validationSchema={loginSchema}
 				// validateOnMount
-				onSubmit={value => handleSubmit(value)}
+				onSubmit={values => handleSubmit(values)}
 			>
 				{p => (
 					<>
@@ -57,6 +86,52 @@ const ActionModal = (props: Props) => {
 								placeholder="Enter Url"
 							/>
 						)}
+						{(props.type === "add-bookmark" ||
+							props.type === "edit-bookmark") && (
+							<View sx={{ height: 500, marginTop: "$4" }}>
+								<Th.TextInput
+									value={searchQuery}
+									onChangeText={handleSearch}
+									autoCorrect={false}
+									// onBlur={p.handleBlur("search")}
+									placeholder="Search Folders"
+								/>
+								<FlatList
+									data={searchResults}
+									keyExtractor={(
+										item: Fuse.FuseResult<{
+											path: string;
+											id: string;
+											pathArr: string[];
+										}>,
+									) => item.item.id}
+									renderItem={({
+										item,
+										index,
+									}: ListRenderItemInfo<
+										Fuse.FuseResult<{
+											path: string;
+											id: string;
+											pathArr: string[];
+										}>
+									>) => {
+										return (
+											<View
+												sx={{
+													marginTop: 10,
+													height: 40,
+													backgroundColor: "#cccccc",
+													justifyContent: "center",
+													alignItems: "center",
+												}}
+											>
+												<Text sx={{ color: "white" }}>{item.item.path}</Text>
+											</View>
+										);
+									}}
+								/>
+							</View>
+						)}
 						<View
 							sx={{
 								flexDirection: "row",
@@ -70,7 +145,10 @@ const ActionModal = (props: Props) => {
 							>
 								Cancel
 							</Th.ButtonSecondary>
-							<Th.ButtonPrimary sx={{ flex: 1, marginLeft: "$3" }}>
+							<Th.ButtonPrimary
+								onPress={handleSubmit}
+								sx={{ flex: 1, marginLeft: "$3" }}
+							>
 								Add
 							</Th.ButtonPrimary>
 						</View>

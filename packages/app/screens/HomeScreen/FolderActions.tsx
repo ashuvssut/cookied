@@ -20,8 +20,8 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 	const { onOpen } = useModal();
 	const addBm = async (parentFl: IFolder) => {
 		onOpen("add-bookmark");
-		const randomBm = generateBookmarkForApi(parentFl);
-		await addBookmark(randomBm);
+		// const randomBm = generateBookmarkForApi(parentFl);
+		// await addBookmark(randomBm);
 		props.onActionComplete?.();
 	};
 	const addFl = async (node: IFolder | null) => {
