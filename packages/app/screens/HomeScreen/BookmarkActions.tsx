@@ -6,7 +6,7 @@ import { openURL } from "expo-linking";
 import { IconButton } from "app/components/IconButton";
 import { Platform } from "react-native";
 import { useAtom } from "jotai";
-import { activeEntityIdAtom } from "app/screens/HomeScreen/TreePanel";
+import { activeEntityIdAtom } from "app/store/slices/compoState";
 
 interface IBookmarkActions extends ComponentProps<typeof View> {
 	node: IBookmark;

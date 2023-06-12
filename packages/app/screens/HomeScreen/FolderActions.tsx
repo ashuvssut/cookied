@@ -10,7 +10,7 @@ import { generateBookmarkForApi, generateFolderForApi } from "app/mock/bmShelf";
 import { useModal } from "app/components/Modal";
 import { IconButton } from "app/components/IconButton";
 import { useAtom } from "jotai";
-import { activeEntityIdAtom } from "app/screens/HomeScreen/TreePanel";
+import { activeEntityIdAtom } from "app/store/slices/compoState";
 
 interface IFolderActions extends ComponentProps<typeof View> {
 	node: IFolder | null;

@@ -21,6 +21,7 @@ import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
 import { atom } from "jotai";
 import { BookmarkActions } from "app/screens/HomeScreen/BookmarkActions";
 import { useModal } from "app/components/Modal";
+import { activeEntityIdAtom, hoverFocusEntityIdAtom } from "app/store/slices/compoState";
 
 export function TreePanel() {
 	const foldersWithBookmarks = useAppSelector(selectDenormalizedBmShelf);
@@ -33,7 +34,7 @@ export function TreePanel() {
 						nodes: foldersWithBookmarks.folders,
 						rootLeafs: [] as IBookmark[],
 					}}
-					// treeData={{
+					// treeData={{ // Faker data
 					// 	nodes: bookmarkState.folders,
 					// 	rootLeafs: [] as IBookmark[],
 					// }}
@@ -69,8 +70,6 @@ const TreePanelHeader = () => {
 	);
 };
 
-export const activeEntityIdAtom = atom<string | null>(null);
-const hoverFocusEntityIdAtom = atom<string | null>(null);
 interface INode {
 	node: IFolder;
 	setCollapse: React.Dispatch<React.SetStateAction<boolean>>;
