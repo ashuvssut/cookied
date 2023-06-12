@@ -84,6 +84,7 @@ build/**
 .dump/
 .gradle
 .env
+.blog
 # apps/client/android/app/google-services.json
 .vscode/tasks.json
 

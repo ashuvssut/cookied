@@ -14,7 +14,7 @@ import { Modal } from "app/components/Modal";
 
 function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 	useEffect(() => {
-		window["reset"] = resetReduxPersist_reload;
+		// window["reset"] = resetReduxPersist_reload;
 	}, []);
 	return (
 		<>

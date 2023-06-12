@@ -6,6 +6,7 @@
     "build": "tsc --noEmit && vite build",
     "build:watch": "cross-env __DEV__=true vite build --watch",
     "build:hmr": "rollup --config utils/reload/rollup.config.ts",
+    "zip": "zip ./cookied-ext.zip ./dist/**/*",
     "wss": "node utils/reload/initReloadServer.js",
     "dev": "yarn build:hmr && (run-p wss build:watch)",
     "test": "jest"

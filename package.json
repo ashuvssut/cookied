@@ -23,6 +23,7 @@
     "native:android": "yarn workspace native android",
     "web": "yarn workspace web dev",
     "ext": "yarn workspace ext dev",
+    "ext:zip": "yarn workspace ext zip",
     "fx:new": "yarn workspace fx new",
     "fx:deploy": "yarn workspace fx deploy",
     "api": "yarn workspace api dev",
