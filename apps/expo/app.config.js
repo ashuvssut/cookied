@@ -8,7 +8,7 @@ module.exports = {
 	assetBundlePatterns: ["**/*"],
 	extra: {
 		...env,
-		MODE: !!env.MODE ? env.MODE : "dev",
+		// MODE: !!env.MODE ? env.MODE : "dev", // example
 	},
 	web: { bundler: "metro" },
 	platforms: ["ios", "android"],
