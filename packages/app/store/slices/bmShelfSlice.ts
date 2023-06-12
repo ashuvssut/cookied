@@ -75,9 +75,6 @@ export default bmShelfSlice.reducer;
 // export const { selectAll: selectAllBookmarks } =
 // 	bookmarksAdapter.getSelectors<RootState>(state => state.bmShelf.bookmarks);
 
-export const { selectById: selectFlById } =
-	foldersAdapter.getSelectors<RootState>(s => s.bmShelf.folders);
-
 export const selectDenormalizedBmShelf = createSelector(
 	(state: RootState) => state.bmShelf,
 	shelf => {
@@ -95,7 +92,7 @@ export const selectFlPaths = createSelector(
 			if (!folder) logr.warn("selectFlPaths: folder is undefined");
 			if (!folder) return [];
 			const folderPath = [...folder.path];
-			if (folder.$id) folderPath.push(folder.$id);
+			if (folder.$id) folderPath.push(folder.$id); // add folder's own id to pathArr too
 			return folderPath;
 		});
 		return flPaths;
@@ -107,7 +104,7 @@ export type TFlPathWithTitle = {
 	id: string;
 	pathArr: string[];
 };
-export const selectFlPathsWithTitles = createSelector(
+export const selectFlPathWithTitleArray = createSelector(
 	selectFlPaths,
 	(state: RootState) => state.bmShelf.folders,
 	(paths, folders): TFlPathWithTitle[] => {
@@ -115,16 +112,24 @@ export const selectFlPathsWithTitles = createSelector(
 		// convert path id array to their respective path title array
 		const flPathsWithTitles = paths.map(path => {
 			const pathCopy = [...path].slice(1); // slice(1) removes "root" from path array
-			const titlePath = pathCopy.map(id => {
+			const titlePathArr = pathCopy.map(id => {
 				const folder = folderEntities[id];
 				if (!folder) logr.warn("selectFlPathsWithTitles: folder is undefined");
 				return folder?.title || "";
 			});
-			const id = path[path.length - 1]!; // last folder's id
+			const id = path[path.length - 1]!; // last id is the folder's id (see selectFlPaths)
 			pathCopy.unshift("root"); // add "root" to beginning of array
-			return { path: titlePath.join("/"), id, pathArr: pathCopy };
+			return { path: titlePathArr.join("/"), id, pathArr: pathCopy };
 		});
 		return flPathsWithTitles;
+	},
+);
+export const selectFlPathWithTitleById = createSelector(
+	selectFlPathWithTitleArray,
+	(_s: RootState, flId: string | null) => flId,
+	(flPathWithTitlesArr, flId) => {
+		if (!flId) return undefined;
+		return flPathWithTitlesArr.find(fl => fl.id === flId);
 	},
 );
 

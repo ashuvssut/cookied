@@ -1,13 +1,13 @@
 import { View, Text, Pressable, useDripsyTheme } from "dripsy";
 import { StyleSheet } from "react-native";
-import React, { useEffect, useMemo, useState } from "react";
-import { Formik } from "formik";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Formik, FormikProps } from "formik";
 import { Th } from "app/theme/components";
 import { TModal } from ".";
 import {
 	TFlPathWithTitle,
-	selectFlById,
-	selectFlPathsWithTitles,
+	selectFlPathWithTitleArray,
+	selectFlPathWithTitleById,
 } from "app/store/slices/bmShelfSlice";
 import Fuse from "fuse.js";
 import { Platform } from "react-native";
@@ -32,11 +32,15 @@ export const ActionModal = (props: Props) => {
 	const colors = useDripsyTheme().theme.colors;
 	const [searchResults, setSearchResults] = useState<TSearchResults>([]);
 	const [activeEntityId] = useAtom(activeEntityIdAtom);
-	const activeFl = useAppSelector(s => selectFlById(s, activeEntityId || ""));
-	const [searchQuery, setSearchQuery] = useState(activeFl?.title || "");
-	const [folder, setFolder] = useState<TFlPathWithTitle | undefined>();
+	const activeFlPathWithTitle = useAppSelector(s =>
+		selectFlPathWithTitleById(s, activeEntityId),
+	);
+	const [searchQuery, setSearchQuery] = useState(
+		activeFlPathWithTitle?.path || "",
+	);
+	const [folder, setFolder] = useState(activeFlPathWithTitle);
 	const { addBookmark } = useBmShelfDB();
-	const flPathsWithTitles = useAppSelector(selectFlPathsWithTitles);
+	const flPathsWithTitles = useAppSelector(selectFlPathWithTitleArray);
 
 	const handleSearch = (text: string) => {
 		setSearchQuery(text);
@@ -76,9 +80,15 @@ export const ActionModal = (props: Props) => {
 		}
 	};
 
+	type TFormikInitialValues = { title: string; url: string; flPath: string };
+	const formikProps = useRef<FormikProps<TFormikInitialValues> | null>(null);
+	useEffect(
+		() => formikProps.current?.handleChange("flPath")(searchQuery), // hacky way to run handleChange on flPath field on first render
+		[],
+	);
 	const renderSearchResults = useMemo(() => {
 		return searchResults.map((result, index) => {
-			if (index > 4) return null; // show only 5 results
+			if (index > 3) return null; // show only 4 results
 			return (
 				<Pressable
 					onPress={() => {
@@ -88,7 +98,7 @@ export const ActionModal = (props: Props) => {
 					}}
 					key={result.item.id}
 					sx={{
-						height: 50,
+						minHeight: 50,
 						borderBottomWidth: StyleSheet.hairlineWidth,
 						justifyContent: "space-between",
 						alignItems: "center",
@@ -105,6 +115,7 @@ export const ActionModal = (props: Props) => {
 			);
 		});
 	}, [searchResults]);
+
 	return (
 		<View sx={{ m: "$4" }}>
 			<Formik
@@ -114,6 +125,7 @@ export const ActionModal = (props: Props) => {
 				onSubmit={({ title, url }) => handleSubmitForm({ title, url })}
 			>
 				{p => {
+					formikProps.current = p;
 					logr(p.errors);
 					return (
 						<>
@@ -140,9 +152,13 @@ export const ActionModal = (props: Props) => {
 								<View sx={{ height: 300, marginTop: "$4" }}>
 									<Th.TextInput
 										value={searchQuery}
-										onChangeText={(text: string) => {
-											p.handleChange("flPath")(text);
+										onChangeText={text => {
+											logr(text);
 											handleSearch(text);
+											p.handleChange("flPath")(searchQuery);
+										}}
+										onChange={e => {
+											logr(e.nativeEvent.target);
 										}}
 										autoCorrect={false}
 										placeholder="Search Folders"
