@@ -33,6 +33,8 @@ const nextConfig = {
 		"expo-linear-gradient",
 		"react-native-modalize",
 		"expo-linking",
+		"react-native-progress",
+		"react-native-svg",
 	],
 };
 

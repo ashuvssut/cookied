@@ -8,7 +8,6 @@ import {
 	APPWRITE_DATABASE_ID,
 } from "app/utils/appwrite";
 import logr from "app/utils/logr";
-import { loadingAtom } from "app/components/LoadingModal";
 import {
 	IBookmark,
 	IFolder,
@@ -21,6 +20,7 @@ import {
 import _ from "lodash";
 import { useAppDispatch } from "app/store/hooks";
 import { Update } from "@reduxjs/toolkit";
+import { barLoadingAtom } from "app/components/Header";
 
 type TFlData = Omit<
 	IFolder,
@@ -30,7 +30,7 @@ type TFlDocument = Models.Document & TFlData & { userId: string };
 type TBmData = Omit<IBookmark, "$id" | "$createdAt" | "$updatedAt">;
 type TBmDocument = Models.Document & TBmData & { userId: string };
 export function useSdkBmShelfDB() {
-	const [_l, setIsLoading] = useAtom(loadingAtom);
+	const [_l, setIsLoading] = useAtom(barLoadingAtom);
 	const [session, _s] = useAtom(sessionAtom);
 	const userId = session?.userId;
 	const dispatch = useAppDispatch();
