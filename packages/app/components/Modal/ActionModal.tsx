@@ -81,18 +81,17 @@ export const ActionModal = (props: Props) => {
 		}
 		if (props.type === "add-folder") {
 			try {
-				if (activeFlObject) {
-					const doc = await addFolder({
-						type: "folder",
-						parentId: activeFlObject ? activeFlObject.$id : "root",
-						path: activeFlObject
-							? [...activeFlObject.path, activeFlObject.$id]
-							: ["root"],
-						level: activeFlObject ? activeFlObject.level + 1 : 1,
-						title:fields.title,
-					});
-					if (doc) props.onClose();
-				}
+				logr("FL OBJECT RUNNING", activeFlObject);
+				const doc = await addFolder({
+					type: "folder",
+					parentId: activeFlObject ? activeFlObject.$id : "root",
+					path: activeFlObject
+						? [...activeFlObject.path, activeFlObject.$id]
+						: ["root"],
+					level: activeFlObject ? activeFlObject.level + 1 : 1,
+					title: fields.title,
+				});
+				if (doc) props.onClose();
 			} catch (e) {
 				logr.err(e);
 			}
@@ -141,13 +140,15 @@ export const ActionModal = (props: Props) => {
 		<View sx={{ m: "$4" }}>
 			<Formik
 				initialValues={{ title: "", url: props.initialUrl || "", flPath: "" }}
-				validationSchema={props.type==="add-bookmark"?addEditBmSchema:addEditFolderSchema}
+				validationSchema={
+					props.type === "add-bookmark" ? addEditBmSchema : addEditFolderSchema
+				}
 				validateOnMount
 				onSubmit={({ title, url }) => handleSubmitForm({ title, url })}
 			>
 				{p => {
 					formikProps.current = p;
-					logr(p.errors);
+					logr("Error", p.errors);
 					return (
 						<>
 							<Th.TextInput
