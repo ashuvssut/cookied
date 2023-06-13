@@ -1,7 +1,9 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 import { Modalize } from "react-native-modalize";
 import { Animated } from "react-native";
-import { ActionModal, TModal, ModalHeader } from ".";
+import { ActionModal } from "app/components/Modal/ActionModal";
+import { TModal } from "app/components/Modal/ModalHeader";
+import { ModalHeader } from "app/components/Modal/ModalHeader";
 import { WebView } from "app/components/WebView";
 import { IWebViewRefProps } from "app/components/WebView";
 import { atom, useAtom } from "jotai";

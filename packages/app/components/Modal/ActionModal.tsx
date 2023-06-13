@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { Th } from "app/theme/components";
-import { TModal } from ".";
+import { TModal } from "app/components/Modal/ModalHeader";
 import {
 	TFlPathWithTitle,
 	selectFlId,
