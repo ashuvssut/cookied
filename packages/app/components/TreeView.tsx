@@ -1,12 +1,42 @@
-import { FCC } from "app/types/IReact";
+import { FCC } from "app/types/IReact"; // FCC = Functional Component with children prop
 import { View } from "dripsy";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
-interface ITreeView<N, L> {
-	treeData: { nodes: N[]; rootLeafs: L[] };
+type WithId<T> = T & { $id: string };
+
+type NodeWithNodesProp<
+	NKey extends string,
+	LKey extends string,
+	N extends WithId<NodeWithNodesAndLeafsProp<NKey, LKey, N, L>>,
+	L extends WithId<{}>,
+> = {
+	[Nkey in NKey]: WithId<NodeWithNodesAndLeafsProp<NKey, LKey, N, L>>[];
+};
+
+type NodeWithLeafsProp<LKey extends string> = {
+	[Lkey in LKey]: WithId<{}>[];
+};
+
+type NodeWithNodesAndLeafsProp<
+	NKey extends string,
+	LKey extends string,
+	N extends WithId<NodeWithNodesAndLeafsProp<NKey, LKey, N, L>>,
+	L extends WithId<{}>,
+> = WithId<NodeWithNodesProp<NKey, LKey, N, L> & NodeWithLeafsProp<LKey>>;
+
+interface ITreeView<
+	NKey extends string,
+	LKey extends string,
+	N extends WithId<NodeWithNodesAndLeafsProp<NKey, LKey, N, L>>,
+	L extends WithId<{}>,
+> {
+	treeData: {
+		nodes: N[];
+		rootLeafs: L[];
+	};
 	isCollapsed: boolean;
-	nodeArrKey: string;
-	leafArrKey: string;
+	nodeArrKey: NKey;
+	leafArrKey: LKey;
 	renderNode: (
 		node: N,
 		setCollapse: Dispatch<SetStateAction<boolean>>,
@@ -14,20 +44,29 @@ interface ITreeView<N, L> {
 	renderLeaf: (node: L) => JSX.Element;
 }
 
-type TWithId = { $id: string };
-export const TreeView = <N extends TWithId, L extends TWithId>(
-	props: ITreeView<N, L>,
+export const TreeView = <
+	NKey extends string,
+	LKey extends string,
+	N extends WithId<NodeWithNodesAndLeafsProp<NKey, LKey, N, L>>,
+	L extends WithId<{}>,
+>(
+	props: ITreeView<NKey, LKey, N, L>,
 ) => {
 	const { treeData, nodeArrKey, leafArrKey, renderNode, renderLeaf } = props;
-	const _renderTree = (tree: (typeof treeData)["nodes"]) => {
-		return tree.map(node => {
+	const _renderNodes = (nodesArr: (typeof treeData)["nodes"]) => {
+		return nodesArr.map(node => {
+			const nodeObj = node[nodeArrKey];
+			const childNodes = nodeObj && _renderNodes(nodeObj);
+
+			const leafObj = node[leafArrKey];
+			const childLeafs = leafObj && _renderLeaf(leafObj);
 			return (
 				<TreeWrapper
 					isCollapsed={props.isCollapsed}
 					key={node.$id}
 					node={setCollapse => renderNode && renderNode(node, setCollapse)}
-					childNodes={node[nodeArrKey] && _renderTree(node[nodeArrKey])}
-					childLeafs={node[leafArrKey] && _renderLeaf(node[leafArrKey])}
+					childNodes={childNodes}
+					childLeafs={childLeafs}
 				/>
 			);
 		});
@@ -43,7 +82,7 @@ export const TreeView = <N extends TWithId, L extends TWithId>(
 	};
 	return (
 		<View>
-			{_renderTree(treeData["nodes"])}
+			{_renderNodes(treeData["nodes"])}
 			{_renderLeaf(treeData["rootLeafs"])}
 		</View>
 	);
