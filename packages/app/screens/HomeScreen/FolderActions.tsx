@@ -37,7 +37,7 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 					<IconButton
 						onPress={() => {
 							setActiveEntityId(node.$id);
-							addBm(node);
+							addBm();
 						}}
 					>
 						<MdOutlineBookmarkAdd size={22} color={onPrimary} />
@@ -46,7 +46,7 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 				<IconButton
 					onPress={() => {
 						setActiveEntityId(node?.$id ?? null);
-						addFl(node);
+						addFl();
 					}}
 					sx={{ borderColor: !node ? "outline" : undefined }}
 				>
