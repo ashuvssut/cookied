@@ -161,13 +161,18 @@ export const ActionModal = (props: Props) => {
 							<View sx={{ marginTop: "$4" }} />
 							{(props.type === "add-bookmark" ||
 								props.type === "edit-bookmark") && (
-								<Th.TextInput
-									value={p.values.url}
-									onChangeText={p.handleChange("url")}
-									autoCorrect={false}
-									onBlur={p.handleBlur("url")}
-									placeholder="Enter URL"
-								/>
+								<>
+									<Th.TextInput
+										value={p.values.url}
+										onChangeText={p.handleChange("url")}
+										autoCorrect={false}
+										onBlur={p.handleBlur("url")}
+										placeholder="Enter URL"
+									/>
+									<Text sx={{ color: "error", width: "50%" }}>
+										{p.errors.url ? p.errors.url : " "}
+									</Text>
+								</>
 							)}
 							{(props.type === "add-bookmark" ||
 								props.type === "edit-bookmark") && (
