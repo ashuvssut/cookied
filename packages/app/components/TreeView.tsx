@@ -10,11 +10,11 @@ type NodeWithNodesProp<
 	N extends WithId<NodeWithNodesAndLeafsProp<NKey, LKey, N, L>>,
 	L extends WithId<{}>,
 > = {
-	[Nkey in NKey]: WithId<NodeWithNodesAndLeafsProp<NKey, LKey, N, L>>[];
+	[Nkey in NKey]: N[];
 };
 
-type NodeWithLeafsProp<LKey extends string> = {
-	[Lkey in LKey]: WithId<{}>[];
+type NodeWithLeafsProp<LKey extends string, L extends WithId<{}>> = {
+	[Lkey in LKey]: L[];
 };
 
 type NodeWithNodesAndLeafsProp<
@@ -22,7 +22,7 @@ type NodeWithNodesAndLeafsProp<
 	LKey extends string,
 	N extends WithId<NodeWithNodesAndLeafsProp<NKey, LKey, N, L>>,
 	L extends WithId<{}>,
-> = WithId<NodeWithNodesProp<NKey, LKey, N, L> & NodeWithLeafsProp<LKey>>;
+> = WithId<NodeWithNodesProp<NKey, LKey, N, L> & NodeWithLeafsProp<LKey, L>>;
 
 interface ITreeView<
 	NKey extends string,
@@ -56,10 +56,10 @@ export const TreeView = <
 	const _renderNodes = (nodesArr: (typeof treeData)["nodes"]) => {
 		return nodesArr.map(node => {
 			const nodeObj = node[nodeArrKey];
-			const childNodes = nodeObj && _renderNodes(nodeObj as unknown as N[]);
+			const childNodes = nodeObj && _renderNodes(nodeObj);
 
 			const leafObj = node[leafArrKey];
-			const childLeafs = leafObj && _renderLeaf(leafObj as unknown as L[]);
+			const childLeafs = leafObj && _renderLeafs(leafObj);
 			return (
 				<TreeWrapper
 					isCollapsed={props.isCollapsed}
@@ -71,7 +71,7 @@ export const TreeView = <
 			);
 		});
 	};
-	const _renderLeaf = (leaf: (typeof treeData)["rootLeafs"]) => {
+	const _renderLeafs = (leaf: (typeof treeData)["rootLeafs"]) => {
 		return leaf.map(node => {
 			return (
 				<React.Fragment key={node.$id}>
@@ -83,7 +83,7 @@ export const TreeView = <
 	return (
 		<View>
 			{_renderNodes(treeData["nodes"])}
-			{_renderLeaf(treeData["rootLeafs"])}
+			{_renderLeafs(treeData["rootLeafs"])}
 		</View>
 	);
 };
