@@ -74,8 +74,21 @@ export const WebView = forwardRef(
 				}).start(() => progress.setValue(0));
 			}
 		};
+		type THandleNavStateChng ={ // TODO: refactor separately
+			url: string;
+			canGoBack: boolean;
+			canGoForward: boolean;
+			loading: boolean;
+			navigationType: string;
+		}
 		const handleNavigationStateChange = useCallback(
-			({ url, canGoBack, canGoForward, loading, navigationType }) => {
+			({
+				url,
+				canGoBack,
+				canGoForward,
+				loading,
+				navigationType,
+			}: THandleNavStateChng) => {
 				setBack(canGoBack);
 				setForward(canGoForward);
 				setSecure(url.includes("https"));

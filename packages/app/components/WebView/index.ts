@@ -1,1 +1,2 @@
-export { WebView, IWebViewRefProps } from "./WebView";
+export { WebView } from "./WebView";
+export type { IWebViewRefProps } from "./WebView";

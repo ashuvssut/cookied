@@ -24,7 +24,7 @@ const TypographyLoader: FCC = ({ children }) => {
 export const expoFontMap = Object.entries(platformFontsMap).reduce(
 	(acc, [key, fontName]) => ({
 		...acc,
-		[key]: p[fontName],
+		[key]: p[fontName as keyof typeof p],
 	}),
 	{},
 );

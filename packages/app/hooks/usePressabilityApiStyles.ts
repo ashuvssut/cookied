@@ -1,9 +1,12 @@
 import { useDripsyTheme } from "dripsy";
+import { PressableStateCallbackType, StyleProp, ViewStyle } from "react-native";
 
-export function usePressabilityApiStyles() {
+export function usePressabilityApiStyles():
+	| StyleProp<ViewStyle>
+	| ((state: PressableStateCallbackType) => StyleProp<ViewStyle>) {
 	const { primary, secondary } = useDripsyTheme().theme.colors;
-	return ({ pressed, hovered }: { pressed: boolean; hovered: boolean }) => {
-		let backgroundColor = hovered ? "#333" : primary;
+	return ({ pressed, hovered }) => {
+		let backgroundColor = !!hovered ? "#333" : primary;
 		backgroundColor = pressed ? secondary : backgroundColor;
 		return {
 			backgroundColor,
