@@ -6,6 +6,7 @@ import { Th } from "app/theme/components";
 import { TModal } from "app/components/Modal/ModalHeader";
 import {
 	TFlPathWithTitle,
+	selectFlId,
 	selectFlPathWithTitleArray,
 	selectFlPathWithTitleById,
 } from "app/store/slices/bmShelfSlice";
@@ -18,6 +19,7 @@ import { useBmShelfDB } from "app/hooks/useBmShelfDB";
 import { useAtom } from "jotai";
 import { MdArrowUpward } from "app/assets/icons";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
+import addEditFolderSchema from "app/validators/addEditFolderSchema";
 
 type Props = {
 	title: string;
@@ -32,6 +34,9 @@ export const ActionModal = (props: Props) => {
 	const colors = useDripsyTheme().theme.colors;
 	const [searchResults, setSearchResults] = useState<TSearchResults>([]);
 	const [activeEntityId] = useAtom(activeEntityIdAtom);
+	const activeFlObject = useAppSelector(state =>
+		selectFlId(state, activeEntityId || ""),
+	);
 	const activeFlPathWithTitle = useAppSelector(s =>
 		selectFlPathWithTitleById(s, activeEntityId),
 	);
@@ -39,7 +44,7 @@ export const ActionModal = (props: Props) => {
 		activeFlPathWithTitle?.path || "",
 	);
 	const [folder, setFolder] = useState(activeFlPathWithTitle);
-	const { addBookmark } = useBmShelfDB();
+	const { addBookmark, addFolder } = useBmShelfDB();
 	const flPathsWithTitles = useAppSelector(selectFlPathWithTitleArray);
 
 	const handleSearch = (text: string) => {
@@ -75,6 +80,21 @@ export const ActionModal = (props: Props) => {
 		if (props.type === "edit-bookmark") {
 		}
 		if (props.type === "add-folder") {
+			try {
+				logr("FL OBJECT RUNNING", activeFlObject);
+				const doc = await addFolder({
+					type: "folder",
+					parentId: activeFlObject ? activeFlObject.$id : "root",
+					path: activeFlObject
+						? [...activeFlObject.path, activeFlObject.$id]
+						: ["root"],
+					level: activeFlObject ? activeFlObject.level + 1 : 1,
+					title: fields.title,
+				});
+				if (doc) props.onClose();
+			} catch (e) {
+				logr.err(e);
+			}
 		}
 		if (props.type === "edit-folder") {
 		}
@@ -120,13 +140,15 @@ export const ActionModal = (props: Props) => {
 		<View sx={{ m: "$4" }}>
 			<Formik
 				initialValues={{ title: "", url: props.initialUrl || "", flPath: "" }}
-				validationSchema={addEditBmSchema}
+				validationSchema={
+					props.type === "add-bookmark" ? addEditBmSchema : addEditFolderSchema
+				}
 				validateOnMount
 				onSubmit={({ title, url }) => handleSubmitForm({ title, url })}
 			>
 				{p => {
 					formikProps.current = p;
-					logr(p.errors);
+					logr("Error", p.errors);
 					return (
 						<>
 							<Th.TextInput

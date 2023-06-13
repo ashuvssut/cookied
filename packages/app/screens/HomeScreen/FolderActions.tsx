@@ -1,6 +1,6 @@
 import { View, useDripsyTheme } from "dripsy";
 import { ComponentProps, FC } from "react";
-import { IFolder } from "app/store/slices/bmShelfSlice";
+import { IFolder, selectFlId } from "app/store/slices/bmShelfSlice";
 import {
 	MdOutlineBookmarkAdd,
 	MdOutlineCreateNewFolder,
@@ -11,6 +11,7 @@ import { useModal } from "app/components/Modal";
 import { IconButton } from "app/components/IconButton";
 import { useAtom } from "jotai";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
+import { useAppSelector } from "app/store/hooks";
 
 interface IFolderActions extends ComponentProps<typeof View> {
 	node: IFolder | null;
@@ -20,15 +21,12 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 	const { addFolder, addBookmark } = useBmShelfDB();
 	const { onPrimary } = useDripsyTheme().theme.colors;
 	const { onOpen } = useModal();
-	const addBm = async (parentFl: IFolder) => {
+	const addBm = async () => {
 		onOpen("add-bookmark");
-		// const randomBm = generateBookmarkForApi(parentFl);
-		// await addBookmark(randomBm);
 		props.onActionComplete?.();
 	};
-	const addFl = async (node: IFolder | null) => {
-		const randomFl = generateFolderForApi(node);
-		await addFolder(randomFl);
+	const addFl = async () => {
+		onOpen("add-folder");
 		props.onActionComplete?.();
 	};
 	const [_, setActiveEntityId] = useAtom(activeEntityIdAtom);
@@ -39,7 +37,7 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 					<IconButton
 						onPress={() => {
 							setActiveEntityId(node.$id);
-							addBm(node);
+							addBm();
 						}}
 					>
 						<MdOutlineBookmarkAdd size={22} color={onPrimary} />
@@ -48,7 +46,7 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 				<IconButton
 					onPress={() => {
 						setActiveEntityId(node?.$id ?? null);
-						addFl(node);
+						addFl();
 					}}
 					sx={{ borderColor: !node ? "outline" : undefined }}
 				>
