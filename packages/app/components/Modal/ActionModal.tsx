@@ -88,7 +88,7 @@ export const ActionModal = (props: Props) => {
 					path: activeFlObject
 						? [...activeFlObject.path, activeFlObject.$id]
 						: ["root"],
-					level: activeFlObject ? activeFlObject.level + 1 : 1,
+					level: activeFlObject ? activeFlObject.level + 1 : 0,
 					title: fields.title,
 				});
 				if (doc) props.onClose();

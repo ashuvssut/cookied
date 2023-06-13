@@ -139,5 +139,30 @@ export function useSdkBmShelfDB() {
 		}
 	};
 
-	return { addFolder, getAllFolders, updateFolder, deleteFolder, addBookmark };
+	const deleteBookmark = async (bm: IBookmark) => {
+		setIsLoading(true);
+		try {
+			if (!userId) throw new Error("User not logged in");
+			await databases.deleteDocument(
+				APPWRITE_DATABASE_ID,
+				APPWRITE_BOOKMARK_COLLECTION_ID,
+				bm.$id,
+			);
+			dispatch(bmShelfAction.removeBm(bm));
+			setIsLoading(false);
+		} catch (e) {
+			setIsLoading(false);
+			logr("Error in deleting bookmark", e);
+			throw e;
+		}
+	};
+
+	return {
+		addFolder,
+		getAllFolders,
+		updateFolder,
+		deleteFolder,
+		addBookmark,
+		deleteBookmark,
+	};
 }

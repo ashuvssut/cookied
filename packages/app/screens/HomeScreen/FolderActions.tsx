@@ -1,24 +1,24 @@
 import { View, useDripsyTheme } from "dripsy";
 import { ComponentProps, FC } from "react";
-import { IFolder, selectFlId } from "app/store/slices/bmShelfSlice";
+import { IFolder } from "app/store/slices/bmShelfSlice";
 import {
+	MdDeleteOutline,
 	MdOutlineBookmarkAdd,
 	MdOutlineCreateNewFolder,
 } from "app/assets/icons";
 import { useBmShelfDB } from "app/hooks/useBmShelfDB/useBmShelfDB";
-import { generateBookmarkForApi, generateFolderForApi } from "app/mock/bmShelf";
 import { useModal } from "app/components/Modal";
 import { IconButton } from "app/components/IconButton";
 import { useAtom } from "jotai";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
-import { useAppSelector } from "app/store/hooks";
 
 interface IFolderActions extends ComponentProps<typeof View> {
+	/** Current node */
 	node: IFolder | null;
 	onActionComplete?: () => void;
 }
 export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
-	const { addFolder, addBookmark } = useBmShelfDB();
+	const { deleteFolder } = useBmShelfDB();
 	const { onPrimary } = useDripsyTheme().theme.colors;
 	const { onOpen } = useModal();
 	const addBm = async () => {
@@ -34,14 +34,25 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 		<View {...props} sx={{ position: "absolute", right: "$3", ...props.sx }}>
 			<View sx={{ gap: 5, flexDirection: "row" }}>
 				{node && (
-					<IconButton
-						onPress={() => {
-							setActiveEntityId(node.$id);
-							addBm();
-						}}
-					>
-						<MdOutlineBookmarkAdd size={22} color={onPrimary} />
-					</IconButton>
+					<>
+						<IconButton
+							onPress={() => {
+								setActiveEntityId(null);
+								deleteFolder(node);
+							}}
+							sx={{ borderColor: !node ? "outline" : undefined }}
+						>
+							<MdDeleteOutline size={22} color={onPrimary} />
+						</IconButton>
+						<IconButton
+							onPress={() => {
+								setActiveEntityId(node.$id);
+								addBm();
+							}}
+						>
+							<MdOutlineBookmarkAdd size={22} color={onPrimary} />
+						</IconButton>
+					</>
 				)}
 				<IconButton
 					onPress={() => {
