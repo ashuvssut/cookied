@@ -4,6 +4,7 @@ import { Account, ID } from "appwrite";
 import { client } from "app/utils/appwrite";
 import logr from "app/utils/logr";
 import { loadingAtom } from "app/components/LoadingModal";
+import { logoutAndResetPersist } from "app/utils/storage";
 
 export function useSdkAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);
@@ -48,6 +49,7 @@ export function useSdkAuth() {
 		setIsLoading(true);
 		try {
 			await account.deleteSession("current");
+			logoutAndResetPersist();
 			setUser(null);
 			setSession(null);
 			setIsLoading(false);

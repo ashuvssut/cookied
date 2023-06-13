@@ -8,6 +8,7 @@ import {
 import { cookieAtom, sessionAtom, userAtom } from "app/store/slices/auth";
 import logr from "app/utils/logr";
 import { loadingAtom } from "app/components/LoadingModal";
+import { logoutAndResetPersist } from "app/utils/storage";
 
 export function useRestAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);
@@ -51,6 +52,7 @@ export function useRestAuth() {
 		setIsLoading(true);
 		try {
 			await logout("current");
+			logoutAndResetPersist()
 			setUser(null);
 			setSession(null);
 			setCookie("");

@@ -28,7 +28,7 @@ export function resetPersistedStorages() {
 	persistStore(store).purge();
 }
 
-export function logout() {
+export function logoutAndResetPersist() {
 	resetPersistedStorages();
 	store.dispatch({ type: "USER_LOGOUT" });
 }

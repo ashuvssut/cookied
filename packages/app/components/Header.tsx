@@ -10,7 +10,7 @@ import { Platform } from "react-native";
 export const barLoadingAtom = atom(false);
 export const Header: FC = () => {
 	const [loading] = useAtom(barLoadingAtom);
-	const { signOut } = usePlatformAuth();
+	const { signOut, user } = usePlatformAuth();
 
 	return (
 		<View sx={{ justifyContent: "center", alignItems: "center" }}>
@@ -21,21 +21,23 @@ export const Header: FC = () => {
 				/>
 				<H1>COOKIED</H1>
 			</View>
-			{Platform.OS==="web"&&<Pressable
-				hitSlop={30}
-				onPress={() => signOut()}
-				sx={{
-					position: "absolute",
-					top: 25,
-					right: 15,
-					elevation: 5,
-					borderRadius: 5,
-					justifyContent: "center",
-					alignItems: "center",
-				}}
-			>
-				<Text>LOGOUT</Text>
-			</Pressable>}
+			{Platform.OS === "web" && !!user && (
+				<Pressable
+					hitSlop={30}
+					onPress={() => signOut()}
+					sx={{
+						position: "absolute",
+						top: 25,
+						right: 15,
+						elevation: 5,
+						borderRadius: 5,
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Text>LOGOUT</Text>
+				</Pressable>
+			)}
 			<Bar
 				indeterminate={true}
 				width={null}

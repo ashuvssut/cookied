@@ -3,6 +3,7 @@ import { ID, Models } from "appwrite";
 import { Platform } from "react-native";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID } from "../utils/appwrite";
 import { cookieAtom, authStore } from "app/store/slices/auth";
+import { logoutAndResetPersist } from "app/utils/storage";
 
 const generalHeaders = {
 	"Content-Type": "application/json",
@@ -70,6 +71,7 @@ export const logout = async (sessionId: string) => {
 		await axiosWithSessionConfig().delete(
 			`${APPWRITE_ENDPOINT}/account/sessions/${sessionId}`,
 		);
+		logoutAndResetPersist();
 		return;
 	} catch (e: any) {
 		throw new Error(e);
@@ -81,6 +83,7 @@ export const logoutFromAllDevices = async () => {
 		await axiosWithSessionConfig().delete(
 			`${APPWRITE_ENDPOINT}/account/sessions`,
 		);
+		logoutAndResetPersist()
 		return;
 	} catch (e: any) {
 		throw new Error(e);
