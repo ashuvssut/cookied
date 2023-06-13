@@ -56,10 +56,10 @@ export const TreeView = <
 	const _renderNodes = (nodesArr: (typeof treeData)["nodes"]) => {
 		return nodesArr.map(node => {
 			const nodeObj = node[nodeArrKey];
-			const childNodes = nodeObj && _renderNodes(nodeObj);
+			const childNodes = nodeObj && _renderNodes(nodeObj as unknown as N[]);
 
 			const leafObj = node[leafArrKey];
-			const childLeafs = leafObj && _renderLeaf(leafObj);
+			const childLeafs = leafObj && _renderLeaf(leafObj as unknown as L[]);
 			return (
 				<TreeWrapper
 					isCollapsed={props.isCollapsed}
