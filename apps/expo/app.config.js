@@ -8,6 +8,9 @@ module.exports = {
 	assetBundlePatterns: ["**/*"],
 	extra: {
 		...env,
+		"eas": {
+			"projectId": "42c6beb7-240e-4c27-bab8-a48661494de3"
+		}
 		// MODE: !!env.MODE ? env.MODE : "dev", // example
 	},
 	web: { bundler: "metro" },
