@@ -18,3 +18,4 @@ utils/reload/injections/*.js
 public/manifest.json
 
 .dump/
+cookied-ext.zip

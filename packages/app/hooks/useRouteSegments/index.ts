@@ -1,0 +1,1 @@
+export { useRouteSegments } from "./useRouteSegments";

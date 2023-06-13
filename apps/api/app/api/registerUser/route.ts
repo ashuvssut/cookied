@@ -18,3 +18,23 @@ export async function POST(req: Request) {
 		return NextResponse.json({ error: e });
 	}
 }
+
+/*
+
+import { Client, ID, Account } from "appwrite";
+ 		const account = new Account(client);
+		// Register user
+		const res = await req.json();
+		const { email, password, name } = res;
+		const user = await account.create(ID.unique(), email, password, name);
+
+		// Create a new session
+		const session = await account.createEmailSession(email, password);
+		console.log(JSON.stringify(session, null, 2));
+		console.log("user", user);
+
+		const jwt = await account.createJWT();
+		console.log("jwt", jwt);
+
+		return NextResponse.json({ user, session });
+ */

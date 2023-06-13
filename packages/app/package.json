@@ -1,0 +1,23 @@
+{
+  "name": "app",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@tanstack/react-query": "^4.29.12",
+    "dripsy": "^4.3.3",
+    "fuse.js": "^6.6.2",
+    "lodash": "^4.17.21",
+    "moti": "latest",
+    "nanoid": "^4.0.2",
+    "react-icons": "^4.9.0",
+    "react-native-progress": "^5.0.0",
+    "react-redux": "^8.0.7",
+    "redux-persist": "^6.0.0",
+    "solito": "^3.2.6"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2"
+  }
+}
