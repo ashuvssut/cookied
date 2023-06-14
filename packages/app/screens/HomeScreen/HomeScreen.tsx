@@ -28,7 +28,7 @@ export default function HomeScreen() {
 					>
 						<Pressable
 							hitSlop={30}
-							onPress={ref.current?.triggerToggle}
+							onPress={() => ref.current?.triggerToggle()}
 							sx={{
 								width: 35,
 								height: 35,

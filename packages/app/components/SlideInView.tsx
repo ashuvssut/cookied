@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { View as MotiView, useDynamicAnimation } from "moti";
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
 import {

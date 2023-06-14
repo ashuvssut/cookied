@@ -3,6 +3,7 @@ import { ID, Models } from "appwrite";
 import { Platform } from "react-native";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID } from "../utils/appwrite";
 import { cookieAtom, authStore } from "app/store/slices/auth";
+import { logoutAndResetPersist } from "app/utils/storage";
 
 const generalHeaders = {
 	"Content-Type": "application/json",
@@ -29,7 +30,7 @@ export const loginWithEmail = async (email: string, password: string) => {
 		const reqHeaderCookieStr = `${cookieKey}=${cookieObj[cookieKey]}`;
 		return { sessionData: res.data, cookie: reqHeaderCookieStr };
 	} catch (e: any) {
-		throw new Error(e);
+		throw new Error(e.message || e);
 	}
 };
 
@@ -42,7 +43,7 @@ export const getUserDetails = async () => {
 			);
 		return res.data;
 	} catch (e: any) {
-		throw new Error(e);
+		throw new Error(e.message || e);
 	}
 };
 
@@ -61,7 +62,7 @@ export const createAccount = async (
 			});
 		return res.data;
 	} catch (e: any) {
-		throw new Error(e);
+		throw new Error(e.message || e);
 	}
 };
 
@@ -70,9 +71,10 @@ export const logout = async (sessionId: string) => {
 		await axiosWithSessionConfig().delete(
 			`${APPWRITE_ENDPOINT}/account/sessions/${sessionId}`,
 		);
+		logoutAndResetPersist();
 		return;
 	} catch (e: any) {
-		throw new Error(e);
+		throw new Error(e.message || e);
 	}
 };
 
@@ -81,9 +83,10 @@ export const logoutFromAllDevices = async () => {
 		await axiosWithSessionConfig().delete(
 			`${APPWRITE_ENDPOINT}/account/sessions`,
 		);
+		logoutAndResetPersist();
 		return;
 	} catch (e: any) {
-		throw new Error(e);
+		throw new Error(e.message || e);
 	}
 };
 
@@ -105,7 +108,7 @@ export const createEmailVerification = async () => {
 				});
 		return tokenObj.data;
 	} catch (e: any) {
-		throw new Error(e);
+		throw new Error(e.message || e);
 	}
 };
 
@@ -118,7 +121,7 @@ export const verifyEmail = async (userId: string, secret: string) => {
 			);
 		return tokenObj.data;
 	} catch (e: any) {
-		throw new Error(e);
+		throw new Error(e.message || e);
 	}
 };
 

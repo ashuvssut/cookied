@@ -4,6 +4,8 @@ import { Account, ID } from "appwrite";
 import { client } from "app/utils/appwrite";
 import logr from "app/utils/logr";
 import { loadingAtom } from "app/components/LoadingModal";
+import { logoutAndResetPersist } from "app/utils/storage";
+import { Toast } from "app/components/Toast";
 
 export function useSdkAuth() {
 	const [_l, setIsLoading] = useAtom(loadingAtom);
@@ -23,6 +25,7 @@ export function useSdkAuth() {
 			setIsLoading(false);
 		} catch (e: any) {
 			setIsLoading(false);
+			Toast.error(e.message || "Error Logging In");
 			logr.err("Login Error:", e);
 		}
 	}
@@ -37,8 +40,8 @@ export function useSdkAuth() {
 			return user;
 		} catch (e: any) {
 			setIsLoading(false);
-			logr.err("Register Error", e);
-			throw new Error(e);
+			Toast.error(e.message || "Error Signing Up");
+			logr.err("Signup Error:", e);
 		}
 	}
 
@@ -48,12 +51,14 @@ export function useSdkAuth() {
 		setIsLoading(true);
 		try {
 			await account.deleteSession("current");
+			logoutAndResetPersist();
 			setUser(null);
 			setSession(null);
 			setIsLoading(false);
 		} catch (e: any) {
 			setIsLoading(false);
-			throw new Error(e);
+			Toast.error(e.message || "Error Logging Out");
+			logr.err("Logout Error:", e);
 		}
 	}
 

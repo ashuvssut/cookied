@@ -6,6 +6,7 @@ import { Th } from "app/theme/components";
 import { TModal } from "app/components/Modal/ModalHeader";
 import {
 	TFlPathWithTitle,
+	selectFlId,
 	selectFlPathWithTitleArray,
 	selectFlPathWithTitleById,
 } from "app/store/slices/bmShelfSlice";
@@ -18,6 +19,7 @@ import { useBmShelfDB } from "app/hooks/useBmShelfDB";
 import { useAtom } from "jotai";
 import { MdArrowUpward } from "app/assets/icons";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
+import addEditFolderSchema from "app/validators/addEditFolderSchema";
 
 type Props = {
 	title: string;
@@ -32,6 +34,9 @@ export const ActionModal = (props: Props) => {
 	const colors = useDripsyTheme().theme.colors;
 	const [searchResults, setSearchResults] = useState<TSearchResults>([]);
 	const [activeEntityId] = useAtom(activeEntityIdAtom);
+	const activeFlObject = useAppSelector(state =>
+		selectFlId(state, activeEntityId || ""),
+	);
 	const activeFlPathWithTitle = useAppSelector(s =>
 		selectFlPathWithTitleById(s, activeEntityId),
 	);
@@ -39,7 +44,7 @@ export const ActionModal = (props: Props) => {
 		activeFlPathWithTitle?.path || "",
 	);
 	const [folder, setFolder] = useState(activeFlPathWithTitle);
-	const { addBookmark } = useBmShelfDB();
+	const { addBookmark, addFolder } = useBmShelfDB();
 	const flPathsWithTitles = useAppSelector(selectFlPathWithTitleArray);
 
 	const handleSearch = (text: string) => {
@@ -53,28 +58,32 @@ export const ActionModal = (props: Props) => {
 		setSearchResults(results);
 	};
 	useEffect(() => void handleSearch(searchQuery), []);
-
 	const handleSubmitForm = async (fields: { title: string; url: string }) => {
 		if (props.type === "add-bookmark") {
 			if (folder) {
-				try {
-					const doc = await addBookmark({
-						type: "bookmark",
-						parentId: folder.id,
-						path: folder.pathArr,
-						level: folder.pathArr.length - 2,
-						...fields,
-					});
-					if (doc) props.onClose();
-					// TODO success & failure snackbar
-				} catch (err) {
-					logr.err(err);
-				}
+				const doc = await addBookmark({
+					type: "bookmark",
+					parentId: folder.id,
+					path: folder.pathArr,
+					level: folder.pathArr.length - 2,
+					...fields,
+				});
+				if (doc) props.onClose();
 			}
 		}
 		if (props.type === "edit-bookmark") {
 		}
 		if (props.type === "add-folder") {
+			const doc = await addFolder({
+				type: "folder",
+				parentId: activeFlObject ? activeFlObject.$id : "root",
+				path: activeFlObject
+					? [...activeFlObject.path, activeFlObject.$id]
+					: ["root"],
+				level: activeFlObject ? activeFlObject.level + 1 : 0,
+				title: fields.title,
+			});
+			if (doc) props.onClose();
 		}
 		if (props.type === "edit-folder") {
 		}
@@ -120,13 +129,15 @@ export const ActionModal = (props: Props) => {
 		<View sx={{ m: "$4" }}>
 			<Formik
 				initialValues={{ title: "", url: props.initialUrl || "", flPath: "" }}
-				validationSchema={addEditBmSchema}
+				validationSchema={
+					props.type === "add-bookmark" ? addEditBmSchema : addEditFolderSchema
+				}
 				validateOnMount
 				onSubmit={({ title, url }) => handleSubmitForm({ title, url })}
 			>
 				{p => {
 					formikProps.current = p;
-					logr(p.errors);
+					Object.keys(p.errors).length > 0 && logr(p.errors);
 					return (
 						<>
 							<Th.TextInput
@@ -139,13 +150,18 @@ export const ActionModal = (props: Props) => {
 							<View sx={{ marginTop: "$4" }} />
 							{(props.type === "add-bookmark" ||
 								props.type === "edit-bookmark") && (
-								<Th.TextInput
-									value={p.values.url}
-									onChangeText={p.handleChange("url")}
-									autoCorrect={false}
-									onBlur={p.handleBlur("url")}
-									placeholder="Enter URL"
-								/>
+								<>
+									<Th.TextInput
+										value={p.values.url}
+										onChangeText={p.handleChange("url")}
+										autoCorrect={false}
+										onBlur={p.handleBlur("url")}
+										placeholder="Enter URL"
+									/>
+									<Text sx={{ color: "error", width: "50%" }}>
+										{p.errors.url ? p.errors.url : " "}
+									</Text>
+								</>
 							)}
 							{(props.type === "add-bookmark" ||
 								props.type === "edit-bookmark") && (
@@ -153,12 +169,8 @@ export const ActionModal = (props: Props) => {
 									<Th.TextInput
 										value={searchQuery}
 										onChangeText={text => {
-											logr(text);
 											handleSearch(text);
 											p.handleChange("flPath")(searchQuery);
-										}}
-										onChange={e => {
-											logr(e.nativeEvent.target);
 										}}
 										autoCorrect={false}
 										placeholder="Search Folders"

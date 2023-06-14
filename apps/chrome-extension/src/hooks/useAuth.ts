@@ -46,6 +46,7 @@ export function useAuth() {
 		setIsLoading(true);
 		try {
 			await account.deleteSession("current");
+			// TODO logoutAndResetPersist();
 			setUser(null);
 			setSession(null);
 			setIsLoading(false);

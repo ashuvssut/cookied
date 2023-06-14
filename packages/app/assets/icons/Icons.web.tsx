@@ -9,4 +9,5 @@ export {
 	MdMenu,
 	MdOutlineOpenInNew,
 	MdArrowUpward,
+	MdDeleteOutline,
 } from "react-icons/md";

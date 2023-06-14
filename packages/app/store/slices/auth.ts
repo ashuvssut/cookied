@@ -11,5 +11,5 @@ export const isVerifiedAtom = //
 	atom(get => get(userAtom)?.emailVerification || false); // read-only
 export const isAuthAtom = atom(get => !!get(sessionAtom)?.$id);
 
-export const cookieAtom = atomWithPlatformStorage("cookie", "");
+export const cookieAtom = atomWithPlatformStorage("cookieFallback", "");
 export const authStore = createStore();
