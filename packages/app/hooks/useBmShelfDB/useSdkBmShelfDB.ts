@@ -51,7 +51,7 @@ export function useSdkBmShelfDB() {
 			const fl = cleanResponse(flDoc);
 			dispatch(bmShelfAction.addFl(fl));
 			return fl;
-		} catch (e) {
+		} catch (e: any) {
 			setIsLoading(false);
 			Toast.error(e.message || "Error in creating new folder");
 			logr.err("Error in creating new folder", e);
@@ -71,7 +71,7 @@ export function useSdkBmShelfDB() {
 			const folders = cleanResponseIterative(allFlsDocsList.documents);
 			dispatch(bmShelfAction.addManyFl(folders));
 			return folders;
-		} catch (e) {
+		} catch (e: any) {
 			setIsLoading(false);
 			Toast.error(e.message || "Error in getting all folders");
 			logr.err("Error in getting all folders", e);
@@ -92,7 +92,7 @@ export function useSdkBmShelfDB() {
 			const reduxUpdateDraft = { id: flDoc.$id, changes: updatedFl };
 			dispatch(bmShelfAction.updateFl(reduxUpdateDraft));
 			return updatedFl;
-		} catch (e) {
+		} catch (e: any) {
 			setIsLoading(false);
 			Toast.error(e.message || "Error in updating folder");
 			logr.err("Error in updating folder", e);
@@ -109,7 +109,7 @@ export function useSdkBmShelfDB() {
 			);
 			dispatch(bmShelfAction.removeFl(fl));
 			setIsLoading(false);
-		} catch (e) {
+		} catch (e: any) {
 			setIsLoading(false);
 			Toast.error(e.message || "Error in deleting folder");
 			logr.err("Error in deleting folder", e);
@@ -130,7 +130,7 @@ export function useSdkBmShelfDB() {
 			const newBm = cleanResponse(bmDoc);
 			dispatch(bmShelfAction.addBm(newBm));
 			return newBm;
-		} catch (e) {
+		} catch (e: any) {
 			setIsLoading(false);
 			Toast.error(e.message || "Error in creating new bookmark");
 			logr.err("Error in creating new bookmark", e);
@@ -148,7 +148,7 @@ export function useSdkBmShelfDB() {
 			);
 			dispatch(bmShelfAction.removeBm(bm));
 			setIsLoading(false);
-		} catch (e) {
+		} catch (e: any) {
 			setIsLoading(false);
 			Toast.error(e.message || "Error in deleting bookmark");
 			logr.err("Error in deleting bookmark", e);
