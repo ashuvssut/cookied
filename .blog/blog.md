@@ -76,7 +76,7 @@ Following are the paths to the apps in the monorepo:
 
 ## Demo Link
 
-We are thankful to the [Appwrite](https://appwrite.io) and [Hashnode](https://hashnode.com) team for providing us with the opportunity to build this project by organizing this awesome hackathon. We are really excited to improve and level up this project and make it an amazing productively tool for the folks out there!
+We are thankful to the [Appwrite](https://appwrite.io) and [Hashnode](https://hashnode.com) team for providing us with the opportunity to build this project by organizing this awesome hackathon. We are really excited to improve and level up this project and make it an amazing productively tool for the folks out there! There are lots of features coming to improve the User experience! Stay tuned!
 
 <!--- Add a link to the demo recording of your project in this section --->
 
