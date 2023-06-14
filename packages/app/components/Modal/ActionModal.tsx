@@ -58,43 +58,32 @@ export const ActionModal = (props: Props) => {
 		setSearchResults(results);
 	};
 	useEffect(() => void handleSearch(searchQuery), []);
-
 	const handleSubmitForm = async (fields: { title: string; url: string }) => {
 		if (props.type === "add-bookmark") {
 			if (folder) {
-				try {
-					const doc = await addBookmark({
-						type: "bookmark",
-						parentId: folder.id,
-						path: folder.pathArr,
-						level: folder.pathArr.length - 2,
-						...fields,
-					});
-					if (doc) props.onClose();
-					// TODO success & failure snackbar
-				} catch (err) {
-					logr.err(err);
-				}
+				const doc = await addBookmark({
+					type: "bookmark",
+					parentId: folder.id,
+					path: folder.pathArr,
+					level: folder.pathArr.length - 2,
+					...fields,
+				});
+				if (doc) props.onClose();
 			}
 		}
 		if (props.type === "edit-bookmark") {
 		}
 		if (props.type === "add-folder") {
-			try {
-				logr("FL OBJECT RUNNING", activeFlObject);
-				const doc = await addFolder({
-					type: "folder",
-					parentId: activeFlObject ? activeFlObject.$id : "root",
-					path: activeFlObject
-						? [...activeFlObject.path, activeFlObject.$id]
-						: ["root"],
-					level: activeFlObject ? activeFlObject.level + 1 : 0,
-					title: fields.title,
-				});
-				if (doc) props.onClose();
-			} catch (e) {
-				logr.err(e);
-			}
+			const doc = await addFolder({
+				type: "folder",
+				parentId: activeFlObject ? activeFlObject.$id : "root",
+				path: activeFlObject
+					? [...activeFlObject.path, activeFlObject.$id]
+					: ["root"],
+				level: activeFlObject ? activeFlObject.level + 1 : 0,
+				title: fields.title,
+			});
+			if (doc) props.onClose();
 		}
 		if (props.type === "edit-folder") {
 		}
@@ -148,7 +137,7 @@ export const ActionModal = (props: Props) => {
 			>
 				{p => {
 					formikProps.current = p;
-					logr("Error", p.errors);
+					Object.keys(p.errors).length > 0 && logr(p.errors);
 					return (
 						<>
 							<Th.TextInput
@@ -180,12 +169,8 @@ export const ActionModal = (props: Props) => {
 									<Th.TextInput
 										value={searchQuery}
 										onChangeText={text => {
-											logr(text);
 											handleSearch(text);
 											p.handleChange("flPath")(searchQuery);
-										}}
-										onChange={e => {
-											logr(e.nativeEvent.target);
 										}}
 										autoCorrect={false}
 										placeholder="Search Folders"
