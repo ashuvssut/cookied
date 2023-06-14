@@ -33,7 +33,7 @@ const commonConfig = makeTheme({
 	},
 });
 
-const commonColors = {
+export const commonColors = {
 	error: "#B00020",
 	warning: "#FFA000",
 	success: "#4CAF50",

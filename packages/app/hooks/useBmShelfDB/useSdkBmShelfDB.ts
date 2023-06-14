@@ -21,6 +21,7 @@ import _ from "lodash";
 import { useAppDispatch } from "app/store/hooks";
 import { Update } from "@reduxjs/toolkit";
 import { barLoadingAtom } from "app/components/Header";
+import { Toast } from "app/components/Toast";
 
 type TFlData = Omit<
 	IFolder,
@@ -34,7 +35,6 @@ export function useSdkBmShelfDB() {
 	const [session, _s] = useAtom(sessionAtom);
 	const userId = session?.userId;
 	const dispatch = useAppDispatch();
-
 	const databases = new Databases(client);
 	const addFolder = async (flData: TFlData) => {
 		setIsLoading(true);
@@ -53,8 +53,8 @@ export function useSdkBmShelfDB() {
 			return fl;
 		} catch (e) {
 			setIsLoading(false);
-			logr("Error in creating new folder", e);
-			throw e;
+			Toast.error(e.message || "Error in creating new folder");
+			logr.err("Error in creating new folder", e);
 		}
 	};
 
@@ -73,15 +73,14 @@ export function useSdkBmShelfDB() {
 			return folders;
 		} catch (e) {
 			setIsLoading(false);
-			logr("Error in getting all folders", e);
-			throw e;
+			Toast.error(e.message || "Error in getting all folders");
+			logr.err("Error in getting all folders", e);
 		}
 	};
 
 	const updateFolder = async (fl: Update<IFolder>) => {
 		setIsLoading(true);
 		try {
-			if (!userId) throw new Error("User not logged in");
 			const flDoc = await databases.updateDocument<TFlDocument>(
 				APPWRITE_DATABASE_ID,
 				APPWRITE_FOLDER_COLLECTION_ID,
@@ -95,15 +94,14 @@ export function useSdkBmShelfDB() {
 			return updatedFl;
 		} catch (e) {
 			setIsLoading(false);
-			logr("Error in updating folder", e);
-			throw e;
+			Toast.error(e.message || "Error in updating folder");
+			logr.err("Error in updating folder", e);
 		}
 	};
 
 	const deleteFolder = async (fl: IFolder) => {
 		setIsLoading(true);
 		try {
-			if (!userId) throw new Error("User not logged in");
 			await databases.deleteDocument(
 				APPWRITE_DATABASE_ID,
 				APPWRITE_FOLDER_COLLECTION_ID,
@@ -113,8 +111,8 @@ export function useSdkBmShelfDB() {
 			setIsLoading(false);
 		} catch (e) {
 			setIsLoading(false);
-			logr("Error in deleting folder", e);
-			throw e;
+			Toast.error(e.message || "Error in deleting folder");
+			logr.err("Error in deleting folder", e);
 		}
 	};
 
@@ -134,7 +132,8 @@ export function useSdkBmShelfDB() {
 			return newBm;
 		} catch (e) {
 			setIsLoading(false);
-			logr("Error in creating new bookmark", e);
+			Toast.error(e.message || "Error in creating new bookmark");
+			logr.err("Error in creating new bookmark", e);
 			throw e;
 		}
 	};
@@ -142,7 +141,6 @@ export function useSdkBmShelfDB() {
 	const deleteBookmark = async (bm: IBookmark) => {
 		setIsLoading(true);
 		try {
-			if (!userId) throw new Error("User not logged in");
 			await databases.deleteDocument(
 				APPWRITE_DATABASE_ID,
 				APPWRITE_BOOKMARK_COLLECTION_ID,
@@ -152,7 +150,8 @@ export function useSdkBmShelfDB() {
 			setIsLoading(false);
 		} catch (e) {
 			setIsLoading(false);
-			logr("Error in deleting bookmark", e);
+			Toast.error(e.message || "Error in deleting bookmark");
+			logr.err("Error in deleting bookmark", e);
 			throw e;
 		}
 	};
