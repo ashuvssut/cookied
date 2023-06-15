@@ -8322,7 +8322,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-splash-screen@npm:^0.18.2":
+"expo-splash-screen@npm:~0.18.2":
   version: 0.18.2
   resolution: "expo-splash-screen@npm:0.18.2"
   dependencies:
@@ -8338,6 +8338,18 @@ __metadata:
   version: 1.5.0
   resolution: "expo-status-bar@npm:1.5.0"
   checksum: d5ca873c42ab742a302b2a3326fc361631e00c164aa5b0efc7da6049c604df1193c8b0785ec9f1376025f9bd3d3573fa294e50be490d5cf87877799462f8111c
+  languageName: node
+  linkType: hard
+
+"expo-system-ui@npm:^2.2.1":
+  version: 2.3.0
+  resolution: "expo-system-ui@npm:2.3.0"
+  dependencies:
+    "@react-native/normalize-color": ^2.0.0
+    debug: ^4.3.2
+  peerDependencies:
+    expo: "*"
+  checksum: 11bfe9b8ede2ab3bee205f7b238df0f4bda4a7cd1e1e37a23e0d2fa2730476df7137227b9495bf1f5b97f955743677d0882231d01a07a8187fa03153e0e0ed11
   languageName: node
   linkType: hard
 
@@ -12401,8 +12413,9 @@ __metadata:
     expo-linear-gradient: ^12.1.2
     expo-linking: ^4.0.1
     expo-router: ^1.5.3
-    expo-splash-screen: ^0.18.2
+    expo-splash-screen: ~0.18.2
     expo-status-bar: ^1.4.4
+    expo-system-ui: ^2.2.1
     formik: ^2.4.0
     jotai: ^2.1.0
     react: 18.2.0
