@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, res: NextResponse) {
+	if (process.env.NODE_ENV !== "development")
+		return NextResponse.json({
+			error: "This endpoint is only available in development mode.",
+		});
+
 	// Modify the received cookie or create a new one
 	const modifiedCookie = `abc-value=xyz-value; Path=/; Domain=localhost; Max-Age=3600; `;
 

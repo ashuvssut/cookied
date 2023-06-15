@@ -15,14 +15,14 @@ hr {
 	border: 1px solid #61dafb;
 }
 
-.himitsu-da {
+.himitsu-dayo {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
 	font-size: 1rem;
-	color: #282c34;
 	cursor: pointer;
 	width: 100%;
-  padding: 0.5rem;
+	padding: 0.5rem;
+	color: #0000
 }
 .App-logo {
 	height: 40vmin;

@@ -14,9 +14,8 @@ const TypographyLoader: FCC = ({ children }) => {
 		if (fontsLoaded) await SplashScreen.hideAsync();
 	}, [fontsLoaded]);
 
-	if (!fontsLoaded) {
-		return null;
-	}
+	if (!fontsLoaded) return null;
+
 	return <View onLayout={onLayoutRootView}>{children}</View>;
 };
 
