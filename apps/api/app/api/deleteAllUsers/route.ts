@@ -22,6 +22,11 @@ async function deleteUsers(users: Users, pass = 0) {
 }
 
 export async function POST() {
+	if (process.env.NODE_ENV !== "development")
+		return NextResponse.json({
+			error: "This endpoint is only available in development mode.",
+		});
+		
 	const client = new Client()
 		.setEndpoint(process.env.APPWRITE_ENDPOINT!)
 		.setProject(process.env.APPWRITE_PROJECT_ID!)

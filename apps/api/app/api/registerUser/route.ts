@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import { Client, ID, Users } from "node-appwrite";
 
 export async function POST(req: Request) {
+	if (process.env.NODE_ENV !== "development")
+		return NextResponse.json({
+			error: "This endpoint is only available in development mode.",
+		});
+
 	const client = new Client()
 		.setEndpoint(process.env.APPWRITE_ENDPOINT!)
 		.setProject(process.env.APPWRITE_PROJECT_ID!)
