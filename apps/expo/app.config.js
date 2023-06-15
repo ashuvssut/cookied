@@ -4,6 +4,7 @@ module.exports = {
 	slug: "cookied",
 	name: "Cookied",
 	displayName: "Cookied",
+	description: "A cross-platform bookmark manager",
 	version: "0.1.0",
 	scheme: "cookied",
 	assetBundlePatterns: ["**/*"],
