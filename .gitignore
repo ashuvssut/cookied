@@ -86,6 +86,7 @@ build/**
 .env
 # apps/client/android/app/google-services.json
 .vscode/tasks.json
+.blog
 
 # Local Netlify folder
 .netlify
