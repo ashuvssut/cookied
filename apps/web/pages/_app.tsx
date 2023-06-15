@@ -23,8 +23,38 @@ function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 		<>
 			<Head>
 				<title>Cookied!!</title>
-				<meta name="description" content="Cookied | Bookmarks manager app" />
-				<link rel="icon" href="/favicon.ico" />
+				<meta
+					name="description"
+					content="Cookied | Cross-platform Bookmarks manager app"
+				/>
+				<link
+					rel="icon"
+					href="https://raw.githubusercontent.com/ashuvssut/cookied/dev/packages/app/assets/svg/good-cookie-square.svg"
+				/>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta property="og:title" content="Cookied!!" />
+				<meta
+					property="og:description"
+					content="Cookied | Cross-platform Bookmarks manager app"
+				/>
+				<meta property="og:type" content="website" />
+				<meta
+					property="og:image"
+					content="https://raw.githubusercontent.com/ashuvssut/cookied/dev/packages/app/assets/svg/good-cookie-square.svg"
+				/>
+
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:site" content="@ashuvssut" />
+				<meta name="twitter:creator" content="@ashuvssut" />
+				<meta name="twitter:title" content="Cookied!!" />
+				<meta
+					name="twitter:description"
+					content="Cookied | Cross-platform Bookmarks manager app"
+				/>
+				<meta
+					name="twitter:image"
+					content="https://raw.githubusercontent.com/ashuvssut/cookied/dev/packages/app/assets/svg/good-cookie-square.svg"
+				/>
 			</Head>
 			<GestureHandlerRootView style={{ flex: 1 }}>
 				<DripsyTheme>

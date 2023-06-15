@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import Image from "next/image";
 
-const Newtab = () => {
+const App = () => {
 	return (
 		<main>
 			<Image
@@ -51,4 +51,4 @@ const Newtab = () => {
 	);
 };
 
-export default Newtab;
+export default App;

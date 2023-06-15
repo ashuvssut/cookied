@@ -26,7 +26,7 @@ module.exports = {
 	// ios: { bundleIdentifier: "com.cookied" },
 	android: {
 		package: "com.cookied",
-		// backgroundColor: "#000000", bg theme color is managed by <Screen/> component
+		// backgroundColor: "#000000", // bg theme color is managed by <Screen/> component
 		playStoreUrl: "https://play.google.com/store/apps/details?id=com.cookied",
 		intentFilters: [
 			{ action: "SEND", category: "DEFAULT", data: { mimeType: "text/plain" } }, // For Bookmark URL send intent from browser
