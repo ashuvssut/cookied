@@ -36,3 +36,7 @@ next-env.d.ts
 
 .env.local
 .dump
+
+
+# created using:- vercel env pull .env.production.bak --environment production
+.env.production.bak
