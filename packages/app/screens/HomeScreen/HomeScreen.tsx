@@ -3,13 +3,12 @@ import { Header } from "app/components/Header";
 import { TreePanel } from "app/screens/HomeScreen/TreePanel";
 import { View, Pressable } from "dripsy";
 import { WebpageViewer } from "app/screens/HomeScreen/WebpageViewer";
-import { Platform } from "react-native";
 import { MdMenu } from "app/assets/icons";
 import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
 import { ISlideInViewRefProps, SlideInView } from "app/components/SlideInView";
 import { useRef } from "react";
+import { isWeb } from "app/utils/constants";
 
-const isWeb = Platform.OS === "web";
 export default function HomeScreen() {
 	const style = usePressabilityApiStyles();
 	const ref = useRef<ISlideInViewRefProps>(null);
@@ -27,7 +26,7 @@ export default function HomeScreen() {
 						}}
 					>
 						<Pressable
-							hitSlop={30}
+							hitSlop={7}
 							onPress={() => ref.current?.triggerToggle()}
 							sx={{
 								width: 35,
@@ -44,11 +43,11 @@ export default function HomeScreen() {
 						</Pressable>
 					</View>
 				)}
-				<View sx={{ height: "100%" }}>
+				<View sx={{ height: isWeb ? "100vh" : "100%" }}>
 					<Header />
 					<View sx={{ flex: 1 }}>
 						{isWeb ? (
-							<View sx={{ flexDirection: "row", height: "100vh" }}>
+							<View sx={{ flexDirection: "row", flex: 1 }}>
 								<TreePanel />
 								<WebpageViewer />
 							</View>

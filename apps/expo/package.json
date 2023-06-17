@@ -54,10 +54,10 @@
     "typescript": "^5.1.3"
   },
   "scripts": {
-    "start": "expo start --dev-client",
+    "start": "expo start --localhost --port 19000 --dev-client ",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "reset-cache": "expo start --dev-client --clear",
+    "reset-cache": "expo start --localhost --port 19000 --dev-client --clear",
     "gradle-clean": "cd ./android && ./gradlew clean"
   },
   "version": "1.0.0",

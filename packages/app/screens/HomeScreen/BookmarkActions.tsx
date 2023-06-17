@@ -4,10 +4,10 @@ import { IBookmark } from "app/store/slices/bmShelfSlice";
 import { MdDeleteOutline, MdOutlineOpenInNew } from "app/assets/icons";
 import { openURL } from "expo-linking";
 import { IconButton } from "app/components/IconButton";
-import { Platform } from "react-native";
 import { useAtom } from "jotai";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
 import { useSdkBmShelfDB } from "app/hooks/useBmShelfDB/useSdkBmShelfDB";
+import { isWeb } from "app/utils/constants";
 
 interface IBookmarkActions extends ComponentProps<typeof View> {
 	node: IBookmark;
@@ -31,7 +31,7 @@ export const BookmarkActions: FC<IBookmarkActions> = ({ node, ...props }) => {
 				<IconButton
 					onPress={() => {
 						setActiveEntityId(node.$id);
-						if (Platform.OS === "web") {
+						if (isWeb) {
 							window.open(node.url, "_blank");
 							return;
 						}

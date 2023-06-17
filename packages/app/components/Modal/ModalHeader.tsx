@@ -59,7 +59,7 @@ export const ModalHeader = (props: IModalHeaderProps) => {
 					}}
 				>
 					<TouchableOpacity
-						hitSlop={30}
+						hitSlop={7}
 						style={{ marginRight: 25 }}
 						onPress={props.handleClose}
 						activeOpacity={0.75}
@@ -68,7 +68,7 @@ export const ModalHeader = (props: IModalHeaderProps) => {
 					</TouchableOpacity>
 
 					<TouchableOpacity
-						hitSlop={30}
+						hitSlop={7}
 						style={{ opacity: props.back ? 1 : 0.2 }}
 						onPress={props.handleBack}
 						disabled={!props.back}
@@ -109,7 +109,7 @@ export const ModalHeader = (props: IModalHeaderProps) => {
 					</View>
 
 					<TouchableOpacity
-						hitSlop={30}
+						hitSlop={7}
 						style={{
 							marginRight: 15,
 							opacity: props.forward ? 1 : 0.2,
@@ -122,7 +122,7 @@ export const ModalHeader = (props: IModalHeaderProps) => {
 						<Image alt="lock" source={require("app/assets/png/arrow.png")} />
 					</TouchableOpacity>
 
-					<TouchableOpacity hitSlop={30} disabled>
+					<TouchableOpacity hitSlop={7} disabled>
 						<Image alt="dots" source={require("app/assets/png/dots.png")} />
 					</TouchableOpacity>
 				</View>

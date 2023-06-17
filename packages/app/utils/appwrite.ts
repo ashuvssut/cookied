@@ -1,8 +1,7 @@
+import { isWeb } from "app/utils/constants";
 import { Account, Client } from "appwrite";
 import Constants from "expo-constants";
-import { Platform } from "react-native";
 
-const isWeb = Platform.OS === "web";
 export const APPWRITE_ENDPOINT = isWeb
 	? process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT
 	: Constants.expoConfig?.extra?.APPWRITE_ENDPOINT;

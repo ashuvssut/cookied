@@ -1,9 +1,9 @@
 import { authStore, cookieAtom, sessionAtom } from "app/store/slices/auth";
 import { useRestAuth } from "./useRestAuth";
 import { useSdkAuth } from "./useSdkAuth";
-import { Platform } from "react-native";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
+import { isWeb } from "app/utils/constants";
 
 export const usePlatformAuth = () => {
 	const sdkAuth = useSdkAuth();
@@ -16,6 +16,6 @@ export const usePlatformAuth = () => {
 		authStore.set(sessionAtom, session);
 	}, [cookie, session]);
 
-	if (Platform.OS === "web") return sdkAuth;
+	if (isWeb) return sdkAuth;
 	return restAuth;
 };

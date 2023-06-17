@@ -203,12 +203,12 @@ declare module "dripsy" {
 // 		height: 896,
 // 	},
 // 	xlargePhone:
-// 		Platform.OS === "ios"
+// 		isIos
 // 			? {
 // 					width: 428,
 // 					height: 926,
 // 			  }
-// 			: Platform.OS === "android"
+// 			: isAndroid
 // 			? {
 // 					width: 480,
 // 					height: 853,

@@ -13,7 +13,7 @@ export const modalizeRefAtom = atom<RefObject<Modalize> | null>(null);
 export const setPayloadAtom = atom<any>({});
 export const modalTypeAtom = atom<TModal>("web-view");
 
-export const Modal = () => {
+export const Modal = ({ modalWidth: modalMaxWidth = 0 }) => {
 	const ref = useRef<Modalize>(null);
 	const [_m, setModalizeRef] = useAtom(modalizeRefAtom);
 	const [payload, _s] = useAtom(setPayloadAtom);
@@ -114,7 +114,12 @@ export const Modal = () => {
 			// modalHeight={100}
 			// snapPoint={100}
 			// modalTopOffset={200}
-			modalStyle={{ backgroundColor: primary }}
+			modalStyle={{
+				backgroundColor: primary,
+				maxWidth: !!modalMaxWidth ? modalMaxWidth : "100%",
+				alignSelf: "center",
+				width: "100%",
+			}}
 			rootStyle={{ backgroundColor: "#9994" }}
 		>
 			{renderModal()}

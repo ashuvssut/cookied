@@ -6,15 +6,14 @@ import {
 	interpolate,
 	Extrapolate,
 } from "react-native-reanimated";
-import { Platform, useWindowDimensions } from "react-native";
+import {  useWindowDimensions } from "react-native";
 import {
 	ForwardedRef,
 	forwardRef,
 	useCallback,
 	useImperativeHandle,
 } from "react";
-
-const isWeb = Platform.OS === "web";
+import { isWeb } from "app/utils/constants";
 
 interface ISlideInView {
 	children: React.ReactNode;
@@ -61,7 +60,7 @@ export const SlideInView = forwardRef(
 				const borderRadius = interpolate(
 					translateX.value,
 					[-width / 2, 0],
-					[20, 0],
+					[20, 5],
 					Extrapolate.CLAMP,
 				);
 				scaleInAnim.animateTo(

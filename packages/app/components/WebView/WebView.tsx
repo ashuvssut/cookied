@@ -8,7 +8,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { Animated, Easing, Platform, useWindowDimensions } from "react-native";
+import { Animated, Easing, useWindowDimensions } from "react-native";
 import {
 	WebView as RNWebView,
 	WebViewMessageEvent,
@@ -17,8 +17,7 @@ import {
 	documentHeightCallbackScript,
 	extractHostname,
 } from "app/components/WebView/utils";
-
-const isAndroid = Platform.OS === "android";
+import { isAndroid } from "app/utils/constants";
 
 interface IWebpageState {
 	url: string;

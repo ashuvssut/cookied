@@ -11,7 +11,6 @@ import {
 	selectFlPathWithTitleById,
 } from "app/store/slices/bmShelfSlice";
 import Fuse from "fuse.js";
-import { Platform } from "react-native";
 import logr from "app/utils/logr";
 import { useAppSelector } from "app/store/hooks";
 import addEditBmSchema from "app/validators/addEditBmSchema";
@@ -188,18 +187,18 @@ export const ActionModal = (props: Props) => {
 								sx={{
 									flexDirection: "row",
 									justifyContent: "space-evenly",
-									pb: Platform.OS === "web" ? 80 : 0,
+									gap: "$4",
 								}}
 							>
 								<Th.ButtonSecondary
 									onPress={() => props.onClose()}
-									sx={{ flex: 1, marginRight: "$3" }}
+									sx={{ flex: 1 }}
 								>
 									Cancel
 								</Th.ButtonSecondary>
 								<Th.ButtonPrimary
 									onPress={() => p.handleSubmit()}
-									sx={{ flex: 1, marginLeft: "$3", zIndex: 8, elevation: 6 }}
+									sx={{ flex: 1 }}
 								>
 									Add
 								</Th.ButtonPrimary>

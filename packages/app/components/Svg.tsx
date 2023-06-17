@@ -1,4 +1,4 @@
-import { Platform } from "react-native";
+import { isWeb } from "app/utils/constants";
 import { SvgProps } from "react-native-svg";
 
 type Props = {
@@ -13,7 +13,7 @@ export const Svg = ({
 	webSvgProps,
 	commonSvgProps,
 }: Props) => {
-	if (Platform.OS === "web")
+	if (isWeb)
 		return <img src={Svg.src} {...webSvgProps} {...commonSvgProps} />;
 
 	return <Svg {...nativeSvgProps} {...commonSvgProps} />;

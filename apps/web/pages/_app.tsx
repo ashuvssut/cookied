@@ -62,7 +62,7 @@ function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 						<ProtectedRoute>
 							<Component {...pageProps} />
 							<LoadingModal />
-							<Modal />
+							<Modal modalWidth={700} />
 							<ToastContainer
 								position="top-right"
 								autoClose={5000}

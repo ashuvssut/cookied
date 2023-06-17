@@ -1,5 +1,5 @@
+import { isWeb } from "app/utils/constants";
 import { makeTheme } from "dripsy";
-import { Platform } from "react-native";
 
 export const fontsMap = {
 	// r100: "Poppins_100Thin",
@@ -26,10 +26,9 @@ type TFontVariant = keyof typeof fontsMap;
 // convert fontMap to platform font map to create font config for dripsy
 const fontName = "Poppins";
 const getFontFamStr = (font: TFontVariant) => {
-	const fontFam =
-		Platform.OS === "web"
-			? `${fontName}, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, Inter-serif`
-			: font;
+	const fontFam = isWeb
+		? `${fontName}, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, Inter-serif`
+		: font;
 	return fontFam;
 };
 let platformFontsMap = Object.entries(fontsMap).reduce(

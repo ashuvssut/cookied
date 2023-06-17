@@ -1,11 +1,11 @@
 import { GoodCookie } from "app/assets/svg";
 import { Svg } from "app/components/Svg";
 import { H1, View, Pressable, Text } from "dripsy";
-import { FC, useRef } from "react";
+import { FC } from "react";
 import { Bar } from "react-native-progress";
 import { atom, useAtom } from "jotai";
 import { usePlatformAuth } from "app/hooks/useAuth/usePlatformAuth";
-import { Platform } from "react-native";
+import { isWeb } from "app/utils/constants";
 
 export const barLoadingAtom = atom(false);
 export const Header: FC = () => {
@@ -21,9 +21,9 @@ export const Header: FC = () => {
 				/>
 				<H1>COOKIED</H1>
 			</View>
-			{Platform.OS === "web" && !!user && (
+			{isWeb && !!user && (
 				<Pressable
-					hitSlop={30}
+					hitSlop={7}
 					onPress={() => signOut()}
 					sx={{
 						position: "absolute",

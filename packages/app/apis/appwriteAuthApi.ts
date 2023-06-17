@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import { ID, Models } from "appwrite";
-import { Platform } from "react-native";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID } from "../utils/appwrite";
 import { cookieAtom, authStore } from "app/store/slices/auth";
 import { logoutAndResetPersist } from "app/utils/storage";
+import { isWeb } from "app/utils/constants";
 
 const generalHeaders = {
 	"Content-Type": "application/json",
@@ -95,10 +95,9 @@ export const createEmailVerification = async () => {
 	if (__DEV__) {
 		// Code to run in development mode
 		console.log("Running in development mode");
-		REDIRECT_URL =
-			Platform.OS === "web" ? "http://localhost:19000/verify" : "cookied://";
+		REDIRECT_URL = isWeb ? "http://localhost:19000/verify" : "cookied://";
 	} else {
-		REDIRECT_URL = Platform.OS === "web" ? "" : "cookied://";
+		REDIRECT_URL = isWeb ? "" : "cookied://";
 	}
 	try {
 		const tokenObj: AxiosResponse<Models.Token> = //
@@ -130,7 +129,7 @@ export const verifyEmail = async (userId: string, secret: string) => {
 // 		const res: AxiosResponse<Models.Jwt> = await axiosWithConfig.post(
 // 			`${APPWRITE_ENDPOINT}/account/jwt`,
 // 		);
-// 		if (Platform.OS === "web") {
+// 		if (isWeb) {
 // 			localStorage.setItem("jwt", res.data.jwt);
 // 		} else {
 // 			await AsyncStorage.setItem("jwt", res.data.jwt);
