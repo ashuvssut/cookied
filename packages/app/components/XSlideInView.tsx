@@ -22,7 +22,7 @@ export interface ISlideInViewRefProps {
 	triggerToggle: () => void;
 }
 
-export const SlideInView = forwardRef(
+export const XSlideInView = forwardRef(
 	(props: ISlideInView, ref: ForwardedRef<ISlideInViewRefProps>) => {
 		const { width } = useWindowDimensions();
 
@@ -44,6 +44,8 @@ export const SlideInView = forwardRef(
 
 		const ctx = useSharedValue({ x: 0 });
 		const pan = Gesture.Pan()
+			.activeOffsetY([-1000, 1000]) // y pan won't be recognized unless it's more than 1000 or less than -1000. Disables y pan
+			.activeOffsetX([-10, 10])
 			.onStart(() => (ctx.value = { x: translateX.value }))
 			.onUpdate(({ translationX }) => {
 				if (isWeb) return;

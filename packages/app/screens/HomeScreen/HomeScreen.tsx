@@ -5,7 +5,10 @@ import { View, Pressable } from "dripsy";
 import { WebpageViewer } from "app/screens/HomeScreen/WebpageViewer";
 import { MdMenu } from "app/assets/icons";
 import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
-import { ISlideInViewRefProps, SlideInView } from "app/components/SlideInView";
+import {
+	ISlideInViewRefProps,
+	XSlideInView,
+} from "app/components/XSlideInView";
 import { useRef } from "react";
 import { isWeb } from "app/utils/constants";
 
@@ -13,29 +16,14 @@ export default function HomeScreen() {
 	const style = usePressabilityApiStyles();
 	const ref = useRef<ISlideInViewRefProps>(null);
 	return (
-		<SlideInView ref={ref}>
+		<XSlideInView ref={ref}>
 			<Screen>
 				{!isWeb && (
-					<View
-						sx={{
-							position: "absolute",
-							top: 14,
-							right: 20,
-							zIndex: 5,
-							elevation: 2,
-						}}
-					>
+					<View sx={{ position: "absolute", top: 14, right: 20 }}>
 						<Pressable
-							hitSlop={7}
+							variant="layout.center"
 							onPress={() => ref.current?.triggerToggle()}
-							sx={{
-								width: 35,
-								height: 35,
-								elevation: 5,
-								borderRadius: 5,
-								justifyContent: "center",
-								alignItems: "center",
-							}}
+							sx={{ width: 35, height: 35 }}
 							style={style}
 							android_ripple={{ borderless: true, color: "#fff" }}
 						>
@@ -60,6 +48,6 @@ export default function HomeScreen() {
 					</View>
 				</View>
 			</Screen>
-		</SlideInView>
+		</XSlideInView>
 	);
 }

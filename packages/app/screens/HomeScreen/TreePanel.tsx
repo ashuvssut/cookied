@@ -21,7 +21,10 @@ import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
 import { atom } from "jotai";
 import { BookmarkActions } from "app/screens/HomeScreen/BookmarkActions";
 import { useModal } from "app/components/Modal";
-import { activeEntityIdAtom, hoverFocusEntityIdAtom } from "app/store/slices/compoState";
+import {
+	activeEntityIdAtom,
+	hoverFocusEntityIdAtom,
+} from "app/store/slices/compoState";
 
 export function TreePanel() {
 	const foldersWithBookmarks = useAppSelector(selectDenormalizedBmShelf);
