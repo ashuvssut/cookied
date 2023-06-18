@@ -9,6 +9,7 @@ import { IWebViewRefProps } from "app/components/WebView";
 import { atom, useAtom } from "jotai";
 import { useDripsyTheme } from "dripsy";
 import { isWeb } from "app/utils/constants";
+import { IWebpageState } from "app/components/WebView/WebView";
 
 export const modalizeRefAtom = atom<RefObject<Modalize> | null>(null);
 export const setPayloadAtom = atom<any>({});
@@ -21,12 +22,13 @@ export const ModalController = ({ modalMaxWidth = 700 }) => {
 	const [modalType, _mt] = useAtom(modalTypeAtom);
 	useEffect(() => void setModalizeRef(ref), [ref, setModalizeRef]);
 
-	const [url, setUrl] = useState("");
-	const [secured, setSecure] = useState(true);
-	const [back, setBack] = useState(false);
-	const [forward, setForward] = useState(false);
-	const progress = useRef(new Animated.Value(0));
-
+	const [webpageState, setWebpageState] = useState<IWebpageState>({
+		url: "",
+		secured: true,
+		back: false,
+		forward: false,
+		progress: new Animated.Value(0),
+	});
 	const webViewRef = useRef<IWebViewRefProps>(null);
 	const renderModal = () => {
 		if (modalType === "web-view" && payload.src) {
@@ -34,13 +36,7 @@ export const ModalController = ({ modalMaxWidth = 700 }) => {
 				<WebView
 					ref={webViewRef}
 					src={payload.src}
-					onWebpageStateChange={state => {
-						setUrl(state.url);
-						setSecure(state.secured);
-						setBack(state.back);
-						setForward(state.forward);
-						progress.current = state.progress;
-					}}
+					onWebpageStateChange={state => setWebpageState(state)}
 				/>
 			);
 		}
@@ -95,14 +91,10 @@ export const ModalController = ({ modalMaxWidth = 700 }) => {
 	const renderHeader = () => (
 		<ModalHeader
 			type={modalType}
-			url={url}
-			secured={secured}
-			back={back}
 			handleBack={webViewRef.current?.goBack}
-			forward={forward}
 			handleForward={webViewRef.current?.goForward}
-			progress={progress.current}
 			handleClose={ref?.current?.close}
+			{...webpageState}
 		/>
 	);
 
@@ -113,9 +105,6 @@ export const ModalController = ({ modalMaxWidth = 700 }) => {
 			ref={ref}
 			HeaderComponent={renderHeader()}
 			adjustToContentHeight={true}
-			// modalHeight={100}
-			// snapPoint={100}
-			// modalTopOffset={200}
 			modalStyle={{
 				backgroundColor: primary,
 				maxWidth: isWeb ? modalMaxWidth : "100%",

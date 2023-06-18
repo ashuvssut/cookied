@@ -173,7 +173,10 @@ const LeafNode: FC<ILeafNode> = memo(
 					}
 				}}
 			>
-				<View variant="layout.row" sx={{ pl: node.level * p, width: "100%" }}>
+				<View
+					variant="layout.row"
+					sx={{ pl: (node.level + 1) * p, width: "100%" }}
+				>
 					<View sx={{ pr: "$3" }}>
 						<MdOutlineBookmarkBorder size={18} color={onPrimary} />
 					</View>

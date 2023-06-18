@@ -19,7 +19,7 @@ import {
 } from "app/components/WebView/utils";
 import { isAndroid } from "app/utils/constants";
 
-interface IWebpageState {
+export interface IWebpageState {
 	url: string;
 	secured: boolean;
 	back: boolean;
@@ -39,19 +39,19 @@ export const WebView = forwardRef(
 	(props: IWebView, ref: ForwardedRef<IWebViewRefProps>) => {
 		const { src, onWebpageStateChange, ...restProps } = props;
 		const webViewRef = useRef<RNWebView>(null);
-		const [url, setUrl] = useState<IWebpageState["url"]>("");
-		const [secured, setSecure] = useState<IWebpageState["secured"]>(true);
 		const [mounted, setMounted] = useState<IWebpageState["secured"]>(false);
-		const [back, setBack] = useState<IWebpageState["back"]>(false);
-		const [forward, setForward] = useState<IWebpageState["forward"]>(false);
+		const [webpageState, setWebpageState] = useState<IWebpageState>({
+			url: "",
+			secured: true,
+			back: false,
+			forward: false,
+			progress: new Animated.Value(0),
+		});
 
 		const { height: initialHeight } = useWindowDimensions();
 		const [layoutHeight, setLayoutHeight] = useState(initialHeight);
 		const [documentHeight, setDocumentHeight] = useState(initialHeight);
 		const height = isAndroid ? documentHeight : layoutHeight;
-		const progress = useRef<IWebpageState["progress"]>(
-			new Animated.Value(0),
-		).current;
 
 		const handleLoad = (status: "start" | "end" | "progress") => {
 			setMounted(true);
@@ -59,39 +59,40 @@ export const WebView = forwardRef(
 
 			const toValue =
 				status === "start" ? 0.2 : status === "progress" ? 0.5 : 1;
-			Animated.timing(
-				progress, //
-				{ toValue, duration: 200, easing: Easing.ease, useNativeDriver: true },
-			).start();
+			Animated.timing(webpageState.progress, {
+				toValue,
+				duration: 200,
+				easing: Easing.ease,
+				useNativeDriver: true,
+			}).start();
 
 			if (status === "end") {
-				Animated.timing(progress, {
+				Animated.timing(webpageState.progress, {
 					toValue: 2,
 					duration: 200,
 					easing: Easing.ease,
 					useNativeDriver: true,
-				}).start(() => progress.setValue(0));
+				}).start(() => webpageState.progress.setValue(0));
 			}
 		};
-		type THandleNavStateChng ={ // TODO: refactor separately
+		type THandleNavStateChng = {
 			url: string;
 			canGoBack: boolean;
 			canGoForward: boolean;
 			loading: boolean;
 			navigationType: string;
-		}
+		};
 		const handleNavigationStateChange = useCallback(
-			({
-				url,
-				canGoBack,
-				canGoForward,
-				loading,
-				navigationType,
-			}: THandleNavStateChng) => {
-				setBack(canGoBack);
-				setForward(canGoForward);
-				setSecure(url.includes("https"));
-				setUrl(extractHostname(url));
+			(navState: THandleNavStateChng) => {
+				const { url, canGoBack, canGoForward, loading, navigationType } =
+					navState;
+				setWebpageState({
+					url: extractHostname(url),
+					secured: url.includes("https"),
+					back: canGoBack,
+					forward: canGoForward,
+					progress: webpageState.progress,
+				});
 
 				if (!loading && !navigationType && isAndroid) {
 					webViewRef.current?.injectJavaScript(documentHeightCallbackScript);
@@ -129,9 +130,8 @@ export const WebView = forwardRef(
 		);
 
 		useEffect(() => {
-			if (onWebpageStateChange)
-				onWebpageStateChange({ url, secured, back, forward, progress });
-		}, [url, secured, back, forward, progress]);
+			if (onWebpageStateChange) onWebpageStateChange(webpageState);
+		}, [webpageState]);
 
 		return (
 			<RNWebView
