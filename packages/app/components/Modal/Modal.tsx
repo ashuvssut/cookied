@@ -8,12 +8,13 @@ import { WebView } from "app/components/WebView";
 import { IWebViewRefProps } from "app/components/WebView";
 import { atom, useAtom } from "jotai";
 import { useDripsyTheme } from "dripsy";
+import { isWeb } from "app/utils/constants";
 
 export const modalizeRefAtom = atom<RefObject<Modalize> | null>(null);
 export const setPayloadAtom = atom<any>({});
 export const modalTypeAtom = atom<TModal>("web-view");
 
-export const Modal = ({ modalWidth: modalMaxWidth = 0 }) => {
+export const Modal = ({ modalMaxWidth = 700 }) => {
 	const ref = useRef<Modalize>(null);
 	const [_m, setModalizeRef] = useAtom(modalizeRefAtom);
 	const [payload, _s] = useAtom(setPayloadAtom);
@@ -106,6 +107,7 @@ export const Modal = ({ modalWidth: modalMaxWidth = 0 }) => {
 	);
 
 	const primary = useDripsyTheme().theme.colors.primary;
+
 	return (
 		<Modalize
 			ref={ref}
@@ -116,7 +118,7 @@ export const Modal = ({ modalWidth: modalMaxWidth = 0 }) => {
 			// modalTopOffset={200}
 			modalStyle={{
 				backgroundColor: primary,
-				maxWidth: !!modalMaxWidth ? modalMaxWidth : "100%",
+				maxWidth: isWeb ? modalMaxWidth : "100%",
 				alignSelf: "center",
 				width: "100%",
 			}}

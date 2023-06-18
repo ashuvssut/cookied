@@ -19,6 +19,7 @@ import { useAtom } from "jotai";
 import { MdArrowUpward } from "app/assets/icons";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
 import addEditFolderSchema from "app/validators/addEditFolderSchema";
+import { barLoadingAtom } from "app/components/Header";
 
 type Props = {
 	title: string;
@@ -124,6 +125,7 @@ export const ActionModal = (props: Props) => {
 		});
 	}, [searchResults]);
 
+	const [isBarLoading] = useAtom(barLoadingAtom);
 	return (
 		<View sx={{ m: "$4" }}>
 			<Formik
@@ -199,6 +201,7 @@ export const ActionModal = (props: Props) => {
 								<Th.ButtonPrimary
 									onPress={() => p.handleSubmit()}
 									sx={{ flex: 1 }}
+									disabled={isBarLoading}
 								>
 									Add
 								</Th.ButtonPrimary>

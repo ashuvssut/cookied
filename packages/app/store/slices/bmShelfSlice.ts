@@ -89,7 +89,7 @@ export const selectFlPaths = createSelector(
 	folders => {
 		const folderEntities = folders.entities;
 		const flPaths = Object.values(folderEntities).map(folder => {
-			if (!folder) logr.warn("selectFlPaths: folder is undefined");
+			// if (!folder) logr.warn("selectFlPaths: folder is undefined");
 			if (!folder) return [];
 			const folderPath = [...folder.path];
 			if (folder.$id) folderPath.push(folder.$id); // add folder's own id to pathArr too
@@ -114,7 +114,7 @@ export const selectFlPathWithTitleArray = createSelector(
 			const pathCopy = [...path].slice(1); // slice(1) removes "root" from path array
 			const titlePathArr = pathCopy.map(id => {
 				const folder = folderEntities[id];
-				if (!folder) logr.warn("selectFlPathsWithTitles: folder is undefined");
+				// if (!folder) logr.warn("selectFlPathsWithTitles: folder is undefined");
 				return folder?.title || "";
 			});
 			const id = path[path.length - 1]!; // last id is the folder's id (see selectFlPaths)

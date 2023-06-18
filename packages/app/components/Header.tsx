@@ -25,15 +25,8 @@ export const Header: FC = () => {
 				<Pressable
 					hitSlop={7}
 					onPress={() => signOut()}
-					sx={{
-						position: "absolute",
-						top: 25,
-						right: 15,
-						elevation: 5,
-						borderRadius: 5,
-						justifyContent: "center",
-						alignItems: "center",
-					}}
+					variant="layout.center"
+					sx={{ position: "absolute", top: 25, right: 15 }}
 				>
 					<Text>LOGOUT</Text>
 				</Pressable>
@@ -47,7 +40,7 @@ export const Header: FC = () => {
 					borderRadius: 0,
 					opacity: loading ? 1 : 0,
 				}}
-				height={1}
+				height={3}
 			/>
 		</View>
 	);

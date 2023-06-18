@@ -19,13 +19,14 @@ export default function HomeScreen() {
 		<XSlideInView ref={ref}>
 			<Screen>
 				{!isWeb && (
-					<View sx={{ position: "absolute", top: 14, right: 20 }}>
+					<View sx={{ position: "absolute", top: 14, right: 20, zIndex: 5 }}>
 						<Pressable
+							hitSlop={10}
 							variant="layout.center"
 							onPress={() => ref.current?.triggerToggle()}
 							sx={{ width: 35, height: 35 }}
 							style={style}
-							android_ripple={{ borderless: true, color: "#fff" }}
+							android_ripple={{ borderless: true, color: "#fff5" }}
 						>
 							<MdMenu size={30} color="white" />
 						</Pressable>
