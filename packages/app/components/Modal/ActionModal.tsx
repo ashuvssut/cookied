@@ -147,6 +147,7 @@ export const ActionModal = (props: Props) => {
 								autoCorrect={false}
 								onBlur={p.handleBlur("title")}
 								placeholder="Enter the title"
+								autoFocus
 							/>
 							<View sx={{ marginTop: "$4" }} />
 							{(props.type === "add-bookmark" ||

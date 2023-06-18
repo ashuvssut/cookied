@@ -14,7 +14,7 @@ export const modalizeRefAtom = atom<RefObject<Modalize> | null>(null);
 export const setPayloadAtom = atom<any>({});
 export const modalTypeAtom = atom<TModal>("web-view");
 
-export const Modal = ({ modalMaxWidth = 700 }) => {
+export const ModalController = ({ modalMaxWidth = 700 }) => {
 	const ref = useRef<Modalize>(null);
 	const [_m, setModalizeRef] = useAtom(modalizeRefAtom);
 	const [payload, _s] = useAtom(setPayloadAtom);
@@ -123,6 +123,7 @@ export const Modal = ({ modalMaxWidth = 700 }) => {
 				width: "100%",
 			}}
 			rootStyle={{ backgroundColor: "#9994" }}
+			scrollViewProps={{ keyboardShouldPersistTaps: "always" }}
 		>
 			{renderModal()}
 		</Modalize>

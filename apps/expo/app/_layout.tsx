@@ -11,7 +11,7 @@ import type { AppStateStatus } from "react-native";
 import { focusManager } from "@tanstack/react-query";
 import NetInfo from "@react-native-community/netinfo";
 import { onlineManager } from "@tanstack/react-query";
-import { Modal } from "app/components/Modal";
+import { ModalController } from "app/components/Modal";
 import NetworkStatus from "app/components/NetworkStatus";
 
 const queryClient = new QueryClient();
@@ -45,7 +45,7 @@ export default function Root() {
 							<Slot />
 						</ProtectedRoute>
 						<LoadingModal />
-						<Modal />
+						<ModalController />
 					</QueryClientProvider>
 				</ReduxProvider>
 			</DripsyTheme>

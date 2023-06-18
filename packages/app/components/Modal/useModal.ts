@@ -1,4 +1,4 @@
-import { modalTypeAtom, modalizeRefAtom, setPayloadAtom } from "./Modal";
+import { modalTypeAtom, modalizeRefAtom, setPayloadAtom } from "./ModalController";
 import { useAtom } from "jotai";
 import type { TModal } from "app/components/Modal/ModalHeader";
 

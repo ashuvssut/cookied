@@ -10,7 +10,7 @@ import { ProtectedRoute } from "app/components/ProtectedRoute";
 import LoadingModal from "app/components/LoadingModal";
 import { resetReduxPersist_reload } from "app/utils/storage";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Modal } from "app/components/Modal";
+import { ModalController } from "app/components/Modal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles.css";
@@ -62,7 +62,7 @@ function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 						<ProtectedRoute>
 							<Component {...pageProps} />
 							<LoadingModal />
-							<Modal modalWidth={700} />
+							<ModalController modalWidth={700} />
 							<ToastContainer
 								position="top-right"
 								autoClose={5000}
