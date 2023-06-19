@@ -1,13 +1,13 @@
 import {
 	Keyboard,
 	KeyboardAvoidingView,
-	Platform,
 	ScrollViewProps,
 	TouchableWithoutFeedback,
 } from "react-native";
 import { useDripsyTheme, ScrollView } from "dripsy";
 import { FCC } from "app/types/IReact";
 import { CookiedTheme } from "app/theme/theme";
+import { isIos } from "app/utils/constants";
 
 interface IKeybrdScr {
 	keyboardShouldPersistTaps: ScrollViewProps["keyboardShouldPersistTaps"];
@@ -27,7 +27,7 @@ export const KeyboardUsingScreen: FCC<IKeybrdScr> = ({
 
 	return (
 		<KeyboardAvoidingView
-			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			behavior={isIos ? "padding" : "height"}
 			style={{ flex: 1, backgroundColor }}
 		>
 			<TouchableWithoutFeedback

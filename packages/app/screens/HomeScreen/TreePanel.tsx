@@ -16,7 +16,7 @@ import {
 	MdFolderOpen,
 	MdOutlineBookmarkBorder,
 } from "app/assets/icons";
-import { Platform, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
 import { atom } from "jotai";
 import { BookmarkActions } from "app/screens/HomeScreen/BookmarkActions";
@@ -25,6 +25,7 @@ import {
 	activeEntityIdAtom,
 	hoverFocusEntityIdAtom,
 } from "app/store/slices/compoState";
+import { isWeb } from "app/utils/constants";
 
 export function TreePanel() {
 	const foldersWithBookmarks = useAppSelector(selectDenormalizedBmShelf);
@@ -85,7 +86,7 @@ const Node: FC<INode> = memo(
 		const [close, setClose] = useState(false);
 		const [activeEntityId, setActiveEntityId] = useAtom(activeEntityIdAtom);
 		const [hfEntityId, setHoverFocusEntityId] = useAtom(hoverFocusEntityIdAtom);
-		const showActions = Platform.OS !== "web" || hfEntityId === node.$id;
+		const showActions = !isWeb || hfEntityId === node.$id;
 
 		useEffect(() => {
 			setCollapse(isCollapsed => {
@@ -152,7 +153,7 @@ const LeafNode: FC<ILeafNode> = memo(
 		const { openModal } = useModal();
 		const [activeEntityId, setActiveEntityId] = useAtom(activeEntityIdAtom);
 		const [hfEntityId, setHoverFocusEntityId] = useAtom(hoverFocusEntityIdAtom);
-		const showActions = Platform.OS !== "web" || hfEntityId === node.$id;
+		const showActions = !isWeb || hfEntityId === node.$id;
 		return (
 			<Pressable
 				key={"bm" + node.$id}
@@ -167,9 +168,8 @@ const LeafNode: FC<ILeafNode> = memo(
 				onPress={() => {
 					setActiveEntityId(node.$id);
 					setActiveUrl(node.url);
-					if (Platform.OS !== "web") {
+					if (!isWeb)
 						openModal({ type: "web-view", payload: { src: node.url } });
-					}
 				}}
 			>
 				<View

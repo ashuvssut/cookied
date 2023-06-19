@@ -6,13 +6,14 @@ import { DripsyTheme } from "app/theme";
 import { ReduxProvider } from "app/store/ReduxProvider";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AppState, Platform } from "react-native";
+import { AppState } from "react-native";
 import type { AppStateStatus } from "react-native";
 import { focusManager } from "@tanstack/react-query";
 import NetInfo from "@react-native-community/netinfo";
 import { onlineManager } from "@tanstack/react-query";
 import { ModalController } from "app/components/Modal";
 import NetworkStatus from "app/components/NetworkStatus";
+import { isWeb } from "app/utils/constants";
 
 const queryClient = new QueryClient();
 
@@ -23,9 +24,7 @@ onlineManager.setEventListener(setOnline => {
 });
 
 function onAppStateChange(status: AppStateStatus) {
-	if (Platform.OS !== "web") {
-		focusManager.setFocused(status === "active");
-	}
+	if (!isWeb) focusManager.setFocused(status === "active");
 }
 
 export default function Root() {
