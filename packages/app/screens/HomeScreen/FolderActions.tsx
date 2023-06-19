@@ -20,15 +20,15 @@ interface IFolderActions extends ComponentProps<typeof View> {
 export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 	const { deleteFolder } = useBmShelfDB();
 	const { onPrimary } = useDripsyTheme().theme.colors;
-	const { onOpen } = useModal();
+	const { openModal } = useModal();
 	const addBm = async () => {
-		onOpen({ type: "add-bookmark", payload: { sharedData: null } });
+		openModal({ type: "add-bookmark", payload: { sharedBmUrl: null } });
 		props.onActionComplete?.();
 	};
 	const addFl = async () => {
-		onOpen({
+		openModal({
 			type: "add-folder",
-			payload: { parentId: node?.$id ?? null },
+			payload: { parentFl: node },
 		});
 		props.onActionComplete?.();
 	};

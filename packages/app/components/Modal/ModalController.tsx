@@ -1,7 +1,6 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 import { Modalize } from "react-native-modalize";
 import { Animated } from "react-native";
-import { ActionModal } from "app/components/Modal/ActionModal";
 import { ModalHeader } from "app/components/Modal/ModalHeader";
 import { WebView } from "app/components/WebView";
 import { IWebViewRefProps } from "app/components/WebView";
@@ -47,15 +46,10 @@ export const ModalController = ({ modalMaxWidth = 700 }) => {
 			return <AddFlModal />;
 		}
 		if (modalType === "edit-folder") {
+			return <></>;
 		}
 		if (modalType === "edit-bookmark") {
-			return (
-				<ActionModal
-					title="Edit Bookmark"
-					type="edit-bookmark"
-					onClose={() => ref?.current?.close()}
-				/>
-			);
+			return <></>;
 		}
 	};
 

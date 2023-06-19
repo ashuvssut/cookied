@@ -149,7 +149,7 @@ const LeafNode: FC<ILeafNode> = memo(
 		const [_, setActiveUrl] = useAtom(activeUrlAtom);
 		const { onPrimary } = useDripsyTheme().theme.colors;
 		const style = usePressabilityApiStyles();
-		const { onOpen, setPayload } = useModal();
+		const { openModal } = useModal();
 		const [activeEntityId, setActiveEntityId] = useAtom(activeEntityIdAtom);
 		const [hfEntityId, setHoverFocusEntityId] = useAtom(hoverFocusEntityIdAtom);
 		const showActions = Platform.OS !== "web" || hfEntityId === node.$id;
@@ -168,8 +168,7 @@ const LeafNode: FC<ILeafNode> = memo(
 					setActiveEntityId(node.$id);
 					setActiveUrl(node.url);
 					if (Platform.OS !== "web") {
-						setPayload({ src: node.url });
-						onOpen("web-view");
+						openModal({ type: "web-view", payload: { src: node.url } });
 					}
 				}}
 			>
