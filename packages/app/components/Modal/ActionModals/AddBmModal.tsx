@@ -17,26 +17,14 @@ import { useBmShelfDB } from "app/hooks/useBmShelfDB";
 import { useAtom } from "jotai";
 import { MdArrowUpward } from "app/assets/icons";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
-import addEditFolderSchema from "app/validators/addEditFolderSchema";
 import { barLoadingAtom } from "app/components/Header";
-import { TModalType } from "app/components/Modal/useModal";
-
-type Props = {
-	title: string;
-	type: TModalType;
-	onClose: () => void;
-	initialUrl?: string;
-};
 
 export type TSearchResults = Fuse.FuseResult<TFlPathWithTitle>[];
 
-export const ActionModal = (props: Props) => {
+export const AddBmModal = () => {
 	const colors = useDripsyTheme().theme.colors;
 	const [searchResults, setSearchResults] = useState<TSearchResults>([]);
 	const [activeEntityId] = useAtom(activeEntityIdAtom);
-	const activeFlObject = useAppSelector(state =>
-		selectFlId(state, activeEntityId || ""),
-	);
 	const activeFlPathWithTitle = useAppSelector(s =>
 		selectFlPathWithTitleById(s, activeEntityId),
 	);
@@ -44,57 +32,38 @@ export const ActionModal = (props: Props) => {
 		activeFlPathWithTitle?.path || "",
 	);
 	const [folder, setFolder] = useState(activeFlPathWithTitle);
-	const { addBookmark, addFolder } = useBmShelfDB();
+	const { addBookmark } = useBmShelfDB();
 	const flPathsWithTitles = useAppSelector(selectFlPathWithTitleArray);
 
 	const handleSearch = (text: string) => {
 		setSearchQuery(text);
-		const fuse = new Fuse(flPathsWithTitles, {
-			keys: ["path"],
-			shouldSort: true,
-			distance: 1000,
-		});
+		const fuse = new Fuse(
+			flPathsWithTitles, //
+			{ keys: ["path"], shouldSort: true, distance: 1000 },
+		);
 		const results = fuse.search(text);
 		setSearchResults(results);
 	};
 	useEffect(() => void handleSearch(searchQuery), []);
 	const handleSubmitForm = async (fields: { title: string; url: string }) => {
-		if (props.type === "add-bookmark") {
-			if (folder) {
-				const doc = await addBookmark({
-					type: "bookmark",
-					parentId: folder.id,
-					path: folder.pathArr,
-					level: folder.pathArr.length - 2,
-					...fields,
-				});
-				if (doc) props.onClose();
-			}
-		}
-		if (props.type === "edit-bookmark") {
-		}
-		if (props.type === "add-folder") {
-			const doc = await addFolder({
-				type: "folder",
-				parentId: activeFlObject ? activeFlObject.$id : "root",
-				path: activeFlObject
-					? [...activeFlObject.path, activeFlObject.$id]
-					: ["root"],
-				level: activeFlObject ? activeFlObject.level + 1 : 0,
-				title: fields.title,
+		if (folder) {
+			const doc = await addBookmark({
+				type: "bookmark",
+				parentId: folder.id,
+				path: folder.pathArr,
+				level: folder.pathArr.length - 2,
+				...fields,
 			});
 			if (doc) props.onClose();
-		}
-		if (props.type === "edit-folder") {
 		}
 	};
 
 	type TFormikInitialValues = { title: string; url: string; flPath: string };
 	const formikProps = useRef<FormikProps<TFormikInitialValues> | null>(null);
-	useEffect(
-		() => formikProps.current?.handleChange("flPath")(searchQuery), // hacky way to run handleChange on flPath field on first render
-		[],
-	);
+	// useEffect(
+	// 	() => formikProps.current?.handleChange("flPath")(searchQuery), // hacky way to run handleChange on flPath field on first render
+	// 	[],
+	// );
 	const renderSearchResults = useMemo(() => {
 		return searchResults.map((result, index) => {
 			if (index > 3) return null; // show only 4 results
@@ -128,11 +97,10 @@ export const ActionModal = (props: Props) => {
 	const [isBarLoading] = useAtom(barLoadingAtom);
 	return (
 		<View sx={{ m: "$4" }}>
-			<Formik
+			<Text>Test: Add Bm form</Text>
+			{/* <Formik
 				initialValues={{ title: "", url: props.initialUrl || "", flPath: "" }}
-				validationSchema={
-					props.type === "add-bookmark" ? addEditBmSchema : addEditFolderSchema
-				}
+				validationSchema={addEditBmSchema}
 				validateOnMount
 				onSubmit={({ title, url }) => handleSubmitForm({ title, url })}
 			>
@@ -150,42 +118,34 @@ export const ActionModal = (props: Props) => {
 								autoFocus
 							/>
 							<View sx={{ marginTop: "$4" }} />
-							{(props.type === "add-bookmark" ||
-								props.type === "edit-bookmark") && (
-								<>
-									<Th.TextInput
-										value={p.values.url}
-										onChangeText={p.handleChange("url")}
-										autoCorrect={false}
-										onBlur={p.handleBlur("url")}
-										placeholder="Enter URL"
-									/>
-									<Text sx={{ color: "error", width: "50%" }}>
-										{p.errors.url ? p.errors.url : " "}
-									</Text>
-								</>
-							)}
-							{(props.type === "add-bookmark" ||
-								props.type === "edit-bookmark") && (
-								<View sx={{ height: 300, marginTop: "$4" }}>
-									<Th.TextInput
-										value={searchQuery}
-										onChangeText={text => {
-											handleSearch(text);
-											p.handleChange("flPath")(searchQuery);
-										}}
-										autoCorrect={false}
-										placeholder="Search Folders"
-										sx={{ zIndex: 1, color: "onPrimary" }}
-									/>
-									<View
-										variant="layout.noTopRadius"
-										sx={{ borderRadius: 8, overflow: "hidden", top: -2 }}
-									>
-										{renderSearchResults}
-									</View>
+							<Th.TextInput
+								value={p.values.url}
+								onChangeText={p.handleChange("url")}
+								autoCorrect={false}
+								onBlur={p.handleBlur("url")}
+								placeholder="Enter URL"
+							/>
+							<Text sx={{ color: "error", width: "50%" }}>
+								{p.errors.url ? p.errors.url : " "}
+							</Text>
+							<View sx={{ height: 300, marginTop: "$4" }}>
+								<Th.TextInput
+									value={searchQuery}
+									onChangeText={text => {
+										handleSearch(text);
+										p.handleChange("flPath")(searchQuery);
+									}}
+									autoCorrect={false}
+									placeholder="Search Folders"
+									sx={{ zIndex: 1, color: "onPrimary" }}
+								/>
+								<View
+									variant="layout.noTopRadius"
+									sx={{ borderRadius: 8, overflow: "hidden", top: -2 }}
+								>
+									{renderSearchResults}
 								</View>
-							)}
+							</View>
 							<View
 								sx={{
 									flexDirection: "row",
@@ -210,7 +170,7 @@ export const ActionModal = (props: Props) => {
 						</>
 					);
 				}}
-			</Formik>
+			</Formik> */}
 		</View>
 	);
 };

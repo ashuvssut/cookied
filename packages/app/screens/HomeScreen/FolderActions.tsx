@@ -22,11 +22,14 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 	const { onPrimary } = useDripsyTheme().theme.colors;
 	const { onOpen } = useModal();
 	const addBm = async () => {
-		onOpen("add-bookmark");
+		onOpen({ type: "add-bookmark", payload: { sharedData: null } });
 		props.onActionComplete?.();
 	};
 	const addFl = async () => {
-		onOpen("add-folder");
+		onOpen({
+			type: "add-folder",
+			payload: { parentId: node?.$id ?? null },
+		});
 		props.onActionComplete?.();
 	};
 	const [_, setActiveEntityId] = useAtom(activeEntityIdAtom);

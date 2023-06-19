@@ -10,4 +10,6 @@ export {
 	MdOutlineOpenInNew,
 	MdArrowUpward,
 	MdDeleteOutline,
+	MdLock,
+	MdClose,
 } from "react-icons/md";

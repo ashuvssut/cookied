@@ -56,6 +56,18 @@ export const customFontConfig = makeTheme({
 			fontFamily: getFontFamStr("r600"),
 			color: "onPrimary",
 		},
+		h2: {
+			fontSize: 20,
+			fontWeight: "600",
+			fontFamily: getFontFamStr("r600"),
+			color: "onPrimary",
+		},
+		h3: {
+			fontSize: 18,
+			fontWeight: "600",
+			fontFamily: getFontFamStr("r600"),
+			color: "onPrimary",
+		},
 		label: {
 			fontSize: 16,
 			fontWeight: "500",

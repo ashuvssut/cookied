@@ -21,16 +21,10 @@ import addEditFolderSchema from "app/validators/addEditFolderSchema";
 import { barLoadingAtom } from "app/components/Header";
 import { TModalType } from "app/components/Modal/useModal";
 
-type Props = {
-	title: string;
-	type: TModalType;
-	onClose: () => void;
-	initialUrl?: string;
-};
 
 export type TSearchResults = Fuse.FuseResult<TFlPathWithTitle>[];
 
-export const ActionModal = (props: Props) => {
+export const AddFlModal = () => {
 	const colors = useDripsyTheme().theme.colors;
 	const [searchResults, setSearchResults] = useState<TSearchResults>([]);
 	const [activeEntityId] = useAtom(activeEntityIdAtom);
@@ -91,10 +85,10 @@ export const ActionModal = (props: Props) => {
 
 	type TFormikInitialValues = { title: string; url: string; flPath: string };
 	const formikProps = useRef<FormikProps<TFormikInitialValues> | null>(null);
-	useEffect(
-		() => formikProps.current?.handleChange("flPath")(searchQuery), // hacky way to run handleChange on flPath field on first render
-		[],
-	);
+	// useEffect(
+	// 	() => formikProps.current?.handleChange("flPath")(searchQuery), // hacky way to run handleChange on flPath field on first render
+	// 	[],
+	// );
 	const renderSearchResults = useMemo(() => {
 		return searchResults.map((result, index) => {
 			if (index > 3) return null; // show only 4 results
@@ -128,10 +122,11 @@ export const ActionModal = (props: Props) => {
 	const [isBarLoading] = useAtom(barLoadingAtom);
 	return (
 		<View sx={{ m: "$4" }}>
-			<Formik
+      <Text>Add fl form</Text>
+			{/* <Formik
 				initialValues={{ title: "", url: props.initialUrl || "", flPath: "" }}
 				validationSchema={
-					props.type === "add-bookmark" ? addEditBmSchema : addEditFolderSchema
+					 addEditFolderSchema
 				}
 				validateOnMount
 				onSubmit={({ title, url }) => handleSubmitForm({ title, url })}
@@ -150,8 +145,6 @@ export const ActionModal = (props: Props) => {
 								autoFocus
 							/>
 							<View sx={{ marginTop: "$4" }} />
-							{(props.type === "add-bookmark" ||
-								props.type === "edit-bookmark") && (
 								<>
 									<Th.TextInput
 										value={p.values.url}
@@ -165,8 +158,6 @@ export const ActionModal = (props: Props) => {
 									</Text>
 								</>
 							)}
-							{(props.type === "add-bookmark" ||
-								props.type === "edit-bookmark") && (
 								<View sx={{ height: 300, marginTop: "$4" }}>
 									<Th.TextInput
 										value={searchQuery}
@@ -185,7 +176,6 @@ export const ActionModal = (props: Props) => {
 										{renderSearchResults}
 									</View>
 								</View>
-							)}
 							<View
 								sx={{
 									flexDirection: "row",
@@ -209,8 +199,8 @@ export const ActionModal = (props: Props) => {
 							</View>
 						</>
 					);
-				}}
-			</Formik>
+				}} */}
+			{/* </Formik> */}
 		</View>
 	);
 };

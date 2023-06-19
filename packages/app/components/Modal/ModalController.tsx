@@ -2,7 +2,6 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import { Modalize } from "react-native-modalize";
 import { Animated } from "react-native";
 import { ActionModal } from "app/components/Modal/ActionModal";
-import { TModal } from "app/components/Modal/ModalHeader";
 import { ModalHeader } from "app/components/Modal/ModalHeader";
 import { WebView } from "app/components/WebView";
 import { IWebViewRefProps } from "app/components/WebView";
@@ -10,16 +9,14 @@ import { atom, useAtom } from "jotai";
 import { useDripsyTheme } from "dripsy";
 import { isWeb } from "app/utils/constants";
 import { IWebpageState } from "app/components/WebView/WebView";
+import { useModal } from "app/components/Modal/useModal";
+import { AddBmModal } from "app/components/Modal/ActionModals/AddBmModal";
+import { AddFlModal } from "app/components/Modal/ActionModals/AddFlModal";
 
 export const modalizeRefAtom = atom<RefObject<Modalize> | null>(null);
-export const setPayloadAtom = atom<any>({});
-export const modalTypeAtom = atom<TModal>("web-view");
-
 export const ModalController = ({ modalMaxWidth = 700 }) => {
 	const ref = useRef<Modalize>(null);
 	const [_m, setModalizeRef] = useAtom(modalizeRefAtom);
-	const [payload, _s] = useAtom(setPayloadAtom);
-	const [modalType, _mt] = useAtom(modalTypeAtom);
 	useEffect(() => void setModalizeRef(ref), [ref, setModalizeRef]);
 
 	const [webpageState, setWebpageState] = useState<IWebpageState>({
@@ -30,52 +27,26 @@ export const ModalController = ({ modalMaxWidth = 700 }) => {
 		progress: new Animated.Value(0),
 	});
 	const webViewRef = useRef<IWebViewRefProps>(null);
+
+	const { modalType, webviewPayload } = useModal();
+
 	const renderModal = () => {
-		if (modalType === "web-view" && payload.src) {
+		if (modalType === "web-view" && webviewPayload.src) {
 			return (
 				<WebView
 					ref={webViewRef}
-					src={payload.src}
+					src={webviewPayload.src}
 					onWebpageStateChange={state => setWebpageState(state)}
 				/>
 			);
 		}
 		if (modalType === "add-bookmark") {
-			if (payload.sharedData) {
-				return (
-					<ActionModal
-						initialUrl={payload.sharedData as string}
-						title="Add Bookmark"
-						type={modalType}
-						onClose={() => ref?.current?.close()}
-					/>
-				);
-			}
-			return (
-				<ActionModal
-					title="Add Bookmark"
-					type={modalType}
-					onClose={() => ref?.current?.close()}
-				/>
-			);
-		}
-		if (modalType === "edit-folder") {
-			return (
-				<ActionModal
-					title="Edit Folder"
-					type="edit-folder"
-					onClose={() => ref?.current?.close()}
-				/>
-			);
+			return <AddBmModal />;
 		}
 		if (modalType === "add-folder") {
-			return (
-				<ActionModal
-					title="Add Folder"
-					type="add-folder"
-					onClose={() => ref?.current?.close()}
-				/>
-			);
+			return <AddFlModal />;
+		}
+		if (modalType === "edit-folder") {
 		}
 		if (modalType === "edit-bookmark") {
 			return (
@@ -91,15 +62,15 @@ export const ModalController = ({ modalMaxWidth = 700 }) => {
 	const renderHeader = () => (
 		<ModalHeader
 			type={modalType}
-			handleBack={webViewRef.current?.goBack}
-			handleForward={webViewRef.current?.goForward}
-			handleClose={ref?.current?.close}
-			{...webpageState}
+			webViewProps={{
+				goBack: () => webViewRef.current?.goBack(),
+				goForward: () => webViewRef.current?.goForward(),
+				...webpageState,
+			}}
 		/>
 	);
 
 	const primary = useDripsyTheme().theme.colors.primary;
-
 	return (
 		<Modalize
 			ref={ref}
@@ -111,7 +82,7 @@ export const ModalController = ({ modalMaxWidth = 700 }) => {
 				alignSelf: "center",
 				width: "100%",
 			}}
-			rootStyle={{ backgroundColor: "#9994" }}
+			rootStyle={{ backgroundColor: "#fff2" }}
 			scrollViewProps={{ keyboardShouldPersistTaps: "always" }}
 		>
 			{renderModal()}

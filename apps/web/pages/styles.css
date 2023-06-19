@@ -1,6 +1,9 @@
 * {
 	outline: none;
 }
+body {
+	background: black;
+}
 .react-toastify {
 	font-family: "Poppins", sans-serif;
 }
