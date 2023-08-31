@@ -44,14 +44,12 @@ export function useModal() {
 				setAddFlPayload(action.payload);
 				break;
 			default:
-				throw new Error(`Unhandled modal action: ${action}`);
+				throw new Error(`Exhaustive check: Unhandled modal action: ${action}`);
 		}
 		ref?.current?.open();
 	}
 
-	const closeModal = () => {
-		ref?.current?.close();
-	};
+	const closeModal = () => ref?.current?.close();
 
 	return {
 		openModal,

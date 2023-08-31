@@ -30,26 +30,25 @@ export const ModalController = ({ modalMaxWidth = 700 }) => {
 	const { modalType, webviewPayload } = useModal();
 
 	const renderModal = () => {
-		if (modalType === "web-view" && webviewPayload.src) {
-			return (
-				<WebView
-					ref={webViewRef}
-					src={webviewPayload.src}
-					onWebpageStateChange={state => setWebpageState(state)}
-				/>
-			);
-		}
-		if (modalType === "add-bookmark") {
-			return <AddBmModal />;
-		}
-		if (modalType === "add-folder") {
-			return <AddFlModal />;
-		}
-		if (modalType === "edit-folder") {
-			return <></>;
-		}
-		if (modalType === "edit-bookmark") {
-			return <></>;
+		switch (modalType) {
+			case "web-view":
+				return (
+					<WebView
+						ref={webViewRef}
+						src={webviewPayload.src}
+						onWebpageStateChange={state => setWebpageState(state)}
+					/>
+				);
+			case "add-bookmark":
+				return <AddBmModal />;
+			case "add-folder":
+				return <AddFlModal />;
+			case "edit-folder":
+				return <></>;
+			case "edit-bookmark":
+				return <></>;
+			default:
+				return <></>;
 		}
 	};
 
