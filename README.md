@@ -11,7 +11,7 @@ This project is built as a part of the Appwrite Hackathon. The project is a Mono
 
 ## Learn More
 
-Checkout the **Hashnode blog post** to learn more about the project: [Cookied: Cross-platform Bookmark Manager](ashuvssut.hashnode.dev/cookied-appwrite-hackathon-project)
+Checkout the **Hashnode blog post** to learn more about the project: [Cookied: Cross-platform Bookmark Manager](https://ashuvssut.hashnode.dev/cookied-appwrite-hackathon-project)
 
 -----------------------
 
