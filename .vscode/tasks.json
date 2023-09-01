@@ -1,0 +1,115 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "alt0Task", // Run Frontend
+			"type": "shell",
+			"presentation": {
+				"group": "native",
+				"clear": true
+				// "close": true
+			},
+			"command": "yarn workspace native start"
+		},
+		{
+			"type": "shell",
+			"label": "alt9Task", //Run API server
+			"presentation": {
+				"group": "native",
+				"clear": true,
+				"panel": "shared"
+			},
+			"command": "yarn workspace native android"
+		},
+		{
+			"label": "alt8Task", // Run Websocket server
+			"type": "shell",
+			// "options": {
+			// 	"cwd": "" // set cwd to linux home directory
+			// },
+			"presentation": {
+				"clear": true,
+				"panel": "dedicated"
+				// "close": true
+			},
+			"command": "yarn workspace web dev"
+		},
+		{
+			"label": "alt7Task", // Run pg_tileserv
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": "yarn workspace ext dev"
+		},
+		{
+			"label": "alt6Task", // Run pg_featureserv
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": ""
+		},
+		{
+			"label": "alt5Task", // Run scrcpy / go build all
+			"type": "shell",
+			"presentation": {
+				"clear": true,
+				"panel": "dedicated",
+				"close": true
+			},
+			// "command": ["wmctrl -s 0 && scrcpy -w"]
+			"command": ""
+		},
+		{
+			"label": "SftAlt9Task", // Run nc -u -l 2000
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": ""
+		},
+		{
+			"label": "SftAlt8Task", // Run nc -u 8000
+			// run along with alt8task
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": ""
+		},
+		{
+			"label": "SftAlt7Task", // Run utility app
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			// "command": "cd ./src/utility/react/ && npm run start"
+			"command": ""
+		},
+		{
+			"label": "SftAlt6Task", // Run utility websocket
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": ""
+		}
+		// {
+		//   "label": "SftAlt5Task", // Run utility apiserver
+		//   "type": "shell",
+		//   "presentation": {
+		//     "group": "utility",
+		//     "clear": true
+		//     // "close": true
+		//   },
+		//   "command": ""
+		// }
+	]
+}
