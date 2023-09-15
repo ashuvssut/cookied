@@ -1,5 +1,5 @@
 import { IFolder } from "app/store/slices/bmShelfSlice";
-import { modalizeRefAtom } from "./ModalController";
+import { modalizeRefAtom } from "app/components/Modal/atoms";
 import { atom, useAtom } from "jotai";
 
 type ActionType<T> = T extends { type: infer U } ? U : never;

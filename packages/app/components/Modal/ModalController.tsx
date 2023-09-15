@@ -1,18 +1,18 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modalize } from "react-native-modalize";
 import { Animated } from "react-native";
 import { ModalHeader } from "app/components/Modal/ModalHeader";
 import { WebView } from "app/components/WebView";
 import { IWebViewRefProps } from "app/components/WebView";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { useDripsyTheme } from "dripsy";
 import { isWeb } from "app/utils/constants";
 import { IWebpageState } from "app/components/WebView/WebView";
 import { useModal } from "app/components/Modal/useModal";
 import { AddBmModal } from "app/components/Modal/ActionModals/AddBmModal";
 import { AddFlModal } from "app/components/Modal/ActionModals/AddFlModal";
+import { modalizeRefAtom } from "app/components/Modal/atoms";
 
-export const modalizeRefAtom = atom<RefObject<Modalize> | null>(null);
 export const ModalController = ({ modalMaxWidth = 700 }) => {
 	const ref = useRef<Modalize>(null);
 	const [_m, setModalizeRef] = useAtom(modalizeRefAtom);
