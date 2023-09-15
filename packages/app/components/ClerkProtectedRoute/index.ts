@@ -1,0 +1,1 @@
+export { ClerkProtectedRoute } from "./ClerkProtectedRoute";

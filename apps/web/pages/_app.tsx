@@ -6,7 +6,7 @@ import React, { useEffect } from "react";
 import type { SolitoAppProps } from "solito";
 import { ReduxProvider } from "app/store/ReduxProvider";
 import { DripsyTheme } from "app/theme";
-import { ProtectedRoute } from "app/components/ProtectedRoute";
+import { ClerkProtectedRoute } from "app/components/ClerkProtectedRoute";
 import { ClerkAuth } from "app/components/ClerkAuth";
 import LoadingModal from "app/components/LoadingModal";
 import { resetReduxPersist_reload } from "app/utils/storage";
@@ -62,7 +62,7 @@ function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 				<GestureHandlerRootView style={{ flex: 1 }}>
 					<DripsyTheme>
 						<ReduxProvider>
-							<ProtectedRoute>
+							<ClerkProtectedRoute>
 								<Component {...pageProps} />
 								<LoadingModal />
 								<ModalController modalMaxWidth={700} />
@@ -79,7 +79,7 @@ function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 									theme="colored"
 									toastClassName="react-toastify"
 								/>
-							</ProtectedRoute>
+							</ClerkProtectedRoute>
 						</ReduxProvider>
 					</DripsyTheme>
 				</GestureHandlerRootView>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Slot } from "expo-router";
 import LoadingModal from "app/components/LoadingModal";
-import { ProtectedRoute } from "app/components/ProtectedRoute";
+import { ClerkProtectedRoute } from "app/components/ClerkProtectedRoute";
 import { ClerkAuth } from "app/components/ClerkAuth";
 import { DripsyTheme } from "app/theme";
 import { ReduxProvider } from "app/store/ReduxProvider";
@@ -42,9 +42,9 @@ export default function Root() {
 					<ReduxProvider>
 						<QueryClientProvider client={queryClient}>
 							<NetworkStatus />
-							<ProtectedRoute>
+							<ClerkProtectedRoute>
 								<Slot />
-							</ProtectedRoute>
+							</ClerkProtectedRoute>
 							<LoadingModal />
 							<ModalController />
 						</QueryClientProvider>
