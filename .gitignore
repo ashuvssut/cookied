@@ -92,3 +92,5 @@ build/**
 
 #local db
 db.json
+
+.env.local
