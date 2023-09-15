@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.23.5",
     "@expo/next-adapter": "5.0.2",
     "app": "*",
     "next": "13.2.0",
