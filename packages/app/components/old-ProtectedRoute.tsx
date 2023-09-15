@@ -1,3 +1,4 @@
+// @deprecated
 import React, { useEffect } from "react";
 import { FCC } from "../types/IReact";
 import { isAuthAtom, isVerifiedAtom } from "app/store/slices/auth";
