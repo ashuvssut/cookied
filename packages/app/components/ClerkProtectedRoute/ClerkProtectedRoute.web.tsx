@@ -1,11 +1,13 @@
 import { FCC } from "app/types/IReact";
 import { SignedIn, SignedOut, SignIn } from "@clerk/nextjs";
+import AuthScreen from "app/screens/AuthScreen";
+
 export const ClerkProtectedRoute: FCC = ({ children }) => {
 	return (
 		<>
 			<SignedIn>{children}</SignedIn>
 			<SignedOut>
-				<SignIn />
+				<AuthScreen ClerkInitiator={<SignIn />} />
 			</SignedOut>
 		</>
 	);

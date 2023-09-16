@@ -5,7 +5,6 @@
 			"label": "alt0Task", // Run Frontend
 			"type": "shell",
 			"presentation": {
-				"group": "native",
 				"clear": true
 				// "close": true
 			},
@@ -15,7 +14,7 @@
 			"type": "shell",
 			"label": "alt9Task", //Run API server
 			"presentation": {
-				"group": "native",
+				"group": "dev",
 				"clear": true,
 				"panel": "shared"
 			},
@@ -28,6 +27,7 @@
 			// 	"cwd": "" // set cwd to linux home directory
 			// },
 			"presentation": {
+				"group": "dev",
 				"clear": true,
 				"panel": "dedicated"
 				// "close": true

@@ -1,13 +1,12 @@
 import React from "react";
 import * as WebBrowser from "expo-web-browser";
-import { Button } from "react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "app/hooks/useWarmUpBrowser";
 import { Th } from "app/theme/components";
 
 WebBrowser.maybeCompleteAuthSession();
 
-const NativeSignInWithOAuth = () => {
+const SignInWithOAuth = () => {
 	// Warm up the android browser to improve UX
 	// https://docs.expo.dev/guides/authentication/#improving-user-experience
 	useWarmUpBrowser();
@@ -33,4 +32,4 @@ const NativeSignInWithOAuth = () => {
 		<Th.ButtonPrimary onPress={onPress}>Sign in with Google</Th.ButtonPrimary>
 	);
 };
-export default NativeSignInWithOAuth;
+export default SignInWithOAuth;
