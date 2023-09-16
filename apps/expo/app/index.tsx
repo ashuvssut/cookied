@@ -7,12 +7,15 @@ import { userAtom } from "app/store/slices/auth";
 import { useAtom } from "jotai";
 import { Th } from "app/theme/components";
 import { useAuth } from "app/utils/clerk";
+import { useRouter } from "solito/router";
+import { Toast } from "app/components/Toast";
 
 const HomeScreenWithDrawer = () => {
 	const [user] = useAtom(userAtom);
 	const { isLoaded, signOut } = useAuth();
 	const { linearGradients } = useDripsyTheme().theme;
 	const { width } = useWindowDimensions();
+	const router = useRouter();
 
 	return (
 		<View sx={{ position: "relative", height: "100%" }}>
@@ -47,7 +50,15 @@ const HomeScreenWithDrawer = () => {
 					<View sx={{ flex: 1 }} />
 					{isLoaded && (
 						<Th.ButtonPrimary
-							onPress={() => signOut()}
+							onPress={async () => {
+								try {
+									await signOut();
+								} catch (err) {
+									Toast.error("Unable to Log out.");
+									console.log(err.message || err.toString());
+								}
+								router.replace({ pathname: "/" });
+							}}
 							sx={{ flex: 1, marginBottom: "$5" }}
 						>
 							LOGOUT

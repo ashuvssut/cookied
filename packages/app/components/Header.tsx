@@ -6,11 +6,14 @@ import { Bar } from "react-native-progress";
 import { atom, useAtom } from "jotai";
 import { isWeb } from "app/utils/constants";
 import { useAuth } from "app/utils/clerk";
+import { Toast } from "app/components/Toast";
+import { useRouter } from "solito/router";
 
 export const barLoadingAtom = atom(false);
 export const Header: FC = () => {
 	const [loading] = useAtom(barLoadingAtom);
 	const { isLoaded, signOut } = useAuth();
+	const router = useRouter();
 
 	return (
 		<View sx={{ justifyContent: "center", alignItems: "center" }}>
@@ -24,7 +27,15 @@ export const Header: FC = () => {
 			{isWeb && isLoaded && (
 				<Pressable
 					hitSlop={7}
-					onPress={() => signOut()}
+					onPress={async () => {
+						try {
+							await signOut();
+						} catch (err) {
+							Toast.error("Unable to Log out.");
+							console.log(err.message || err.toString());
+						}
+						router.replace({ pathname: "/" });
+					}}
 					variant="layout.center"
 					sx={{ position: "absolute", top: 25, right: 15 }}
 				>

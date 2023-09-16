@@ -1,7 +1,13 @@
 import * as SecureStore from "expo-secure-store";
 import { Toast } from "app/components/Toast";
 
-export { useAuth, SignedIn, SignedOut, ClerkProvider } from "@clerk/clerk-expo";
+export {
+	useAuth,
+	SignedIn,
+	SignedOut,
+	ClerkProvider,
+	useUser,
+} from "@clerk/clerk-expo";
 export { SignIn } from "app/components/SignIn.native";
 
 export const tokenCache = {
