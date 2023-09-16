@@ -4,13 +4,13 @@ import { H1, View, Pressable, Text } from "dripsy";
 import { FC } from "react";
 import { Bar } from "react-native-progress";
 import { atom, useAtom } from "jotai";
-import { usePlatformAuth } from "app/hooks/useAuth/usePlatformAuth";
 import { isWeb } from "app/utils/constants";
+import { useAuth } from "app/utils/clerk";
 
 export const barLoadingAtom = atom(false);
 export const Header: FC = () => {
 	const [loading] = useAtom(barLoadingAtom);
-	const { signOut, user } = usePlatformAuth();
+	const { isLoaded, signOut } = useAuth();
 
 	return (
 		<View sx={{ justifyContent: "center", alignItems: "center" }}>
@@ -21,7 +21,7 @@ export const Header: FC = () => {
 				/>
 				<H1>COOKIED</H1>
 			</View>
-			{isWeb && !!user && (
+			{isWeb && isLoaded && (
 				<Pressable
 					hitSlop={7}
 					onPress={() => signOut()}

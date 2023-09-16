@@ -6,11 +6,11 @@ import React from "react";
 import { userAtom } from "app/store/slices/auth";
 import { useAtom } from "jotai";
 import { Th } from "app/theme/components";
-import { usePlatformAuth } from "app/hooks/useAuth";
+import { useAuth } from "app/utils/clerk";
 
 const HomeScreenWithDrawer = () => {
 	const [user] = useAtom(userAtom);
-	const { signOut } = usePlatformAuth();
+	const { isLoaded, signOut } = useAuth();
 	const { linearGradients } = useDripsyTheme().theme;
 	const { width } = useWindowDimensions();
 
@@ -45,12 +45,14 @@ const HomeScreenWithDrawer = () => {
 						sx={{ bg: "#888", height: StyleSheet.hairlineWidth, mt: "$4" }}
 					/>
 					<View sx={{ flex: 1 }} />
-					<Th.ButtonPrimary
-						onPress={signOut}
-						sx={{ flex: 1, marginBottom: "$5" }}
-					>
-						LOGOUT
-					</Th.ButtonPrimary>
+					{isLoaded && (
+						<Th.ButtonPrimary
+							onPress={() => signOut()}
+							sx={{ flex: 1, marginBottom: "$5" }}
+						>
+							LOGOUT
+						</Th.ButtonPrimary>
+					)}
 				</View>
 			</View>
 			<HomeScreen />
