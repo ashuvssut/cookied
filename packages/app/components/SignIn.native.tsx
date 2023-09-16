@@ -6,7 +6,7 @@ import { Th } from "app/theme/components";
 
 WebBrowser.maybeCompleteAuthSession();
 
-const SignInWithOAuth = () => {
+export const SignIn = () => {
 	// Warm up the android browser to improve UX
 	// https://docs.expo.dev/guides/authentication/#improving-user-experience
 	useWarmUpBrowser();
@@ -32,4 +32,3 @@ const SignInWithOAuth = () => {
 		<Th.ButtonPrimary onPress={onPress}>Sign in with Google</Th.ButtonPrimary>
 	);
 };
-export default SignInWithOAuth;
