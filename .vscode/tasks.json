@@ -4,6 +4,9 @@
 		{
 			"label": "alt0Task", // Native dev server
 			"type": "shell",
+			// "options": {
+			// 	"cwd": "" // set cwd to linux home directory
+			// },
 			"presentation": {
 				"group": "dev",
 				"clear": true,
@@ -22,11 +25,8 @@
 			"command": "yarn workspace native android"
 		},
 		{
-			"label": "alt8Task", // Run Websocket server
+			"label": "alt8Task", // Run Nextjs dev server
 			"type": "shell",
-			// "options": {
-			// 	"cwd": "" // set cwd to linux home directory
-			// },
 			"presentation": {
 				"group": "dev",
 				"clear": true,
@@ -36,7 +36,7 @@
 			"command": "yarn workspace web dev"
 		},
 		{
-			"label": "alt7Task", // Run pg_tileserv
+			"label": "alt7Task", // Vite Chrome Extension dev server
 			"type": "shell",
 			"presentation": {
 				"clear": true
@@ -45,7 +45,7 @@
 			"command": "yarn workspace ext dev"
 		},
 		{
-			"label": "alt6Task", // Run pg_featureserv
+			"label": "alt6Task", //
 			"type": "shell",
 			"presentation": {
 				"clear": true
@@ -54,18 +54,35 @@
 			"command": ""
 		},
 		{
-			"label": "alt5Task", // Run scrcpy / go build all
+			"label": "alt5Task", //
 			"type": "shell",
 			"presentation": {
 				"clear": true,
 				"panel": "dedicated",
 				"close": true
 			},
-			// "command": ["wmctrl -s 0 && scrcpy -w"]
 			"command": ""
 		},
 		{
-			"label": "SftAlt9Task", // Run nc -u -l 2000
+			"label": "SftAlt9Task", // Convex Dev Server
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": "npx convex dev"
+		},
+		{
+			"label": "SftAlt8Task", // Convex Dashboard
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": "npx convex dashboard"
+		},
+		{
+			"label": "SftAlt7Task", //
 			"type": "shell",
 			"presentation": {
 				"clear": true
@@ -74,8 +91,7 @@
 			"command": ""
 		},
 		{
-			"label": "SftAlt8Task", // Run nc -u 8000
-			// run along with alt8task
+			"label": "SftAlt6Task", //
 			"type": "shell",
 			"presentation": {
 				"clear": true
@@ -84,17 +100,7 @@
 			"command": ""
 		},
 		{
-			"label": "SftAlt7Task", // Run utility app
-			"type": "shell",
-			"presentation": {
-				"clear": true
-				// "close": true
-			},
-			// "command": "cd ./src/utility/react/ && npm run start"
-			"command": ""
-		},
-		{
-			"label": "SftAlt6Task", // Run utility websocket
+			"label": "SftAlt5Task", //
 			"type": "shell",
 			"presentation": {
 				"clear": true
@@ -102,15 +108,5 @@
 			},
 			"command": ""
 		}
-		// {
-		//   "label": "SftAlt5Task", // Run utility apiserver
-		//   "type": "shell",
-		//   "presentation": {
-		//     "group": "utility",
-		//     "clear": true
-		//     // "close": true
-		//   },
-		//   "command": ""
-		// }
 	]
 }
