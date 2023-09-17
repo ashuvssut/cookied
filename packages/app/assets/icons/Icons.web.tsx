@@ -12,4 +12,5 @@ export {
 	MdDeleteOutline,
 	MdLock,
 	MdClose,
+	MdAccountCircle,
 } from "react-icons/md";

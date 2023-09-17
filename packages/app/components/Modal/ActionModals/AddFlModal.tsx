@@ -45,7 +45,7 @@ export const AddFlModal = () => {
 								onChangeText={p.handleChange("title")}
 								autoCorrect={false}
 								onBlur={p.handleBlur("title")}
-								placeholder="Enter the title"
+								placeholder="Enter the Folder name"
 								autoFocus
 							/>
 							<Text sx={{ color: "error", width: "50%" }}>

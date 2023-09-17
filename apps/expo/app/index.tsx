@@ -1,17 +1,16 @@
 import HomeScreen from "app/screens/HomeScreen";
 import { View, Text, useDripsyTheme } from "dripsy";
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, useWindowDimensions } from "react-native";
+import { Image, StyleSheet, useWindowDimensions } from "react-native";
 import React from "react";
-import { userAtom } from "app/store/slices/auth";
-import { useAtom } from "jotai";
 import { Th } from "app/theme/components";
-import { useAuth } from "app/utils/clerk";
+import { useAuth, useUser } from "app/utils/clerk";
 import { useRouter } from "solito/router";
 import { Toast } from "app/components/Toast";
+import { MdAccountCircle } from "app/assets/icons";
 
 const HomeScreenWithDrawer = () => {
-	const [user] = useAtom(userAtom);
+	const { user } = useUser();
 	const { isLoaded, signOut } = useAuth();
 	const { linearGradients } = useDripsyTheme().theme;
 	const { width } = useWindowDimensions();
@@ -41,7 +40,7 @@ const HomeScreenWithDrawer = () => {
 							<Text variant="semibold" sx={{ fontSize: 22, lineHeight: 30 }}>
 								Hi
 							</Text>
-							<Text variant="semibold">{user?.name}</Text>
+							<Text variant="semibold">{user?.firstName}</Text>
 						</View>
 					</View>
 					<View
@@ -73,25 +72,51 @@ const HomeScreenWithDrawer = () => {
 
 export default HomeScreenWithDrawer;
 
+const l = 60;
 function Avatar() {
-	const [user] = useAtom(userAtom);
+	const { user } = useUser();
+
+	const imageUrl = user?.hasImage ? user.imageUrl : null;
+	const name = user?.firstName ?? null;
+
+	const avatarContent = getContent(imageUrl, name);
 
 	return (
 		<View
 			variant="layout.secondary"
 			sx={{
-				width: 60,
-				height: 60,
-				borderRadius: 60,
+				width: l,
+				height: l,
+				borderRadius: l,
 				overflow: "hidden",
 				justifyContent: "center",
 				alignItems: "center",
 				bg: "#434343",
 			}}
 		>
-			<Text sx={{ fontSize: 35 }} variant="semibold">
-				{user?.name.charAt(0).toUpperCase()}
-			</Text>
+			{avatarContent}
 		</View>
 	);
+}
+
+function getContent(imageUrl: string | null, name: string | null) {
+	if (imageUrl) {
+		return (
+			<Image
+				source={{ uri: imageUrl }}
+				style={{ width: l, height: l, borderRadius: l }}
+			/>
+		);
+	} else if (name) {
+		const initials = name
+			.split(" ")
+			.map(word => word.charAt(0))
+			.join("")
+			.toUpperCase();
+		return (
+			<Text style={{ fontSize: 24, lineHeight: 45, color: "white" }}>
+				{initials}
+			</Text>
+		);
+	} else return <MdAccountCircle size={50} color="white" />;
 }
