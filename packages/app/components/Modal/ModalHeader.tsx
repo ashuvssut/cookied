@@ -1,6 +1,6 @@
 import { MdClose, MdLock } from "app/assets/icons";
 import { IconButton } from "app/components/IconButton";
-import { TModalType } from "app/components/Modal/useModal";
+import { TModalType, useModal } from "app/components/Modal/useModal";
 import {
 	IWebViewRefProps,
 	IWebpageState,
@@ -46,11 +46,15 @@ export const ModalHeader = ({ webViewProps, ...props }: IModalHeaderProps) => {
 	);
 };
 
-const CloseModalButton = (props: { onPress?: () => void }) => {
+const CloseModalButton = ({ onPress }: { onPress?: () => void }) => {
+	const { closeModal } = useModal();
 	return (
 		<IconButton
 			hitSlop={15}
-			onPress={props.onPress}
+			onPress={() => {
+				onPress && onPress();
+				closeModal();
+			}}
 			sx={{ position: "absolute", left: 10, zIndex: 1 }}
 		>
 			<MdClose color="#fff" size={18} />
