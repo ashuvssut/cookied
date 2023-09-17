@@ -50,7 +50,6 @@ const CloseModalButton = ({ onPress }: { onPress?: () => void }) => {
 	const { closeModal } = useModal();
 	return (
 		<IconButton
-			hitSlop={15}
 			onPress={() => {
 				onPress && onPress();
 				closeModal();
@@ -83,7 +82,7 @@ const ss = StyleSheet.create({
 		borderBottomWidth: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		paddingTop: 8,
+		paddingVertical: 8,
 	},
 });
 
@@ -104,7 +103,6 @@ const ss = StyleSheet.create({
 	}}
 />
 <TouchableOpacity
-	hitSlop={7}
 	style={{ opacity: props.back ? 1 : 0.2 }}
 	onPress={props.handleBack}
 	disabled={!props.back}
@@ -114,7 +112,6 @@ const ss = StyleSheet.create({
 </TouchableOpacity>
 
 <TouchableOpacity
-	hitSlop={7}
 	style={{
 		marginRight: 15,
 		opacity: props.forward ? 1 : 0.2,
@@ -127,7 +124,7 @@ const ss = StyleSheet.create({
 	<Image alt="arrow" source={require("app/assets/png/arrow.png")} />
 </TouchableOpacity>
 	
-<TouchableOpacity hitSlop={7} disabled>
+<TouchableOpacity disabled>
 	<Image alt="dots" source={require("app/assets/png/dots.png")} />
 </TouchableOpacity>
 

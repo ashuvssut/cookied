@@ -26,7 +26,6 @@ export const Header: FC = () => {
 			</View>
 			{isWeb && isLoaded && (
 				<Pressable
-					hitSlop={7}
 					onPress={async () => {
 						try {
 							await signOut();

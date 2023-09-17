@@ -21,7 +21,6 @@ export default function HomeScreen() {
 				{!isWeb && (
 					<View sx={{ position: "absolute", top: 14, right: 20, zIndex: 5 }}>
 						<Pressable
-							hitSlop={10}
 							variant="layout.center"
 							onPress={() => ref.current?.triggerToggle()}
 							sx={{ width: 35, height: 35 }}
