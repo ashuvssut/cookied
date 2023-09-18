@@ -23,12 +23,12 @@ export default function HomeScreen() {
 
 	const folders = useQuery(api.bmShelf.folder.getAll);
 	useEffect(() => {
-		if (folders) dispatch(bmShelfAction.addManyFl(folders));
+		if (folders) dispatch(bmShelfAction.setAllFl(folders));
 	}, [folders]);
 
 	const bookmarks = useQuery(api.bmShelf.bookmark.getAll);
 	useEffect(() => {
-		if (bookmarks) dispatch(bmShelfAction.addManyBm(bookmarks));
+		if (bookmarks) dispatch(bmShelfAction.setAllBm(bookmarks));
 	}, [bookmarks]);
 
 	return (

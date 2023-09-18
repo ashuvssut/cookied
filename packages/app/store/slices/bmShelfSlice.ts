@@ -9,6 +9,8 @@ import {
 import { RootState } from "../types";
 import { convertToDenormalized } from "app/store/utils/bmShelfUtils";
 import logr from "app/utils/logr";
+import { Id } from "gconvex/_generated/dataModel";
+import { TBm, TFl } from "gconvex/schema";
 
 const foldersAdapter = createEntityAdapter<IFolder>({
 	selectId: folder => folder._id,
@@ -46,6 +48,14 @@ export const bmShelfSlice = createSlice({
 					.map(folder => ({ ...folder, bookmarks: [], folders: [] })),
 			}),
 		},
+		setAllFl: {
+			reducer: (state, action: PA<IFolder[]>) =>
+				void foldersAdapter.setAll(state.folders, action.payload),
+			prepare: (folders: Omit<IFolder, "bookmarks" | "folders">[]) => ({
+				payload: folders //
+					.map(folder => ({ ...folder, bookmarks: [], folders: [] })),
+			}),
+		},
 		updateFl: (state, action: PA<Update<IFolder>>) =>
 			void foldersAdapter.updateOne(state.folders, action.payload),
 		removeFl: (state, action: PA<IFolder>) =>
@@ -56,6 +66,8 @@ export const bmShelfSlice = createSlice({
 			void bookmarksAdapter.addOne(state.bookmarks, action.payload),
 		addManyBm: (state, action: PA<IBookmark[]>) =>
 			void bookmarksAdapter.addMany(state.bookmarks, action.payload),
+		setAllBm: (state, action: PA<IBookmark[]>) =>
+			void bookmarksAdapter.setAll(state.bookmarks, action.payload),
 		updateBm: (state, action: PA<Update<IBookmark>>) =>
 			void bookmarksAdapter.updateOne(state.bookmarks, action.payload),
 		removeBm: (state, action: PA<IBookmark>) =>
@@ -134,23 +146,10 @@ export const selectFlPathWithTitleById = createSelector(
 );
 
 // TS Types
-export interface IBookmark {
-	type: "bookmark";
-	_id: string;
-	parentId: string;
-	path: string[];
-	level: number;
-	title: string;
-	url: string;
+export interface IBookmark extends Omit<TBm, "userId"> {
+	_id: Id<"bookmarks">;
 }
 
-export interface IFolder {
-	type: "folder";
-	_id: string;
-	parentId: string;
-	path: string[];
-	level: number;
-	bookmarks: IBookmark[];
-	folders: IFolder[];
-	title: string;
+export interface IFolder extends Omit<TFl, "userId"> {
+	_id: Id<"folders">;
 }
