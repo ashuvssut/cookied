@@ -1,6 +1,8 @@
 import { query, mutation } from "gconvex/_generated/server";
 import { v } from "convex/values";
-import { bookmarksCols } from "../schema";
+import { bookmarksCols, parentIdSchema } from "../schema";
+import { getUserId } from "gconvex/utils";
+import { handleFlUpdate } from "gconvex/bmShelf/folder";
 
 export const getAll = query({
 	args: {},
@@ -22,8 +24,23 @@ export const create = mutation({
 	handler: async (ctx, newBm) => {
 		const identity = await ctx.auth.getUserIdentity();
 		if (identity === null) throw new Error("Unauthenticated. Please Sign in.");
-		const _id = await ctx.db.insert("bookmarks", newBm);
-		return { _id, ...newBm };
+		const bmId = await ctx.db.insert("bookmarks", newBm);
+
+		// update parent Fl
+		const parentFlId = newBm.parentId;
+		console.log(parentFlId);
+		if (parentFlId !== "root") {
+			const parentFl = await ctx.db.get(parentFlId);
+			if (parentFl) {
+				const userId = getUserId(identity);
+				const { _creationTime, _id, userId: _, ...updData } = parentFl;
+
+				const updates = { ...updData, bookmarks: [...updData.bookmarks, bmId] };
+				await handleFlUpdate(ctx, userId, parentFlId, updates);
+			}
+		}
+
+		return { _id: bmId, ...newBm };
 	},
 });
 
@@ -42,7 +59,7 @@ export const update = mutation({
 		bmId: v.id("bookmarks"),
 		updates: v.object({
 			type: v.literal("bookmark"),
-			parentId: v.optional(v.string()),
+			parentId: v.optional(parentIdSchema),
 			path: v.optional(v.array(v.string())),
 			level: v.optional(v.number()),
 			title: v.optional(v.string()),
@@ -53,7 +70,7 @@ export const update = mutation({
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 
-		const userId = identity.tokenIdentifier.split("|")[1];
+		const userId = getUserId(identity);
 		const existingBm = await ctx.db.get(bmId);
 
 		if (!existingBm) throw new Error("Bookmark not found");
