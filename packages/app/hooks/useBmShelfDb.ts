@@ -17,11 +17,13 @@ export function useBmShelfDb() {
 
 	// Folder CRUD
 	const createFl = useMutation(api.bmShelf.folder.create);
-	async function addFolder(newFl: Omit<TFl, "userId">) {
+	async function addFolder(
+		newFl: Omit<TFl, "userId" | "bookmarks" | "folders">,
+	) {
 		setIsLoading(true);
 		try {
 			if (!userId) throw new Error("Please log in first!");
-			const reqData = { ...newFl, userId };
+			const reqData = { ...newFl, userId, bookmarks: [], folders: [] };
 			const fl = await createFl(reqData);
 			setIsLoading(false);
 			// dispatch(bmShelfAction.addFl(fl));

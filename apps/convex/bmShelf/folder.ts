@@ -38,3 +38,23 @@ export const remove = mutation({
 		return flId;
 	},
 });
+
+export const update = mutation({
+	args: {
+		flId: v.id("folders"),
+		updates: v.object(foldersCols),
+	},
+	handler: async (ctx, { flId, updates }) => {
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
+
+		const userId = identity.tokenIdentifier.split("|")[1];
+		const existingFl = await ctx.db.get(flId);
+
+		if (!existingFl) throw new Error("Folder not found");
+		if (existingFl.userId !== userId) throw new Error("Unauthorized");
+
+		await ctx.db.patch(flId, updates);
+		return { _id: flId, ...updates };
+	},
+});

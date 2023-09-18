@@ -36,3 +36,23 @@ export const remove = mutation({
 		return bmId;
 	},
 });
+
+export const update = mutation({
+	args: {
+		bmId: v.id("bookmarks"),
+		updates: v.object(bookmarksCols),
+	},
+	handler: async (ctx, { bmId, updates }) => {
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
+
+		const userId = identity.tokenIdentifier.split("|")[1];
+		const existingBm = await ctx.db.get(bmId);
+
+		if (!existingBm) throw new Error("Bookmark not found");
+		if (existingBm.userId !== userId) throw new Error("Unauthorized");
+
+		await ctx.db.patch(bmId, updates);
+		return { _id: bmId, ...updates };
+	},
+});

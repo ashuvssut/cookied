@@ -8,6 +8,8 @@ export const foldersCols = {
 	path: v.array(v.string()),
 	level: v.number(),
 	title: v.string(),
+	bookmarks: v.array(v.string()),
+	folders: v.array(v.string()),
 };
 export type TFl = ObjectType<typeof foldersCols>;
 
@@ -23,10 +25,8 @@ export const bookmarksCols = {
 export type TBm = ObjectType<typeof bookmarksCols>;
 
 export default defineSchema({
-	folders: defineTable(foldersCols).searchIndex("by_userId", {
-		searchField: "userId",
-	}),
-	bookmarks: defineTable(bookmarksCols).searchIndex("by_userId", {
-		searchField: "userId",
-	}),
+	folders: defineTable(foldersCols) //
+		.searchIndex("by_userId", { searchField: "userId" }),
+	bookmarks: defineTable(bookmarksCols) //
+		.searchIndex("by_userId", { searchField: "userId" }),
 });
