@@ -9,7 +9,7 @@ export function generateRandomBookmark(
 ): IBookmark {
 	const id = faker.string.uuid();
 	return {
-		$id: id,
+		_id: id,
 		parentId: parentId || "",
 		type: "bookmark",
 		path: [...path, id],
@@ -17,10 +17,10 @@ export function generateRandomBookmark(
 		title: faker.word.words({ count: { min: 3, max: 5 } }),
 		// title: `bm ${level} ${id} - ${parentId}`,
 		url: faker.internet.url(),
-		// $createdAt: faker.date.past().toISOString(),
-		// $updatedAt: faker.date.recent().toISOString(),
-		$createdAt: new Date().toISOString(),
-		$updatedAt: new Date().toISOString(),
+		// _createdAt: faker.date.past().toISOString(),
+		// _updatedAt: faker.date.recent().toISOString(),
+		_createdAt: new Date().toISOString(),
+		_updatedAt: new Date().toISOString(),
 	};
 }
 
@@ -32,7 +32,7 @@ export function generateRandomFolder(
 ): IFolder {
 	const id = faker.string.uuid();
 	return {
-		$id: id,
+		_id: id,
 		parentId: parentId || "",
 		type: "folder",
 		path: [...path, id],
@@ -41,10 +41,10 @@ export function generateRandomFolder(
 		folders: gen1 ? [] : generateFolders(id, newLevel + 1, [...path]),
 		// title: `fl ${level} ${id} - ${parentId}`,
 		title: faker.word.words({ count: { min: 3, max: 5 } }),
-		// $createdAt: faker.date.past().toISOString(),
-		// $updatedAt: faker.date.recent().toISOString(),
-		$createdAt: new Date().toISOString(),
-		$updatedAt: new Date().toISOString(),
+		// _createdAt: faker.date.past().toISOString(),
+		// _updatedAt: faker.date.recent().toISOString(),
+		_createdAt: new Date().toISOString(),
+		_updatedAt: new Date().toISOString(),
 	};
 }
 
@@ -86,8 +86,8 @@ export const bookmarkState = generateBookmarkState();
 export function generateFolderForApi(node: IFolder | null) {
 	function getFolderObj() {
 		if (!node) return generateRandomFolder("root", 0, ["root"], true);
-		const { $id, level, path } = node;
-		return generateRandomFolder($id, level + 1, [...path, $id], true);
+		const { _id, level, path } = node;
+		return generateRandomFolder(_id, level + 1, [...path, _id], true);
 	}
 
 	const flData = getFolderObj();
@@ -96,16 +96,16 @@ export function generateFolderForApi(node: IFolder | null) {
 	flData.path = pathCopy;
 	const folderData = _.omit(
 		flData, //
-		["$updatedAt", "$createdAt", "$id", "bookmarks", "folders"],
+		["_updatedAt", "_createdAt", "_id", "bookmarks", "folders"],
 	);
 
 	return folderData;
 }
 
 export function generateBookmarkForApi(node: IFolder) {
-	const { $id: parentId, level, path } = node;
+	const { _id: parentId, level, path } = node;
 	const bmObject = generateRandomBookmark(parentId, level, path);
 	bmObject.path = [...path, parentId];
-	const bookmarkData = _.omit(bmObject, ["$updatedAt", "$createdAt", "$id"]);
+	const bookmarkData = _.omit(bmObject, ["_updatedAt", "_createdAt", "_id"]);
 	return bookmarkData;
 }

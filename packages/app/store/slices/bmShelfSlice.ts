@@ -11,12 +11,12 @@ import { convertToDenormalized } from "app/store/utils/bmShelfUtils";
 import logr from "app/utils/logr";
 
 const foldersAdapter = createEntityAdapter<IFolder>({
-	selectId: folder => folder.$id,
+	selectId: folder => folder._id,
 	sortComparer: (a, b) => a.title.localeCompare(b.title), // TODO: expt:- check if changin title to something else using jotai to something gives us sort ability or not (else create selectors)
 });
 
 const bookmarksAdapter = createEntityAdapter<IBookmark>({
-	selectId: bookmark => bookmark.$id,
+	selectId: bookmark => bookmark._id,
 	sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
@@ -49,7 +49,7 @@ export const bmShelfSlice = createSlice({
 		updateFl: (state, action: PA<Update<IFolder>>) =>
 			void foldersAdapter.updateOne(state.folders, action.payload),
 		removeFl: (state, action: PA<IFolder>) =>
-			void foldersAdapter.removeOne(state.folders, action.payload.$id),
+			void foldersAdapter.removeOne(state.folders, action.payload._id),
 
 		// Bookmark CRUD
 		addBm: (state, action: PA<IBookmark>) =>
@@ -59,7 +59,7 @@ export const bmShelfSlice = createSlice({
 		updateBm: (state, action: PA<Update<IBookmark>>) =>
 			void bookmarksAdapter.updateOne(state.bookmarks, action.payload),
 		removeBm: (state, action: PA<IBookmark>) =>
-			void bookmarksAdapter.removeOne(state.bookmarks, action.payload.$id),
+			void bookmarksAdapter.removeOne(state.bookmarks, action.payload._id),
 	},
 	extraReducers: builder => {},
 });
@@ -92,7 +92,7 @@ export const selectFlPaths = createSelector(
 			// if (!folder) logr.warn("selectFlPaths: folder is undefined");
 			if (!folder) return [];
 			const folderPath = [...folder.path];
-			if (folder.$id) folderPath.push(folder.$id); // add folder's own id to pathArr too
+			if (folder._id) folderPath.push(folder._id); // add folder's own id to pathArr too
 			return folderPath;
 		});
 		return flPaths;
@@ -136,25 +136,23 @@ export const selectFlPathWithTitleById = createSelector(
 // TS Types
 export interface IBookmark {
 	type: "bookmark";
-	$id: string;
+	_id: string;
 	parentId: string;
 	path: string[];
 	level: number;
 	title: string;
 	url: string;
-	$createdAt: string;
-	$updatedAt: string;
+	_createdAt: string;
+	_updatedAt: string;
 }
 
 export interface IFolder {
 	type: "folder";
-	$id: string;
+	_id: string;
 	parentId: string;
 	path: string[];
 	level: number;
 	bookmarks: IBookmark[];
 	folders: IFolder[];
 	title: string;
-	$createdAt: string;
-	$updatedAt: string;
 }

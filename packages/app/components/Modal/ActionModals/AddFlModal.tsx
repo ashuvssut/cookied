@@ -20,8 +20,8 @@ export const AddFlModal = () => {
 	const handleSubmitForm = async (title: string) => {
 		const doc = await addFolder({
 			type: "folder",
-			parentId: parentFl ? parentFl.$id : "root",
-			path: parentFl ? [...parentFl.path, parentFl.$id] : ["root"],
+			parentId: parentFl ? parentFl._id : "root",
+			path: parentFl ? [...parentFl.path, parentFl._id] : ["root"],
 			level: parentFl ? parentFl.level + 1 : 0,
 			title,
 		});

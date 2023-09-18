@@ -30,7 +30,7 @@ export const BookmarkActions: FC<IBookmarkActions> = ({ node, ...props }) => {
 				</IconButton>
 				<IconButton
 					onPress={() => {
-						setActiveEntityId(node.$id);
+						setActiveEntityId(node._id);
 						if (isWeb) {
 							window.open(node.url, "_blank");
 							return;

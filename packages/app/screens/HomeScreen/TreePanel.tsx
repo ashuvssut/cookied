@@ -86,7 +86,7 @@ const Node: FC<INode> = memo(
 		const [close, setClose] = useState(false);
 		const [activeEntityId, setActiveEntityId] = useAtom(activeEntityIdAtom);
 		const [hfEntityId, setHoverFocusEntityId] = useAtom(hoverFocusEntityIdAtom);
-		const showActions = !isWeb || hfEntityId === node.$id;
+		const showActions = !isWeb || hfEntityId === node._id;
 
 		useEffect(() => {
 			setCollapse(isCollapsed => {
@@ -102,17 +102,17 @@ const Node: FC<INode> = memo(
 
 		return (
 			<Pressable
-				key={"fl" + node.$id}
+				key={"fl" + node._id}
 				variants={["layout.narrowHzTile", "layout.row", "layout.noBorderX"]}
 				style={style}
 				sx={{
-					borderColor: activeEntityId === node.$id ? "outline" : undefined,
-					backgroundColor: activeEntityId === node.$id ? "#222a" : undefined,
+					borderColor: activeEntityId === node._id ? "outline" : undefined,
+					backgroundColor: activeEntityId === node._id ? "#222a" : undefined,
 				}}
-				onHoverIn={() => setHoverFocusEntityId(node.$id)}
-				// onLongPress={() => setHoverFocusEntityId(node.$id)}
+				onHoverIn={() => setHoverFocusEntityId(node._id)}
+				// onLongPress={() => setHoverFocusEntityId(node._id)}
 				onPress={() => {
-					setActiveEntityId(node.$id);
+					setActiveEntityId(node._id);
 					setCollapse(isCollapsed => {
 						setClose(!isCollapsed);
 						return !isCollapsed;
@@ -129,7 +129,7 @@ const Node: FC<INode> = memo(
 					</View>
 					<Text sx={{ top: "$1", py: "$2" }} numberOfLines={1}>
 						{node.title}
-						{/* {`${node.title.slice(0, 5)} - ${node.$id} - ${node.parentId}`} */}
+						{/* {`${node.title.slice(0, 5)} - ${node._id} - ${node.parentId}`} */}
 					</Text>
 					{showActions && (
 						<FolderActions node={node} onActionComplete={() => openFolder()} />
@@ -153,20 +153,20 @@ const LeafNode: FC<ILeafNode> = memo(
 		const { openModal } = useModal();
 		const [activeEntityId, setActiveEntityId] = useAtom(activeEntityIdAtom);
 		const [hfEntityId, setHoverFocusEntityId] = useAtom(hoverFocusEntityIdAtom);
-		const showActions = !isWeb || hfEntityId === node.$id;
+		const showActions = !isWeb || hfEntityId === node._id;
 		return (
 			<Pressable
-				key={"bm" + node.$id}
+				key={"bm" + node._id}
 				variants={["layout.narrowHzTile", "layout.row", "layout.noBorderX"]}
 				style={style}
-				onHoverIn={() => setHoverFocusEntityId(node.$id)}
-				// onLongPress={() => setHoverFocusEntityId(node.$id)}
+				onHoverIn={() => setHoverFocusEntityId(node._id)}
+				// onLongPress={() => setHoverFocusEntityId(node._id)}
 				sx={{
-					borderColor: activeEntityId === node.$id ? "outline" : undefined,
-					backgroundColor: activeEntityId === node.$id ? "#222a" : undefined,
+					borderColor: activeEntityId === node._id ? "outline" : undefined,
+					backgroundColor: activeEntityId === node._id ? "#222a" : undefined,
 				}}
 				onPress={() => {
-					setActiveEntityId(node.$id);
+					setActiveEntityId(node._id);
 					setActiveUrl(node.url);
 					if (!isWeb)
 						openModal({ type: "web-view", payload: { src: node.url } });
@@ -181,7 +181,7 @@ const LeafNode: FC<ILeafNode> = memo(
 					</View>
 					<Text sx={{ top: "$1", py: "$2" }} numberOfLines={1}>
 						{node.title}
-						{/* {`${node.title.slice(0, 5)} - ${node.$id} - ${node.parentId}`} */}
+						{/* {`${node.title.slice(0, 5)} - ${node._id} - ${node.parentId}`} */}
 					</Text>
 					{showActions && <BookmarkActions node={node} />}
 				</View>

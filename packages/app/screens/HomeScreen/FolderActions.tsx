@@ -46,7 +46,7 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 						</IconButton>
 						<IconButton
 							onPress={() => {
-								setActiveEntityId(node.$id);
+								setActiveEntityId(node._id);
 								addBm();
 							}}
 						>
@@ -56,7 +56,7 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 				)}
 				<IconButton
 					onPress={() => {
-						setActiveEntityId(node?.$id ?? null);
+						setActiveEntityId(node?._id ?? null);
 						addFl();
 					}}
 					sx={{ borderColor: !node ? "outline" : undefined }}
