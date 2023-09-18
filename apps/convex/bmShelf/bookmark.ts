@@ -40,7 +40,14 @@ export const remove = mutation({
 export const update = mutation({
 	args: {
 		bmId: v.id("bookmarks"),
-		updates: v.object(bookmarksCols),
+		updates: v.object({
+			type: v.literal("bookmark"),
+			parentId: v.optional(v.string()),
+			path: v.optional(v.array(v.string())),
+			level: v.optional(v.number()),
+			title: v.optional(v.string()),
+			url: v.optional(v.string()),
+		}),
 	},
 	handler: async (ctx, { bmId, updates }) => {
 		const identity = await ctx.auth.getUserIdentity();

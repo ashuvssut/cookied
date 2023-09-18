@@ -1,5 +1,4 @@
-import { useAppDispatch } from "app/store/hooks";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "gconvex/_generated/api";
 import { useAtom } from "jotai";
 import { TBm, TFl } from "gconvex/schema";
@@ -8,7 +7,7 @@ import { barLoadingAtom } from "app/components/Header";
 import logr from "app/utils/logr";
 import { IBookmark, IFolder } from "app/store/slices/bmShelfSlice";
 import { useUser } from "app/utils/clerk";
-import { Id } from "gconvex/_generated/dataModel";
+import { PartialExceptForKeys } from "app/types/utility";
 
 export function useBmShelfDb() {
 	const { user } = useUser();
@@ -43,16 +42,39 @@ export function useBmShelfDb() {
 		setIsLoading(true);
 		try {
 			if (!userId) throw new Error("Please log in first!");
-			const fl = await deleteFl({ flId });
+			const id = await deleteFl({ flId });
 			setIsLoading(false);
-			// dispatch(bmShelfAction.addFl(fl));
-			return flId;
+			return id;
 		} catch (err) {
 			setIsLoading(false);
 			const msg = err.message || err.toString();
 
 			Toast.error(!!msg ? msg : "Error in deleting folder");
 			logr.err("Error in deleting folder", err);
+		}
+	}
+
+	const updateFl = useMutation(api.bmShelf.folder.update);
+
+	async function updateFolder(
+		flUpdate: PartialExceptForKeys<IFolder, ["_id", "type"]>,
+	) {
+		const flId = flUpdate._id;
+		setIsLoading(true);
+
+		try {
+			if (!userId) throw new Error("Please log in first!");
+
+			const updatedFl = await updateFl({ flId, updates: flUpdate });
+			setIsLoading(false);
+
+			return updatedFl;
+		} catch (err) {
+			setIsLoading(false);
+			const msg = err.message || err.toString();
+
+			Toast.error(!!msg ? msg : "Error in updating folder");
+			logr.err("Error in updating folder", err);
 		}
 	}
 
@@ -81,10 +103,9 @@ export function useBmShelfDb() {
 		setIsLoading(true);
 		try {
 			if (!userId) throw new Error("Please log in first!");
-			const fl = await deleteBm({ bmId });
+			const id = await deleteBm({ bmId });
 			setIsLoading(false);
-			// dispatch(bmShelfAction.addFl(fl));
-			return bmId;
+			return id;
 		} catch (err) {
 			setIsLoading(false);
 			const msg = err.message || err.toString();
@@ -93,10 +114,35 @@ export function useBmShelfDb() {
 			logr.err("Error in deleting bookmark", err);
 		}
 	}
+
+	const updateBm = useMutation(api.bmShelf.bookmark.update);
+	async function updateBookmark(
+		bmUpdate: PartialExceptForKeys<IBookmark, ["_id", "type"]>,
+	) {
+		const bmId = bmUpdate._id;
+		setIsLoading(true);
+
+		try {
+			if (!userId) throw new Error("Please log in first!");
+
+			const updatedFl = await updateBm({ bmId, updates: bmUpdate });
+			setIsLoading(false);
+
+			return updatedFl;
+		} catch (err) {
+			setIsLoading(false);
+			const msg = err.message || err.toString();
+
+			Toast.error(!!msg ? msg : "Error in updating folder");
+			logr.err("Error in updating folder", err);
+		}
+	}
 	return {
 		addFolder,
 		deleteFolder,
+		updateFolder,
 		addBookmark,
 		deleteBookmark,
+		updateBookmark,
 	};
 }

@@ -42,7 +42,15 @@ export const remove = mutation({
 export const update = mutation({
 	args: {
 		flId: v.id("folders"),
-		updates: v.object(foldersCols),
+		updates: v.object({
+			type: v.literal("folder"),
+			parentId: v.optional(v.string()),
+			path: v.optional(v.array(v.string())),
+			level: v.optional(v.number()),
+			title: v.optional(v.string()),
+			bookmarks: v.optional(v.array(v.string())),
+			folders: v.optional(v.array(v.string())),
+		}),
 	},
 	handler: async (ctx, { flId, updates }) => {
 		const identity = await ctx.auth.getUserIdentity();
