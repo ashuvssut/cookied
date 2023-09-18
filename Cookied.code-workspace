@@ -16,10 +16,10 @@
 			"name": "ext | Chrome Extension",
 			"path": "apps/chrome-extension"
 		},
-		{
-			"name": "api | Vercel Serverless",
-			"path": "apps/api"
-		},
+		// {
+		// 	"name": "api | Vercel Serverless",
+		// 	"path": "apps/api"
+		// },
 		{
 			"name": "convex | Convex Backend",
 			"path": "apps/convex/"

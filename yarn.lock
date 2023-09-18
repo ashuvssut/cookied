@@ -7962,6 +7962,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:^16.3.1":
+  version: 16.3.1
+  resolution: "dotenv@npm:16.3.1"
+  checksum: 15d75e7279018f4bafd0ee9706593dd14455ddb71b3bcba9c52574460b7ccaf67d5cf8b2c08a5af1a9da6db36c956a04a1192b101ee102a3e0cf8817bbcf3dfd
+  languageName: node
+  linkType: hard
+
 "dripsy@npm:^4.3.3":
   version: 4.3.3
   resolution: "dripsy@npm:4.3.3"
@@ -13506,6 +13513,7 @@ __metadata:
     appwrite: ^11.0.0
     asyncstorage-inspector-flipper: ^1.0.2
     axios: ^1.4.0
+    convex: ^1.3.1
     expo: ~48.0.18
     expo-auth-session: ^5.2.0
     expo-build-properties: ^0.6.0
@@ -13524,8 +13532,9 @@ __metadata:
     formik: ^2.4.0
     jotai: ^2.1.0
     react: 18.2.0
-    react-dom: 18.2.0
+    react-dom: ^18.2.0
     react-native: 0.71.8
+    react-native-dotenv: ^3.4.9
     react-native-flipper: ^0.192.0
     react-native-gesture-handler: ^2.10.1
     react-native-get-random-values: ^1.9.0
@@ -15045,7 +15054,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.2.0":
+"react-dom@npm:18.2.0, react-dom@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -15135,6 +15144,17 @@ __metadata:
     jscodeshift: ^0.13.1
     nullthrows: ^1.1.1
   checksum: d3a40b557d4b3a0d51664070eb8388b0dde247a0518025ff5a815d3573c98ff16f616df8236e827ee16625f685169931db5c966dd144d860ad5aed437b65b28c
+  languageName: node
+  linkType: hard
+
+"react-native-dotenv@npm:^3.4.9":
+  version: 3.4.9
+  resolution: "react-native-dotenv@npm:3.4.9"
+  dependencies:
+    dotenv: ^16.3.1
+  peerDependencies:
+    "@babel/runtime": ^7.20.6
+  checksum: 9727c6a08e1b3e53b31d620ac1e9daedd899b61c0fd5413fb4593a209c0bf73e245506fc02bdb0d3caa4abf4f4145fa8499afff8e48e22bcf317cd90dbe18b87
   languageName: node
   linkType: hard
 

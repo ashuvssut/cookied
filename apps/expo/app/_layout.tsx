@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Slot } from "expo-router";
 import LoadingModal from "app/components/LoadingModal";
 import { ClerkProtectedRoute } from "app/components/ClerkProtectedRoute";
@@ -15,6 +15,7 @@ import { onlineManager } from "@tanstack/react-query";
 import { ModalController } from "app/components/Modal";
 import NetworkStatus from "app/components/NetworkStatus";
 import { isWeb } from "app/utils/constants";
+import "react-native-get-random-values";
 
 const queryClient = new QueryClient();
 
