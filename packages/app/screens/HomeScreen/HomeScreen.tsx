@@ -9,12 +9,28 @@ import {
 	ISlideInViewRefProps,
 	XSlideInView,
 } from "app/components/XSlideInView";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { isWeb } from "app/utils/constants";
+import { useQuery } from "convex/react";
+import { api } from "gconvex/_generated/api";
+import { useAppDispatch } from "app/store/hooks";
+import { bmShelfAction } from "app/store/slices/bmShelfSlice";
 
 export default function HomeScreen() {
 	const style = usePressabilityApiStyles();
 	const ref = useRef<ISlideInViewRefProps>(null);
+	const dispatch = useAppDispatch();
+
+	const folders = useQuery(api.bmShelf.folder.getAll);
+	useEffect(() => {
+		if (folders) dispatch(bmShelfAction.addManyFl(folders));
+	}, [folders]);
+
+	const bookmarks = useQuery(api.bmShelf.bookmark.getAll);
+	useEffect(() => {
+		if (bookmarks) dispatch(bmShelfAction.addManyBm(bookmarks));
+	}, [bookmarks]);
+
 	return (
 		<XSlideInView ref={ref}>
 			<Screen>

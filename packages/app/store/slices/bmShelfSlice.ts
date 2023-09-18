@@ -142,8 +142,6 @@ export interface IBookmark {
 	level: number;
 	title: string;
 	url: string;
-	_createdAt: string;
-	_updatedAt: string;
 }
 
 export interface IFolder {
