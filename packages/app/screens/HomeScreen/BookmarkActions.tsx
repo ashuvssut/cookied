@@ -6,7 +6,7 @@ import { openURL } from "expo-linking";
 import { IconButton } from "app/components/IconButton";
 import { useAtom } from "jotai";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
-import { useSdkBmShelfDB } from "app/hooks/useBmShelfDB/useSdkBmShelfDB";
+import { useBmShelfDb } from "app/hooks/useBmShelfDb";
 import { isWeb } from "app/utils/constants";
 
 interface IBookmarkActions extends ComponentProps<typeof View> {
@@ -15,7 +15,7 @@ interface IBookmarkActions extends ComponentProps<typeof View> {
 export const BookmarkActions: FC<IBookmarkActions> = ({ node, ...props }) => {
 	const { onPrimary } = useDripsyTheme().theme.colors;
 	const [_, setActiveEntityId] = useAtom(activeEntityIdAtom);
-	const { deleteBookmark } = useSdkBmShelfDB();
+	const { deleteBookmark } = useBmShelfDb();
 	return (
 		<View {...props} sx={{ position: "absolute", right: "$3", ...props.sx }}>
 			<View sx={{ gap: 5, flexDirection: "row" }}>

@@ -6,16 +6,16 @@ import { TBm, TFl } from "gconvex/schema";
 import { Toast } from "app/components/Toast";
 import { barLoadingAtom } from "app/components/Header";
 import logr from "app/utils/logr";
-import { bmShelfAction } from "app/store/slices/bmShelfSlice";
+import { IBookmark, IFolder } from "app/store/slices/bmShelfSlice";
 import { useUser } from "app/utils/clerk";
+import { Id } from "gconvex/_generated/dataModel";
 
 export function useBmShelfDb() {
 	const { user } = useUser();
 	const userId = user?.id;
 	const [, setIsLoading] = useAtom(barLoadingAtom);
-	const dispatch = useAppDispatch();
 
-  // Folder CRUD
+	// Folder CRUD
 	const createFl = useMutation(api.bmShelf.folder.create);
 	async function addFolder(newFl: Omit<TFl, "userId">) {
 		setIsLoading(true);
@@ -35,7 +35,26 @@ export function useBmShelfDb() {
 		}
 	}
 
-  // Bookmark CRUD
+	const deleteFl = useMutation(api.bmShelf.folder.remove);
+	async function deleteFolder(fl: IFolder) {
+		const flId = fl._id;
+		setIsLoading(true);
+		try {
+			if (!userId) throw new Error("Please log in first!");
+			const fl = await deleteFl({ flId });
+			setIsLoading(false);
+			// dispatch(bmShelfAction.addFl(fl));
+			return flId;
+		} catch (err) {
+			setIsLoading(false);
+			const msg = err.message || err.toString();
+
+			Toast.error(!!msg ? msg : "Error in deleting folder");
+			logr.err("Error in deleting folder", err);
+		}
+	}
+
+	// Bookmark CRUD
 	const createBm = useMutation(api.bmShelf.bookmark.create);
 	async function addBookmark(newBm: Omit<TBm, "userId">) {
 		setIsLoading(true);
@@ -53,8 +72,29 @@ export function useBmShelfDb() {
 			logr.err("Error in creating new bookmark", err);
 		}
 	}
+
+	const deleteBm = useMutation(api.bmShelf.bookmark.remove);
+	async function deleteBookmark(bm: IBookmark) {
+		const bmId = bm._id;
+		setIsLoading(true);
+		try {
+			if (!userId) throw new Error("Please log in first!");
+			const fl = await deleteBm({ bmId });
+			setIsLoading(false);
+			// dispatch(bmShelfAction.addFl(fl));
+			return bmId;
+		} catch (err) {
+			setIsLoading(false);
+			const msg = err.message || err.toString();
+
+			Toast.error(!!msg ? msg : "Error in deleting bookmark");
+			logr.err("Error in deleting bookmark", err);
+		}
+	}
 	return {
 		addFolder,
+		deleteFolder,
 		addBookmark,
+		deleteBookmark,
 	};
 }

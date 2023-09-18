@@ -9,7 +9,6 @@ export const getAll = query({
 		if (identity === null) throw new Error("Unauthenticated. Please Sign in.");
 
 		const userId = identity.tokenIdentifier;
-		console.log(userId);
 		const allBms = await ctx.db
 			.query("bookmarks")
 			.withSearchIndex("by_userId", q => q.search("userId", userId))
@@ -25,5 +24,15 @@ export const create = mutation({
 		if (identity === null) throw new Error("Unauthenticated. Please Sign in.");
 		const _id = await ctx.db.insert("bookmarks", newBm);
 		return { _id, ...newBm };
+	},
+});
+
+export const remove = mutation({
+	args: { bmId: v.id("bookmarks") },
+	handler: async (ctx, { bmId }) => {
+		const identity = await ctx.auth.getUserIdentity();
+		if (identity === null) throw new Error("Unauthenticated. Please Sign in.");
+		await ctx.db.delete(bmId);
+		return bmId;
 	},
 });

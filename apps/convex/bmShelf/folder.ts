@@ -11,7 +11,6 @@ export const getAll = query({
 		const userId = identity.tokenIdentifier.split("|")[1];
 		if (!userId) throw new Error("Unauthorized");
 
-		console.log("yo", userId);
 		const allFls = await ctx.db
 			.query("folders")
 			.withSearchIndex("by_userId", q => q.search("userId", userId))
@@ -27,5 +26,15 @@ export const create = mutation({
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 		const _id = await ctx.db.insert("folders", newFl);
 		return { _id, ...newFl };
+	},
+});
+
+export const remove = mutation({
+	args: { flId: v.id("folders") },
+	handler: async (ctx, { flId }) => {
+		const identity = await ctx.auth.getUserIdentity();
+		if (identity === null) throw new Error("Unauthenticated. Please Sign in.");
+		await ctx.db.delete(flId);
+		return flId;
 	},
 });

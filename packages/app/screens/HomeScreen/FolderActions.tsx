@@ -6,7 +6,7 @@ import {
 	MdOutlineBookmarkAdd,
 	MdOutlineCreateNewFolder,
 } from "app/assets/icons";
-import { useBmShelfDB } from "app/hooks/useBmShelfDB/useBmShelfDB";
+import { useBmShelfDb } from "app/hooks/useBmShelfDb";
 import { useModal } from "app/components/Modal";
 import { IconButton } from "app/components/IconButton";
 import { useAtom } from "jotai";
@@ -18,7 +18,7 @@ interface IFolderActions extends ComponentProps<typeof View> {
 	onActionComplete?: () => void;
 }
 export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
-	const { deleteFolder } = useBmShelfDB();
+	const { deleteFolder } = useBmShelfDb();
 	const { onPrimary } = useDripsyTheme().theme.colors;
 	const { openModal } = useModal();
 	const addBm = async () => {
