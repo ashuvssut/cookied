@@ -30,7 +30,7 @@ import { isWeb } from "app/utils/constants";
 export function TreePanel() {
 	const foldersWithBookmarks = useAppSelector(selectDenormalizedBmShelf);
 	return (
-		<View sx={{ flex: 1, minWidth: 400, maxWidth: 500 }}>
+		<View sx={{ flex: 1, minWidth: 300, maxWidth: 500 }}>
 			<TreePanelHeader />
 			<ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
 				<TreeView

@@ -26,10 +26,7 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 		props.onActionComplete?.();
 	};
 	const addFl = async () => {
-		openModal({
-			type: "add-folder",
-			payload: { parentFl: node },
-		});
+		openModal({ type: "add-folder", payload: { parentFl: node } });
 		props.onActionComplete?.();
 	};
 	const [_, setActiveEntityId] = useAtom(activeEntityIdAtom);
