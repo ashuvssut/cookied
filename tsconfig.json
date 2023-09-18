@@ -4,7 +4,7 @@
 		"noUncheckedIndexedAccess": true,
 		"paths": {
 			"app/*": ["./packages/app/*"],
-			"gconvex/*": ["./apps/convex/_generated/*"]
+			"gconvex/*": ["./apps/convex/*"]
 		}
 	},
 	"extends": "expo/tsconfig.base"

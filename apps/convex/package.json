@@ -1,0 +1,8 @@
+{
+	"name": "gconvex",
+	"version": "0.0.1",
+	"description": "Convex Backend",
+	"author": "Team Cookied",
+	"private": true,
+	"type": "module"
+}

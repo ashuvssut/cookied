@@ -21,7 +21,7 @@
 		// 	"path": "apps/api"
 		// },
 		{
-			"name": "convex | Convex Backend",
+			"name": "gconvex | Convex Backend",
 			"path": "apps/convex/"
 		},
 		{

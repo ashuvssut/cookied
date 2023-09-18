@@ -14,6 +14,8 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as bmShelf_bookmark from "../bmShelf/bookmark";
+import type * as bmShelf_folder from "../bmShelf/folder";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -23,7 +25,10 @@ import type {
  * const myFunctionReference = api.myModule.myFunction;
  * ```
  */
-declare const fullApi: ApiFromModules<{}>;
+declare const fullApi: ApiFromModules<{
+  "bmShelf/bookmark": typeof bmShelf_bookmark;
+  "bmShelf/folder": typeof bmShelf_folder;
+}>;
 export declare const api: FilterApi<
   typeof fullApi,
   FunctionReference<any, "public">

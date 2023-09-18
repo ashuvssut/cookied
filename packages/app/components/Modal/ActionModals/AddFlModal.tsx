@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { Th } from "app/theme/components";
 import { TFlPathWithTitle } from "app/store/slices/bmShelfSlice";
 import Fuse from "fuse.js";
-import { useBmShelfDB } from "app/hooks/useBmShelfDB";
+import { useBmShelfDb } from "app/hooks/useBmShelfDb";
 import { useAtom } from "jotai";
 import addFlSchema from "app/validators/addFlSchema";
 import { barLoadingAtom } from "app/components/Header";
@@ -13,7 +13,7 @@ import { useModal } from "app/components/Modal/useModal";
 export type TSearchResults = Fuse.FuseResult<TFlPathWithTitle>[];
 
 export const AddFlModal = () => {
-	const { addFolder } = useBmShelfDB();
+	const { addFolder } = useBmShelfDb();
 	const { addFlPayload, closeModal } = useModal();
 	const { parentFl } = addFlPayload;
 
