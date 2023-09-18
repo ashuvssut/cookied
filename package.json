@@ -6,8 +6,7 @@
   "private": true,
   "workspaces": [
     "apps/*",
-    "packages/*",
-    "apps/fx/functions/*"
+    "packages/*"
   ],
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
@@ -24,8 +23,6 @@
     "web": "yarn workspace web dev",
     "ext": "yarn workspace ext dev",
     "ext:zip": "yarn workspace ext zip",
-    "fx:new": "yarn workspace fx new",
-    "fx:deploy": "yarn workspace fx deploy",
     "api": "yarn workspace api dev",
     "apk": "cd ./apps/expo/android && ./gradlew assembleRelease",
     "apk:install": "adb install ./apps/expo/android/app/build/outputs/apk/release/app-release.apk",
@@ -43,6 +40,7 @@
   ],
   "packageManager": "yarn@3.4.1",
   "dependencies": {
-    "convex": "^1.3.1"
+    "convex": "^1.3.1",
+    "jotai": "^2.4.2"
   }
 }

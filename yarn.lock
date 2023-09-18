@@ -6072,7 +6072,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.1.2, axios@npm:^1.3.6, axios@npm:^1.4.0":
+"axios@npm:^1.3.6, axios@npm:^1.4.0":
   version: 1.4.0
   resolution: "axios@npm:1.4.0"
   dependencies:
@@ -7231,6 +7231,7 @@ __metadata:
     "@types/react-native": ^0.69.5
     convex: ^1.3.1
     eslint: ^8.21.0
+    jotai: ^2.4.2
     turbo: ^1.4.2
     typescript: ^4.7.4
   languageName: unknown
@@ -10041,12 +10042,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fx@workspace:apps/fx":
-  version: 0.0.0-use.local
-  resolution: "fx@workspace:apps/fx"
-  languageName: unknown
-  linkType: soft
-
 "gauge@npm:^4.0.3":
   version: 4.0.4
   resolution: "gauge@npm:4.0.4"
@@ -11960,6 +11955,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jotai@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "jotai@npm:2.4.2"
+  peerDependencies:
+    "@types/react": ">=17.0.0"
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: b0f77afa692435ae922c8ad25f8642b98759127d686c6b3a6e8944b64f351be63e08b14bbcf7f6d2becdf68f2f5c1005b19c853271fc22052db783a2bce25efc
+  languageName: node
+  linkType: hard
+
 "js-cookie@npm:3.0.1":
   version: 3.0.1
   resolution: "js-cookie@npm:3.0.1"
@@ -13763,16 +13773,6 @@ __metadata:
   dependencies:
     node-gyp: latest
   checksum: 3a539510e677cfa3a833aca5397300e36141aca064cdc487554f2017110709a03a95da937e98c2a14ec3c626af7b2d1b6dabe629a481f9883143d0d5bff07bf2
-  languageName: node
-  linkType: hard
-
-"node-appwrite@npm:^8.0.0":
-  version: 8.2.0
-  resolution: "node-appwrite@npm:8.2.0"
-  dependencies:
-    axios: ^1.1.2
-    form-data: ^4.0.0
-  checksum: 9158ae1edd04b2cc5fd9c4d707f12a1c4550916f2da4d04052565bccbefa141609f2759119a72f1fada9f1867e98cc1ca049e21a7072946c845db0baf84fa453
   languageName: node
   linkType: hard
 
@@ -15664,14 +15664,6 @@ __metadata:
   checksum: 95bb97088419f5396e07769b7de96f995f58137ad75fac5811fb5fe53737766dfff35d66a0ee66babb1eb55386ef981feaef392f9df6d671f3c124812ba24da2
   languageName: node
   linkType: hard
-
-"register-user@workspace:apps/fx/functions/registerUser":
-  version: 0.0.0-use.local
-  resolution: "register-user@workspace:apps/fx/functions/registerUser"
-  dependencies:
-    node-appwrite: ^8.0.0
-  languageName: unknown
-  linkType: soft
 
 "regjsparser@npm:^0.9.1":
   version: 0.9.1

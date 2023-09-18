@@ -21,8 +21,8 @@
 			"path": "apps/api"
 		},
 		{
-			"name": "fx | Appwrite Functions",
-			"path": "apps/fx"
+			"name": "convex | Convex Backend",
+			"path": "apps/convex/"
 		},
 		{
 			"name": "cookied | Root",
