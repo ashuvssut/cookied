@@ -1,18 +1,14 @@
-.App {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  text-align: center;
+#app-container, body {
   height: 100%;
-  padding: 10px;
-  background-color: #282c34;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  color: #fff
 }
 
-.App-logo {
-  height: 30vmin;
-  pointer-events: none;
+.app {
+  text-align: center;
+  background-color: #282c34;
 }
 
 @media (prefers-reduced-motion: no-preference) {
