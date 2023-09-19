@@ -59,7 +59,7 @@ export function useBmShelfDb() {
 	async function updateFolder(
 		flUpdate: PartialExceptForKeys<IFolder, ["_id", "type"]>,
 	) {
-		const { _id: flId, ...updates } = flUpdate;
+		const { _id: flId, _creationTime: _, userId: _u, ...updates } = flUpdate;
 		setIsLoading(true);
 
 		try {
@@ -119,13 +119,13 @@ export function useBmShelfDb() {
 	async function updateBookmark(
 		bmUpdate: PartialExceptForKeys<IBookmark, ["_id", "type"]>,
 	) {
-		const bmId = bmUpdate._id;
+		const { _id: bmId, _creationTime: _, userId: _u, ...updates } = bmUpdate;
 		setIsLoading(true);
 
 		try {
 			if (!userId) throw new Error("Please log in first!");
 
-			const updatedFl = await updateBm({ bmId, updates: bmUpdate });
+			const updatedFl = await updateBm({ bmId, updates });
 			setIsLoading(false);
 
 			return updatedFl;

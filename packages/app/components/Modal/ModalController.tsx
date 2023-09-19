@@ -13,6 +13,7 @@ import { AddBmModal } from "app/components/Modal/ActionModals/AddBmModal";
 import { AddFlModal } from "app/components/Modal/ActionModals/AddFlModal";
 import { modalizeRefAtom } from "app/components/Modal/atoms";
 import { EditFlModal } from "app/components/Modal/ActionModals/EditFlModal";
+import { EditBmModal } from "app/components/Modal/ActionModals/EditBmModal";
 
 export const ModalController = ({ modalMaxWidth = 700 }) => {
 	const ref = useRef<Modalize>(null);
@@ -43,7 +44,7 @@ export const ModalController = ({ modalMaxWidth = 700 }) => {
 			case "add-bookmark":
 				return <AddBmModal />;
 			case "edit-bookmark":
-				return <></>;
+				return <EditBmModal />;
 			case "add-folder":
 				return <AddFlModal />;
 			case "edit-folder":
