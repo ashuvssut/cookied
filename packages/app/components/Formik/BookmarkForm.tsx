@@ -7,7 +7,8 @@ import { BmFolderPathSearch } from "app/components/Formik/FormFields/BmFolderPat
 import { Th } from "app/theme/components";
 import {
 	TFlPathWithTitle,
-	selectFlPathWithTitleById,
+	selectFlPathWithTitleByBmId,
+	selectFlPathWithTitleByFlId,
 } from "app/store/slices/bmShelfSlice";
 import { useAppSelector } from "app/store/hooks";
 import { atom, useAtom } from "jotai";
@@ -23,12 +24,26 @@ export const bmFolderAtom = atom<TFlPathWithTitle | undefined>(undefined);
 export const BookmarkForm: FC<IBookmarkForm> = ({ formikProps: p }) => {
 	const [activeEntityId] = useAtom(activeEntityIdAtom);
 	const activeFlPathWithTitle = //
-		useAppSelector(s => selectFlPathWithTitleById(s, activeEntityId));
+		useAppSelector(s => selectFlPathWithTitleByFlId(s, activeEntityId));
+	const activeParentFlPathWithTitleOfBm = //
+		useAppSelector(s => selectFlPathWithTitleByBmId(s, activeEntityId));
+
+	const isBmEntity =
+		!activeFlPathWithTitle && !!activeParentFlPathWithTitleOfBm;
+	const activeEntity = isBmEntity
+		? activeParentFlPathWithTitleOfBm
+		: activeFlPathWithTitle;
+
+	console.log(
+		activeEntity,
+		activeFlPathWithTitle,
+		activeParentFlPathWithTitleOfBm,
+	);
 
 	const [, setBmFolder] = useAtom(bmFolderAtom);
 	useEffect(() => {
-		void setBmFolder(activeFlPathWithTitle);
-	}, [activeFlPathWithTitle]);
+		void setBmFolder(activeEntity);
+	}, [activeEntity]);
 
 	return (
 		<>
@@ -45,7 +60,7 @@ export const BookmarkForm: FC<IBookmarkForm> = ({ formikProps: p }) => {
 			/>
 			<BmFolderPathSearch
 				formikProps={p}
-				initialQuery={activeFlPathWithTitle?.path || ""}
+				initialQuery={activeEntity?.path || ""}
 			/>
 			<ModalActions formik={p} />
 		</>

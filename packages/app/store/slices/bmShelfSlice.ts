@@ -136,11 +136,24 @@ export const selectFlPathWithTitleArray = createSelector(
 		return flPathsWithTitles;
 	},
 );
-export const selectFlPathWithTitleById = createSelector(
+export const selectFlPathWithTitleByFlId = createSelector(
 	selectFlPathWithTitleArray,
 	(_s: RootState, flId: string | null) => flId,
 	(flPathWithTitlesArr, flId) => {
 		if (!flId) return undefined;
+		return flPathWithTitlesArr.find(fl => fl.id === flId);
+	},
+);
+
+export const selectFlPathWithTitleByBmId = createSelector(
+	selectFlPathWithTitleArray,
+	(state: RootState) => state.bmShelf.bookmarks,
+	(_s: RootState, bmId: string | null) => bmId,
+	(flPathWithTitlesArr, bookmarks, bmId) => {
+		if (!bmId) return undefined;
+		const bm = bookmarks.entities[bmId];
+		if (!bm) return undefined;
+		const flId = bm.parentId;
 		return flPathWithTitlesArr.find(fl => fl.id === flId);
 	},
 );
