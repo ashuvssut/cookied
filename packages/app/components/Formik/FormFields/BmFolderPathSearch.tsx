@@ -9,18 +9,19 @@ import {
 import Fuse from "fuse.js";
 import { useAppSelector } from "app/store/hooks";
 import { MdArrowUpward } from "app/assets/icons";
-import { TFormikInitialValues } from "./AddBmModal";
 import { FormikProps } from "formik";
+import { TBookmarkFormSchema } from "app/components/Formik/bookmarkFormSchema";
+import { useAtom } from "jotai";
+import { bmFolderAtom } from "app/components/Formik/BookmarkForm";
 
 export type TSearchResults = Fuse.FuseResult<TFlPathWithTitle>[];
 
 interface SearchFieldProps {
-	formik: FormikProps<TFormikInitialValues>;
+	formikProps: FormikProps<TBookmarkFormSchema>;
 	initialQuery: string;
-	setFolder: (folder: TFlPathWithTitle) => void;
 }
 export const BmFolderPathSearch: FC<SearchFieldProps> = (
-	{ formik, initialQuery, setFolder }, //
+	{ formikProps: p, initialQuery }, //
 ) => {
 	// Fuse config
 	const flPathsWithTitles = useAppSelector(selectFlPathWithTitleArray);
@@ -31,7 +32,7 @@ export const BmFolderPathSearch: FC<SearchFieldProps> = (
 
 	const [searchQuery, setSearchQuery] = useState(initialQuery);
 	useEffect(() => {
-		formik.setFieldValue("flPath", searchQuery); // contrib:- [TS] "flPath" was not autocompleted
+		p.setFieldValue("flPath", searchQuery); // contrib:- [TS] "flPath" was not autocompleted
 	}, [searchQuery]);
 	const [searchResults, setSearchResults] = useState<TSearchResults>([]);
 	const handleSearch = (text: string) => {
@@ -41,6 +42,7 @@ export const BmFolderPathSearch: FC<SearchFieldProps> = (
 	};
 	useEffect(() => void handleSearch(initialQuery), []);
 
+	const [, setBmFolder] = useAtom(bmFolderAtom);
 	const renderSearchResults = useMemo(() => {
 		return searchResults.map((result, index) => {
 			if (index > 3) return null; // show only 4 results
@@ -50,7 +52,7 @@ export const BmFolderPathSearch: FC<SearchFieldProps> = (
 					onPress={() => {
 						setSearchQuery(result.item.path);
 						setSearchResults([]);
-						setFolder(result.item);
+						setBmFolder(result.item);
 					}}
 					path={result.item.path}
 				/>
