@@ -1,4 +1,5 @@
 import HomeScreen from "app/screens/HomeScreen";
+import { Avatar } from "app/components/Avatar";
 import { View, Text, useDripsyTheme } from "dripsy";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image, StyleSheet, useWindowDimensions } from "react-native";
@@ -71,52 +72,3 @@ const HomeScreenWithDrawer = () => {
 };
 
 export default HomeScreenWithDrawer;
-
-const l = 60;
-function Avatar() {
-	const { user } = useUser();
-
-	const imageUrl = user?.hasImage ? user.imageUrl : null;
-	const name = user?.firstName ?? null;
-
-	const avatarContent = getContent(imageUrl, name);
-
-	return (
-		<View
-			variant="layout.secondary"
-			sx={{
-				width: l,
-				height: l,
-				borderRadius: l,
-				overflow: "hidden",
-				justifyContent: "center",
-				alignItems: "center",
-				bg: "#434343",
-			}}
-		>
-			{avatarContent}
-		</View>
-	);
-}
-
-function getContent(imageUrl: string | null, name: string | null) {
-	if (imageUrl) {
-		return (
-			<Image
-				source={{ uri: imageUrl }}
-				style={{ width: l, height: l, borderRadius: l }}
-			/>
-		);
-	} else if (name) {
-		const initials = name
-			.split(" ")
-			.map(word => word.charAt(0))
-			.join("")
-			.toUpperCase();
-		return (
-			<Text style={{ fontSize: 24, lineHeight: 45, color: "white" }}>
-				{initials}
-			</Text>
-		);
-	} else return <MdAccountCircle size={50} color="white" />;
-}
