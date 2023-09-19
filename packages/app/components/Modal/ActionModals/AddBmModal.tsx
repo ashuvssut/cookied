@@ -4,7 +4,7 @@ import { useFormik, FormikProps } from "formik";
 import { Th } from "app/theme/components";
 import { selectFlPathWithTitleById } from "app/store/slices/bmShelfSlice";
 import { useAppSelector } from "app/store/hooks";
-import addEditBmSchema from "app/validators/addEditBmSchema";
+import bookmarkFormSchema from "app/components/Formik/bookmarkFormSchema";
 import { useAtom } from "jotai";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
 import { barLoadingAtom } from "app/components/Header";
@@ -32,7 +32,7 @@ export const AddBmModal = () => {
 			url: addBmPayload.sharedBmUrl || "",
 			flPath: "",
 		},
-		validationSchema: addEditBmSchema,
+		validationSchema: bookmarkFormSchema,
 		validateOnMount: true,
 		onSubmit: async ({ title, url, flPath }) => {
 			if (folder) {
