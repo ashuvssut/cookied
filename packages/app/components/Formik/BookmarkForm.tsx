@@ -6,12 +6,11 @@ import { View } from "dripsy";
 import { BmFolderPathSearch } from "app/components/Formik/FormFields/BmFolderPathSearch";
 import { Th } from "app/theme/components";
 import {
-	TFlPathWithTitle,
 	selectFlPathWithTitleByBmId,
 	selectFlPathWithTitleByFlId,
 } from "app/store/slices/bmShelfSlice";
 import { useAppSelector } from "app/store/hooks";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
 import { barLoadingAtom } from "app/components/Header";
 import { useModal } from "app/components/Modal/useModal";
@@ -19,12 +18,12 @@ import * as yup from "yup";
 import { debounce } from "lodash";
 import { useAction } from "convex/react";
 import { api } from "gconvex/_generated/api";
+import { bmFolderAtom } from "app/components/Formik/atoms";
 
 interface IBookmarkForm {
 	formikProps: FormikProps<TBookmarkFormSchema>;
 }
 
-export const bmFolderAtom = atom<TFlPathWithTitle | undefined>(undefined);
 export const BookmarkForm: FC<IBookmarkForm> = ({ formikProps: p }) => {
 	const [activeEntityId] = useAtom(activeEntityIdAtom);
 	const activeFlPathWithTitle = //

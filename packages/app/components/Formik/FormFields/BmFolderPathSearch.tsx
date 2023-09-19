@@ -12,7 +12,7 @@ import { MdArrowUpward } from "app/assets/icons";
 import { FormikProps } from "formik";
 import { TBookmarkFormSchema } from "app/components/Formik/bookmarkFormSchema";
 import { useAtom } from "jotai";
-import { bmFolderAtom } from "app/components/Formik/BookmarkForm";
+import { bmFolderAtom } from "app/components/Formik/atoms";
 
 export type TSearchResults = Fuse.FuseResult<TFlPathWithTitle>[];
 

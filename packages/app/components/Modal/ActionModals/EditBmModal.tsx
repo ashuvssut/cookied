@@ -9,7 +9,8 @@ import { useAppSelector } from "app/store/hooks";
 import bookmarkFormSchema, {
 	TBookmarkFormSchema,
 } from "app/components/Formik/bookmarkFormSchema";
-import { BookmarkForm, bmFolderAtom } from "app/components/Formik/BookmarkForm";
+import { BookmarkForm } from "app/components/Formik/BookmarkForm";
+import { bmFolderAtom } from "app/components/Formik/atoms";
 
 export const EditBmModal = () => {
 	const { closeModal } = useModal();

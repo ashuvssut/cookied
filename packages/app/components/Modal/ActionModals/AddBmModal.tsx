@@ -6,7 +6,8 @@ import bookmarkFormSchema, {
 import { useAtom } from "jotai";
 import { useModal } from "app/components/Modal/useModal";
 import { useBmShelfDb } from "app/hooks/useBmShelfDb";
-import { BookmarkForm, bmFolderAtom } from "app/components/Formik/BookmarkForm";
+import { BookmarkForm } from "app/components/Formik/BookmarkForm";
+import { bmFolderAtom } from "app/components/Formik/atoms";
 
 export const AddBmModal = () => {
 	const { addBmPayload, closeModal } = useModal();
