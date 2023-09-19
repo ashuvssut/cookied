@@ -20,12 +20,15 @@ export default function makeManifest(
     const manifestPath = resolve(to, "manifest.json");
 
     // Naming change for cache invalidation
-    if (config.contentScriptCssKey) {
-      manifest.content_scripts.forEach((script) => {
-        script.css = script.css.map((css) =>
-          css.replace("<KEY>", config.contentScriptCssKey)
-        );
-      });
+    const contentScriptCssKey = config.contentScriptCssKey;
+    if (contentScriptCssKey) {
+      const scripts = manifest.content_scripts;
+      if (scripts)
+        scripts.forEach((script) => {
+          script.css = script.css.map((css) =>
+            css.replace("<KEY>", contentScriptCssKey)
+          );
+        });
     }
 
     fs.writeFileSync(

@@ -73,3 +73,17 @@ const Popup = () => {
 };
 
 export default withSuspense(Popup);
+
+// const queryParams = `?sharedBmUrl=${url}`;
+// const targetUrl = webAppUrl + queryParams;
+
+// // Check if a tab with the target URL is already open
+// chrome.tabs.query({ url: targetUrl }, function (existingTabs) {
+//   if (existingTabs.length > 0) {
+//     // Switch to the first tab with the target URL
+//     chrome.tabs.update(existingTabs[0].id, { active: true });
+//   } else {
+//     // Open a new tab with the target URL
+//     chrome.tabs.create({ url: targetUrl });
+//   }
+// });
