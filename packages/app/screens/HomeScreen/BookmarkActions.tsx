@@ -1,14 +1,17 @@
 import { View, useDripsyTheme } from "dripsy";
 import { ComponentProps, FC } from "react";
 import { IBookmark } from "app/store/slices/bmShelfSlice";
-import { MdDeleteOutline, MdOutlineOpenInNew } from "app/assets/icons";
+import {
+	MdDeleteOutline,
+	MdModeEdit,
+	MdOutlineOpenInNew,
+} from "app/assets/icons";
 import { openURL } from "expo-linking";
 import { IconButton } from "app/components/IconButton";
 import { useAtom } from "jotai";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
 import { useBmShelfDb } from "app/hooks/useBmShelfDb";
 import { isWeb } from "app/utils/constants";
-import { MdModeEdit } from "react-icons/md";
 import { useModal } from "app/components/Modal";
 
 interface IBookmarkActions extends ComponentProps<typeof View> {
