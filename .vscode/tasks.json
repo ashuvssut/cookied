@@ -70,7 +70,7 @@
 				"clear": true
 				// "close": true
 			},
-			"command": "npx convex dev"
+			"command": "npx convex dev --tail-logs"
 		},
 		{
 			"label": "SftAlt8Task", // Convex Dashboard
