@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Button3D } from "./Button3D";
 import { TextField } from "./TextField";
 import * as yup from "yup";
+import { webAppUrl } from "./../constants";
 
 const Popup = () => {
   const [url, setUrl] = useState("");
@@ -30,7 +31,10 @@ const Popup = () => {
 
   const handleSaveBookmark = (e: any) => {
     e.preventDefault();
-    if (!isError) console.log("Saving bookmark for URL:", url);
+    if (isError) return;
+
+    const queryParams = `?sharedBmUrl=${url}`;
+    chrome.tabs.create({ url: webAppUrl + queryParams });
   };
 
   return (
