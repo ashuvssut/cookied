@@ -18,6 +18,7 @@ export const MdOutlineBookmarkBorder = MdIcon("bookmark-border");
 export const MdArrowUpward = MdIcon("arrow-upward");
 export const MdDeleteOutline = MdIcon("delete-outline");
 export const MdAccountCircle = MdIcon("account-circle");
+export const MdModeEdit = MdIcon("mode-edit");
 
 // Typed Factory Functions
 type MdcProps = ComponentProps<typeof MaterialCommunityIcons>;

@@ -64,10 +64,10 @@ const displayTitle = (type: TModalType) => {
 	switch (type) {
 		case "add-folder":
 			return "ADD FOLDER";
-		case "add-bookmark":
-			return "ADD BOOKMARK";
 		case "edit-folder":
 			return "EDIT FOLDER";
+		case "add-bookmark":
+			return "ADD BOOKMARK";
 		case "edit-bookmark":
 			return "EDIT BOOKMARK";
 		default:

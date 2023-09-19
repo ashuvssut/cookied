@@ -3,6 +3,7 @@ import { ComponentProps, FC } from "react";
 import { IFolder } from "app/store/slices/bmShelfSlice";
 import {
 	MdDeleteOutline,
+	MdModeEdit,
 	MdOutlineBookmarkAdd,
 	MdOutlineCreateNewFolder,
 } from "app/assets/icons";
@@ -25,6 +26,10 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 		openModal({ type: "add-bookmark", payload: { sharedBmUrl: null } });
 		props.onActionComplete?.();
 	};
+	const editFl = async () => {
+		openModal({ type: "edit-folder" });
+		props.onActionComplete?.();
+	};
 	const addFl = async () => {
 		openModal({ type: "add-folder", payload: { parentFl: node } });
 		props.onActionComplete?.();
@@ -35,6 +40,14 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 			<View sx={{ gap: 5, flexDirection: "row" }}>
 				{node && (
 					<>
+						<IconButton
+							onPress={() => {
+								setActiveEntityId(node._id);
+								editFl();
+							}}
+						>
+							<MdModeEdit size={22} color={onPrimary} />
+						</IconButton>
 						<IconButton
 							onPress={() => {
 								setActiveEntityId(null);

@@ -59,13 +59,13 @@ export function useBmShelfDb() {
 	async function updateFolder(
 		flUpdate: PartialExceptForKeys<IFolder, ["_id", "type"]>,
 	) {
-		const flId = flUpdate._id;
+		const { _id: flId, ...updates } = flUpdate;
 		setIsLoading(true);
 
 		try {
 			if (!userId) throw new Error("Please log in first!");
 
-			const updatedFl = await updateFl({ flId, updates: flUpdate });
+			const updatedFl = await updateFl({ flId, updates });
 			setIsLoading(false);
 
 			return updatedFl;

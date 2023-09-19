@@ -13,4 +13,5 @@ export {
 	MdLock,
 	MdClose,
 	MdAccountCircle,
+	MdModeEdit,
 } from "react-icons/md";

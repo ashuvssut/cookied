@@ -9,12 +9,19 @@ type TAddBookmarkAction = {
 	type: "add-bookmark";
 	payload: { sharedBmUrl: string | null };
 };
+type TEditBookmarkAction = { type: "edit-bookmark" };
 type TAddFolderAction = {
 	type: "add-folder";
 	payload: { parentFl: IFolder | null };
 };
+type TEditFolderAction = { type: "edit-folder" };
 
-type ModalActions = TWebviewAction | TAddBookmarkAction | TAddFolderAction;
+type ModalActions =
+	| TWebviewAction
+	| TAddBookmarkAction
+	| TEditBookmarkAction
+	| TAddFolderAction
+	| TEditFolderAction;
 export type TModalType = ActionType<ModalActions>;
 
 const modalTypeAtom = atom<TModalType>("web-view");
@@ -40,8 +47,12 @@ export function useModal() {
 			case "add-bookmark":
 				setAddBmPayload(action.payload);
 				break;
+			case "edit-bookmark":
+				break;
 			case "add-folder":
 				setAddFlPayload(action.payload);
+				break;
+			case "edit-folder":
 				break;
 			default:
 				throw new Error(`Exhaustive check: Unhandled modal action: ${action}`);

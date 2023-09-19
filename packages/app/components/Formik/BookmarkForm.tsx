@@ -55,7 +55,7 @@ export const BookmarkForm: FC<IBookmarkForm> = ({ formikProps: p }) => {
 const ModalActions = (
 	{ formik }: { formik: FormikProps<TBookmarkFormSchema> }, //
 ) => {
-	const { closeModal } = useModal();
+	const { closeModal, modalType } = useModal();
 	const [isBarLoading] = useAtom(barLoadingAtom);
 
 	return (
@@ -70,7 +70,7 @@ const ModalActions = (
 				sx={{ flex: 1 }}
 				disabled={isBarLoading}
 			>
-				Add
+				{modalType.includes("edit") ? "Edit" : "Add"}
 			</Th.ButtonPrimary>
 		</View>
 	);

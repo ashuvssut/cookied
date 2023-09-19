@@ -148,8 +148,12 @@ export const selectFlPathWithTitleById = createSelector(
 // TS Types
 export interface IBookmark extends Omit<TBm, "userId"> {
 	_id: Id<"bookmarks">;
+	_creationTime?: number;
+	userId?: string;
 }
 
 export interface IFolder extends Omit<TFl, "userId"> {
 	_id: Id<"folders">;
+	_creationTime?: number;
+	userId?: string;
 }

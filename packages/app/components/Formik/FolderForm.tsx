@@ -14,7 +14,7 @@ interface IFolderForm {
 
 export const FolderForm: FC<IFolderForm> = ({ formikProps: p }) => {
 	const [isBarLoading] = useAtom(barLoadingAtom);
-	const { closeModal } = useModal();
+	const { closeModal, modalType } = useModal();
 
 	return (
 		<>
@@ -35,7 +35,7 @@ export const FolderForm: FC<IFolderForm> = ({ formikProps: p }) => {
 					sx={{ flex: 1 }}
 					disabled={isBarLoading}
 				>
-					Add
+					{modalType.includes("edit") ? "Edit" : "Add"}
 				</Th.ButtonPrimary>
 			</View>
 		</>
