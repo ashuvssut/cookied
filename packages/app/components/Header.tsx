@@ -19,11 +19,11 @@ export const Header: FC = () => {
 	return (
 		<View sx={{ justifyContent: "center", alignItems: "center", zIndex: 1 }}>
 			<View
+				variant="layout.row"
 				sx={{
-					flexDirection: "row",
 					justifyContent: "space-between",
-					width: "100%",
-					px: "$4",
+					width: isWeb ? "100%" : undefined,
+					px: "$4"
 				}}
 			>
 				<View variant="layout.row" sx={{ gap: 5 }}>
@@ -35,6 +35,7 @@ export const Header: FC = () => {
 				</View>
 				{isWeb && isLoaded && <ProfileMenuDisplay />}
 			</View>
+
 			<Bar
 				indeterminate={true}
 				width={null}
