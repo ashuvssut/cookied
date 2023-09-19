@@ -8,7 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import BookmarkRemoveIcon from "@mui/icons-material/BookmarkRemove";
@@ -22,7 +22,7 @@ export default function BookmarkForm() {
 		);
 	}, []);
 
-	function onSubmit(e) {
+	function onSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 	}
 	return (
