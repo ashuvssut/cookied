@@ -1,0 +1,95 @@
+$bg-color: #282c34;
+$surface-color: #1c1f25;
+
+#app-container,
+body {
+  height: 100vh;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  color: #fff;
+  background-color: $bg-color;
+  box-sizing: border-box;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+  height: 100%;
+
+  header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: $surface-color;
+    gap: 10px;
+    img {
+      height: 52px;
+      width: 52px;
+    }
+    h1 {
+      font-weight: 700;
+      font-size: 32px;
+    }
+  }
+  main {
+    flex: 1;
+    background-color: $surface-color;
+    padding: 20px;
+    border-radius: 10px;
+    h2 {
+      font-size: 28px;
+      border-bottom-width: 1px;
+      padding-bottom: 5px;
+      border-color: #ccc2; /* Line color */
+      margin: 10px 0;
+    }
+    form {
+      display: grid;
+      gap: 20px;
+      .fields {
+        p {
+          font-size: 18px;
+          margin-bottom: 10px;
+        }
+      }
+      .btnWrap {
+        display: flex;
+        justify-content: flex-end;
+        button {
+          .submitBtnContent {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.App-header {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

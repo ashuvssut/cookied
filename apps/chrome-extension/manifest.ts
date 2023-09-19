@@ -8,7 +8,7 @@ const manifest: chrome.runtime.ManifestV3 = {
   name: "Cookied!!",
   version: packageJson.version,
   description: packageJson.description,
-  permissions: ["storage"],
+  permissions: ["storage", "activeTab", "tabs"],
   // options_page: "src/pages/options/index.html",
   // background: {
   //   service_worker: "src/pages/background/index.js",

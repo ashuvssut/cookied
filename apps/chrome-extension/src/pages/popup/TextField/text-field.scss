@@ -1,0 +1,25 @@
+.inputRoot {
+  display: grid;
+  width: 100%;
+  input[type="text"] {
+    appearance: none;
+    border: none;
+    outline: none;
+    background: #333;
+    padding: 8px;
+    margin: 4px 0;
+    height: 40px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 16px;
+    border-bottom: 0.2em solid rgba(#ccc, 0.5);
+
+    &:active {
+      border-bottom: 0.2em solid #888;
+    }
+  }
+  .errText {
+    color: rgb(207, 35, 35);
+    font-size: 14px;
+  }
+}
