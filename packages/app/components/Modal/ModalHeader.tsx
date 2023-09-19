@@ -22,12 +22,17 @@ export const ModalHeader = ({ webViewProps, ...props }: IModalHeaderProps) => {
 				<CloseModalButton onPress={props.handleClose} />
 				<View
 					variant="layout.row"
-					sx={{ flex: 1, justifyContent: "center", gap: 5 }}
+					sx={{
+						flex: 1,
+						justifyContent: "center",
+						gap: 5,
+						alignItems: "center",
+					}}
 				>
 					{webViewProps.secured && <MdLock color={secureColor} size={18} />}
 					<Text
 						variant="medium"
-						sx={{ textAlign: "center", lineHeight: 50, color: secureColor }}
+						sx={{ textAlign: "center", lineHeight: 20, color: secureColor }}
 						numberOfLines={1}
 					>
 						{webViewProps.url}
