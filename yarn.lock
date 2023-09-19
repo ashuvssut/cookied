@@ -4695,6 +4695,48 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@twind/core@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "@twind/core@npm:1.1.3"
+  dependencies:
+    csstype: ^3.1.1
+  peerDependencies:
+    typescript: ^4.8.4
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 18ad6fc44795209147dec1518778307b99d6ee339f2f4d2a981056d986ea1905817ea3d1c3f3c274cee79e65b70f1ee427a88a63dd943e613fb047f943454523
+  languageName: node
+  linkType: hard
+
+"@twind/preset-autoprefix@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "@twind/preset-autoprefix@npm:1.0.7"
+  dependencies:
+    style-vendorizer: ^2.2.3
+  peerDependencies:
+    "@twind/core": ^1.1.0
+    typescript: ^4.8.4
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 65e538d150eaa61aa9dbd9655b16599c96c725fe6f4008583e1267dfca8c10c6c6919fc803fb14e74db7dc934c3da9f37e8082286e7155cefa7c22fdf9b2a9c7
+  languageName: node
+  linkType: hard
+
+"@twind/preset-tailwind@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "@twind/preset-tailwind@npm:1.1.4"
+  peerDependencies:
+    "@twind/core": ^1.1.0
+    typescript: ^4.8.4
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 06cca73fcc2877efdfce4eba0f6e53ea754cb04e0943a87c35e77f87e519f2b6dc4b000413b862db4a9ded2282a5eee9d891d3951c2fb550191a764ff8f6c992
+  languageName: node
+  linkType: hard
+
 "@types/aria-query@npm:^5.0.1":
   version: 5.0.1
   resolution: "@types/aria-query@npm:5.0.1"
@@ -5067,7 +5109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.2.4":
+"@types/react-dom@npm:18.2.4, @types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.2.4":
   version: 18.2.4
   resolution: "@types/react-dom@npm:18.2.4"
   dependencies:
@@ -7166,6 +7208,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"construct-style-sheets-polyfill@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "construct-style-sheets-polyfill@npm:3.1.0"
+  checksum: 68e8b3ac654f235bba9749d51c162ddeddac31fa0f9111b70fdaedae6ff24b515a266ec918c1f57a0d68e659d89a208ec736a1361bf62ffd6004226b89bf8d8d
+  languageName: node
+  linkType: hard
+
 "content-type@npm:~1.0.5":
   version: 1.0.5
   resolution: "content-type@npm:1.0.5"
@@ -7482,7 +7531,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.1.2":
+"csstype@npm:^3.1.1, csstype@npm:^3.1.2":
   version: 3.1.2
   resolution: "csstype@npm:3.1.2"
   checksum: e1a52e6c25c1314d6beef5168da704ab29c5186b877c07d822bd0806717d9a265e8493a2e35ca7e68d0f5d472d43fac1cdce70fd79fd0853dff81f3028d857b5
@@ -9438,6 +9487,48 @@ __metadata:
 "ext@workspace:apps/chrome-extension":
   version: 0.0.0-use.local
   resolution: "ext@workspace:apps/chrome-extension"
+  dependencies:
+    "@rollup/plugin-typescript": ^8.5.0
+    "@testing-library/react": 13.4.0
+    "@twind/core": ^1.1.3
+    "@twind/preset-autoprefix": ^1.0.7
+    "@twind/preset-tailwind": ^1.1.4
+    "@types/chrome": 0.0.224
+    "@types/jest": 29.0.3
+    "@types/node": 18.15.11
+    "@types/react": 18.0.21
+    "@types/react-dom": 18.2.4
+    "@types/ws": ^8.5.4
+    "@typescript-eslint/eslint-plugin": 5.56.0
+    "@typescript-eslint/parser": 5.38.1
+    "@vitejs/plugin-react": 2.2.0
+    chokidar: ^3.5.3
+    construct-style-sheets-polyfill: ^3.1.0
+    cross-env: ^7.0.3
+    eslint: 8.36.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: 4.2.1
+    eslint-plugin-react: 7.32.2
+    fs-extra: 11.1.0
+    jest: 29.0.3
+    jest-environment-jsdom: 29.5.0
+    npm-run-all: ^4.1.5
+    prettier: 2.8.8
+    react: 18.2.0
+    react-dom: 18.2.0
+    rollup: 2.79.1
+    sass: 1.62.1
+    ts-jest: 29.0.2
+    ts-loader: 9.4.2
+    typescript: 4.8.4
+    vite: 3.1.3
+    ws: 8.13.0
+  languageName: unknown
+  linkType: soft
+
+"extapp@workspace:apps/chrome-extension-app":
+  version: 0.0.0-use.local
+  resolution: "extapp@workspace:apps/chrome-extension-app"
   dependencies:
     "@emotion/react": ^11.11.0
     "@emotion/styled": ^11.11.0
@@ -16108,6 +16199,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sass@npm:1.62.1":
+  version: 1.62.1
+  resolution: "sass@npm:1.62.1"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+    immutable: ^4.0.0
+    source-map-js: ">=0.6.2 <2.0.0"
+  bin:
+    sass: sass.js
+  checksum: 1b1b3584b38a63dd94156b65f13b90e3f84b170a38c3d5e3fa578b7a32a37aeb349b4926b0eaf9448d48e955e86b1ee01b13993f19611dad8068af07a607c13b
+  languageName: node
+  linkType: hard
+
 "sax@npm:>=0.6.0, sax@npm:^1.2.4":
   version: 1.2.4
   resolution: "sax@npm:1.2.4"
@@ -17025,6 +17129,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"style-vendorizer@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "style-vendorizer@npm:2.2.3"
+  checksum: b840d19aae468278d742f1de2925dd265611b73c35818fb315bfb96100f192e579e183c7aae26dc4d4d078c971a87d61b34cb3c123ff7ba41063cc5fdc0e9866
+  languageName: node
+  linkType: hard
+
 "styled-jsx@npm:5.1.1":
   version: 5.1.1
   resolution: "styled-jsx@npm:5.1.1"
@@ -17894,6 +18005,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:4.8.4":
+  version: 4.8.4
+  resolution: "typescript@npm:4.8.4"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 3e4f061658e0c8f36c820802fa809e0fd812b85687a9a2f5430bc3d0368e37d1c9605c3ce9b39df9a05af2ece67b1d844f9f6ea8ff42819f13bcb80f85629af0
+  languageName: node
+  linkType: hard
+
 "typescript@npm:5.0.4":
   version: 5.0.4
   resolution: "typescript@npm:5.0.4"
@@ -17931,6 +18052,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: dfe2ee3b9da1d74b9e06784ae90c20c435db9ad6ab23172911f6cdbfd7ab7213ae3611c4254c5a2c6dc2e89f05a658b95493890bf62d218267033b3d8a2e4dd6
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@4.8.4#~builtin<compat/typescript>":
+  version: 4.8.4
+  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=1a91c8"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: c981e82b77a5acdcc4e69af9c56cdecf5b934a87a08e7b52120596701e389a878b8e3f860e73ffb287bf649cc47a8c741262ce058148f71de4cdd88bb9c75153
   languageName: node
   linkType: hard
 

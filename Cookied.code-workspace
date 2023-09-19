@@ -13,9 +13,13 @@
 			"path": "apps/web"
 		},
 		{
-			"name": "ext | Chrome Extension",
+			"name": "ext | Chrome Extension Bm Saver",
 			"path": "apps/chrome-extension"
 		},
+		// {
+		// 	"name": "ext-app | Chrome Extension App",
+		// 	"path": "apps/chrome-extension-app"
+		// },
 		// {
 		// 	"name": "api | Vercel Serverless",
 		// 	"path": "apps/api"
@@ -27,7 +31,7 @@
 		{
 			"name": "cookied | Root",
 			"path": "."
-		},
+		}
 	],
 	"settings": {
 		"svg.preview.background": "dark-transparent",
