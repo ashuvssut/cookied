@@ -1,3 +1,6 @@
+# Chrome Extension URL Redirector
+The Chrome Extension is used to forward webpage url link to save as bookmark in the Cookied webapp
+
 <div align="center">
 <img src="public/icon-128.png" alt="logo"/>
 <h1> Chrome Extension Boilerplate with<br/>React + Vite + TypeScript</h1>
@@ -15,15 +18,19 @@
 
 ## Table of Contents
 
-- [Intro](#intro)
-- [Features](#features)
-- [Installation](#installation)
-  - [Procedures](#procedures)
-- [Screenshots](#screenshots)
-  - [NewTab](#newtab)
-  - [Popup](#popup)  
-- [Examples](#examples)
-- [Documents](#documents)
+- [Chrome Extension URL Redirector](#chrome-extension-url-redirector)
+  - [Table of Contents](#table-of-contents)
+  - [Intro ](#intro-)
+  - [Features ](#features-)
+  - [Installation ](#installation-)
+    - [Procedures ](#procedures-)
+  - [Screenshots ](#screenshots-)
+    - [New Tab ](#new-tab-)
+    - [Popup ](#popup-)
+  - [Examples ](#examples-)
+  - [Documents ](#documents-)
+  - [Star History](#star-history)
+  - [Thanks To](#thanks-to)
 
 ## Intro <a name="intro"></a>
 This boilerplate is made for creating chrome extensions using React and Typescript.
