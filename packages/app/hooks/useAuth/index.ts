@@ -1,1 +1,0 @@
-export { usePlatformAuth } from "./usePlatformAuth";

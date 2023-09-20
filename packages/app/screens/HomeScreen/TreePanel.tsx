@@ -8,7 +8,7 @@ import {
 import { useAppSelector } from "app/store/hooks";
 import { TreeView } from "app/components/TreeView";
 import { Text, View, Pressable, useDripsyTheme } from "dripsy";
-import { userAtom } from "app/store/slices/auth";
+import { useUser } from "app/utils/clerk";
 import { useAtom } from "jotai";
 import { FolderActions } from "app/screens/HomeScreen/FolderActions";
 import {
@@ -56,8 +56,8 @@ export function TreePanel() {
 }
 
 const TreePanelHeader = () => {
-	const user = useAtom(userAtom);
-	const whosBms = user[0]?.name ? `${user[0]?.name}'s` : "Your";
+	const { user } = useUser();
+	const whosBms = user?.firstName ? `${user?.firstName}'s` : "Your";
 	return (
 		<View
 			variants={[
