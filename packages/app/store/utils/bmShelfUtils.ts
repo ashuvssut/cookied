@@ -30,10 +30,10 @@ export function convertToDenormalized(
 				[...pathId, fl._id],
 			);
 			if (children.length > 0) {
-				newFl.folders = children;
+				newFl.folders = children as any;
 			}
 
-			newFl.bookmarks = getBookmarksByPathId(newFl._id);
+			newFl.bookmarks = getBookmarksByPathId(newFl._id) as any;
 			// newFl.path = ["root", ...pathId, newFl._id];
 			newFl.path = ["root", ...pathId];
 			result.push(newFl);

@@ -35,7 +35,7 @@ export function TreePanel() {
 			<ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
 				<TreeView
 					treeData={{
-						nodes: foldersWithBookmarks.folders,
+						nodes: foldersWithBookmarks.folders as any,
 						rootLeafs: [] as IBookmark[],
 					}}
 					// treeData={{ // Faker data
@@ -46,7 +46,7 @@ export function TreePanel() {
 					nodeArrKey="folders"
 					leafArrKey="bookmarks"
 					renderNode={(node, setCollapse) => (
-						<Node node={node} setCollapse={setCollapse} />
+						<Node node={node as any} setCollapse={setCollapse} />
 					)}
 					renderLeaf={node => <LeafNode node={node} />}
 				/>
