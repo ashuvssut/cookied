@@ -17,10 +17,6 @@
 			"path": "apps/chrome-extension"
 		},
 		// {
-		// 	"name": "ext-app | Chrome Extension App",
-		// 	"path": "apps/chrome-extension-app"
-		// },
-		// {
 		// 	"name": "api | Vercel Serverless",
 		// 	"path": "apps/api"
 		// },
