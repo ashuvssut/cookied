@@ -17,7 +17,7 @@ const App = () => {
 				Your are looking at the Vercel API Endpoint for Cookied
 			</code>
 			<h2>
-				Cookied is a Bookmarks app that uses AppWrite BaaS, React and React
+				Cookied is a Bookmarks app that uses Convex BaaS, React and React
 				Native.
 			</h2>
 			<p>
