@@ -1,4 +1,4 @@
-export const isDevMode = import.meta.env.MODE !== "development";
+export const isDevMode = import.meta.env.MODE === "development";
 export const isProdMode = import.meta.env.MODE === "production";
 
 export const webAppDevUrl = "http://localhost:3000";
