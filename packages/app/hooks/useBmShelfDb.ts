@@ -27,7 +27,7 @@ export function useBmShelfDb() {
 			setIsLoading(false);
 			// dispatch(bmShelfAction.addFl(fl));
 			return fl;
-		} catch (err) {
+		} catch (err: any) {
 			setIsLoading(false);
 			const msg = err.message || err.toString();
 
@@ -45,7 +45,7 @@ export function useBmShelfDb() {
 			const id = await deleteFl({ flId });
 			setIsLoading(false);
 			return id;
-		} catch (err) {
+		} catch (err: any) {
 			setIsLoading(false);
 			const msg = err.message || err.toString();
 
@@ -69,7 +69,7 @@ export function useBmShelfDb() {
 			setIsLoading(false);
 
 			return updatedFl;
-		} catch (err) {
+		} catch (err: any) {
 			setIsLoading(false);
 			const msg = err.message || err.toString();
 
@@ -88,7 +88,7 @@ export function useBmShelfDb() {
 			const bm = await createBm(reqData);
 			setIsLoading(false);
 			return bm;
-		} catch (err) {
+		} catch (err: any) {
 			setIsLoading(false);
 			const msg = err.message || err.toString();
 
@@ -106,7 +106,7 @@ export function useBmShelfDb() {
 			const id = await deleteBm({ bmId });
 			setIsLoading(false);
 			return id;
-		} catch (err) {
+		} catch (err: any) {
 			setIsLoading(false);
 			const msg = err.message || err.toString();
 
@@ -129,7 +129,7 @@ export function useBmShelfDb() {
 			setIsLoading(false);
 
 			return updatedFl;
-		} catch (err) {
+		} catch (err: any) {
 			setIsLoading(false);
 			const msg = err.message || err.toString();
 

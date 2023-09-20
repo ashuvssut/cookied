@@ -79,7 +79,11 @@ export const BmFolderPathSearch: FC<SearchFieldProps> = (
 	);
 };
 
-const SearchResult = ({ onPress, path }) => {
+interface ISearchResult {
+	onPress: () => void;
+	path: string;
+}
+const SearchResult: FC<ISearchResult> = ({ onPress, path }) => {
 	const colors = useDripsyTheme().theme.colors;
 
 	return (

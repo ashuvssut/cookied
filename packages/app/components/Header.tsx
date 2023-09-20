@@ -91,7 +91,7 @@ const ProfileMenu = ({ showMenu }: { showMenu: boolean }) => {
 					onPress={async () => {
 						try {
 							await signOut();
-						} catch (err) {
+						} catch (err: any) {
 							Toast.error("Unable to Log out.");
 							console.log(err.message || err.toString());
 						}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Text, View } from "dripsy";
 import { Svg } from "app/components/Svg";
 import { StatusBar } from "app/components/StatusBar";
@@ -6,7 +6,7 @@ import { Header } from "app/components/Header";
 import Screen from "app/components/Screen";
 import { GoodCookie } from "app/assets/svg";
 
-const AuthScreen = ({ ClerkInitiator }) => {
+const AuthScreen = ({ ClerkInitiator }: { ClerkInitiator: ReactNode }) => {
 	return (
 		<Screen sx={{ alignItems: "center" }}>
 			<StatusBar style="light" />

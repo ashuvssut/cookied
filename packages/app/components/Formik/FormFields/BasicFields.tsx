@@ -5,13 +5,13 @@ import { FormikProps } from "formik";
 import { Text } from "dripsy";
 import { checkError } from "app/components/Formik/FormFields/utils";
 
-interface IFormTextField<T extends FormikProps<{}>> {
+interface IFormTextField<T extends FormikProps<any>> {
 	formikProps: T;
 	name: string;
 	fieldProps?: ComponentProps<typeof Th.TextInput>;
 }
 
-export const FormTextField = <T extends FormikProps<{}>>(
+export const FormTextField = <T extends FormikProps<any>>(
 	{ formikProps: p, fieldProps, name }: IFormTextField<T>, //
 ) => {
 	return (
