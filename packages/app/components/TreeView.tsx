@@ -2,7 +2,7 @@ import { FCC } from "app/types/IReact"; // FCC = Functional Component with child
 import { View } from "dripsy";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
-type WithId<T> = T & { $id: string };
+type WithId<T> = T & { _id: string };
 
 type NodeWithNodesProp<
 	NKey extends string,
@@ -63,7 +63,7 @@ export const TreeView = <
 			return (
 				<TreeWrapper
 					isCollapsed={props.isCollapsed}
-					key={node.$id}
+					key={node._id}
 					node={setCollapse => renderNode && renderNode(node, setCollapse)}
 					childNodes={childNodes}
 					childLeafs={childLeafs}
@@ -74,7 +74,7 @@ export const TreeView = <
 	const _renderLeafs = (leaf: (typeof treeData)["rootLeafs"]) => {
 		return leaf.map(node => {
 			return (
-				<React.Fragment key={node.$id}>
+				<React.Fragment key={node._id}>
 					{renderLeaf && renderLeaf(node)}
 				</React.Fragment>
 			);

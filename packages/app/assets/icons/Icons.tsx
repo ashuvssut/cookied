@@ -6,8 +6,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 export const MdOutlineBookmarkAdd = MdcIcon("bookmark-plus-outline");
 export const MdOutlineBookmarkRemove = MdcIcon("bookmark-remove-outline");
 export const MdOutlineCreateNewFolder = MdcIcon("folder-plus-outline");
-
 export const MdOutlineOpenInNew = MdcIcon("open-in-new");
+
+export const MdClose = MdIcon("close");
+export const MdLock = MdIcon("lock");
 export const MdChevronRight = MdIcon("chevron-right");
 export const MdFolder = MdIcon("folder");
 export const MdMenu = MdIcon("menu");
@@ -15,6 +17,8 @@ export const MdFolderOpen = MdIcon("folder-open");
 export const MdOutlineBookmarkBorder = MdIcon("bookmark-border");
 export const MdArrowUpward = MdIcon("arrow-upward");
 export const MdDeleteOutline = MdIcon("delete-outline");
+export const MdAccountCircle = MdIcon("account-circle");
+export const MdModeEdit = MdIcon("mode-edit");
 
 // Typed Factory Functions
 type MdcProps = ComponentProps<typeof MaterialCommunityIcons>;

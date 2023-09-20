@@ -19,22 +19,22 @@ export function convertToDenormalized(
 	const result: IFolder[] = [];
 	for (const flId in flEntities) {
 		const fl = flEntities[flId]!;
-		if (fl.parentId === parentId && !visitedIds.has(fl.$id)) {
-			visitedIds.add(fl.$id);
+		if (fl.parentId === parentId && !visitedIds.has(fl._id)) {
+			visitedIds.add(fl._id);
 			const newFl = { ...fl };
 			const children = convertToDenormalized(
 				flEntities,
 				bmEntities,
-				fl.$id,
+				fl._id,
 				visitedIds,
-				[...pathId, fl.$id],
+				[...pathId, fl._id],
 			);
 			if (children.length > 0) {
-				newFl.folders = children;
+				newFl.folders = children as any;
 			}
 
-			newFl.bookmarks = getBookmarksByPathId(newFl.$id);
-			// newFl.path = ["root", ...pathId, newFl.$id];
+			newFl.bookmarks = getBookmarksByPathId(newFl._id) as any;
+			// newFl.path = ["root", ...pathId, newFl._id];
 			newFl.path = ["root", ...pathId];
 			result.push(newFl);
 		}

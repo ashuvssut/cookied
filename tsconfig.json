@@ -1,10 +1,11 @@
 {
-  "compilerOptions": {
-    "strictNullChecks": true,
-    "noUncheckedIndexedAccess": true,
-    "paths": {
-      "app/*": ["./packages/app/*"]
-    }
-  },
-  "extends": "expo/tsconfig.base"
+	"compilerOptions": {
+		"strictNullChecks": true,
+		"noUncheckedIndexedAccess": true,
+		"paths": {
+			"app/*": ["./packages/app/*"],
+			"gconvex/*": ["./apps/convex/*"]
+		}
+	},
+	"extends": "expo/tsconfig.base"
 }

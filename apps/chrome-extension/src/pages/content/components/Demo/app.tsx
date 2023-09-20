@@ -5,6 +5,6 @@ export default function App() {
     console.log("content view loaded");
   }, []);
 
-  // return <div className="content-view">content view</div>;
-  return null;
+  return null
+  // return <div className="text-lime-400">content view</div>;
 }

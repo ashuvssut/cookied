@@ -8,6 +8,7 @@ const manifest: chrome.runtime.ManifestV3 = {
   name: "Cookied!!",
   version: packageJson.version,
   description: packageJson.description,
+  permissions: ["storage", "activeTab", "tabs"],
   // options_page: "src/pages/options/index.html",
   // background: {
   //   service_worker: "src/pages/background/index.js",
@@ -24,12 +25,12 @@ const manifest: chrome.runtime.ManifestV3 = {
     "128": "128-logo.png",
   },
   content_scripts: [
-    {
-      matches: ["http://*/*", "https://*/*", "<all_urls>"],
-      js: ["src/pages/content/index.js"],
-      // KEY for cache invalidation
-      css: ["assets/css/contentStyle<KEY>.chunk.css"],
-    },
+  //   {
+  //     matches: ["http://*/*", "https://*/*", "<all_urls>"],
+  //     js: ["src/pages/content/index.js"],
+  //     // KEY for cache invalidation
+  //     css: ["assets/css/contentStyle<KEY>.chunk.css"],
+  //   },
   ],
   // devtools_page: "src/pages/devtools/index.html",
   web_accessible_resources: [

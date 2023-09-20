@@ -9,14 +9,16 @@ import {
 import { RootState } from "../types";
 import { convertToDenormalized } from "app/store/utils/bmShelfUtils";
 import logr from "app/utils/logr";
+import { Id } from "gconvex/_generated/dataModel";
+import { TBm, TFl } from "gconvex/schema";
 
 const foldersAdapter = createEntityAdapter<IFolder>({
-	selectId: folder => folder.$id,
+	selectId: folder => folder._id,
 	sortComparer: (a, b) => a.title.localeCompare(b.title), // TODO: expt:- check if changin title to something else using jotai to something gives us sort ability or not (else create selectors)
 });
 
 const bookmarksAdapter = createEntityAdapter<IBookmark>({
-	selectId: bookmark => bookmark.$id,
+	selectId: bookmark => bookmark._id,
 	sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
@@ -46,20 +48,30 @@ export const bmShelfSlice = createSlice({
 					.map(folder => ({ ...folder, bookmarks: [], folders: [] })),
 			}),
 		},
+		setAllFl: {
+			reducer: (state, action: PA<IFolder[]>) =>
+				void foldersAdapter.setAll(state.folders, action.payload),
+			prepare: (folders: Omit<IFolder, "bookmarks" | "folders">[]) => ({
+				payload: folders //
+					.map(folder => ({ ...folder, bookmarks: [], folders: [] })),
+			}),
+		},
 		updateFl: (state, action: PA<Update<IFolder>>) =>
 			void foldersAdapter.updateOne(state.folders, action.payload),
 		removeFl: (state, action: PA<IFolder>) =>
-			void foldersAdapter.removeOne(state.folders, action.payload.$id),
+			void foldersAdapter.removeOne(state.folders, action.payload._id),
 
 		// Bookmark CRUD
 		addBm: (state, action: PA<IBookmark>) =>
 			void bookmarksAdapter.addOne(state.bookmarks, action.payload),
 		addManyBm: (state, action: PA<IBookmark[]>) =>
 			void bookmarksAdapter.addMany(state.bookmarks, action.payload),
+		setAllBm: (state, action: PA<IBookmark[]>) =>
+			void bookmarksAdapter.setAll(state.bookmarks, action.payload),
 		updateBm: (state, action: PA<Update<IBookmark>>) =>
 			void bookmarksAdapter.updateOne(state.bookmarks, action.payload),
 		removeBm: (state, action: PA<IBookmark>) =>
-			void bookmarksAdapter.removeOne(state.bookmarks, action.payload.$id),
+			void bookmarksAdapter.removeOne(state.bookmarks, action.payload._id),
 	},
 	extraReducers: builder => {},
 });
@@ -72,8 +84,8 @@ export default bmShelfSlice.reducer;
 export const { selectById: selectFlId } =
 	foldersAdapter.getSelectors<RootState>(state => state.bmShelf.folders);
 
-// export const { selectAll: selectAllBookmarks } =
-// 	bookmarksAdapter.getSelectors<RootState>(state => state.bmShelf.bookmarks);
+export const { selectById: selectBmId } =
+	bookmarksAdapter.getSelectors<RootState>(state => state.bmShelf.bookmarks);
 
 export const selectDenormalizedBmShelf = createSelector(
 	(state: RootState) => state.bmShelf,
@@ -89,10 +101,10 @@ export const selectFlPaths = createSelector(
 	folders => {
 		const folderEntities = folders.entities;
 		const flPaths = Object.values(folderEntities).map(folder => {
-			if (!folder) logr.warn("selectFlPaths: folder is undefined");
+			// if (!folder) logr.warn("selectFlPaths: folder is undefined");
 			if (!folder) return [];
 			const folderPath = [...folder.path];
-			if (folder.$id) folderPath.push(folder.$id); // add folder's own id to pathArr too
+			if (folder._id) folderPath.push(folder._id); // add folder's own id to pathArr too
 			return folderPath;
 		});
 		return flPaths;
@@ -114,7 +126,7 @@ export const selectFlPathWithTitleArray = createSelector(
 			const pathCopy = [...path].slice(1); // slice(1) removes "root" from path array
 			const titlePathArr = pathCopy.map(id => {
 				const folder = folderEntities[id];
-				if (!folder) logr.warn("selectFlPathsWithTitles: folder is undefined");
+				// if (!folder) logr.warn("selectFlPathsWithTitles: folder is undefined");
 				return folder?.title || "";
 			});
 			const id = path[path.length - 1]!; // last id is the folder's id (see selectFlPaths)
@@ -124,7 +136,7 @@ export const selectFlPathWithTitleArray = createSelector(
 		return flPathsWithTitles;
 	},
 );
-export const selectFlPathWithTitleById = createSelector(
+export const selectFlPathWithTitleByFlId = createSelector(
 	selectFlPathWithTitleArray,
 	(_s: RootState, flId: string | null) => flId,
 	(flPathWithTitlesArr, flId) => {
@@ -133,28 +145,28 @@ export const selectFlPathWithTitleById = createSelector(
 	},
 );
 
+export const selectFlPathWithTitleByBmId = createSelector(
+	selectFlPathWithTitleArray,
+	(state: RootState) => state.bmShelf.bookmarks,
+	(_s: RootState, bmId: string | null) => bmId,
+	(flPathWithTitlesArr, bookmarks, bmId) => {
+		if (!bmId) return undefined;
+		const bm = bookmarks.entities[bmId];
+		if (!bm) return undefined;
+		const flId = bm.parentId;
+		return flPathWithTitlesArr.find(fl => fl.id === flId);
+	},
+);
+
 // TS Types
-export interface IBookmark {
-	type: "bookmark";
-	$id: string;
-	parentId: string;
-	path: string[];
-	level: number;
-	title: string;
-	url: string;
-	$createdAt: string;
-	$updatedAt: string;
+export interface IBookmark extends Omit<TBm, "userId"> {
+	_id: Id<"bookmarks">;
+	_creationTime?: number;
+	userId?: string;
 }
 
-export interface IFolder {
-	type: "folder";
-	$id: string;
-	parentId: string;
-	path: string[];
-	level: number;
-	bookmarks: IBookmark[];
-	folders: IFolder[];
-	title: string;
-	$createdAt: string;
-	$updatedAt: string;
+export interface IFolder extends Omit<TFl, "userId"> {
+	_id: Id<"folders">;
+	_creationTime?: number;
+	userId?: string;
 }

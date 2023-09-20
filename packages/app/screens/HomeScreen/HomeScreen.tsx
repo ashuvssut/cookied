@@ -3,52 +3,55 @@ import { Header } from "app/components/Header";
 import { TreePanel } from "app/screens/HomeScreen/TreePanel";
 import { View, Pressable } from "dripsy";
 import { WebpageViewer } from "app/screens/HomeScreen/WebpageViewer";
-import { Platform } from "react-native";
 import { MdMenu } from "app/assets/icons";
 import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
-import { ISlideInViewRefProps, SlideInView } from "app/components/SlideInView";
-import { useRef } from "react";
+import {
+	ISlideInViewRefProps,
+	XSlideInView,
+} from "app/components/XSlideInView";
+import { useEffect, useRef } from "react";
+import { isWeb } from "app/utils/constants";
+import { useQuery } from "convex/react";
+import { api } from "gconvex/_generated/api";
+import { useAppDispatch } from "app/store/hooks";
+import { bmShelfAction } from "app/store/slices/bmShelfSlice";
 
-const isWeb = Platform.OS === "web";
 export default function HomeScreen() {
 	const style = usePressabilityApiStyles();
 	const ref = useRef<ISlideInViewRefProps>(null);
+	const dispatch = useAppDispatch();
+
+	const folders = useQuery(api.bmShelf.folder.getAll);
+	useEffect(() => {
+		if (folders) dispatch(bmShelfAction.setAllFl(folders));
+	}, [folders]);
+
+	const bookmarks = useQuery(api.bmShelf.bookmark.getAll);
+	useEffect(() => {
+		if (bookmarks) dispatch(bmShelfAction.setAllBm(bookmarks));
+	}, [bookmarks]);
+
 	return (
-		<SlideInView ref={ref}>
+		<XSlideInView ref={ref}>
 			<Screen>
 				{!isWeb && (
-					<View
-						sx={{
-							position: "absolute",
-							top: 14,
-							right: 20,
-							zIndex: 5,
-							elevation: 2,
-						}}
-					>
+					<View sx={{ position: "absolute", top: 14, right: 20, zIndex: 5 }}>
 						<Pressable
-							hitSlop={30}
+							variant="layout.center"
 							onPress={() => ref.current?.triggerToggle()}
-							sx={{
-								width: 35,
-								height: 35,
-								elevation: 5,
-								borderRadius: 5,
-								justifyContent: "center",
-								alignItems: "center",
-							}}
+							sx={{ width: 35, height: 35 }}
 							style={style}
-							android_ripple={{ borderless: true, color: "#fff" }}
+							android_ripple={{ borderless: true, color: "#fff5" }}
 						>
 							<MdMenu size={30} color="white" />
 						</Pressable>
 					</View>
 				)}
-				<View sx={{ height: "100%" }}>
+				<View sx={{ height: isWeb ? "100vh" : "100%" }}>
 					<Header />
 					<View sx={{ flex: 1 }}>
 						{isWeb ? (
-							<View sx={{ flexDirection: "row", height: "100vh" }}>
+							<View sx={{ flexDirection: "row", flex: 1 }}>
 								<TreePanel />
 								<WebpageViewer />
 							</View>
@@ -61,6 +64,6 @@ export default function HomeScreen() {
 					</View>
 				</View>
 			</Screen>
-		</SlideInView>
+		</XSlideInView>
 	);
 }

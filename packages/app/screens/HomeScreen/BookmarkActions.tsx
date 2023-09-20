@@ -1,13 +1,18 @@
 import { View, useDripsyTheme } from "dripsy";
 import { ComponentProps, FC } from "react";
 import { IBookmark } from "app/store/slices/bmShelfSlice";
-import { MdDeleteOutline, MdOutlineOpenInNew } from "app/assets/icons";
+import {
+	MdDeleteOutline,
+	MdModeEdit,
+	MdOutlineOpenInNew,
+} from "app/assets/icons";
 import { openURL } from "expo-linking";
 import { IconButton } from "app/components/IconButton";
-import { Platform } from "react-native";
 import { useAtom } from "jotai";
 import { activeEntityIdAtom } from "app/store/slices/compoState";
-import { useSdkBmShelfDB } from "app/hooks/useBmShelfDB/useSdkBmShelfDB";
+import { useBmShelfDb } from "app/hooks/useBmShelfDb";
+import { isWeb } from "app/utils/constants";
+import { useModal } from "app/components/Modal";
 
 interface IBookmarkActions extends ComponentProps<typeof View> {
 	node: IBookmark;
@@ -15,10 +20,20 @@ interface IBookmarkActions extends ComponentProps<typeof View> {
 export const BookmarkActions: FC<IBookmarkActions> = ({ node, ...props }) => {
 	const { onPrimary } = useDripsyTheme().theme.colors;
 	const [_, setActiveEntityId] = useAtom(activeEntityIdAtom);
-	const { deleteBookmark } = useSdkBmShelfDB();
+	const { deleteBookmark } = useBmShelfDb();
+	const { openModal } = useModal();
+
 	return (
 		<View {...props} sx={{ position: "absolute", right: "$3", ...props.sx }}>
 			<View sx={{ gap: 5, flexDirection: "row" }}>
+				<IconButton
+					onPress={() => {
+						setActiveEntityId(node._id);
+						openModal({ type: "edit-bookmark" });
+					}}
+				>
+					<MdModeEdit size={22} color={onPrimary} />
+				</IconButton>
 				<IconButton
 					onPress={() => {
 						setActiveEntityId(null);
@@ -30,8 +45,8 @@ export const BookmarkActions: FC<IBookmarkActions> = ({ node, ...props }) => {
 				</IconButton>
 				<IconButton
 					onPress={() => {
-						setActiveEntityId(node.$id);
-						if (Platform.OS === "web") {
+						setActiveEntityId(node._id);
+						if (isWeb) {
 							window.open(node.url, "_blank");
 							return;
 						}

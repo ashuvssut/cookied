@@ -1,18 +1,21 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Slot } from "expo-router";
 import LoadingModal from "app/components/LoadingModal";
-import { ProtectedRoute } from "app/components/ProtectedRoute";
+import { ClerkProtectedRoute } from "app/components/ClerkProtectedRoute";
+import { ClerkAuth } from "app/components/ClerkAuth";
 import { DripsyTheme } from "app/theme";
 import { ReduxProvider } from "app/store/ReduxProvider";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AppState, Platform } from "react-native";
+import { AppState } from "react-native";
 import type { AppStateStatus } from "react-native";
 import { focusManager } from "@tanstack/react-query";
 import NetInfo from "@react-native-community/netinfo";
 import { onlineManager } from "@tanstack/react-query";
-import { Modal } from "app/components/Modal";
+import { ModalController } from "app/components/Modal";
 import NetworkStatus from "app/components/NetworkStatus";
+import { isWeb } from "app/utils/constants";
+import "react-native-get-random-values";
 
 const queryClient = new QueryClient();
 
@@ -23,9 +26,7 @@ onlineManager.setEventListener(setOnline => {
 });
 
 function onAppStateChange(status: AppStateStatus) {
-	if (Platform.OS !== "web") {
-		focusManager.setFocused(status === "active");
-	}
+	if (!isWeb) focusManager.setFocused(status === "active");
 }
 
 export default function Root() {
@@ -36,19 +37,21 @@ export default function Root() {
 	}, []);
 
 	return (
-		<GestureHandlerRootView style={{ flex: 1 }}>
-			<DripsyTheme>
-				<ReduxProvider>
-					<QueryClientProvider client={queryClient}>
-						<NetworkStatus />
-						<ProtectedRoute>
-							<Slot />
-						</ProtectedRoute>
-						<LoadingModal />
-						<Modal />
-					</QueryClientProvider>
-				</ReduxProvider>
-			</DripsyTheme>
-		</GestureHandlerRootView>
+		<ClerkAuth>
+			<GestureHandlerRootView style={{ flex: 1 }}>
+				<DripsyTheme>
+					<ReduxProvider>
+						<QueryClientProvider client={queryClient}>
+							<NetworkStatus />
+							<ClerkProtectedRoute>
+								<Slot />
+							</ClerkProtectedRoute>
+							<LoadingModal />
+							<ModalController />
+						</QueryClientProvider>
+					</ReduxProvider>
+				</DripsyTheme>
+			</GestureHandlerRootView>
+		</ClerkAuth>
 	);
 }

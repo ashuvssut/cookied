@@ -1,0 +1,112 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "alt0Task", // Native dev server
+			"type": "shell",
+			// "options": {
+			// 	"cwd": "" // set cwd to linux home directory
+			// },
+			"presentation": {
+				"group": "dev",
+				"clear": true,
+				"close": true
+			},
+			"command": "yarn workspace native start"
+		},
+		{
+			"type": "shell",
+			"label": "alt9Task", // Native Android Build + dev server
+			"presentation": {
+				"group": "dev",
+				"clear": true,
+				"panel": "shared"
+			},
+			"command": "yarn workspace native android"
+		},
+		{
+			"label": "alt8Task", // Run Nextjs dev server
+			"type": "shell",
+			"presentation": {
+				"group": "dev",
+				"clear": true,
+				"panel": "dedicated"
+				// "close": true
+			},
+			"command": "yarn workspace web dev"
+		},
+		{
+			"label": "alt7Task", // Vite Chrome Extension dev server
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": "yarn workspace ext dev"
+		},
+		{
+			"label": "alt6Task", //
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": ""
+		},
+		{
+			"label": "alt5Task", //
+			"type": "shell",
+			"presentation": {
+				"clear": true,
+				"panel": "dedicated",
+				"close": true
+			},
+			"command": ""
+		},
+		{
+			"label": "SftAlt9Task", // Convex Dev Server
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": "npx convex dev --tail-logs"
+		},
+		{
+			"label": "SftAlt8Task", // Convex Dashboard
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": "npx convex dashboard"
+		},
+		{
+			"label": "SftAlt7Task", //
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": ""
+		},
+		{
+			"label": "SftAlt6Task", //
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": ""
+		},
+		{
+			"label": "SftAlt5Task", //
+			"type": "shell",
+			"presentation": {
+				"clear": true
+				// "close": true
+			},
+			"command": ""
+		}
+	]
+}

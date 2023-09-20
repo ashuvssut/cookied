@@ -1,18 +1,21 @@
 import HomeScreen from "app/screens/HomeScreen";
+import { Avatar } from "app/components/Avatar";
 import { View, Text, useDripsyTheme } from "dripsy";
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, useWindowDimensions } from "react-native";
+import { Image, StyleSheet, useWindowDimensions } from "react-native";
 import React from "react";
-import { userAtom } from "app/store/slices/auth";
-import { useAtom } from "jotai";
 import { Th } from "app/theme/components";
-import { usePlatformAuth } from "app/hooks/useAuth";
+import { useAuth, useUser } from "app/utils/clerk";
+import { useRouter } from "solito/router";
+import { Toast } from "app/components/Toast";
+import { MdAccountCircle } from "app/assets/icons";
 
 const HomeScreenWithDrawer = () => {
-	const [user] = useAtom(userAtom);
-	const { signOut } = usePlatformAuth();
+	const { user } = useUser();
+	const { isLoaded, signOut } = useAuth();
 	const { linearGradients } = useDripsyTheme().theme;
 	const { width } = useWindowDimensions();
+	const router = useRouter();
 
 	return (
 		<View sx={{ position: "relative", height: "100%" }}>
@@ -38,19 +41,29 @@ const HomeScreenWithDrawer = () => {
 							<Text variant="semibold" sx={{ fontSize: 22, lineHeight: 30 }}>
 								Hi
 							</Text>
-							<Text variant="semibold">{user?.name}</Text>
+							<Text variant="semibold">{user?.firstName}</Text>
 						</View>
 					</View>
 					<View
 						sx={{ bg: "#888", height: StyleSheet.hairlineWidth, mt: "$4" }}
 					/>
 					<View sx={{ flex: 1 }} />
-					<Th.ButtonPrimary
-						onPress={signOut}
-						sx={{ flex: 1, marginBottom: "$5" }}
-					>
-						LOGOUT
-					</Th.ButtonPrimary>
+					{isLoaded && (
+						<Th.ButtonPrimary
+							onPress={async () => {
+								try {
+									await signOut();
+								} catch (err) {
+									Toast.error("Unable to Log out.");
+									console.log(err.message || err.toString());
+								}
+								router.replace({ pathname: "/" });
+							}}
+							sx={{ flex: 1, marginBottom: "$5" }}
+						>
+							LOGOUT
+						</Th.ButtonPrimary>
+					)}
 				</View>
 			</View>
 			<HomeScreen />
@@ -59,26 +72,3 @@ const HomeScreenWithDrawer = () => {
 };
 
 export default HomeScreenWithDrawer;
-
-function Avatar() {
-	const [user] = useAtom(userAtom);
-
-	return (
-		<View
-			variant="layout.secondary"
-			sx={{
-				width: 60,
-				height: 60,
-				borderRadius: 60,
-				overflow: "hidden",
-				justifyContent: "center",
-				alignItems: "center",
-				bg: "#434343",
-			}}
-		>
-			<Text sx={{ fontSize: 35 }} variant="semibold">
-				{user?.name.charAt(0).toUpperCase()}
-			</Text>
-		</View>
-	);
-}

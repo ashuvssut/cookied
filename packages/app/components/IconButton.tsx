@@ -14,6 +14,7 @@ export const IconButton: FC<PressableProps> = ({ children, sx, ...props }) => {
 				userSelect: "none",
 				...sx,
 			}}
+			android_ripple={{ color: "#fff5" }}
 			{...props}
 			style={style}
 		>

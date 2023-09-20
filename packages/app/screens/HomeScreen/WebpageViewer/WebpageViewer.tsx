@@ -4,12 +4,15 @@ import { useFocusEffect } from "expo-router";
 import { useModal } from "app/components/Modal";
 
 export const WebpageViewer = () => {
-	const { onOpen, setPayload } = useModal();
+	const { openModal } = useModal();
 	const { sharedData } = useSendIntent();
 	useFocusEffect(
 		useCallback(() => {
-			setPayload({ sharedData });
-			if (sharedData) onOpen("add-bookmark");
+			if (sharedData)
+				openModal({
+					type: "add-bookmark",
+					payload: { sharedBmUrl: String(sharedData) },
+				});
 		}, [sharedData]),
 	);
 

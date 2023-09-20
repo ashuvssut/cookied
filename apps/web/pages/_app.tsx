@@ -6,14 +6,16 @@ import React, { useEffect } from "react";
 import type { SolitoAppProps } from "solito";
 import { ReduxProvider } from "app/store/ReduxProvider";
 import { DripsyTheme } from "app/theme";
-import { ProtectedRoute } from "app/components/ProtectedRoute";
+import { ClerkProtectedRoute } from "app/components/ClerkProtectedRoute";
+import { ClerkAuth } from "app/components/ClerkAuth";
 import LoadingModal from "app/components/LoadingModal";
 import { resetReduxPersist_reload } from "app/utils/storage";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Modal } from "app/components/Modal";
+import { ModalController } from "app/components/Modal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles.css";
+import { ClerkProvider } from "@clerk/nextjs";
 
 function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 	useEffect(() => {
@@ -56,30 +58,32 @@ function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 					content="https://raw.githubusercontent.com/ashuvssut/cookied/dev/packages/app/assets/svg/good-cookie-square.svg"
 				/>
 			</Head>
-			<GestureHandlerRootView style={{ flex: 1 }}>
-				<DripsyTheme>
-					<ReduxProvider>
-						<ProtectedRoute>
-							<Component {...pageProps} />
-							<LoadingModal />
-							<Modal />
-							<ToastContainer
-								position="top-right"
-								autoClose={5000}
-								hideProgressBar={false}
-								newestOnTop={false}
-								closeOnClick
-								rtl={false}
-								pauseOnFocusLoss
-								draggable
-								pauseOnHover
-								theme="colored"
-								toastClassName="react-toastify"
-							/>
-						</ProtectedRoute>
-					</ReduxProvider>
-				</DripsyTheme>
-			</GestureHandlerRootView>
+			<ClerkAuth>
+				<GestureHandlerRootView style={{ flex: 1 }}>
+					<DripsyTheme>
+						<ReduxProvider>
+							<ClerkProtectedRoute>
+								<Component {...pageProps} />
+								<LoadingModal />
+								<ModalController modalMaxWidth={700} />
+								<ToastContainer
+									position="top-right"
+									autoClose={5000}
+									hideProgressBar={false}
+									newestOnTop={false}
+									closeOnClick
+									rtl={false}
+									pauseOnFocusLoss
+									draggable
+									pauseOnHover
+									theme="colored"
+									toastClassName="react-toastify"
+								/>
+							</ClerkProtectedRoute>
+						</ReduxProvider>
+					</DripsyTheme>
+				</GestureHandlerRootView>
+			</ClerkAuth>
 		</>
 	);
 }

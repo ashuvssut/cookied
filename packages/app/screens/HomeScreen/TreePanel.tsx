@@ -8,7 +8,7 @@ import {
 import { useAppSelector } from "app/store/hooks";
 import { TreeView } from "app/components/TreeView";
 import { Text, View, Pressable, useDripsyTheme } from "dripsy";
-import { userAtom } from "app/store/slices/auth";
+import { useUser } from "app/utils/clerk";
 import { useAtom } from "jotai";
 import { FolderActions } from "app/screens/HomeScreen/FolderActions";
 import {
@@ -16,22 +16,26 @@ import {
 	MdFolderOpen,
 	MdOutlineBookmarkBorder,
 } from "app/assets/icons";
-import { Platform, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import { usePressabilityApiStyles } from "app/hooks/usePressabilityApiStyles";
 import { atom } from "jotai";
 import { BookmarkActions } from "app/screens/HomeScreen/BookmarkActions";
 import { useModal } from "app/components/Modal";
-import { activeEntityIdAtom, hoverFocusEntityIdAtom } from "app/store/slices/compoState";
+import {
+	activeEntityIdAtom,
+	hoverFocusEntityIdAtom,
+} from "app/store/slices/compoState";
+import { isWeb } from "app/utils/constants";
 
 export function TreePanel() {
 	const foldersWithBookmarks = useAppSelector(selectDenormalizedBmShelf);
 	return (
-		<View sx={{ flex: 1, minWidth: 400, maxWidth: 500 }}>
+		<View sx={{ flex: 1, minWidth: 300, maxWidth: 500 }}>
 			<TreePanelHeader />
 			<ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
 				<TreeView
 					treeData={{
-						nodes: foldersWithBookmarks.folders,
+						nodes: foldersWithBookmarks.folders as any,
 						rootLeafs: [] as IBookmark[],
 					}}
 					// treeData={{ // Faker data
@@ -42,7 +46,7 @@ export function TreePanel() {
 					nodeArrKey="folders"
 					leafArrKey="bookmarks"
 					renderNode={(node, setCollapse) => (
-						<Node node={node} setCollapse={setCollapse} />
+						<Node node={node as any} setCollapse={setCollapse} />
 					)}
 					renderLeaf={node => <LeafNode node={node} />}
 				/>
@@ -52,8 +56,8 @@ export function TreePanel() {
 }
 
 const TreePanelHeader = () => {
-	const user = useAtom(userAtom);
-	const whosBms = user[0]?.name ? `${user[0]?.name}'s` : "Your";
+	const { user } = useUser();
+	const whosBms = user?.firstName ? `${user?.firstName}'s` : "Your";
 	return (
 		<View
 			variants={[
@@ -82,7 +86,7 @@ const Node: FC<INode> = memo(
 		const [close, setClose] = useState(false);
 		const [activeEntityId, setActiveEntityId] = useAtom(activeEntityIdAtom);
 		const [hfEntityId, setHoverFocusEntityId] = useAtom(hoverFocusEntityIdAtom);
-		const showActions = Platform.OS !== "web" || hfEntityId === node.$id;
+		const showActions = !isWeb || hfEntityId === node._id;
 
 		useEffect(() => {
 			setCollapse(isCollapsed => {
@@ -98,17 +102,17 @@ const Node: FC<INode> = memo(
 
 		return (
 			<Pressable
-				key={"fl" + node.$id}
+				key={"fl" + node._id}
 				variants={["layout.narrowHzTile", "layout.row", "layout.noBorderX"]}
 				style={style}
 				sx={{
-					borderColor: activeEntityId === node.$id ? "outline" : undefined,
-					backgroundColor: activeEntityId === node.$id ? "#222a" : undefined,
+					borderColor: activeEntityId === node._id ? "outline" : undefined,
+					backgroundColor: activeEntityId === node._id ? "#222a" : undefined,
 				}}
-				onHoverIn={() => setHoverFocusEntityId(node.$id)}
-				// onLongPress={() => setHoverFocusEntityId(node.$id)}
+				onHoverIn={() => setHoverFocusEntityId(node._id)}
+				// onLongPress={() => setHoverFocusEntityId(node._id)}
 				onPress={() => {
-					setActiveEntityId(node.$id);
+					setActiveEntityId(node._id);
 					setCollapse(isCollapsed => {
 						setClose(!isCollapsed);
 						return !isCollapsed;
@@ -125,7 +129,7 @@ const Node: FC<INode> = memo(
 					</View>
 					<Text sx={{ top: "$1", py: "$2" }} numberOfLines={1}>
 						{node.title}
-						{/* {`${node.title.slice(0, 5)} - ${node.$id} - ${node.parentId}`} */}
+						{/* {`${node.title.slice(0, 5)} - ${node._id} - ${node.parentId}`} */}
 					</Text>
 					{showActions && (
 						<FolderActions node={node} onActionComplete={() => openFolder()} />
@@ -146,37 +150,38 @@ const LeafNode: FC<ILeafNode> = memo(
 		const [_, setActiveUrl] = useAtom(activeUrlAtom);
 		const { onPrimary } = useDripsyTheme().theme.colors;
 		const style = usePressabilityApiStyles();
-		const { onOpen, setPayload } = useModal();
+		const { openModal } = useModal();
 		const [activeEntityId, setActiveEntityId] = useAtom(activeEntityIdAtom);
 		const [hfEntityId, setHoverFocusEntityId] = useAtom(hoverFocusEntityIdAtom);
-		const showActions = Platform.OS !== "web" || hfEntityId === node.$id;
+		const showActions = !isWeb || hfEntityId === node._id;
 		return (
 			<Pressable
-				key={"bm" + node.$id}
+				key={"bm" + node._id}
 				variants={["layout.narrowHzTile", "layout.row", "layout.noBorderX"]}
 				style={style}
-				onHoverIn={() => setHoverFocusEntityId(node.$id)}
-				// onLongPress={() => setHoverFocusEntityId(node.$id)}
+				onHoverIn={() => setHoverFocusEntityId(node._id)}
+				// onLongPress={() => setHoverFocusEntityId(node._id)}
 				sx={{
-					borderColor: activeEntityId === node.$id ? "outline" : undefined,
-					backgroundColor: activeEntityId === node.$id ? "#222a" : undefined,
+					borderColor: activeEntityId === node._id ? "outline" : undefined,
+					backgroundColor: activeEntityId === node._id ? "#222a" : undefined,
 				}}
 				onPress={() => {
-					setActiveEntityId(node.$id);
+					setActiveEntityId(node._id);
 					setActiveUrl(node.url);
-					if (Platform.OS !== "web") {
-						setPayload({ src: node.url });
-						onOpen("web-view");
-					}
+					if (!isWeb)
+						openModal({ type: "web-view", payload: { src: node.url } });
 				}}
 			>
-				<View variant="layout.row" sx={{ pl: node.level * p, width: "100%" }}>
+				<View
+					variant="layout.row"
+					sx={{ pl: (node.level + 1) * p, width: "100%" }}
+				>
 					<View sx={{ pr: "$3" }}>
 						<MdOutlineBookmarkBorder size={18} color={onPrimary} />
 					</View>
 					<Text sx={{ top: "$1", py: "$2" }} numberOfLines={1}>
 						{node.title}
-						{/* {`${node.title.slice(0, 5)} - ${node.$id} - ${node.parentId}`} */}
+						{/* {`${node.title.slice(0, 5)} - ${node._id} - ${node.parentId}`} */}
 					</Text>
 					{showActions && <BookmarkActions node={node} />}
 				</View>

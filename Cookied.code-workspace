@@ -13,21 +13,21 @@
 			"path": "apps/web"
 		},
 		{
-			"name": "ext | Chrome Extension",
+			"name": "ext | Chrome Extension Bm Saver",
 			"path": "apps/chrome-extension"
 		},
+		// {
+		// 	"name": "api | Vercel Serverless",
+		// 	"path": "apps/api"
+		// },
 		{
-			"name": "api | Vercel Serverless",
-			"path": "apps/api"
-		},
-		{
-			"name": "fx | Appwrite Functions",
-			"path": "apps/fx"
+			"name": "gconvex | Convex Backend",
+			"path": "apps/convex/"
 		},
 		{
 			"name": "cookied | Root",
 			"path": "."
-		},
+		}
 	],
 	"settings": {
 		"svg.preview.background": "dark-transparent",

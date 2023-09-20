@@ -3,10 +3,11 @@ import { ComponentProps, FC } from "react";
 import { IFolder } from "app/store/slices/bmShelfSlice";
 import {
 	MdDeleteOutline,
+	MdModeEdit,
 	MdOutlineBookmarkAdd,
 	MdOutlineCreateNewFolder,
 } from "app/assets/icons";
-import { useBmShelfDB } from "app/hooks/useBmShelfDB/useBmShelfDB";
+import { useBmShelfDb } from "app/hooks/useBmShelfDb";
 import { useModal } from "app/components/Modal";
 import { IconButton } from "app/components/IconButton";
 import { useAtom } from "jotai";
@@ -18,15 +19,19 @@ interface IFolderActions extends ComponentProps<typeof View> {
 	onActionComplete?: () => void;
 }
 export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
-	const { deleteFolder } = useBmShelfDB();
+	const { deleteFolder } = useBmShelfDb();
 	const { onPrimary } = useDripsyTheme().theme.colors;
-	const { onOpen } = useModal();
+	const { openModal } = useModal();
 	const addBm = async () => {
-		onOpen("add-bookmark");
+		openModal({ type: "add-bookmark", payload: { sharedBmUrl: null } });
+		props.onActionComplete?.();
+	};
+	const editFl = async () => {
+		openModal({ type: "edit-folder" });
 		props.onActionComplete?.();
 	};
 	const addFl = async () => {
-		onOpen("add-folder");
+		openModal({ type: "add-folder", payload: { parentFl: node } });
 		props.onActionComplete?.();
 	};
 	const [_, setActiveEntityId] = useAtom(activeEntityIdAtom);
@@ -35,6 +40,14 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 			<View sx={{ gap: 5, flexDirection: "row" }}>
 				{node && (
 					<>
+						<IconButton
+							onPress={() => {
+								setActiveEntityId(node._id);
+								editFl();
+							}}
+						>
+							<MdModeEdit size={22} color={onPrimary} />
+						</IconButton>
 						<IconButton
 							onPress={() => {
 								setActiveEntityId(null);
@@ -46,7 +59,7 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 						</IconButton>
 						<IconButton
 							onPress={() => {
-								setActiveEntityId(node.$id);
+								setActiveEntityId(node._id);
 								addBm();
 							}}
 						>
@@ -56,7 +69,7 @@ export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
 				)}
 				<IconButton
 					onPress={() => {
-						setActiveEntityId(node?.$id ?? null);
+						setActiveEntityId(node?._id ?? null);
 						addFl();
 					}}
 					sx={{ borderColor: !node ? "outline" : undefined }}

@@ -1,3 +1,12 @@
+* {
+	outline: none;
+}
+body {
+	background: black;
+}
+::-webkit-scrollbar {
+    display: none;
+}
 .react-toastify {
 	font-family: "Poppins", sans-serif;
 }
