@@ -1,5 +1,5 @@
 import { ExpoConfig } from "expo/config";
-import env from "./env.js";
+import env from "native/env";
 
 const config: ExpoConfig = {
 	slug: "cookied",
