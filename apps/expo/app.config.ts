@@ -1,5 +1,4 @@
 import { ExpoConfig } from "expo/config";
-import env from "native/env";
 
 const config: ExpoConfig = {
 	slug: "cookied",
@@ -8,11 +7,22 @@ const config: ExpoConfig = {
 	version: "0.1.0",
 	scheme: "cookied",
 	assetBundlePatterns: ["**/*"],
-	owner: env.EAS_PROJECT_OWNER,
+	owner: "ashuvssut",
 	orientation: "portrait",
 	extra: {
-		...env,
-		eas: { projectId: env.EAS_PROJECT_ID },
+		EAS_PROJECT_OWNER: "ashuvssut",
+		EAS_PROJECT_ID: "664b92a2-77d0-4698-8e63-f7f05f584eed",
+		APPWRITE_ENDPOINT: "https://cloud.appwrite.io/v1",
+		APPWRITE_PROJECT_ID: "6469040898e19fe9052c",
+		VERCEL_DEV_ENDPOINT: "http://localhost:2023/api",
+		VERCEL_PROD_ENDPOINT: "https://cookied.vercel.app/api",
+		APPWRITE_DATABASE_ID: "647f6f1d99ac8628b69e",
+		APPWRITE_BOOKMARK_COLLECTION_ID: "6480c52f46e67ce6fe3f",
+		APPWRITE_FOLDER_COLLECTION_ID: "6480c53dd969cfb4e64d",
+		CLERK_PUBLISHABLE_KEY:
+			"pk_test_cGxlYXNhbnQtc2VhbC04MC5jbGVyay5hY2NvdW50cy5kZXYk",
+		CONVEX_URL: "https://exuberant-perch-307.convex.cloud",
+		eas: { projectId: "664b92a2-77d0-4698-8e63-f7f05f584eed" },
 		// MODE: !!env.MODE ? env.MODE : "dev", // example
 	},
 	web: {
