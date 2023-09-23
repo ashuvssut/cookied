@@ -16,12 +16,12 @@ export async function GET(req: Request) {
 
 		let document = absolutify(htmlText, targetUrl);
 
-		// use DOMParser to also handle the unhandled relative urls in srcset attributes https://github.com/sorensen/absolutify/issues/8
+		// use cheerio to also handle the unhandled relative urls in srcset attributes https://github.com/sorensen/absolutify/issues/8
 		document = await absolutifySrcsetAttributes(document, targetUrl);
 		console.log(document);
 		const clientOrigins = [
 			process.env.NEXT_PUBLIC_WEB_URL,
-			process.env.NEXT_PUBLIC_WEB_DEV_URL,
+			process.env.NEXT_PUBLIC_DEV_WEB_URL,
 		].join(" ");
 
 		const nextRes = NextResponse.json({ body: document }, { status: 200 });
