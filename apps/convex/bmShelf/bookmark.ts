@@ -5,7 +5,7 @@ import { getUserId } from "gconvex/utils";
 import { handleFlUpdate } from "gconvex/bmShelf/folder";
 
 export const getAll = query({
-	handler: async (ctx, args) => {
+	handler: async ctx => {
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 

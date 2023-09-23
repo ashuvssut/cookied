@@ -23,7 +23,7 @@ export function generateRandomBookmark(
 		url: faker.internet.url(),
 		// _createdAt: faker.date.past().toISOString(),
 		// _updatedAt: faker.date.recent().toISOString(),
-		_creationTime: new Date().toISOString(),
+		_creationTime: new Date().getTime(),
 	};
 }
 
@@ -46,7 +46,7 @@ export function generateRandomFolder(
 		title: faker.word.words({ count: { min: 3, max: 5 } }),
 		// _createdAt: faker.date.past().toISOString(),
 		// _updatedAt: faker.date.recent().toISOString(),
-		_creationTime: new Date().toISOString(),
+		_creationTime: new Date().getTime(),
 	};
 }
 

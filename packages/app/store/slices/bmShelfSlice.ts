@@ -155,7 +155,7 @@ export const selectFlPathWithTitleByBmId = createSelector(
 // TS Types
 export interface IBookmark extends Omit<TBm, "userId"> {
 	_id: Id<"bookmarks">;
-	_creationTime?: string;
+	_creationTime?: number;
 	userId?: string;
 }
 export interface IBookmarkNode extends IBookmark {}
@@ -164,7 +164,7 @@ export interface IBookmarkNode extends IBookmark {}
 // IFolderNode  has folder & bookmarks array of IFolder[] & IBookmark[] resp. because they store the whole node/leaf object array. They are used in rendering TreeView
 export interface IFolder extends Omit<TFl, "userId"> {
 	_id: Id<"folders">;
-	_creationTime?: string;
+	_creationTime?: number;
 	userId?: string;
 }
 export interface IFolderNode extends Omit<IFolder, "folders" | "bookmarks"> {
