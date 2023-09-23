@@ -7056,6 +7056,8 @@ __metadata:
     "@types/lodash": ^4.14.195
     "@types/react": ^18.0.17
     "@types/react-native": ^0.69.5
+    absolutify: ^0.1.0
+    cheerio: ^1.0.0-rc.12
     convex: ^1.3.1
     eslint: ^8.21.0
     jotai: ^2.4.2

@@ -7,6 +7,8 @@ import {
 	useState,
 } from "react";
 import { Toast } from "app/components/Toast";
+import { useAction } from "convex/react";
+import { api } from "gconvex/_generated/api";
 
 interface IWebView
 	extends DetailedHTMLProps<
@@ -16,20 +18,19 @@ interface IWebView
 export const WebView: FC<IWebView> = ({ src, style, ...props }) => {
 	const [htmlContent, setHtmlContent] = useState<string | undefined>(undefined);
 
+	const getWebResource = useAction(api.webContent.fetchWebpage);
 	useEffect(() => {
 		async function getHtml() {
-			if (!src) return;
+			if (!src) {
+				console.error("Missing URL. Cannot fetch iframe HTML")
+				return;
+			}
 			try {
-				const res = await fetch(
-					"http://localhost:2023/api/webpage-fetch?url=" + src,
-				);
+				const res = await getWebResource({ url: src });
 
-				if (res.status === 200) {
-					const json = await res.json();
-					console.log(json.body)
-					setHtmlContent(json.body);
-				} else {
-					console.error(`fetch webpage failed. Status: ${res.status}`);
+				if (res.statusCode === 200) setHtmlContent(res.htmlDoc);
+				else {
+					console.error(`fetch webpage failed. Status: ${res.statusCode}`);
 					Toast.error(`Something went wrong! Failed to fetch webpage`);
 				}
 			} catch (error) {
