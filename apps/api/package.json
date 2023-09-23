@@ -12,6 +12,7 @@
 	},
 	"dependencies": {
 		"absolutify": "^0.1.0",
+		"cheerio": "^1.0.0-rc.12",
 		"encoding": "^0.1.13",
 		"next": "13.4.3",
 		"react": "18.2.0",
