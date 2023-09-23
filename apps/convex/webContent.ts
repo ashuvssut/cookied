@@ -1,6 +1,7 @@
 "use node";
 import { v } from "convex/values";
 import { action } from "gconvex/_generated/server";
+// @ts-ignore
 import absolutify from "absolutify";
 import { absolutifySrcsetAttributes, fetchHTML } from "gconvex/utils";
 
@@ -52,8 +53,8 @@ export const fetchWebpage = action({
 			// console.log(document);
 
 			return { htmlDoc: document, statusCode: 200 };
-		} catch (error) {
-			throw new Error(error);
+		} catch (error: any) {
+			throw new Error(error.message || error.toString());
 		}
 	},
 });
