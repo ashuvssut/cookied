@@ -16,7 +16,10 @@ export const getTitleFromUrl = action({
 				const descriptionMatch = htmlContent //
 					.match(/<meta\s+name=["']description["']\s+content=["'](.*?)["']/i);
 
-				const title = titleMatch && titleMatch[1] ? titleMatch[1] : "Untitled";
+				const urlObj = new URL(url);
+				const altUrl = urlObj.hostname + urlObj.pathname;
+
+				const title = titleMatch && titleMatch[1] ? titleMatch[1] : altUrl;
 				const description =
 					descriptionMatch && descriptionMatch[1] ? descriptionMatch[1] : null;
 
