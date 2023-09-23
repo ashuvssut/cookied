@@ -49,13 +49,13 @@ export const remove = mutation({
 	args: { flId: v.id("folders") },
 	handler: async (ctx, { flId }) => {
 		const identity = await ctx.auth.getUserIdentity();
-		if (identity === null) throw new Error("Unauthenticated. Please Sign in.");
+		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 
 		// prepare deletion list recursively to delete all children Fl & Bm
 		const deletionLists = await getDeletionList(ctx, [], [flId]);
 		const allIdsToDelete = [...deletionLists.bmList, ...deletionLists.flList];
 		const uniqueIdsToDelete = Array.from(new Set(allIdsToDelete));
-		console.log(uniqueIdsToDelete);
+		// console.log(uniqueIdsToDelete);
 		await Promise.all(uniqueIdsToDelete.map(id => ctx.db.delete(id)));
 
 		return flId;

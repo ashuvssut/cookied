@@ -5,12 +5,11 @@ import { getUserId } from "gconvex/utils";
 import { handleFlUpdate } from "gconvex/bmShelf/folder";
 
 export const getAll = query({
-	args: {},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity();
-		if (identity === null) throw new Error("Unauthenticated. Please Sign in.");
+		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 
-		const userId = identity.tokenIdentifier;
+		const userId = getUserId(identity);
 		const allBms = await ctx.db
 			.query("bookmarks")
 			.withSearchIndex("by_userId", q => q.search("userId", userId))
@@ -23,7 +22,7 @@ export const create = mutation({
 	args: bookmarksCols,
 	handler: async (ctx, newBm) => {
 		const identity = await ctx.auth.getUserIdentity();
-		if (identity === null) throw new Error("Unauthenticated. Please Sign in.");
+		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 		const bmId = await ctx.db.insert("bookmarks", newBm);
 
 		// update parent Fl
@@ -48,7 +47,7 @@ export const remove = mutation({
 	args: { bmId: v.id("bookmarks") },
 	handler: async (ctx, { bmId }) => {
 		const identity = await ctx.auth.getUserIdentity();
-		if (identity === null) throw new Error("Unauthenticated. Please Sign in.");
+		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 		await ctx.db.delete(bmId);
 		return bmId;
 	},

@@ -9,7 +9,6 @@ export function useSharedBmUrl() {
 	const baseUrl = router.asPath.replace(/\?.*/, "");
 
 	const { openModal, modalType } = useModal();
-	useEffect(() => console.log(modalType), [modalType]);
 	useEffect(() => {
 		const url = isArray(sharedBmUrl) ? sharedBmUrl[0] : sharedBmUrl;
 		if (url) {
