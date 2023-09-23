@@ -8,7 +8,6 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../types";
 import { convertToDenormalized } from "app/store/utils/bmShelfUtils";
-import logr from "app/utils/logr";
 import { Id } from "gconvex/_generated/dataModel";
 import { TBm, TFl } from "gconvex/schema";
 
@@ -48,14 +47,8 @@ export const bmShelfSlice = createSlice({
 					.map(folder => ({ ...folder, bookmarks: [], folders: [] })),
 			}),
 		},
-		setAllFl: {
-			reducer: (state, action: PA<IFolder[]>) =>
-				void foldersAdapter.setAll(state.folders, action.payload),
-			prepare: (folders: Omit<IFolder, "bookmarks" | "folders">[]) => ({
-				payload: folders //
-					.map(folder => ({ ...folder, bookmarks: [], folders: [] })),
-			}),
-		},
+		setAllFl: (state, action: PA<IFolder[]>) =>
+			void foldersAdapter.setAll(state.folders, action.payload),
 		updateFl: (state, action: PA<Update<IFolder>>) =>
 			void foldersAdapter.updateOne(state.folders, action.payload),
 		removeFl: (state, action: PA<IFolder>) =>
@@ -92,6 +85,7 @@ export const selectDenormalizedBmShelf = createSelector(
 	shelf => {
 		const bookmarkEntities = shelf.bookmarks.entities;
 		const folderEntities = shelf.folders.entities;
+		// console.log(convertToDenormalized(folderEntities, bookmarkEntities));
 		return { folders: convertToDenormalized(folderEntities, bookmarkEntities) }; // denormalizedJson;
 	},
 );
@@ -161,12 +155,19 @@ export const selectFlPathWithTitleByBmId = createSelector(
 // TS Types
 export interface IBookmark extends Omit<TBm, "userId"> {
 	_id: Id<"bookmarks">;
-	_creationTime?: number;
+	_creationTime?: string;
 	userId?: string;
 }
+export interface IBookmarkNode extends IBookmark {}
 
+// TFl has folder & bookmarks array of string[] because they store document ids in those string[]
+// IFolderNode  has folder & bookmarks array of IFolder[] & IBookmark[] resp. because they store the whole node/leaf object array. They are used in rendering TreeView
 export interface IFolder extends Omit<TFl, "userId"> {
 	_id: Id<"folders">;
-	_creationTime?: number;
+	_creationTime?: string;
 	userId?: string;
+}
+export interface IFolderNode extends Omit<IFolder, "folders" | "bookmarks"> {
+	folders: IFolderNode[];
+	bookmarks: IBookmarkNode[];
 }

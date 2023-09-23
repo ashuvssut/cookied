@@ -18,3 +18,7 @@ export type PartialExceptForKeys<T, K extends (keyof T)[]> = Partial<
 	Omit<T, K[number]>
 > &
 	Required<Pick<T, K[number]>>;
+
+export type Prettify<T> = {
+	[K in keyof T]: T[K];
+} & {};

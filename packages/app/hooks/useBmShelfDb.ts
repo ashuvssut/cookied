@@ -5,7 +5,7 @@ import { TBm, TFl } from "gconvex/schema";
 import { Toast } from "app/components/Toast";
 import { barLoadingAtom } from "app/components/Header";
 import logr from "app/utils/logr";
-import { IBookmark, IFolder } from "app/store/slices/bmShelfSlice";
+import { IBookmark, IFolder, IFolderNode } from "app/store/slices/bmShelfSlice";
 import { useUser } from "app/utils/clerk";
 import { PartialExceptForKeys } from "app/types/utility";
 
@@ -37,7 +37,7 @@ export function useBmShelfDb() {
 	}
 
 	const deleteFl = useMutation(api.bmShelf.folder.remove);
-	async function deleteFolder(fl: IFolder) {
+	async function deleteFolder(fl: IFolderNode) {
 		const flId = fl._id;
 		setIsLoading(true);
 		try {
@@ -55,7 +55,6 @@ export function useBmShelfDb() {
 	}
 
 	const updateFl = useMutation(api.bmShelf.folder.update);
-
 	async function updateFolder(
 		flUpdate: PartialExceptForKeys<IFolder, ["_id", "type"]>,
 	) {
