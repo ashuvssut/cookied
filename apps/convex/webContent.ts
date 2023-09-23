@@ -4,6 +4,7 @@ import { action } from "gconvex/_generated/server";
 // @ts-ignore
 import absolutify from "absolutify";
 import { absolutifySrcsetAttributes, fetchHTML } from "gconvex/utils";
+import { load } from "cheerio";
 
 export const getTitleFromUrl = action({
 	args: { url: v.string() },
@@ -39,22 +40,37 @@ export const getTitleFromUrl = action({
 
 export const fetchWebpage = action({
 	args: { url: v.string() },
-	handler: async (ctx, { url: urlString }) => {
+	handler: async (ctx, { url }) => {
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
+
 		try {
-			if (!urlString) throw new Error("Missing URL parameter");
-			const urlObj = new URL(urlString);
-			const targetUrl = urlObj.origin;
-			const htmlText = await fetchHTML(targetUrl);
-
-			let document = absolutify(htmlText, targetUrl);
-
-			// use cheerio to also handle the unhandled relative urls in srcset attributes https://github.com/sorensen/absolutify/issues/8
-			document = await absolutifySrcsetAttributes(document, targetUrl);
-			// console.log(document);
-
-			return { htmlDoc: document, statusCode: 200 };
+			const res = await handleFetchWebpage(url);
+			return res;
 		} catch (error: any) {
 			throw new Error(error.message || error.toString());
 		}
 	},
 });
+
+export async function handleFetchWebpage(urlString: string) {
+	try {
+		if (!urlString) throw new Error("Missing URL parameter");
+		const urlObj = new URL(urlString);
+		const targetUrl = urlObj.origin;
+		const htmlText = await fetchHTML(targetUrl);
+
+		let document = absolutify(htmlText, targetUrl);
+
+		// use cheerio to also handle the unhandled relative urls in srcset attributes https://github.com/sorensen/absolutify/issues/8
+		document = await absolutifySrcsetAttributes(document, targetUrl);
+		// console.log(document);
+
+		const $ = load(document);
+		const searchableText = $.text();
+
+		return { htmlDoc: document, searchableText, statusCode: 200 };
+	} catch (error: any) {
+		throw new Error(error.message || error.toString());
+	}
+}

@@ -1,8 +1,9 @@
 import { query, mutation } from "gconvex/_generated/server";
 import { v } from "convex/values";
-import { bookmarksCols, parentIdSchema } from "../schema";
+import { TBm, bookmarksCols, parentIdSchema } from "../schema";
 import { getUserId } from "gconvex/utils";
 import { handleFlUpdate } from "gconvex/bmShelf/folder";
+import { handleFetchWebpage } from "gconvex/webContent";
 
 export const getAll = query({
 	handler: async ctx => {
@@ -23,10 +24,12 @@ export const create = mutation({
 	handler: async (ctx, newBm) => {
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
-		const bmId = await ctx.db.insert("bookmarks", newBm);
+
+		const bmObj = (await bmWithSearchableText(newBm)) as typeof newBm;
+		const bmId = await ctx.db.insert("bookmarks", bmObj);
 
 		// update parent Fl
-		const parentFlId = newBm.parentId;
+		const parentFlId = bmObj.parentId;
 		console.log(parentFlId);
 		if (parentFlId !== "root") {
 			const parentFl = await ctx.db.get(parentFlId);
@@ -39,7 +42,7 @@ export const create = mutation({
 			}
 		}
 
-		return { _id: bmId, ...newBm };
+		return { _id: bmId, ...bmObj };
 	},
 });
 
@@ -75,7 +78,19 @@ export const update = mutation({
 		if (!existingBm) throw new Error("Bookmark not found");
 		if (existingBm.userId !== userId) throw new Error("Unauthorized");
 
+		const bmObj =
+			existingBm.url !== updates.url
+				? await bmWithSearchableText(updates)
+				: updates;
+
 		await ctx.db.patch(bmId, updates);
-		return { _id: bmId, ...updates };
+		return { _id: bmId, ...bmObj };
 	},
 });
+
+async function bmWithSearchableText(bm: Partial<TBm>) {
+	if (!bm.url) return bm;
+	const { searchableText } = await handleFetchWebpage(bm.url);
+	const bmObj = { ...bm, searchableText };
+	return bmObj;
+}
