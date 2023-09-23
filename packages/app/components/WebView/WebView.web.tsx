@@ -21,11 +21,12 @@ export const WebView: FC<IWebView> = ({ src, style, ...props }) => {
 			if (!src) return;
 			try {
 				const res = await fetch(
-					"http://localhost:2023/api/webPageFetch?url=" + src,
+					"http://localhost:2023/api/webpage-fetch?url=" + src,
 				);
 
 				if (res.status === 200) {
 					const json = await res.json();
+					console.log(json.body)
 					setHtmlContent(json.body);
 				} else {
 					console.error(`fetch webpage failed. Status: ${res.status}`);
