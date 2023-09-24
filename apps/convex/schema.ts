@@ -33,7 +33,6 @@ export default defineSchema({
 		.searchIndex("by_userId", { searchField: "userId" }),
 });
 
-
 export const bmUpdSchema = {
 	type: v.literal("bookmark"),
 	parentId: v.optional(parentIdSchema),
@@ -43,5 +42,5 @@ export const bmUpdSchema = {
 	url: v.optional(v.string()),
 	searchableText: v.optional(v.string()),
 	// userId is prohibited to change!
-}
+};
 export type TBmUpd = ObjectType<typeof bmUpdSchema>;

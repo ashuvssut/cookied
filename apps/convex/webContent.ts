@@ -2,6 +2,7 @@
 import { v } from "convex/values";
 import { action } from "gconvex/_generated/server";
 import { handleFetchWebpage } from "gconvex/utils";
+import he from "he";
 
 export const getTitleFromUrl = action({
 	args: { url: v.string() },
@@ -25,7 +26,7 @@ export const getTitleFromUrl = action({
 					descriptionMatch && descriptionMatch[1] ? descriptionMatch[1] : null;
 
 				const suffix = !!description ? ` - ${description}` : "";
-				return title + suffix;
+				return he.decode(title + suffix);
 			} catch (error) {
 				console.error("Error fetching website meta:", error);
 				return null;
