@@ -30,6 +30,12 @@ export async function handleFetchWebpage(urlString: string) {
 		// console.log(document);
 
 		const $ = load(document);
+		$("script").remove();
+		$("style").remove();
+		$("*")
+			.contents()
+			.filter((index, node) => node.nodeType === 8)
+			.remove(); // Node type 8 represents comments
 		const searchableText = $.text();
 
 		return { htmlDoc: document, searchableText, statusCode: 200 };
