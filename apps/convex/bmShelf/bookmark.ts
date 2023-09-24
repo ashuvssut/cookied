@@ -88,8 +88,8 @@ export const update = mutation({
 export const handleUpdate = internalMutation({
 	args: { bmId: v.id("bookmarks"), updates: v.object(bmUpdSchema) },
 	handler: async (ctx, { bmId, updates }) => {
-		await ctx.db.patch(bmId, updates);
 		const existingBm = await ctx.db.get(bmId);
+		await ctx.db.patch(bmId, updates);
 		if (!existingBm) return { _id: bmId, ...updates };
 
 		const shouldRunUpdAction =
