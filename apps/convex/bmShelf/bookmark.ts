@@ -1,9 +1,14 @@
-import { query, mutation } from "gconvex/_generated/server";
+import {
+	query,
+	mutation,
+	internalAction,
+	internalMutation,
+} from "gconvex/_generated/server";
 import { v } from "convex/values";
-import { TBm, bookmarksCols, parentIdSchema } from "../schema";
-import { getUserId } from "gconvex/utils";
+import { bmUpdSchema, bookmarksCols } from "../schema";
+import { bmWithSearchableText, getUserId } from "gconvex/utils";
 import { handleFlUpdate } from "gconvex/bmShelf/folder";
-import { handleFetchWebpage } from "gconvex/webContent";
+import { internal } from "gconvex/_generated/api";
 
 export const getAll = query({
 	handler: async ctx => {
@@ -25,12 +30,16 @@ export const create = mutation({
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 
-		const bmObj = (await bmWithSearchableText(newBm)) as typeof newBm;
-		const bmId = await ctx.db.insert("bookmarks", bmObj);
+		const bmId = await ctx.db.insert("bookmarks", newBm);
+		const { userId, ...updates } = newBm;
+		ctx.scheduler.runAfter(
+			0,
+			internal.bmShelf.bookmark.updBmWithSearchableText, // updates the bm
+			{ bmId, bm: updates },
+		);
 
 		// update parent Fl
-		const parentFlId = bmObj.parentId;
-		console.log(parentFlId);
+		const parentFlId = newBm.parentId;
 		if (parentFlId !== "root") {
 			const parentFl = await ctx.db.get(parentFlId);
 			if (parentFl) {
@@ -42,7 +51,7 @@ export const create = mutation({
 			}
 		}
 
-		return { _id: bmId, ...bmObj };
+		return { _id: bmId, ...newBm };
 	},
 });
 
@@ -57,17 +66,7 @@ export const remove = mutation({
 });
 
 export const update = mutation({
-	args: {
-		bmId: v.id("bookmarks"),
-		updates: v.object({
-			type: v.literal("bookmark"),
-			parentId: v.optional(parentIdSchema),
-			path: v.optional(v.array(v.string())),
-			level: v.optional(v.number()),
-			title: v.optional(v.string()),
-			url: v.optional(v.string()),
-		}),
-	},
+	args: { bmId: v.id("bookmarks"), updates: v.object(bmUpdSchema) },
 	handler: async (ctx, { bmId, updates }) => {
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
@@ -78,19 +77,51 @@ export const update = mutation({
 		if (!existingBm) throw new Error("Bookmark not found");
 		if (existingBm.userId !== userId) throw new Error("Unauthorized");
 
-		const bmObj =
-			existingBm.url !== updates.url
-				? await bmWithSearchableText(updates)
-				: updates;
-
-		await ctx.db.patch(bmId, updates);
-		return { _id: bmId, ...bmObj };
+		ctx.scheduler.runAfter(
+			0,
+			internal.bmShelf.bookmark.handleUpdate,
+			{ bmId, updates }, //
+		);
 	},
 });
 
-async function bmWithSearchableText(bm: Partial<TBm>) {
-	if (!bm.url) return bm;
-	const { searchableText } = await handleFetchWebpage(bm.url);
-	const bmObj = { ...bm, searchableText };
-	return bmObj;
-}
+export const handleUpdate = internalMutation({
+	args: { bmId: v.id("bookmarks"), updates: v.object(bmUpdSchema) },
+	handler: async (ctx, { bmId, updates }) => {
+		await ctx.db.patch(bmId, updates);
+		const existingBm = await ctx.db.get(bmId);
+		if (!existingBm) return { _id: bmId, ...updates };
+
+		const shouldRunUpdAction =
+			updates.url !== existingBm.url || existingBm.searchableText === undefined;
+		if (shouldRunUpdAction) {
+			ctx.scheduler.runAfter(
+				0,
+				internal.bmShelf.bookmark.updBmWithSearchableText,
+				{ bmId, bm: updates },
+			);
+		}
+		return { _id: bmId, ...updates };
+	},
+});
+
+export const updBmWithSearchableText = internalAction({
+	args: { bmId: v.id("bookmarks"), bm: v.object(bmUpdSchema) },
+	handler: async (ctx, { bmId, bm }) => {
+		async function getUpdatedBm() {
+			// if (exisitingBm?.url) {
+			// 	if (exisitingBm.url !== bm?.url || !exisitingBm["searchableText"]) {
+			// 		return await bmWithSearchableText(bm);
+			// 	} else return await bmWithSearchableText(exisitingBm);
+			// } else if (bm.url) {
+			if (bm.url) return await bmWithSearchableText(bm);
+			else throw new Error(`Exhaustive check: missing url in new Bm object`);
+		}
+		const updatedBm = await getUpdatedBm();
+
+		await ctx.runMutation(internal.bmShelf.bookmark.handleUpdate, {
+			bmId,
+			updates: updatedBm,
+		});
+	},
+});

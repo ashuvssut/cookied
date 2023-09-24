@@ -1,11 +1,43 @@
 import { UserIdentity } from "convex/server";
+import { TBmUpd } from "gconvex/schema";
+// @ts-ignore
+import absolutify from "absolutify";
 import { load } from "cheerio";
 
 export function getUserId(identity: UserIdentity) {
 	return identity.tokenIdentifier.split("|")[1]!;
 }
 
+export async function bmWithSearchableText(bm: TBmUpd) {
+	if (!bm.url) return bm;
+	const { searchableText } = await handleFetchWebpage(bm.url);
+	const bmObj = { ...bm, searchableText };
+	return bmObj;
+}
+
 // Web Content
+export async function handleFetchWebpage(urlString: string) {
+	try {
+		if (!urlString) throw new Error("Missing URL parameter");
+		const urlObj = new URL(urlString);
+		const targetUrl = urlObj.origin;
+		const htmlText = await fetchHTML(targetUrl);
+
+		let document = absolutify(htmlText, targetUrl);
+
+		// use cheerio to also handle the unhandled relative urls in srcset attributes https://github.com/sorensen/absolutify/issues/8
+		document = await absolutifySrcsetAttributes(document, targetUrl);
+		// console.log(document);
+
+		const $ = load(document);
+		const searchableText = $.text();
+
+		return { htmlDoc: document, searchableText, statusCode: 200 };
+	} catch (error: any) {
+		throw new Error(error.message || error.toString());
+	}
+}
+
 export async function fetchHTML(url: string) {
 	try {
 		const response = await fetch(url);
