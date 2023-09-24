@@ -23,7 +23,7 @@ export const FormTextField = <T extends FormikProps<any>>(
 				onBlur={p.handleBlur(name)}
 				{...fieldProps}
 			/>
-			<Text sx={{ color: "error", width: "50%" }}>{checkError(p, name)}</Text>
+			<Text sx={{ color: "error" }}>{checkError(p, name)}</Text>
 		</>
 	);
 };
