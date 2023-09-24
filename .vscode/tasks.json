@@ -85,8 +85,8 @@
 			"label": "SftAlt7Task", //
 			"type": "shell",
 			"presentation": {
-				"clear": true
-				// "close": true
+				"clear": true,
+				"close": true
 			},
 			"command": ""
 		},
