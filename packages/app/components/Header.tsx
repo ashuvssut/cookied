@@ -1,6 +1,6 @@
 import { GoodCookie } from "app/assets/svg";
 import { Svg } from "app/components/Svg";
-import { H1, View, Pressable, Text } from "dripsy";
+import { H1, View, Text } from "dripsy";
 import { FC, useState } from "react";
 import { Bar } from "react-native-progress";
 import { atom, useAtom } from "jotai";
@@ -10,6 +10,8 @@ import { Toast } from "app/components/Toast";
 import { useRouter } from "solito/router";
 import { Avatar } from "app/components/Avatar";
 import { Th } from "app/theme/components";
+import { BmSearch } from "app/components/BmSearch";
+import { BmSearchContent } from "app/components/BmSearch/BmSearchContent";
 
 export const barLoadingAtom = atom(false);
 export const Header: FC = () => {
@@ -23,19 +25,13 @@ export const Header: FC = () => {
 				sx={{
 					justifyContent: "space-between",
 					width: isWeb ? "100%" : undefined,
-					px: "$4"
+					px: "$4",
 				}}
 			>
-				<View variant="layout.row" sx={{ gap: 5 }}>
-					<Svg
-						Svg={GoodCookie}
-						commonSvgProps={{ height: 30, width: 30, style: { top: -2 } }}
-					/>
-					<H1>COOKIED</H1>
-				</View>
+				{isWeb ? <Wordmark /> : <BmSearch />}
+				{isWeb && <BmSearch />}
 				{isWeb && isLoaded && <ProfileMenuDisplay />}
 			</View>
-
 			<Bar
 				indeterminate={true}
 				width={null}
@@ -47,6 +43,7 @@ export const Header: FC = () => {
 				}}
 				height={3}
 			/>
+			<BmSearchContent />
 		</View>
 	);
 };
@@ -106,3 +103,15 @@ const ProfileMenu = ({ showMenu }: { showMenu: boolean }) => {
 		</View>
 	);
 };
+
+function Wordmark() {
+	return (
+		<View variant="layout.row" sx={{ gap: 5 }}>
+			<Svg
+				Svg={GoodCookie}
+				commonSvgProps={{ height: 30, width: 30, style: { top: -2 } }}
+			/>
+			<H1>COOKIED</H1>
+		</View>
+	);
+}

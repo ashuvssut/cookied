@@ -15,6 +15,8 @@ import { useQuery } from "convex/react";
 import { api } from "gconvex/_generated/api";
 import { useAppDispatch } from "app/store/hooks";
 import { bmShelfAction } from "app/store/slices/bmShelfSlice";
+import { useAtom } from "jotai";
+import { bmQueryAtom } from "app/components/BmSearch/BmSearch";
 
 export default function HomeScreen() {
 	const style = usePressabilityApiStyles();
@@ -31,10 +33,11 @@ export default function HomeScreen() {
 		if (bookmarks) dispatch(bmShelfAction.setAllBm(bookmarks));
 	}, [bookmarks]);
 
+	const [query] = useAtom(bmQueryAtom);
 	return (
 		<XSlideInView ref={ref}>
 			<Screen>
-				{!isWeb && (
+				{!isWeb && !query && (
 					<View sx={{ position: "absolute", top: 14, right: 20, zIndex: 5 }}>
 						<Pressable
 							variant="layout.center"
