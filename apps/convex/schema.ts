@@ -22,7 +22,7 @@ export const bookmarksCols = {
 	level: v.number(),
 	title: v.string(),
 	url: v.string(),
-	searchableText: v.optional(v.string()),
+	searchTokens: v.optional(v.array(v.string())),
 };
 export type TBm = ObjectType<typeof bookmarksCols>;
 
@@ -40,7 +40,7 @@ export const bmUpdSchema = {
 	level: v.optional(v.number()),
 	title: v.optional(v.string()),
 	url: v.optional(v.string()),
-	searchableText: v.optional(v.string()),
+	searchableText: v.optional(v.array(v.string())),
 	// userId is prohibited to change!
 };
 export type TBmUpd = ObjectType<typeof bmUpdSchema>;

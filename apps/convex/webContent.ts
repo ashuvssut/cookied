@@ -43,8 +43,8 @@ export const fetchWebpage = action({
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 
 		try {
-			const res = await handleFetchWebpage(url);
-			return res;
+			const { htmlDoc } = await handleFetchWebpage(url);
+			return { htmlDoc, statusCode: 200 };
 		} catch (error: any) {
 			throw new Error(error.message || error.toString());
 		}

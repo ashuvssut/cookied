@@ -6,7 +6,7 @@ import {
 } from "gconvex/_generated/server";
 import { v } from "convex/values";
 import { bmUpdSchema, bookmarksCols } from "../schema";
-import { bmWithSearchableText, getUserId } from "gconvex/utils";
+import { bmWithSearchTokens, getUserId } from "gconvex/utils";
 import { handleFlUpdate } from "gconvex/bmShelf/folder";
 import { internal } from "gconvex/_generated/api";
 
@@ -34,7 +34,7 @@ export const create = mutation({
 		const { userId, ...updates } = newBm;
 		ctx.scheduler.runAfter(
 			0,
-			internal.bmShelf.bookmark.updBmWithSearchableText, // updates the bm
+			internal.bmShelf.bookmark.updBmWithSearchTokens, // updates the bm
 			{ bmId, bm: updates },
 		);
 
@@ -93,11 +93,11 @@ export const handleUpdate = internalMutation({
 		if (!existingBm) return { _id: bmId, ...updates };
 
 		const shouldRunUpdAction =
-			updates.url !== existingBm.url || existingBm.searchableText === undefined;
+			updates.url !== existingBm.url || existingBm.searchTokens === undefined;
 		if (shouldRunUpdAction) {
 			ctx.scheduler.runAfter(
 				0,
-				internal.bmShelf.bookmark.updBmWithSearchableText,
+				internal.bmShelf.bookmark.updBmWithSearchTokens,
 				{ bmId, bm: updates },
 			);
 		}
@@ -105,16 +105,16 @@ export const handleUpdate = internalMutation({
 	},
 });
 
-export const updBmWithSearchableText = internalAction({
+export const updBmWithSearchTokens = internalAction({
 	args: { bmId: v.id("bookmarks"), bm: v.object(bmUpdSchema) },
 	handler: async (ctx, { bmId, bm }) => {
 		async function getUpdatedBm() {
 			// if (exisitingBm?.url) {
-			// 	if (exisitingBm.url !== bm?.url || !exisitingBm["searchableText"]) {
-			// 		return await bmWithSearchableText(bm);
-			// 	} else return await bmWithSearchableText(exisitingBm);
+			// 	if (exisitingBm.url !== bm?.url || !exisitingBm.searchTokens) {
+			// 		return await bmWithSearchTokens(bm);
+			// 	} else return await bmWithSearchTokens(exisitingBm);
 			// } else if (bm.url) {
-			if (bm.url) return await bmWithSearchableText(bm);
+			if (bm.url) return await bmWithSearchTokens(bm);
 			else throw new Error(`Exhaustive check: missing url in new Bm object`);
 		}
 		const updatedBm = await getUpdatedBm();
