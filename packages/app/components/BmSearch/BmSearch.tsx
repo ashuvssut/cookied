@@ -35,7 +35,7 @@ function SearchField() {
 					onChangeText={txt => setQuery(txt)}
 					value={query}
 					placeholderTextColor={secondary}
-					placeholder="Search..."
+					placeholder="Search by site's content..."
 				/>
 				<View sx={{ position: "absolute", right: p, bg: "surface" }}>
 					<MdSearch color={secondary} size={20} />

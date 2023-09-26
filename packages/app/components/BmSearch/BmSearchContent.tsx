@@ -1,4 +1,4 @@
-import { View } from "dripsy";
+import { Pressable, View } from "dripsy";
 import { useAtom } from "jotai";
 import { MotiView } from "moti";
 import { BlurView } from "expo-blur";
@@ -8,7 +8,7 @@ import { SearchResults } from "app/components/BmSearch/SearchResults";
 import { bmQueryAtom } from "app/components/BmSearch/BmSearch";
 
 export const BmSearchContent = () => {
-	const [query] = useAtom(bmQueryAtom);
+	const [query, setQuery] = useAtom(bmQueryAtom);
 	const isOpen = !!query;
 
 	const { height, width } = useWindowDimensions();
@@ -28,6 +28,10 @@ export const BmSearchContent = () => {
 						tint="dark"
 						style={{ height: "100%", alignItems: "center" }}
 					>
+						<Pressable
+							variant="layout.absoluteFlex"
+							onPress={() => setQuery("")}
+						/>
 						<View sx={{ maxWidth: 500, px: "$3", width: "100%" }}>
 							<View
 								sx={{ mx: "$3", px: "$3", borderRadius: 15 }}

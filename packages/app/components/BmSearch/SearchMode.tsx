@@ -1,10 +1,11 @@
 import { Text, View, useDripsyTheme } from "dripsy";
-import { useState } from "react";
 import { MotiPressable } from "moti/interactions";
+import { atom, useAtom } from "jotai";
 
+export const searchModeAtom = atom(1);
 export function SearchMode() {
 	const { primary, secondary, onPrimary } = useDripsyTheme().theme.colors;
-	const [mode, setMode] = useState(1);
+	const [mode, setMode] = useAtom(searchModeAtom);
 	const animate = (active: boolean, btnMode: number) => {
 		"worklet";
 		return {
