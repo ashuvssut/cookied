@@ -35,6 +35,7 @@ const nextConfig = {
 		"expo-linking",
 		"react-native-progress",
 		"react-native-svg",
+		"expo-blur",
 	],
 };
 
