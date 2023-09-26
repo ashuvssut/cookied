@@ -61,7 +61,7 @@ export const BmFolderPathSearch: FC<SearchFieldProps> = (
 	}, [searchResults]);
 
 	return (
-		<View sx={{ height: 300, marginTop: "$4" }}>
+		<View sx={{ height: 200, marginTop: "$2" }}>
 			<Th.TextInput
 				value={searchQuery}
 				onChangeText={handleSearch}
@@ -90,7 +90,7 @@ const SearchResult: FC<ISearchResult> = ({ onPress, path }) => {
 		<Pressable
 			onPress={onPress}
 			sx={{
-				minHeight: 50,
+				minHeight: 30,
 				borderBottomWidth: StyleSheet.hairlineWidth,
 				justifyContent: "space-between",
 				alignItems: "center",

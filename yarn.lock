@@ -4686,6 +4686,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/he@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@types/he@npm:1.2.1"
+  checksum: 9acb0e115c22507bbff6c9400ee8c66616c5443236bd078fc55befe9fbc23f8abafc4c8fa86f0682791271397135720f83d027bfac99e11cde74ec6941aa8790
+  languageName: node
+  linkType: hard
+
 "@types/hoist-non-react-statics@npm:^3.3.1":
   version: 3.3.1
   resolution: "@types/hoist-non-react-statics@npm:3.3.1"
@@ -5316,6 +5323,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"absolutify@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "absolutify@npm:0.1.0"
+  checksum: b34cb0847a1f3b39d5f0fe290370dd0605c0511f74adfc57f2371c05a319a3c5571c6e4e22a2f63b9f76e660bb01258a38b0a5f00306fd671912692e692b81cb
+  languageName: node
+  linkType: hard
+
 "accepts@npm:^1.3.7, accepts@npm:^1.3.8, accepts@npm:~1.3.5, accepts@npm:~1.3.7":
   version: 1.3.8
   resolution: "accepts@npm:1.3.8"
@@ -5537,6 +5551,8 @@ __metadata:
     "@types/node": ^20.2.3
     "@types/react": 18.2.7
     "@types/react-dom": ^18.2.4
+    absolutify: ^0.1.0
+    cheerio: ^1.0.0-rc.12
     encoding: ^0.1.13
     next: 13.4.3
     react: 18.2.0
@@ -6551,6 +6567,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cheerio-select@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "cheerio-select@npm:2.1.0"
+  dependencies:
+    boolbase: ^1.0.0
+    css-select: ^5.1.0
+    css-what: ^6.1.0
+    domelementtype: ^2.3.0
+    domhandler: ^5.0.3
+    domutils: ^3.0.1
+  checksum: 843d6d479922f28a6c5342c935aff1347491156814de63c585a6eb73baf7bb4185c1b4383a1195dca0f12e3946d737c7763bcef0b9544c515d905c5c44c5308b
+  languageName: node
+  linkType: hard
+
+"cheerio@npm:^1.0.0-rc.12":
+  version: 1.0.0-rc.12
+  resolution: "cheerio@npm:1.0.0-rc.12"
+  dependencies:
+    cheerio-select: ^2.1.0
+    dom-serializer: ^2.0.0
+    domhandler: ^5.0.3
+    domutils: ^3.0.1
+    htmlparser2: ^8.0.1
+    parse5: ^7.0.0
+    parse5-htmlparser2-tree-adapter: ^7.0.0
+  checksum: 5d4c1b7a53cf22d3a2eddc0aff70cf23cbb30d01a4c79013e703a012475c02461aa1fcd99127e8d83a02216386ed6942b2c8103845fd0812300dd199e6e7e054
+  languageName: node
+  linkType: hard
+
 "chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.5.3":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
@@ -7015,11 +7060,15 @@ __metadata:
   dependencies:
     "@faker-js/faker": ^8.0.2
     "@fontsource/poppins": ^5.0.8
+    "@types/he": ^1.2.1
     "@types/lodash": ^4.14.195
     "@types/react": ^18.0.17
     "@types/react-native": ^0.69.5
+    absolutify: ^0.1.0
+    cheerio: ^1.0.0-rc.12
     convex: ^1.3.1
     eslint: ^8.21.0
+    he: ^1.2.0
     jotai: ^2.4.2
     turbo: ^1.4.2
     typescript: ^4.7.4
@@ -10238,6 +10287,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"he@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "he@npm:1.2.0"
+  bin:
+    he: bin/he
+  checksum: 3d4d6babccccd79c5c5a3f929a68af33360d6445587d628087f39a965079d84f18ce9c3d3f917ee1e3978916fc833bb8b29377c3b403f919426f91bc6965e7a7
+  languageName: node
+  linkType: hard
+
 "hermes-estree@npm:0.8.0":
   version: 0.8.0
   resolution: "hermes-estree@npm:0.8.0"
@@ -10308,6 +10366,18 @@ __metadata:
   version: 2.0.2
   resolution: "html-escaper@npm:2.0.2"
   checksum: d2df2da3ad40ca9ee3a39c5cc6475ef67c8f83c234475f24d8e9ce0dc80a2c82df8e1d6fa78ddd1e9022a586ea1bd247a615e80a5cd9273d90111ddda7d9e974
+  languageName: node
+  linkType: hard
+
+"htmlparser2@npm:^8.0.1":
+  version: 8.0.2
+  resolution: "htmlparser2@npm:8.0.2"
+  dependencies:
+    domelementtype: ^2.3.0
+    domhandler: ^5.0.3
+    domutils: ^3.0.1
+    entities: ^4.4.0
+  checksum: 29167a0f9282f181da8a6d0311b76820c8a59bc9e3c87009e21968264c2987d2723d6fde5a964d4b7b6cba663fca96ffb373c06d8223a85f52a6089ced942700
   languageName: node
   linkType: hard
 
@@ -14162,6 +14232,16 @@ __metadata:
   dependencies:
     pngjs: ^3.3.0
   checksum: 0c6b6c42c8830cd16f6f9e9aedafd53111c0ad2ff350ba79c629996887567558f5639ad0c95764f96f7acd1f9ff63d4ac73737e80efa3911a6de9839ee520c96
+  languageName: node
+  linkType: hard
+
+"parse5-htmlparser2-tree-adapter@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "parse5-htmlparser2-tree-adapter@npm:7.0.0"
+  dependencies:
+    domhandler: ^5.0.2
+    parse5: ^7.0.0
+  checksum: fc5d01e07733142a1baf81de5c2a9c41426c04b7ab29dd218acb80cd34a63177c90aff4a4aee66cf9f1d0aeecff1389adb7452ad6f8af0a5888e3e9ad6ef733d
   languageName: node
   linkType: hard
 

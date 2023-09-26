@@ -94,3 +94,4 @@ build/**
 db.json
 
 .env.local
+apps/expo/build.app.*

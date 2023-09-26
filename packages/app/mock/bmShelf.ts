@@ -1,16 +1,20 @@
 import { faker } from "@faker-js/faker";
-import { IBookmark, IFolder } from "app/store/slices/bmShelfSlice";
+import {
+	IBookmarkNode,
+	IFolder,
+	IFolderNode,
+} from "app/store/slices/bmShelfSlice";
 import _ from "lodash";
 
 export function generateRandomBookmark(
 	parentId: string,
 	level: number,
 	path: string[],
-): IBookmark {
+): IBookmarkNode {
 	const id = faker.string.uuid();
 	return {
-		_id: id,
-		parentId: parentId || "",
+		_id: id as any,
+		parentId: parentId || ("" as any),
 		type: "bookmark",
 		path: [...path, id],
 		level,
@@ -19,8 +23,7 @@ export function generateRandomBookmark(
 		url: faker.internet.url(),
 		// _createdAt: faker.date.past().toISOString(),
 		// _updatedAt: faker.date.recent().toISOString(),
-		_createdAt: new Date().toISOString(),
-		_updatedAt: new Date().toISOString(),
+		_creationTime: new Date().getTime(),
 	};
 }
 
@@ -29,11 +32,11 @@ export function generateRandomFolder(
 	newLevel: number,
 	path: string[],
 	gen1 = false,
-): IFolder {
+): IFolderNode {
 	const id = faker.string.uuid();
 	return {
-		_id: id,
-		parentId: parentId || "",
+		_id: id as any,
+		parentId: parentId || ("" as any),
 		type: "folder",
 		path: [...path, id],
 		level: newLevel,
@@ -43,15 +46,14 @@ export function generateRandomFolder(
 		title: faker.word.words({ count: { min: 3, max: 5 } }),
 		// _createdAt: faker.date.past().toISOString(),
 		// _updatedAt: faker.date.recent().toISOString(),
-		_createdAt: new Date().toISOString(),
-		_updatedAt: new Date().toISOString(),
+		_creationTime: new Date().getTime(),
 	};
 }
 
 const randRng = (u: number, l = 0) => Math.random() * (u - l) + l;
 
 function generateBookmarks(parentId: string, level: number, path: string[]) {
-	const bookmarks: IBookmark[] = [];
+	const bookmarks: IBookmarkNode[] = [];
 	const rand = randRng(1, 0);
 	for (let i = 0; i < rand; i++) {
 		bookmarks.push(
@@ -65,9 +67,9 @@ function generateFolders(
 	parentId: string,
 	level: number,
 	path: string[],
-): IFolder[] {
+): IFolderNode[] {
 	if (level > 3) return [];
-	const folders: IFolder[] = [];
+	const folders: IFolderNode[] = [];
 	// const rand = randRng(5, 3);
 	const rand = randRng(2, 0);
 	for (let i = 0; i < rand; i++) {

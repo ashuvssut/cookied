@@ -2,7 +2,8 @@
 import { FC, memo, useEffect, useState } from "react";
 import {
 	IBookmark,
-	IFolder,
+	IBookmarkNode,
+	IFolderNode,
 	selectDenormalizedBmShelf,
 } from "app/store/slices/bmShelfSlice";
 import { useAppSelector } from "app/store/hooks";
@@ -35,8 +36,8 @@ export function TreePanel() {
 			<ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
 				<TreeView
 					treeData={{
-						nodes: foldersWithBookmarks.folders as any,
-						rootLeafs: [] as IBookmark[],
+						nodes: foldersWithBookmarks.folders,
+						rootLeafs: [] as IBookmarkNode[],
 					}}
 					// treeData={{ // Faker data
 					// 	nodes: bookmarkState.folders,
@@ -46,7 +47,7 @@ export function TreePanel() {
 					nodeArrKey="folders"
 					leafArrKey="bookmarks"
 					renderNode={(node, setCollapse) => (
-						<Node node={node as any} setCollapse={setCollapse} />
+						<Node node={node} setCollapse={setCollapse} />
 					)}
 					renderLeaf={node => <LeafNode node={node} />}
 				/>
@@ -75,7 +76,7 @@ const TreePanelHeader = () => {
 };
 
 interface INode {
-	node: IFolder;
+	node: IFolderNode;
 	setCollapse: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const p = 15;

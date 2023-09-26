@@ -1,4 +1,4 @@
-import { IFolder } from "app/store/slices/bmShelfSlice";
+import { IFolderNode } from "app/store/slices/bmShelfSlice";
 import { modalizeRefAtom } from "app/components/Modal/atoms";
 import { atom, useAtom } from "jotai";
 
@@ -12,7 +12,7 @@ type TAddBookmarkAction = {
 type TEditBookmarkAction = { type: "edit-bookmark" };
 type TAddFolderAction = {
 	type: "add-folder";
-	payload: { parentFl: IFolder | null };
+	payload: { parentFl: IFolderNode | null };
 };
 type TEditFolderAction = { type: "edit-folder" };
 

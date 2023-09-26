@@ -1,6 +1,6 @@
 import { View, useDripsyTheme } from "dripsy";
 import { ComponentProps, FC } from "react";
-import { IFolder } from "app/store/slices/bmShelfSlice";
+import { IFolderNode } from "app/store/slices/bmShelfSlice";
 import {
 	MdDeleteOutline,
 	MdModeEdit,
@@ -15,7 +15,7 @@ import { activeEntityIdAtom } from "app/store/slices/compoState";
 
 interface IFolderActions extends ComponentProps<typeof View> {
 	/** Current node */
-	node: IFolder | null;
+	node: IFolderNode | null;
 	onActionComplete?: () => void;
 }
 export const FolderActions: FC<IFolderActions> = ({ node, ...props }) => {
