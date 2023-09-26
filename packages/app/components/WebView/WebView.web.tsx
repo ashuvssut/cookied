@@ -9,6 +9,7 @@ import {
 import { Toast } from "app/components/Toast";
 import { useAction } from "convex/react";
 import { api } from "gconvex/_generated/api";
+import { toast, Zoom } from "react-toastify";
 
 interface IWebView
 	extends DetailedHTMLProps<
@@ -22,7 +23,7 @@ export const WebView: FC<IWebView> = ({ src, style, ...props }) => {
 	useEffect(() => {
 		async function getHtml() {
 			if (!src) {
-				console.error("Missing URL. Cannot fetch iframe HTML")
+				console.error("Missing URL. Cannot fetch iframe HTML");
 				return;
 			}
 			try {
@@ -41,6 +42,8 @@ export const WebView: FC<IWebView> = ({ src, style, ...props }) => {
 		getHtml();
 	}, [src]);
 
+	useEffect(() => openToast(src), []);
+
 	return (
 		<View variant="layout.absoluteFlex">
 			<iframe
@@ -51,5 +54,24 @@ export const WebView: FC<IWebView> = ({ src, style, ...props }) => {
 				{...props}
 			/>
 		</View>
+	);
+};
+
+const openToast = (src?: string) => {
+	if (!src) return;
+	toast.info(
+		<>
+			Content shown here might be inaccurate.&nbsp;
+			<a href={src} target="_blank">
+				Visit website
+			</a>
+			&nbsp;instead?
+		</>,
+		{
+			position: "bottom-right",
+			toastId: "webview-info",
+			transition: Zoom,
+			style: { transformOrigin: "bottom right" },
+		},
 	);
 };
