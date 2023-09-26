@@ -12,7 +12,7 @@ export async function bmWithSearchTokens(bm: TBmUpd) {
 	if (!bm.url) return bm;
 	const searchableText = await generateSearchableText(bm.url);
 	const searchTokens = tokenizeString(searchableText);
-	const bmObj = { ...bm, searchTokens };
+	const bmObj = { ...bm, searchTokens, searchableText };
 	return bmObj;
 }
 

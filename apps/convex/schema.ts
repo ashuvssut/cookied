@@ -23,14 +23,20 @@ export const bookmarksCols = {
 	title: v.string(),
 	url: v.string(),
 	searchTokens: v.optional(v.array(v.string())),
+	searchableText: v.optional(v.string()),
 };
 export type TBm = ObjectType<typeof bookmarksCols>;
 
 export default defineSchema({
 	folders: defineTable(foldersCols) //
 		.searchIndex("by_userId", { searchField: "userId" }),
-	bookmarks: defineTable(bookmarksCols) //
-		.searchIndex("by_userId", { searchField: "userId" }),
+	bookmarks: defineTable({ ...bookmarksCols, embedding: v.array(v.float64()) })
+		.searchIndex("by_userId", { searchField: "userId" })
+		.vectorIndex("by_embedding", {
+			vectorField: "embedding",
+			dimensions: 1536,
+			filterFields: ["searchableText"],
+		}),
 });
 
 export const bmUpdSchema = {
@@ -41,6 +47,7 @@ export const bmUpdSchema = {
 	title: v.optional(v.string()),
 	url: v.optional(v.string()),
 	searchTokens: v.optional(v.array(v.string())),
+	searchableText: v.optional(v.string()),
 	// userId is prohibited to change!
 };
 export type TBmUpd = ObjectType<typeof bmUpdSchema>;
