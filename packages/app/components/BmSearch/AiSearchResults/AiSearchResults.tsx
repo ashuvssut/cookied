@@ -150,7 +150,9 @@ function SearchResultCards() {
 	return (
 		<>
 			<View variant="layout.row" sx={{ justifyContent: "space-between" }}>
-				<Text variant="overline">Describe what was that content about.</Text>
+				<Text variant="overline" sx={{ width: "50%" }}>
+					Describe what was that content about.
+				</Text>
 				<IconButton
 					onPress={fetchResults}
 					sx={{
