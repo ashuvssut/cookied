@@ -2,17 +2,18 @@ import HomeScreen from "app/screens/HomeScreen";
 import { Avatar } from "app/components/Avatar";
 import { View, Text, useDripsyTheme } from "dripsy";
 import { LinearGradient } from "expo-linear-gradient";
-import { Image, StyleSheet, useWindowDimensions } from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import React from "react";
 import { Th } from "app/theme/components";
 import { useAuth, useUser } from "app/utils/clerk";
 import { useRouter } from "solito/router";
 import { Toast } from "app/components/Toast";
-import { MdAccountCircle } from "app/assets/icons";
+import { useSignOut } from "app/hooks/useSignOut";
 
 const HomeScreenWithDrawer = () => {
 	const { user } = useUser();
-	const { isLoaded, signOut } = useAuth();
+	const { isLoaded } = useAuth();
+	const { signOut } = useSignOut();
 	const { linearGradients } = useDripsyTheme().theme;
 	const { width } = useWindowDimensions();
 	const router = useRouter();

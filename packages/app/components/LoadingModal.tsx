@@ -1,7 +1,6 @@
-import { atom, useAtom } from "jotai";
+import { loadingAtom } from "app/store/slices/compoState";
+import { useAtom } from "jotai";
 import { View, Modal, ActivityIndicator, StyleSheet } from "react-native";
-
-export const loadingAtom = atom(false);
 
 const LoadingModal = () => {
 	const [isLoading] = useAtom(loadingAtom);

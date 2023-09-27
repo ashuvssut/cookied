@@ -4,13 +4,12 @@ import { selectBmId } from "app/store/slices/bmShelfSlice";
 import { useBmShelfDb } from "app/hooks/useBmShelfDb";
 import { useModal } from "app/components/Modal/useModal";
 import { useAtom } from "jotai";
-import { activeEntityIdAtom } from "app/store/slices/compoState";
+import { activeEntityIdAtom, bmFolderAtom } from "app/store/slices/compoState";
 import { useAppSelector } from "app/store/hooks";
 import bookmarkFormSchema, {
 	TBookmarkFormSchema,
 } from "app/components/Formik/bookmarkFormSchema";
 import { BookmarkForm } from "app/components/Formik/BookmarkForm";
-import { bmFolderAtom } from "app/components/Formik/atoms";
 
 export const EditBmModal = () => {
 	const { closeModal } = useModal();

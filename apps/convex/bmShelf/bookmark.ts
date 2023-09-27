@@ -6,7 +6,7 @@ import {
 } from "gconvex/_generated/server";
 import { v } from "convex/values";
 import { bmUpdSchema, bookmarksCols } from "../schema";
-import { bmWithSearchTokens, getUserId } from "gconvex/utils";
+import { bmWithSearchFields, getUserId } from "gconvex/utils";
 import { handleFlUpdate } from "gconvex/bmShelf/folder";
 import { internal } from "gconvex/_generated/api";
 
@@ -18,7 +18,7 @@ export const getAll = query({
 		const userId = getUserId(identity);
 		const allBms = await ctx.db
 			.query("bookmarks")
-			.withSearchIndex("by_userId", q => q.search("userId", userId))
+			.withIndex("by_userId", q => q.eq("userId", userId))
 			.collect();
 		return allBms;
 	},
@@ -34,7 +34,7 @@ export const create = mutation({
 		const { userId, ...updates } = newBm;
 		ctx.scheduler.runAfter(
 			0,
-			internal.bmShelf.bookmark.updBmWithSearchTokens, // updates the bm
+			internal.bmShelf.bookmark.updBmWithSearchFields, // updates the bm
 			{ bmId, bm: updates },
 		);
 
@@ -97,7 +97,7 @@ export const handleUpdate = internalMutation({
 		if (shouldRunUpdAction) {
 			ctx.scheduler.runAfter(
 				0,
-				internal.bmShelf.bookmark.updBmWithSearchTokens,
+				internal.bmShelf.bookmark.updBmWithSearchFields,
 				{ bmId, bm: updates },
 			);
 		}
@@ -105,7 +105,7 @@ export const handleUpdate = internalMutation({
 	},
 });
 
-export const updBmWithSearchTokens = internalAction({
+export const updBmWithSearchFields = internalAction({
 	args: { bmId: v.id("bookmarks"), bm: v.object(bmUpdSchema) },
 	handler: async (ctx, { bmId, bm }) => {
 		async function getUpdatedBm() {
@@ -114,7 +114,7 @@ export const updBmWithSearchTokens = internalAction({
 			// 		return await bmWithSearchTokens(bm);
 			// 	} else return await bmWithSearchTokens(exisitingBm);
 			// } else if (bm.url) {
-			if (bm.url) return await bmWithSearchTokens(bm);
+			if (bm.url) return await bmWithSearchFields(bm);
 			else throw new Error(`Exhaustive check: missing url in new Bm object`);
 		}
 		const updatedBm = await getUpdatedBm();
@@ -123,5 +123,44 @@ export const updBmWithSearchTokens = internalAction({
 			bmId,
 			updates: updatedBm,
 		});
+	},
+});
+
+export const getEmptyEmbeddingDocs = query({
+	handler: async ctx => {
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
+
+		const userId = getUserId(identity);
+		const emptyFields = await ctx.db
+			.query("bookmarks")
+			.withIndex("by_userId", q => q.eq("userId", userId).eq("embedding", []))
+			.collect();
+
+		const docs = emptyFields.flatMap(f => {
+			const { _id, searchableText } = f;
+			if (searchableText !== "" && searchableText !== undefined)
+				return [{ _id, searchableText }];
+			return [];
+		});
+
+		return docs;
+	},
+});
+
+export const updateEmbeddingsMany = internalMutation({
+	args: {
+		docUpdates: v.array(
+			v.object({
+				_id: v.id("bookmarks"),
+				embedding: v.array(v.float64()),
+			}),
+		),
+	},
+	handler: async (ctx, { docUpdates }) => {
+		const updatePromises = docUpdates.map(({ _id, embedding }) =>
+			ctx.db.patch(_id, { embedding }),
+		);
+		await Promise.all(updatePromises);
 	},
 });

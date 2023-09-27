@@ -12,7 +12,7 @@ import { MdArrowUpward } from "app/assets/icons";
 import { FormikProps } from "formik";
 import { TBookmarkFormSchema } from "app/components/Formik/bookmarkFormSchema";
 import { useAtom } from "jotai";
-import { bmFolderAtom } from "app/components/Formik/atoms";
+import { bmFolderAtom } from "app/store/slices/compoState";
 
 export type TSearchResults = Fuse.FuseResult<TFlPathWithTitle>[];
 
@@ -52,7 +52,7 @@ export const BmFolderPathSearch: FC<SearchFieldProps> = (
 					onPress={() => {
 						setSearchQuery(result.item.path);
 						setSearchResults([]);
-						setBmFolder(result.item);
+						setBmFolder(result.item); // TODO: set showError when searchQuery changes again and ask user to select from drop down again
 					}}
 					path={result.item.path}
 				/>
@@ -73,6 +73,7 @@ export const BmFolderPathSearch: FC<SearchFieldProps> = (
 				variant="layout.noTopRadius"
 				sx={{ borderRadius: 8, overflow: "hidden", top: -2 }}
 			>
+				{/* TODO: Add option to create new folder for the select path (result.item) */}
 				{renderSearchResults}
 			</View>
 		</View>

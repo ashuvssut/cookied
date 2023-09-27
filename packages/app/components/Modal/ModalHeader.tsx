@@ -6,8 +6,9 @@ import {
 	IWebpageState,
 } from "app/components/WebView/WebView";
 import { View, Text } from "dripsy";
-import { StyleSheet } from "react-native";
-
+import { Pressable, StyleSheet } from "react-native";
+import * as Clipboard from "expo-clipboard";
+import { Toast } from "app/components/Toast";
 export interface IModalHeaderProps {
 	type: TModalType;
 	handleClose?: () => void;
@@ -15,29 +16,41 @@ export interface IModalHeaderProps {
 }
 
 export const ModalHeader = ({ webViewProps, ...props }: IModalHeaderProps) => {
+	async function copyUrl() {
+		try {
+			await Clipboard.setStringAsync(webViewProps.url);
+			Toast.success("URL copied to Clipboard!");
+		} catch (err: any) {
+			const msg = err.message || err.toString();
+			console.error(msg);
+			Toast.error(`Error: Could not copy URL. ${msg}`);
+		}
+	}
 	if (props.type === "web-view") {
 		const secureColor = webViewProps.secured ? "#31a14c" : "#5a6266";
 		return (
 			<View style={ss.header}>
 				<CloseModalButton onPress={props.handleClose} />
-				<View
-					variant="layout.row"
-					sx={{
-						flex: 1,
-						justifyContent: "center",
-						gap: 5,
-						alignItems: "center",
-					}}
-				>
-					{webViewProps.secured && <MdLock color={secureColor} size={18} />}
-					<Text
-						variant="medium"
-						sx={{ textAlign: "center", lineHeight: 20, color: secureColor }}
-						numberOfLines={1}
+				<Pressable onLongPress={copyUrl}>
+					<View
+						variant="layout.row"
+						sx={{
+							flex: 1,
+							justifyContent: "center",
+							gap: 5,
+							alignItems: "center",
+						}}
 					>
-						{webViewProps.url}
-					</Text>
-				</View>
+						{webViewProps.secured && <MdLock color={secureColor} size={18} />}
+						<Text
+							variant="medium"
+							sx={{ textAlign: "center", lineHeight: 20, color: secureColor }}
+							numberOfLines={1}
+						>
+							{webViewProps.url}
+						</Text>
+					</View>
+				</Pressable>
 			</View>
 		);
 	}

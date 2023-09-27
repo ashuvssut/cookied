@@ -5,7 +5,7 @@ import { TFolderFormSchema } from "app/components/Formik/folderFormSchema";
 import { View } from "dripsy";
 import { Th } from "app/theme/components";
 import { useAtom } from "jotai";
-import { barLoadingAtom } from "app/components/Header";
+import { barLoadingAtom } from "app/store/slices/compoState";
 import { useModal } from "app/components/Modal/useModal";
 
 interface IFolderForm {

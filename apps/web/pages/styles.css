@@ -5,8 +5,18 @@ body {
 	background: black;
 }
 ::-webkit-scrollbar {
-    display: none;
+	display: none;
 }
 .react-toastify {
 	font-family: "Poppins", sans-serif;
+}
+
+:root {
+	/* Toastify overrides */
+	--toastify-color-success: #177e1a;
+	--toastify-color-warning: #ffa000;
+	--toastify-color-error: #b00020;
+	--toastify-icon-color-success: var(--toastify-color-success);
+	--toastify-icon-color-warning: var(--toastify-color-warning);
+	--toastify-icon-color-error: var(--toastify-color-error);
 }

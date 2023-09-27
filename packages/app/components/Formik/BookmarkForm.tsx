@@ -11,14 +11,12 @@ import {
 } from "app/store/slices/bmShelfSlice";
 import { useAppSelector } from "app/store/hooks";
 import { useAtom } from "jotai";
-import { activeEntityIdAtom } from "app/store/slices/compoState";
-import { barLoadingAtom } from "app/components/Header";
+import { activeEntityIdAtom, barLoadingAtom, bmFolderAtom } from "app/store/slices/compoState";
 import { useModal } from "app/components/Modal/useModal";
 import * as yup from "yup";
 import { debounce } from "lodash";
 import { useAction } from "convex/react";
 import { api } from "gconvex/_generated/api";
-import { bmFolderAtom } from "app/components/Formik/atoms";
 
 interface IBookmarkForm {
 	formikProps: FormikProps<TBookmarkFormSchema>;
@@ -63,7 +61,11 @@ export const BookmarkForm: FC<IBookmarkForm> = ({ formikProps: p }) => {
 			<FormTextField
 				name="url"
 				formikProps={p}
-				fieldProps={{ placeholder: "Enter the Bookmark URL", autoFocus: true }}
+				fieldProps={{
+					placeholder: "Enter the Bookmark URL",
+					autoFocus: true,
+					keyboardType: "url",
+				}}
 			/>
 			<View sx={{ marginTop: "$2" }} />
 			<FormTextField

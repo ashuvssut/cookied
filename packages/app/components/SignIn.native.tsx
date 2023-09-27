@@ -5,7 +5,7 @@ import { useWarmUpBrowser } from "app/hooks/useWarmUpBrowser";
 import { Th } from "app/theme/components";
 import { Toast } from "app/components/Toast";
 import { useRouter } from "solito/router";
-import { loadingAtom } from "app/components/LoadingModal";
+import { loadingAtom } from "app/store/slices/compoState";
 import { useAtom } from "jotai";
 
 WebBrowser.maybeCompleteAuthSession();
