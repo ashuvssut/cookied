@@ -34,7 +34,7 @@ export const BmSearchContent = () => {
 						/>
 						<View sx={{ maxWidth: 500, px: "$3", width: "100%" }}>
 							<View
-								sx={{ mx: "$3", px: "$3", borderRadius: 15 }}
+								sx={{ mx: "$3", p: "$4", borderRadius: 15 }}
 								variant="layout.secondary"
 							>
 								<SearchMode />
