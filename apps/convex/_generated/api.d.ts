@@ -16,6 +16,7 @@ import type {
 } from "convex/server";
 import type * as bmShelf_bookmark from "../bmShelf/bookmark";
 import type * as bmShelf_folder from "../bmShelf/folder";
+import type * as openApi from "../openApi";
 import type * as utils from "../utils";
 import type * as webContent from "../webContent";
 
@@ -30,6 +31,7 @@ import type * as webContent from "../webContent";
 declare const fullApi: ApiFromModules<{
   "bmShelf/bookmark": typeof bmShelf_bookmark;
   "bmShelf/folder": typeof bmShelf_folder;
+  openApi: typeof openApi;
   utils: typeof utils;
   webContent: typeof webContent;
 }>;

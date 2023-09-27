@@ -3,6 +3,7 @@ import {
 	mutation,
 	internalAction,
 	internalMutation,
+	action,
 } from "gconvex/_generated/server";
 import { v } from "convex/values";
 import { bmUpdSchema, bookmarksCols } from "../schema";
@@ -123,5 +124,22 @@ export const updBmWithSearchTokens = internalAction({
 			bmId,
 			updates: updatedBm,
 		});
+	},
+});
+
+export const similarFoods = action({
+	args: {
+		descriptionQuery: v.string(),
+	},
+	handler: async (ctx, args) => {
+		// 1. Generate an embedding from you favorite third party API:
+		const embedding = await embed(args.descriptionQuery);
+		// 2. Then search for similar foods!
+		const results = await ctx.vectorSearch("bookmarks", "by_embedding", {
+			vector: embedding,
+			limit: 16,
+			filter: q => q.eq("searchableText", "French"),
+		});
+		// ...
 	},
 });

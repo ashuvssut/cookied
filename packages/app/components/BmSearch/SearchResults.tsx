@@ -5,9 +5,10 @@ import { Text, View } from "dripsy";
 import { useAtom } from "jotai";
 import { useSelector } from "react-redux";
 import Fuse from "fuse.js";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { ResultCard } from "app/components/BmSearch/ResultCard";
+import { AiSearchResults } from "app/components/BmSearch/AiSearchResults";
 
 export const SearchResults = () => {
 	const [query] = useAtom(bmQueryAtom);
@@ -15,7 +16,7 @@ export const SearchResults = () => {
 
 	return (
 		<View sx={{ mt: "$4" }}>
-			<View sx={{ px: "$4" }}>
+			<View sx={{ p: "$4" }}>
 				{!!query && mode === 1 ? <FuzzySearchResults /> : <AiSearchResults />}
 			</View>
 		</View>
@@ -57,14 +58,6 @@ function FuzzySearchResults() {
 				renderItem={({ item }) => <ResultCard item={item} />}
 				style={{ marginVertical: 10 }}
 			/>
-		</>
-	);
-}
-
-function AiSearchResults() {
-	return (
-		<>
-			<Text variant="overline">Describe what was that content about.</Text>
 		</>
 	);
 }
