@@ -88,7 +88,7 @@ function SearchInitializer({ encryptedKey }: { encryptedKey: string }) {
 		<>
 			{!searchReady ? (
 				isUpdating ? (
-					<ToastView bg="error">
+					<ToastView bg="success">
 						<Text>
 							Please wait while AI Search is being prepared.{`\n`}We are
 							updating vector embeddings for all bookmarks.
@@ -96,7 +96,7 @@ function SearchInitializer({ encryptedKey }: { encryptedKey: string }) {
 						<ActivityIndicator color="#fff" size="large" />
 					</ToastView>
 				) : (
-					<ToastView bg="success">
+					<ToastView bg="error">
 						<Text>Failed to prepare AI search</Text>
 						<IconButton onPress={() => requestEmbedding()}>
 							<MdRefresh color="#fff" size={18} />
@@ -167,6 +167,7 @@ const ToastView: FCC<{ bg: "success" | "error" }> = ({ children, bg }) => {
 		<View
 			variant="layout.row"
 			sx={{ p: "$4", borderRadius: 15, bg, justifyContent: "space-between" }}
+			style={{ marginBottom: 10 }}
 		>
 			{children}
 		</View>
