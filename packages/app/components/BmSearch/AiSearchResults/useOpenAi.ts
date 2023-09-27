@@ -2,7 +2,7 @@ import {
 	getEncryptedKey,
 	storeEncryptedKey,
 } from "app/components/BmSearch/AiSearchResults/openAi";
-import { barLoadingAtom } from "app/components/Header";
+import { barLoadingAtom } from "app/store/slices/compoState";
 import { Toast } from "app/components/Toast";
 import { useAction } from "convex/react";
 import { api } from "gconvex/_generated/api";

@@ -3,7 +3,7 @@ import { api } from "gconvex/_generated/api";
 import { useAtom } from "jotai";
 import { TBm, TFl } from "gconvex/schema";
 import { Toast } from "app/components/Toast";
-import { barLoadingAtom } from "app/components/Header";
+import { barLoadingAtom } from "app/store/slices/compoState";
 import logr from "app/utils/logr";
 import { IBookmark, IFolder, IFolderNode } from "app/store/slices/bmShelfSlice";
 import { useUser } from "app/utils/clerk";

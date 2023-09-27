@@ -11,8 +11,7 @@ import {
 } from "app/store/slices/bmShelfSlice";
 import { useAppSelector } from "app/store/hooks";
 import { useAtom } from "jotai";
-import { activeEntityIdAtom } from "app/store/slices/compoState";
-import { barLoadingAtom } from "app/components/Header";
+import { activeEntityIdAtom, barLoadingAtom } from "app/store/slices/compoState";
 import { useModal } from "app/components/Modal/useModal";
 import * as yup from "yup";
 import { debounce } from "lodash";

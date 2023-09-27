@@ -13,8 +13,8 @@ import { Th } from "app/theme/components";
 import { BmSearch } from "app/components/BmSearch";
 import { BmSearchContent } from "app/components/BmSearch/BmSearchContent";
 import { useSignOut } from "app/hooks/useSignOut";
+import { barLoadingAtom } from "app/store/slices/compoState";
 
-export const barLoadingAtom = atom(false);
 export const Header: FC = () => {
 	const [loading] = useAtom(barLoadingAtom);
 	const { isLoaded } = useAuth();
