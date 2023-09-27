@@ -1,5 +1,4 @@
-import { bmQueryAtom } from "app/store/slices/compoState";
-import { searchModeAtom } from "app/components/BmSearch/SearchMode";
+import { bmQueryAtom, searchModeAtom } from "app/store/slices/compoState";
 import { IBookmark, selectAllBm } from "app/store/slices/bmShelfSlice";
 import { Text, View } from "dripsy";
 import { useAtom } from "jotai";

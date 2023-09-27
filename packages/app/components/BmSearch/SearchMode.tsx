@@ -1,8 +1,8 @@
 import { Text, View, useDripsyTheme } from "dripsy";
 import { MotiPressable } from "moti/interactions";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
+import { searchModeAtom } from "app/store/slices/compoState";
 
-export const searchModeAtom = atom(1);
 export function SearchMode() {
 	const { primary, secondary, onPrimary } = useDripsyTheme().theme.colors;
 	const [mode, setMode] = useAtom(searchModeAtom);
