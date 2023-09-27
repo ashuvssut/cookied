@@ -30,7 +30,7 @@ export type TBm = ObjectType<typeof bookmarksCols>;
 
 export default defineSchema({
 	folders: defineTable(foldersCols) //
-		.searchIndex("by_userId", { searchField: "userId" }),
+		.index("by_userId", ["userId"]),
 	bookmarks: defineTable(bookmarksCols)
 		.searchIndex("by_userId", {
 			searchField: "userId",

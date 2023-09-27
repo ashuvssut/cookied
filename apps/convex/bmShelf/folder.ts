@@ -15,7 +15,7 @@ export const getAll = query({
 
 		const allFls = await ctx.db
 			.query("folders")
-			.withSearchIndex("by_userId", q => q.search("userId", userId))
+			.withIndex("by_userId", q => q.eq("userId", userId))
 			.collect();
 		return allFls;
 	},
