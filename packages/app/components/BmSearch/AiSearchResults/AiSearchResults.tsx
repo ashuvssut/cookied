@@ -1,4 +1,4 @@
-import { MdRefresh, MdSearch } from "app/assets/icons";
+import { MdContentPaste, MdRefresh, MdSearch } from "app/assets/icons";
 import { getEncryptedKey } from "app/components/BmSearch/AiSearchResults/openAi";
 import { useOpenAi } from "app/components/BmSearch/AiSearchResults/useOpenAi";
 import { bmQueryAtom } from "app/components/BmSearch/BmSearch";
@@ -21,9 +21,10 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { useSelector } from "react-redux";
+import * as Clipboard from "expo-clipboard";
 
 export function AiSearchResults() {
-	const inactive = useDripsyTheme().theme.colors.onInactive;
+	const { onPrimary, onInactive } = useDripsyTheme().theme.colors;
 
 	const { encryptedKey, submitApiKey } = useOpenAi();
 	const [apiKey, setApiKey] = useState("");
@@ -34,20 +35,32 @@ export function AiSearchResults() {
 				<Text variant="label" sx={{ my: "$3" }}>
 					Your OpenAI key
 				</Text>
-				<TextInput
-					sx={{
-						px: "$4",
-						width: "100%",
-						bg: "surface",
-						color: "onPrimary",
-						height: 65,
-						borderRadius: 15,
-					}}
-					onChangeText={txt => setApiKey(txt)}
-					value={apiKey}
-					placeholderTextColor={inactive}
-					placeholder="Your OpenAI key"
-				/>
+				<View variant="layout.row">
+					<TextInput
+						sx={{
+							pl: "$4",
+							pr: 50,
+							width: "100%",
+							bg: "surface",
+							color: "onPrimary",
+							height: 65,
+							borderRadius: 15,
+						}}
+						onChangeText={txt => setApiKey(txt)}
+						value={apiKey}
+						placeholderTextColor={onInactive}
+						placeholder="Your OpenAI key"
+					/>
+					<IconButton
+						sx={{ position: "absolute", right: 10 }}
+						onPress={async () => {
+							const text = await Clipboard.getStringAsync();
+							setApiKey(text);
+						}}
+					>
+						<MdContentPaste size={22} color={onPrimary} />
+					</IconButton>
+				</View>
 				<Text variant="overline" sx={{ mt: "$4" }}>
 					Please store your API key securely.
 				</Text>

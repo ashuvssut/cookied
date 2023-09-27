@@ -21,6 +21,7 @@ export const MdAccountCircle = MdIcon("account-circle");
 export const MdModeEdit = MdIcon("mode-edit");
 export const MdSearch = MdIcon("search");
 export const MdRefresh = MdIcon("refresh");
+export const MdContentPaste = MdIcon("content-paste");
 
 // Typed Factory Functions
 type MdcProps = ComponentProps<typeof MaterialCommunityIcons>;

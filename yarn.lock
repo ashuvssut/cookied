@@ -8880,6 +8880,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-clipboard@npm:^4.5.0":
+  version: 4.6.0
+  resolution: "expo-clipboard@npm:4.6.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 63b7d16ce7c717034705ec30d3aba9fde5fa96dab98219cf180ad020d98f2e385b43ed061aa7a85f1f92eee6eb9ebf591cd292c4b7751fb7d9c04bbef40dd6a1
+  languageName: node
+  linkType: hard
+
 "expo-constants@npm:^14.2.1, expo-constants@npm:~14.3.0":
   version: 14.3.0
   resolution: "expo-constants@npm:14.3.0"
@@ -13360,6 +13369,7 @@ __metadata:
     expo-auth-session: ^5.2.0
     expo-blur: ^12.6.0
     expo-build-properties: ^0.6.0
+    expo-clipboard: ^4.5.0
     expo-constants: ^14.2.1
     expo-dev-client: ^2.2.1
     expo-font: ^11.1.1

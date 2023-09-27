@@ -36,6 +36,7 @@ const nextConfig = {
 		"react-native-progress",
 		"react-native-svg",
 		"expo-blur",
+		"expo-clipboard",
 	],
 };
 

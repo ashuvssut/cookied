@@ -15,5 +15,6 @@ export {
 	MdAccountCircle,
 	MdModeEdit,
 	MdSearch,
-	MdRefresh
+	MdRefresh,
+	MdContentPaste
 } from "react-icons/md";
