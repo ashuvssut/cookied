@@ -6,6 +6,8 @@ import { Text, View } from "dripsy";
 import { useMemo } from "react";
 import { MotiPressable } from "moti/interactions";
 import { activeUrlAtom } from "app/screens/HomeScreen/TreePanel";
+import { isWeb } from "app/utils/constants";
+import { useModal } from "app/components/Modal";
 
 interface IResultCard {
 	item: IBookmark;
@@ -14,6 +16,7 @@ interface IResultCard {
 export const ResultCard: FC<IResultCard> = ({ item }) => {
 	const [, setActiveEntityId] = useAtom(activeEntityIdAtom);
 	const [, setActiveUrl] = useAtom(activeUrlAtom);
+	const { openModal } = useModal();
 
 	return (
 		<View
@@ -23,6 +26,8 @@ export const ResultCard: FC<IResultCard> = ({ item }) => {
 				onPress={() => {
 					setActiveEntityId(item._id);
 					setActiveUrl(item.url);
+					if (!isWeb)
+						openModal({ type: "web-view", payload: { src: item.url } });
 				}}
 				animate={useMemo(
 					() =>

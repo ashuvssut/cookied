@@ -32,7 +32,14 @@ export const BmSearchContent = () => {
 							variant="layout.absoluteFlex"
 							onPress={() => setQuery("")}
 						/>
-						<View sx={{ maxWidth: 500, px: "$3", width: "100%" }}>
+						<View
+							sx={{
+								maxWidth: 500,
+								px: "$3",
+								width: "100%",
+								display: isOpen ? "flex" : "none",
+							}}
+						>
 							<View
 								sx={{ mx: "$3", p: "$4", borderRadius: 15 }}
 								variant="layout.secondary"

@@ -63,7 +63,11 @@ export const BookmarkForm: FC<IBookmarkForm> = ({ formikProps: p }) => {
 			<FormTextField
 				name="url"
 				formikProps={p}
-				fieldProps={{ placeholder: "Enter the Bookmark URL", autoFocus: true }}
+				fieldProps={{
+					placeholder: "Enter the Bookmark URL",
+					autoFocus: true,
+					keyboardType: "url",
+				}}
 			/>
 			<View sx={{ marginTop: "$2" }} />
 			<FormTextField
