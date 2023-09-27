@@ -3,9 +3,9 @@ import { v } from "convex/values";
 import { action } from "gconvex/_generated/server";
 import crypto from "crypto";
 
-export const encryptOpenApiKey = action({
-	args: { openApiKey: v.string() },
-	handler: async (ctx, { openApiKey }) => {
+export const encryptOpenAiKey = action({
+	args: { openAiKey: v.string() },
+	handler: async (ctx, { openAiKey }) => {
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 
@@ -14,7 +14,7 @@ export const encryptOpenApiKey = action({
 		if (!encryptionKey || !iv)
 			return new Error("Something went wrong during encryption.");
 		const cipher = crypto.createCipheriv("aes-256-cbc", encryptionKey, iv);
-		let encryptedApiKey = cipher.update(openApiKey, "utf8", "hex");
+		let encryptedApiKey = cipher.update(openAiKey, "utf8", "hex");
 		encryptedApiKey += cipher.final("hex");
 		return encryptedApiKey;
 	},

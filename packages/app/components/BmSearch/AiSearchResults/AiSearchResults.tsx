@@ -1,4 +1,4 @@
-import { useOpenApi } from "app/components/BmSearch/AiSearchResults/useOpenApi";
+import { useOpenAi } from "app/components/BmSearch/AiSearchResults/useOpenAi";
 import { Th } from "app/theme/components";
 import { Text, TextInput, View, useDripsyTheme } from "dripsy";
 import { useState } from "react";
@@ -6,14 +6,14 @@ import { useState } from "react";
 export function AiSearchResults() {
 	const inactive = useDripsyTheme().theme.colors.onInactive;
 
-	const { encryptedKey, submitApiKey } = useOpenApi();
+	const { encryptedKey, submitApiKey } = useOpenAi();
 	const [apiKey, setApiKey] = useState("");
 
 	if (!encryptedKey) {
 		return (
 			<View sx={{ bg: "surfaceHigh", px: "$4", py: "$3", borderRadius: 15 }}>
 				<Text variant="label" sx={{ my: "$3" }}>
-					Your OpenAPI key
+					Your OpenAi key
 				</Text>
 				<TextInput
 					sx={{
@@ -27,7 +27,7 @@ export function AiSearchResults() {
 					onChangeText={txt => setApiKey(txt)}
 					value={apiKey}
 					placeholderTextColor={inactive}
-					placeholder="Your OpenAPI key"
+					placeholder="Your OpenAi key"
 				/>
 				<Text variant="overline" sx={{ mt: "$4" }}>
 					Please store your API key securely.

@@ -1,13 +1,10 @@
-import {
-	getEncryptedKey,
-	storeEncryptedKey,
-} from "app/components/BmSearch/AiSearchResults/openApi";
+import { getEncryptedKey, storeEncryptedKey } from "app/components/BmSearch/AiSearchResults/openAi";
 import { Toast } from "app/components/Toast";
 import { useAction } from "convex/react";
 import { api } from "gconvex/_generated/api";
 import { useEffect, useState } from "react";
 
-export function useOpenApi() {
+export function useOpenAi() {
 	const [encryptedKey, setEncryptedKey] = useState<string | null>(null);
 	useEffect(() => {
 		async function setKey() {
@@ -24,10 +21,10 @@ export function useOpenApi() {
 		getKey();
 	}, []);
 
-	const encryptOpenApiKey = useAction(api.openApi.encryptOpenApiKey);
+	const encryptOpenAiKey = useAction(api.openAi.encryptOpenAiKey);
 	async function submitApiKey(key: string) {
 		try {
-			const encKey = await encryptOpenApiKey({ openApiKey: key });
+			const encKey = await encryptOpenAiKey({ openAiKey: key });
 			if (typeof encKey === "string" && !!encKey) setEncryptedKey(encKey);
 		} catch (err: any) {
 			const msg = err.message || err.toString();
