@@ -18,7 +18,7 @@ export const getAll = query({
 		const userId = getUserId(identity);
 		const allBms = await ctx.db
 			.query("bookmarks")
-			.withSearchIndex("by_userId", q => q.search("userId", userId))
+			.withIndex("by_userId", q => q.eq("userId", userId))
 			.collect();
 		return allBms;
 	},
@@ -134,9 +134,7 @@ export const getEmptyEmbeddingDocs = query({
 		const userId = getUserId(identity);
 		const emptyFields = await ctx.db
 			.query("bookmarks")
-			.withSearchIndex("by_userId", q =>
-				q.search("userId", userId).eq("embedding", undefined || []),
-			)
+			.withIndex("by_userId", q => q.eq("userId", userId).eq("embedding", []))
 			.collect();
 
 		const docs = emptyFields.flatMap(f => {

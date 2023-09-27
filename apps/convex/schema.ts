@@ -32,10 +32,7 @@ export default defineSchema({
 	folders: defineTable(foldersCols) //
 		.index("by_userId", ["userId"]),
 	bookmarks: defineTable(bookmarksCols)
-		.searchIndex("by_userId", {
-			searchField: "userId",
-			filterFields: ["embedding"],
-		})
+		.index("by_userId", ["userId", "embedding"])
 		.vectorIndex("by_embedding", {
 			vectorField: "embedding",
 			dimensions: 1536,
