@@ -11,13 +11,12 @@ import {
 } from "app/store/slices/bmShelfSlice";
 import { useAppSelector } from "app/store/hooks";
 import { useAtom } from "jotai";
-import { activeEntityIdAtom, barLoadingAtom } from "app/store/slices/compoState";
+import { activeEntityIdAtom, barLoadingAtom, bmFolderAtom } from "app/store/slices/compoState";
 import { useModal } from "app/components/Modal/useModal";
 import * as yup from "yup";
 import { debounce } from "lodash";
 import { useAction } from "convex/react";
 import { api } from "gconvex/_generated/api";
-import { bmFolderAtom } from "app/components/Formik/atoms";
 
 interface IBookmarkForm {
 	formikProps: FormikProps<TBookmarkFormSchema>;

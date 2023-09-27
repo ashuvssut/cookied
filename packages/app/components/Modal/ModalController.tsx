@@ -11,7 +11,7 @@ import { IWebpageState } from "app/components/WebView/WebView";
 import { useModal } from "app/components/Modal/useModal";
 import { AddBmModal } from "app/components/Modal/ActionModals/AddBmModal";
 import { AddFlModal } from "app/components/Modal/ActionModals/AddFlModal";
-import { modalizeRefAtom } from "app/components/Modal/atoms";
+import { modalizeRefAtom } from "app/store/slices/compoState";
 import { EditFlModal } from "app/components/Modal/ActionModals/EditFlModal";
 import { EditBmModal } from "app/components/Modal/ActionModals/EditBmModal";
 
