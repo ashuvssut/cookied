@@ -77,8 +77,11 @@ export default bmShelfSlice.reducer;
 export const { selectById: selectFlId } =
 	foldersAdapter.getSelectors<RootState>(state => state.bmShelf.folders);
 
-export const { selectById: selectBmId, selectAll: selectAllBm } =
-	bookmarksAdapter.getSelectors<RootState>(state => state.bmShelf.bookmarks);
+export const {
+	selectById: selectBmId,
+	selectAll: selectAllBm,
+	selectEntities: selectAllBmEntities,
+} = bookmarksAdapter.getSelectors<RootState>(state => state.bmShelf.bookmarks);
 
 export const selectDenormalizedBmShelf = createSelector(
 	(state: RootState) => state.bmShelf,

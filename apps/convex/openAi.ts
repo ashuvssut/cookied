@@ -2,6 +2,7 @@
 import { v } from "convex/values";
 import { action } from "gconvex/_generated/server";
 import crypto from "crypto";
+import { internal } from "gconvex/_generated/api";
 
 export const encryptOpenAiKey = action({
 	args: { openAiKey: v.string() },
@@ -19,10 +20,37 @@ export const encryptOpenAiKey = action({
 	},
 });
 
+export const updateEmbeddings = action({
+	args: {
+		docs: v.array(
+			v.object({ _id: v.id("bookmarks"), searchableText: v.string() }),
+		),
+		encryptedKey: v.string(),
+	},
+	handler: async (ctx, { docs, encryptedKey }) => {
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
+
+		try {
+			const docUpdatesPromises = docs.map(async doc => {
+				const embedding = await embed(doc.searchableText, encryptedKey);
+				return { _id: doc._id, embedding };
+			});
+			const docUpdates = await Promise.all(docUpdatesPromises);
+			await ctx.runMutation(internal.bmShelf.bookmark.updateEmbeddingsMany, {
+				docUpdates,
+			});
+		} catch (err: any) {
+			const msg = err.message || err.toString();
+			throw new Error("Error updating embeddings: " + msg);
+		}
+	},
+});
+
 export const aiSearchSimilarBms = action({
-	args: { descriptionQuery: v.string(), encApiKey: v.string() },
-	handler: async (ctx, { descriptionQuery, encApiKey }) => {
-		const embedding = await embed(descriptionQuery, encApiKey);
+	args: { query: v.string(), encApiKey: v.string() },
+	handler: async (ctx, { query, encApiKey }) => {
+		const embedding = await embed(query, encApiKey);
 		const results = await ctx.vectorSearch("bookmarks", "by_embedding", {
 			vector: embedding,
 			limit: 16,

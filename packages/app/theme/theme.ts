@@ -36,7 +36,7 @@ const commonConfig = makeTheme({
 export const commonColors = {
 	error: "#B00020",
 	warning: "#FFA000",
-	success: "#4CAF50",
+	success: "#177e1a",
 };
 
 export const darkTheme = makeTheme({

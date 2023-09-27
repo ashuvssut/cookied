@@ -11,7 +11,7 @@ export async function bmWithSearchFields(bm: TBmUpd) {
 	if (!bm.url) return bm;
 	const searchableText = await generateSearchableText(bm.url);
 	const searchTokens = tokenizeString(searchableText);
-	const bmObj = { ...bm, searchTokens, searchableText };
+	const bmObj = { ...bm, searchTokens, searchableText, embedding: [] };
 	return bmObj;
 }
 

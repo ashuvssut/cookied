@@ -125,3 +125,44 @@ export const updBmWithSearchFields = internalAction({
 		});
 	},
 });
+
+export const getEmptyEmbeddingDocs = query({
+	handler: async ctx => {
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
+
+		const userId = getUserId(identity);
+		const emptyFields = await ctx.db
+			.query("bookmarks")
+			.withSearchIndex("by_userId", q =>
+				q.search("userId", userId).eq("embedding", undefined || []),
+			)
+			.collect();
+
+		const docs = emptyFields.flatMap(f => {
+			const { _id, searchableText } = f;
+			if (searchableText !== "" && searchableText !== undefined)
+				return [{ _id, searchableText }];
+			return [];
+		});
+
+		return docs;
+	},
+});
+
+export const updateEmbeddingsMany = internalMutation({
+	args: {
+		docUpdates: v.array(
+			v.object({
+				_id: v.id("bookmarks"),
+				embedding: v.array(v.float64()),
+			}),
+		),
+	},
+	handler: async (ctx, { docUpdates }) => {
+		const updatePromises = docUpdates.map(({ _id, embedding }) =>
+			ctx.db.patch(_id, { embedding }),
+		);
+		await Promise.all(updatePromises);
+	},
+});
