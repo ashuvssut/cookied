@@ -3,7 +3,7 @@ import { Svg } from "app/components/Svg";
 import { H1, View, Text } from "dripsy";
 import { FC, useState } from "react";
 import { Bar } from "react-native-progress";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { isWeb } from "app/utils/constants";
 import { useAuth, useUser } from "app/utils/clerk";
 import { Toast } from "app/components/Toast";

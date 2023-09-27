@@ -16,7 +16,7 @@ import { api } from "gconvex/_generated/api";
 import { useAppDispatch } from "app/store/hooks";
 import { bmShelfAction } from "app/store/slices/bmShelfSlice";
 import { useAtom } from "jotai";
-import { bmQueryAtom } from "app/components/BmSearch/BmSearch";
+import { bmQueryAtom } from "app/store/slices/compoState";
 
 export default function HomeScreen() {
 	const style = usePressabilityApiStyles();

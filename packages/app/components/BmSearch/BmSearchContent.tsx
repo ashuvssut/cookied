@@ -5,7 +5,7 @@ import { BlurView } from "expo-blur";
 import { useWindowDimensions } from "react-native";
 import { SearchMode } from "app/components/BmSearch/SearchMode";
 import { SearchResults } from "app/components/BmSearch/SearchResults";
-import { bmQueryAtom } from "app/components/BmSearch/BmSearch";
+import { bmQueryAtom } from "app/store/slices/compoState";
 
 export const BmSearchContent = () => {
 	const [query, setQuery] = useAtom(bmQueryAtom);

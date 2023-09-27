@@ -2,7 +2,8 @@ import { MotiView } from "moti";
 import { View, TextInput, useDripsyTheme } from "dripsy";
 import { MdSearch } from "app/assets/icons";
 import { isWeb } from "app/utils/constants";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
+import { bmQueryAtom } from "app/store/slices/compoState";
 
 export const BmSearch = () => {
 	const [query] = useAtom(bmQueryAtom);
@@ -14,7 +15,6 @@ export const BmSearch = () => {
 	);
 };
 
-export const bmQueryAtom = atom("");
 function SearchField() {
 	const [query, setQuery] = useAtom(bmQueryAtom);
 

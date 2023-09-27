@@ -1,7 +1,7 @@
 import { MdContentPaste, MdRefresh, MdSearch } from "app/assets/icons";
 import { getEncryptedKey } from "app/components/BmSearch/AiSearchResults/openAi";
 import { useOpenAi } from "app/components/BmSearch/AiSearchResults/useOpenAi";
-import { bmQueryAtom } from "app/components/BmSearch/BmSearch";
+import { bmQueryAtom } from "app/store/slices/compoState";
 import { ResultCard } from "app/components/BmSearch/ResultCard";
 import { IconButton } from "app/components/IconButton";
 import { Toast } from "app/components/Toast";
