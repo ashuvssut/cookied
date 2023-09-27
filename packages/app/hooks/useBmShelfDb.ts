@@ -26,6 +26,7 @@ export function useBmShelfDb() {
 			const fl = await createFl(reqData);
 			setIsLoading(false);
 			// dispatch(bmShelfAction.addFl(fl));
+			Toast.success("Folder added!");
 			return fl;
 		} catch (err: any) {
 			setIsLoading(false);
@@ -44,6 +45,7 @@ export function useBmShelfDb() {
 			if (!userId) throw new Error("Please log in first!");
 			const id = await deleteFl({ flId });
 			setIsLoading(false);
+			Toast.success("Folder deleted!");
 			return id;
 		} catch (err: any) {
 			setIsLoading(false);
@@ -66,7 +68,7 @@ export function useBmShelfDb() {
 
 			const updatedFl = await updateFl({ flId, updates });
 			setIsLoading(false);
-
+			Toast.success("Folder updated!");
 			return updatedFl;
 		} catch (err: any) {
 			setIsLoading(false);
@@ -86,6 +88,7 @@ export function useBmShelfDb() {
 			const reqData = { ...newBm, userId };
 			const bm = await createBm(reqData);
 			setIsLoading(false);
+			Toast.success("Bookmark created!");
 			return bm;
 		} catch (err: any) {
 			setIsLoading(false);
@@ -104,11 +107,11 @@ export function useBmShelfDb() {
 			if (!userId) throw new Error("Please log in first!");
 			const id = await deleteBm({ bmId });
 			setIsLoading(false);
+			Toast.success("Bookmark deleted!");
 			return id;
 		} catch (err: any) {
 			setIsLoading(false);
 			const msg = err.message || err.toString();
-
 			Toast.error(!!msg ? msg : "Error in deleting bookmark");
 			logr.err("Error in deleting bookmark", err);
 		}
@@ -123,10 +126,9 @@ export function useBmShelfDb() {
 
 		try {
 			if (!userId) throw new Error("Please log in first!");
-
 			const updatedFl = await updateBm({ bmId, updates });
 			setIsLoading(false);
-
+			Toast.success("Bookmark updated!");
 			return updatedFl;
 		} catch (err: any) {
 			setIsLoading(false);
