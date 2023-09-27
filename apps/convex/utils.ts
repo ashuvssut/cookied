@@ -7,7 +7,7 @@ export function getUserId(identity: UserIdentity) {
 	return identity.tokenIdentifier.split("|")[1]!;
 }
 
-export async function bmWithSearchTokens(bm: TBmUpd) {
+export async function bmWithSearchFields(bm: TBmUpd) {
 	if (!bm.url) return bm;
 	const searchableText = await generateSearchableText(bm.url);
 	const searchTokens = tokenizeString(searchableText);

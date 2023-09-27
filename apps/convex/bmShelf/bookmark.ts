@@ -7,7 +7,7 @@ import {
 } from "gconvex/_generated/server";
 import { v } from "convex/values";
 import { bmUpdSchema, bookmarksCols } from "../schema";
-import { bmWithSearchTokens, getUserId } from "gconvex/utils";
+import { bmWithSearchFields, getUserId } from "gconvex/utils";
 import { handleFlUpdate } from "gconvex/bmShelf/folder";
 import { internal } from "gconvex/_generated/api";
 
@@ -35,7 +35,7 @@ export const create = mutation({
 		const { userId, ...updates } = newBm;
 		ctx.scheduler.runAfter(
 			0,
-			internal.bmShelf.bookmark.updBmWithSearchTokens, // updates the bm
+			internal.bmShelf.bookmark.updBmWithSearchFields, // updates the bm
 			{ bmId, bm: updates },
 		);
 
@@ -98,7 +98,7 @@ export const handleUpdate = internalMutation({
 		if (shouldRunUpdAction) {
 			ctx.scheduler.runAfter(
 				0,
-				internal.bmShelf.bookmark.updBmWithSearchTokens,
+				internal.bmShelf.bookmark.updBmWithSearchFields,
 				{ bmId, bm: updates },
 			);
 		}
@@ -106,7 +106,7 @@ export const handleUpdate = internalMutation({
 	},
 });
 
-export const updBmWithSearchTokens = internalAction({
+export const updBmWithSearchFields = internalAction({
 	args: { bmId: v.id("bookmarks"), bm: v.object(bmUpdSchema) },
 	handler: async (ctx, { bmId, bm }) => {
 		async function getUpdatedBm() {
@@ -115,7 +115,7 @@ export const updBmWithSearchTokens = internalAction({
 			// 		return await bmWithSearchTokens(bm);
 			// 	} else return await bmWithSearchTokens(exisitingBm);
 			// } else if (bm.url) {
-			if (bm.url) return await bmWithSearchTokens(bm);
+			if (bm.url) return await bmWithSearchFields(bm);
 			else throw new Error(`Exhaustive check: missing url in new Bm object`);
 		}
 		const updatedBm = await getUpdatedBm();
@@ -124,22 +124,5 @@ export const updBmWithSearchTokens = internalAction({
 			bmId,
 			updates: updatedBm,
 		});
-	},
-});
-
-export const similarFoods = action({
-	args: {
-		descriptionQuery: v.string(),
-	},
-	handler: async (ctx, args) => {
-		// 1. Generate an embedding from you favorite third party API:
-		const embedding = await embed(args.descriptionQuery);
-		// 2. Then search for similar foods!
-		const results = await ctx.vectorSearch("bookmarks", "by_embedding", {
-			vector: embedding,
-			limit: 16,
-			filter: q => q.eq("searchableText", "French"),
-		});
-		// ...
 	},
 });
