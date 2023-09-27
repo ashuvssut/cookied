@@ -30,7 +30,10 @@ export type TBm = ObjectType<typeof bookmarksCols>;
 export default defineSchema({
 	folders: defineTable(foldersCols) //
 		.searchIndex("by_userId", { searchField: "userId" }),
-	bookmarks: defineTable({ ...bookmarksCols, embedding: v.array(v.float64()) })
+	bookmarks: defineTable({
+		...bookmarksCols,
+		embedding: v.optional(v.array(v.float64())),
+	})
 		.searchIndex("by_userId", { searchField: "userId" })
 		.vectorIndex("by_embedding", {
 			vectorField: "embedding",

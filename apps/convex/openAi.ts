@@ -1,7 +1,7 @@
 "use node";
 import { v } from "convex/values";
 import { action } from "gconvex/_generated/server";
-import crypto from "crypto";
+import { aesCrypto } from "gconvex/utils";
 
 export const encryptOpenAiKey = action({
 	args: { openAiKey: v.string() },
@@ -9,29 +9,18 @@ export const encryptOpenAiKey = action({
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 
-		const encryptionKey = process.env.OPEN_API_SECRET;
-		const iv = process.env.INIT_VECTOR;
-		if (!encryptionKey || !iv)
-			return new Error("Something went wrong during encryption.");
-		const cipher = crypto.createCipheriv("aes-256-cbc", encryptionKey, iv);
-		let encryptedApiKey = cipher.update(openAiKey, "utf8", "hex");
-		encryptedApiKey += cipher.final("hex");
-		return encryptedApiKey;
+		const aes = aesCrypto();
+		return aes.encrypt(openAiKey);
 	},
 });
 
-export const decryptKey = (
-	encryptedKey: string,
-	encryptionKey: string,
-	iv: string,
-) => {
+export const decryptKey = (encryptedKey: string) => {
 	try {
-		const decipher = crypto.createDecipheriv("aes-256-cbc", encryptionKey, iv);
-		let decryptedApiKey = decipher.update(encryptedKey, "hex", "utf8");
-		decryptedApiKey += decipher.final("utf8");
-		return decryptedApiKey;
-	} catch (error) {
-		console.error("Error decrypting API key:", error);
-		return null;
+		const aes = aesCrypto();
+		return aes.decrypt(encryptedKey);
+	} catch (err: any) {
+		const msg = err.message || err.toString();
+		console.error("Error decrypting API key:", msg);
+		throw new Error("Error decrypting API key: " + msg);
 	}
 };

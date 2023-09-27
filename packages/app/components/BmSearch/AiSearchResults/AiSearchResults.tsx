@@ -13,7 +13,7 @@ export function AiSearchResults() {
 		return (
 			<View sx={{ bg: "surfaceHigh", px: "$4", py: "$3", borderRadius: 15 }}>
 				<Text variant="label" sx={{ my: "$3" }}>
-					Your OpenAi key
+					Your OpenAI key
 				</Text>
 				<TextInput
 					sx={{
@@ -27,7 +27,7 @@ export function AiSearchResults() {
 					onChangeText={txt => setApiKey(txt)}
 					value={apiKey}
 					placeholderTextColor={inactive}
-					placeholder="Your OpenAi key"
+					placeholder="Your OpenAI key"
 				/>
 				<Text variant="overline" sx={{ mt: "$4" }}>
 					Please store your API key securely.
