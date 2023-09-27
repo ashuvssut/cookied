@@ -80,7 +80,7 @@ export async function embed(
 	}
 	const json = await resp.json();
 	const vector = json["data"][0]["embedding"];
-	console.log(`Computed embedding of "${text}": ${vector.length} dimensions`);
+	// console.log(`Computed embedding of "${text}": ${vector.length} dimensions`);
 	return vector;
 }
 

@@ -36,7 +36,9 @@ export const ResultCard: FC<IResultCard> = ({ item }) => {
 				<Text numberOfLines={2} variant="semibold">
 					{item.title}
 				</Text>
-				<Text numberOfLines={1}>{item.url}</Text>
+				<Text numberOfLines={1} sx={{ color: "onInactive" }}>
+					{item.url}
+				</Text>
 			</MotiPressable>
 		</View>
 	);
