@@ -34,6 +34,7 @@ const commonConfig = makeTheme({
 });
 
 export const commonColors = {
+	// Update in /apps/web/pages/styles.css too
 	error: "#B00020",
 	warning: "#FFA000",
 	success: "#177e1a",
