@@ -3,7 +3,6 @@ import {
 	mutation,
 	internalAction,
 	internalMutation,
-	action,
 } from "gconvex/_generated/server";
 import { v } from "convex/values";
 import { bmUpdSchema, bookmarksCols } from "../schema";
