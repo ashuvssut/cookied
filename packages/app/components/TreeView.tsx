@@ -1,5 +1,6 @@
 import { FCC } from "app/types/IReact"; // FCC = Functional Component with children prop
 import { View } from "dripsy";
+import Re, { withSpring, useAnimatedStyle } from "react-native-reanimated";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
 type WithId<T> = T & { _id: string };
@@ -97,17 +98,28 @@ interface ITreeWrapper {
 const TreeWrapper: FCC<ITreeWrapper> = props => {
 	const { node, childNodes, childLeafs, isCollapsed } = props;
 	const [wrapperMinHt, setWrapperMinHt] = useState(0);
+	const [wrapperMaxHt, setWrapperMaxHt] = useState(0);
 	const [collapse, setCollapse] = useState(isCollapsed);
-	const allowCollapse = collapse && !!wrapperMinHt;
-	const wrapperHt = allowCollapse ? wrapperMinHt : "auto";
-	// TODO: animate height change
+
+	const rHeight = useAnimatedStyle(() => {
+		const config = { damping: 15 };
+		const allowCollapse = collapse && !!wrapperMinHt;
+		if (allowCollapse) return { height: withSpring(wrapperMaxHt, config) };
+		return { height: withSpring(wrapperMinHt, config) };
+	}, [collapse, wrapperMinHt, wrapperMaxHt]);
+
 	return (
-		<View style={{ height: wrapperHt, overflow: "hidden" }}>
-			<View onLayout={e => setWrapperMinHt(e.nativeEvent.layout.height)}>
-				{node(setCollapse)}
+		<Re.View style={[rHeight, { overflow: "hidden", width: "100%" }]}>
+			<View
+				onLayout={e => setWrapperMaxHt(e.nativeEvent.layout.height)}
+				sx={{ position: "absolute", top: 0, left: 0, width: "100%" }}
+			>
+				<View onLayout={e => setWrapperMinHt(e.nativeEvent.layout.height)}>
+					{node(setCollapse)}
+				</View>
+				{childNodes}
+				{childLeafs}
 			</View>
-			{childNodes}
-			{childLeafs}
-		</View>
+		</Re.View>
 	);
 };
