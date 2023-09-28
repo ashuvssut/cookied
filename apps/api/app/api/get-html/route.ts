@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer-core";
-import chromium from "@sparticuz/chromium";
+import puppeteer from "puppeteer";
 
 export async function GET(req: Request) {
 	try {
@@ -14,13 +13,7 @@ export async function GET(req: Request) {
 			);
 		}
 
-		const browser = await puppeteer.launch({
-			args: chromium.args,
-			executablePath:
-				process.env.CHROME_EXECUTABLE_PATH || (await chromium.executablePath),
-			headless: true,
-			// ...more config options
-		});
+		const browser = await puppeteer.launch({ headless: "new" });
 		const page = await browser.newPage();
 		await page.goto(url, { waitUntil: "networkidle2" });
 		const bodyHTML = await page.content();

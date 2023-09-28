@@ -11,12 +11,11 @@
 		"env:push": "yarn env:rm || cat .env.local | sed 's/=/ /' | xargs -n 2 bash -c 'echo -n $1 | vercel env add $0 production'"
 	},
 	"dependencies": {
-		"@sparticuz/chromium": "92.0.0",
 		"absolutify": "^0.1.0",
 		"cheerio": "^1.0.0-rc.12",
 		"encoding": "^0.1.13",
 		"next": "13.4.3",
-		"puppeteer-core": "^21.3.6",
+		"puppeteer": "^21.3.6",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"typescript": "5.0.4"
