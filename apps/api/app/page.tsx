@@ -6,7 +6,7 @@ const App = () => {
 	return (
 		<main>
 			<Image
-				src="https://raw.githubusercontent.com/ashuvssut/cookied/dev/packages/app/assets/svg/good-cookie-square.svg"
+				src="/assets/svg/good-cookie-square.svg"
 				className="App-logo"
 				alt="logo"
 				width={400}

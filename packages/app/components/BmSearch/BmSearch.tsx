@@ -29,7 +29,6 @@ function SearchField() {
 						pl: p,
 						pr: p * 2,
 						width: isWeb ? "100%" : 220,
-						bg: "surface",
 						color: "onPrimary",
 					}}
 					onChangeText={txt => setQuery(txt)}

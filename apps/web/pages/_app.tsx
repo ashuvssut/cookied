@@ -29,10 +29,7 @@ function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 					name="description"
 					content="Cookied | Cross-platform Bookmarks manager app"
 				/>
-				<link
-					rel="icon"
-					href="https://cookiedapi.vercel.app/api/u/good-cookie-square.svg"
-				/>
+				<link rel="icon" href="/assets/svg/good-cookie-square.svg" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<meta property="og:title" content="Cookied!!" />
 				<meta
@@ -55,7 +52,7 @@ function CookiedApp({ Component, pageProps }: SolitoAppProps) {
 				/>
 				<meta
 					name="twitter:image"
-					content="https://raw.githubusercontent.com/ashuvssut/cookied/dev/packages/app/assets/svg/good-cookie-square.svg"
+					content="/assets/svg/good-cookie-square.svg"
 				/>
 			</Head>
 			<ClerkAuth>
