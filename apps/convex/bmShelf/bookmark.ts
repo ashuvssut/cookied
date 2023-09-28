@@ -60,7 +60,23 @@ export const remove = mutation({
 	handler: async (ctx, { bmId }) => {
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
+
+		const bmDoc = await ctx.db.get(bmId); // get bmDoc, then do the deletion
 		await ctx.db.delete(bmId);
+
+		// Update parent fl's bookmarks array
+		if (bmDoc) {
+			const parentId = bmDoc.parentId;
+			if (parentId !== "root") {
+				const parentFlDoc = await ctx.db.get(parentId);
+				if (parentFlDoc) {
+					const bookmarks = parentFlDoc.bookmarks;
+					const updatedBookmarks = bookmarks.filter(id => id !== bmId);
+					const flUpdates = { ...parentFlDoc, bookmarks: updatedBookmarks };
+					ctx.db.patch(parentId, flUpdates);
+				}
+			}
+		}
 		return bmId;
 	},
 });
