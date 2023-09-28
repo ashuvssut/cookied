@@ -64,7 +64,7 @@ async function validateOpenAiKey(key: string) {
 			throw new Error(`Error: ${response.status}, ${data.error.message}`);
 
 		return true;
-	} catch (error) {
+	} catch (error: any) {
 		console.error("Error:", error.message);
 		Toast.error(error.message);
 		return false;
