@@ -1,7 +1,7 @@
 // @ts-ignore
 import absolutify from "absolutify";
 import { load, Element, Document } from "cheerio";
-import { COOKIED_API_PROD_URL } from "app/utils/constants";
+import { COOKIED_API_PROD_URL } from "gconvex/constants";
 
 // Web Content
 export async function handleFetchWebpage(urlString: string) {
