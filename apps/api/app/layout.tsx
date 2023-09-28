@@ -6,7 +6,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 			<head>
 				<link
 					rel="icon"
-					href="https://raw.githubusercontent.com/ashuvssut/cookied/dev/packages/app/assets/svg/good-cookie-square.svg"
+					href="https://cookiedapi.vercel.app/api/uploadstash/good-cookie-square.svg"
 				/>
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<meta property="og:title" content="Cookied!!" />
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 				<meta property="og:type" content="website" />
 				<meta
 					property="og:image"
-					content="https://raw.githubusercontent.com/ashuvssut/cookied/dev/packages/app/assets/svg/good-cookie-square.svg"
+					content="https://cookiedapi.vercel.app/api/uploadstash/good-cookie-square.svg"
 				/>
 				<title>Cookied!!</title>
 			</head>
