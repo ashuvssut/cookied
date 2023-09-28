@@ -45,7 +45,6 @@ export const BookmarkForm: FC<IBookmarkForm> = ({ formikProps: p }) => {
 			if (!isUrlValid) return;
 			try {
 				const fetchedTitle = await getTitleFromUrl({ url: p.values.url });
-				console.log(fetchedTitle);
 				p.setFieldValue("title", fetchedTitle);
 			} catch (err) {
 				console.error("Error:", err);
