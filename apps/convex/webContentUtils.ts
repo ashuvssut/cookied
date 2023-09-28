@@ -62,14 +62,13 @@ export async function generateSearchableText(url: string) {
 	return searchableText;
 }
 
+// This can't handle scraping CSR webapps. See End of this file for the alternative solution
 export async function fetchHtml(url: string) {
 	try {
-		const response = await fetch(
-			`${COOKIED_API_PROD_URL}/api/get-html?url=${encodeURIComponent(url)}`,
-		); // convex doesnt support puppeteer for now. So use in vercel serveless instead. Vercel works with puppeteer
+		const response = await fetch(url);
 		if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-		const json = (await response.json()) as { body: string };
-		return json.body;
+		const html = await response.text();
+		return html;
 	} catch (error) {
 		console.error("Error fetching HTML:", error);
 		throw error;
@@ -118,13 +117,15 @@ export async function absolutifySrcsetAttributes(
 	// const htmlDocument = `<img srcset="/_next/image?url=%2Fimage1.jpg&amp;w=100 1x, /_next/image?url=%2Fimage1.jpg&amp;w=200 2x"><img srcset="/_next/image?url=%2Fimage2.jpg&amp;w=100 1x, /_next/image?url=%2Fimage2.jpg&amp;w=200 2x">`;
 }
 
-// @deprecated. Now we use puppeteer to fetch HTML from client side rendering apps
+// Doesnt work in Prod. Vercel Serverless has 50MB+ file size. but puppeteer's chromium is way larger than than. Thus, this always returns 500
 // export async function fetchHtml(url: string) {
 // 	try {
-// 		const response = await fetch(url);
+// 		const response = await fetch(
+// 			`${COOKIED_API_PROD_URL}/api/get-html?url=${encodeURIComponent(url)}`,
+// 		); // convex doesnt support puppeteer for now. So use in vercel serveless instead. Vercel works with puppeteer
 // 		if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-// 		const html = await response.text();
-// 		return html;
+// 		const json = (await response.json()) as { body: string };
+// 		return json.body;
 // 	} catch (error) {
 // 		console.error("Error fetching HTML:", error);
 // 		throw error;
