@@ -61,7 +61,7 @@ export const BmFolderPathSearch: FC<SearchFieldProps> = (
 	}, [searchResults]);
 
 	return (
-		<View sx={{ height: 200, marginTop: "$2" }}>
+		<View sx={{ height: 100, marginTop: "$2", zIndex: 1 }}>
 			<Th.TextInput
 				value={searchQuery}
 				onChangeText={handleSearch}

@@ -1,8 +1,9 @@
+// contrib:- propose to add this hook in library
 import { useCallback, useEffect, useState } from "react";
 import ShareMenu, { ShareData } from "react-native-share-menu";
-import { LogBox } from "react-native";
 
-export const useSendIntent = () => {
+type TShareCallback = (shareData: ShareData) => void;
+export const useSendIntent = (receiveShareCallback: TShareCallback) => {
 	const [sharedData, setSharedData] = useState<ShareData["data"]>("");
 	const [sharedMimeType, setSharedMimeType] =
 		useState<ShareData["mimeType"]>("");
@@ -13,7 +14,6 @@ export const useSendIntent = () => {
 		if (!item) return;
 
 		const { mimeType, data, extraData } = item;
-
 		setSharedData(data);
 		setSharedExtraData(extraData);
 		setSharedMimeType(mimeType);
@@ -22,11 +22,22 @@ export const useSendIntent = () => {
 	useEffect(() => void ShareMenu.getInitialShare(handleShare), []);
 
 	useEffect(() => {
-		LogBox.ignoreLogs(["new NativeEventEmitter()"]);
 		const listener = ShareMenu.addNewShareListener(handleShare);
-
 		return () => listener.remove();
 	}, []);
 
-	return { sharedData, sharedMimeType, sharedExtraData };
+	const memoizedReceiveShareCallback = useCallback(
+		() =>
+			receiveShareCallback({
+				data: sharedData,
+				mimeType: sharedMimeType,
+				extraData: sharedExtraData,
+			}),
+		[sharedData],
+	);
+	useEffect(() => {
+		if (!sharedData) return;
+		memoizedReceiveShareCallback();
+		setSharedData("");
+	}, [sharedData]);
 };

@@ -1,6 +1,7 @@
- // @ts-ignore
+// @ts-ignore
 import absolutify from "absolutify";
 import { load, Element, Document } from "cheerio";
+import { COOKIED_API_PROD_URL } from "gconvex/constants";
 
 // Web Content
 export async function handleFetchWebpage(urlString: string) {
@@ -8,7 +9,7 @@ export async function handleFetchWebpage(urlString: string) {
 		if (!urlString) throw new Error("Missing URL parameter");
 		const urlObj = new URL(urlString);
 		const targetUrl = urlObj.origin;
-		const htmlText = await fetchHTML(targetUrl);
+		const htmlText = await fetchHtml(targetUrl);
 
 		let document = absolutify(htmlText, targetUrl);
 
@@ -31,7 +32,7 @@ export async function generateSearchableText(url: string) {
 	// prettier-ignore // const inlineElements = ["a", "abbr", "acronym", "bdi", "bdo", "b", "strong", "i", "em", "s", "strike", " big", "small", "cite", "data", "dfn", "label", "mark", "menuitem", "q", "rp", " rt", "span", "sub", "sup", "th", "td", "tt", "time", "u", "var"]; // "code" may be added (currently blacklisted)
 
 	let searchableText = "";
-	const htmlText = await fetchHTML(url);
+	const htmlText = await fetchHtml(url);
 	const $ = load(htmlText);
 
 	// Recursive function to process nodes and build searchableText
@@ -61,16 +62,14 @@ export async function generateSearchableText(url: string) {
 	return searchableText;
 }
 
-export async function fetchHTML(url: string) {
+export async function fetchHtml(url: string) {
 	try {
-		const response = await fetch(url);
-
-		if (!response.ok) {
-			throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-
-		const html = await response.text();
-		return html;
+		const response = await fetch(
+			`${COOKIED_API_PROD_URL}/api/get-html?url=${encodeURIComponent(url)}`,
+		); // convex doesnt support puppeteer for now. So use in vercel serveless instead. Vercel works with puppeteer
+		if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+		const json = (await response.json()) as { body: string };
+		return json.body;
 	} catch (error) {
 		console.error("Error fetching HTML:", error);
 		throw error;
@@ -118,3 +117,16 @@ export async function absolutifySrcsetAttributes(
 	// For Testing
 	// const htmlDocument = `<img srcset="/_next/image?url=%2Fimage1.jpg&amp;w=100 1x, /_next/image?url=%2Fimage1.jpg&amp;w=200 2x"><img srcset="/_next/image?url=%2Fimage2.jpg&amp;w=100 1x, /_next/image?url=%2Fimage2.jpg&amp;w=200 2x">`;
 }
+
+// @deprecated. Now we use puppeteer to fetch HTML from client side rendering apps
+// export async function fetchHtml(url: string) {
+// 	try {
+// 		const response = await fetch(url);
+// 		if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+// 		const html = await response.text();
+// 		return html;
+// 	} catch (error) {
+// 		console.error("Error fetching HTML:", error);
+// 		throw error;
+// 	}
+// }

@@ -10,5 +10,4 @@ if (!CLERK_PUBLISHABLE_KEY)
 export const CONVEX_URL = isWeb
 	? process.env.NEXT_PUBLIC_CONVEX_URL
 	: Constants.expoConfig?.extra?.CONVEX_URL;
-if (!CONVEX_URL)
-	throw Error("CONVEX_URL isn't set in env.js/.env.local");
+if (!CONVEX_URL) throw Error("CONVEX_URL isn't set in env.js/.env.local");

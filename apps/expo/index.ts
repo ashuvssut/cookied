@@ -5,6 +5,7 @@ import { initAsyncStorageInspector } from "asyncstorage-inspector-flipper";
 
 initAsyncStorageInspector();
 LogBox.ignoreLogs([
-	"Constants.manifest has been deprecated in favor of Constants.expoConfig.",
-	"new NativeEventEmitter()",
+	"Constants.manifest has been deprecated",
+	"SerializableStateInvariantMiddleware took",
+	"ImmutableStateInvariantMiddleware took",
 ]);

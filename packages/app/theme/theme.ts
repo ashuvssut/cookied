@@ -12,7 +12,7 @@ const commonConfig = makeTheme({
 			borderColor: "#333",
 		},
 		center: { alignItems: "center", justifyContent: "center" },
-		textInput: { bg: "secondary", py: "$4", px: 20, borderRadius: 4 },
+		textInput: { bg: "secondary", py: "$3", px: 20, borderRadius: 4 },
 		buttonContainer: { py: 15, px: 20, borderRadius: 4 },
 		narrowHzTile: { px: "$3", py: "$2", justifyContent: "space-between" },
 		row: { flexDirection: "row", alignItems: "center" },
