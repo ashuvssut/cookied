@@ -22,7 +22,6 @@ export const useSendIntent = () => {
 	useEffect(() => void ShareMenu.getInitialShare(handleShare), []);
 
 	useEffect(() => {
-		LogBox.ignoreLogs(["new NativeEventEmitter()"]);
 		const listener = ShareMenu.addNewShareListener(handleShare);
 
 		return () => listener.remove();

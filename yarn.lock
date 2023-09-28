@@ -4894,10 +4894,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native-share-menu@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "@types/react-native-share-menu@npm:5.0.2"
-  checksum: 515bd134ed5236bcad7fe45421e6879d4c8ec044be413945ae9fb8c2ef6dfd9439409c4fe8990f430f51a0c9a616b061fdd13463e4969f0b369b6c905089ae15
+"@types/react-native-share-menu@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "@types/react-native-share-menu@npm:5.0.3"
+  checksum: b18dd24e9a12c13cf7f2408c3c5fbde8c5cf0f8e8bd5bc928a0ba20ca425e70731a3be20cbfcf72dfd4e626255186e1a7b1b3089c0766e2f75b636a06da851db
   languageName: node
   linkType: hard
 
@@ -13360,7 +13360,7 @@ __metadata:
     "@react-navigation/drawer": ^6.6.2
     "@types/react": ~18.0.27
     "@types/react-native": ~0.69.1
-    "@types/react-native-share-menu": ^5.0.2
+    "@types/react-native-share-menu": ^5.0.3
     app: "*"
     asyncstorage-inspector-flipper: ^1.0.2
     axios: ^1.4.0
@@ -13395,8 +13395,7 @@ __metadata:
     react-native-reanimated: 3.0.2
     react-native-safe-area-context: ^4.5.3
     react-native-screens: ^3.20.0
-    react-native-share: ^8.2.2
-    react-native-share-menu: ^6.0.0
+    react-native-share-menu: "https://github.com/Expensify/react-native-share-menu"
     react-native-snackbar: ^2.6.2
     react-native-svg: ^13.9.0
     react-native-svg-transformer: ^1.0.0
@@ -15129,17 +15128,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-share-menu@npm:^6.0.0":
+"react-native-share-menu@https://github.com/Expensify/react-native-share-menu":
   version: 6.0.0
-  resolution: "react-native-share-menu@npm:6.0.0"
-  checksum: db3d6d690bb6e6093682a4b83ee36dadb9d1d6708fc552270bb88df0cbceb553a2f13841fa05ad1960f7067c0d755f807d3011f07a764147c584e04098a3d49f
-  languageName: node
-  linkType: hard
-
-"react-native-share@npm:^8.2.2":
-  version: 8.2.2
-  resolution: "react-native-share@npm:8.2.2"
-  checksum: 0f69911fda2ca1856b439d8b4fcc2ac9c74bd92590fb6a7db60282181f0a9612f218985b3c69b0bbe73da5395a3aa197e91ac8de9a05c07c0b0da5a096a0e294
+  resolution: "react-native-share-menu@https://github.com/Expensify/react-native-share-menu.git#commit=cec3ac8f399c731898004761b93761a069c0d542"
+  checksum: 737743c42c6704425d4529b50070b5c70a819098bfc3410745dc5be4c433e015de8120047c3646d98f72d5e50e18559953ece64d90fd4ec3dae64a763309ed02
   languageName: node
   linkType: hard
 
