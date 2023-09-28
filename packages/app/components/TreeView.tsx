@@ -104,8 +104,8 @@ const TreeWrapper: FCC<ITreeWrapper> = props => {
 	const rHeight = useAnimatedStyle(() => {
 		const config = { damping: 15 };
 		const allowCollapse = collapse && !!wrapperMinHt;
-		if (allowCollapse) return { height: withSpring(wrapperMaxHt, config) };
-		return { height: withSpring(wrapperMinHt, config) };
+		if (allowCollapse) return { height: withSpring(wrapperMinHt, config) };
+		return { height: withSpring(wrapperMaxHt, config) };
 	}, [collapse, wrapperMinHt, wrapperMaxHt]);
 
 	return (

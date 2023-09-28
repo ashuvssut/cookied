@@ -7,12 +7,14 @@ import { useAtom } from "jotai";
 import { useModal } from "app/components/Modal/useModal";
 import { useBmShelfDb } from "app/hooks/useBmShelfDb";
 import { BookmarkForm } from "app/components/Formik/BookmarkForm";
-import { bmFolderAtom } from "app/store/slices/compoState";
+import { activeEntityIdAtom, bmFolderAtom } from "app/store/slices/compoState";
 
 export const AddBmModal = () => {
 	const { addBmPayload, closeModal } = useModal();
 	const { addBookmark } = useBmShelfDb();
 	const [folder] = useAtom(bmFolderAtom);
+
+	const [, setActiveEntityId] = useAtom(activeEntityIdAtom);
 	const formik = useFormik<TBookmarkFormSchema>({
 		initialValues: {
 			title: "",
@@ -31,7 +33,10 @@ export const AddBmModal = () => {
 					title,
 					url,
 				});
-				if (doc) closeModal();
+				if (doc) {
+					setActiveEntityId(doc._id);
+					closeModal();
+				}
 			}
 		},
 	});

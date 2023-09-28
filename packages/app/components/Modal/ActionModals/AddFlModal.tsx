@@ -4,12 +4,15 @@ import { useBmShelfDb } from "app/hooks/useBmShelfDb";
 import { useModal } from "app/components/Modal/useModal";
 import folderFormSchema from "app/components/Formik/folderFormSchema";
 import { FolderForm } from "app/components/Formik/FolderForm";
+import { useAtom } from "jotai";
+import { activeEntityIdAtom } from "app/store/slices/compoState";
 
 export const AddFlModal = () => {
 	const { addFolder } = useBmShelfDb();
 	const { addFlPayload, closeModal } = useModal();
 	const { parentFl } = addFlPayload;
 
+	const [, setActiveEntityId] = useAtom(activeEntityIdAtom);
 	const p = useFormik({
 		initialValues: { title: "" },
 		validationSchema: folderFormSchema,
@@ -22,7 +25,10 @@ export const AddFlModal = () => {
 				level: parentFl ? parentFl.level + 1 : 0,
 				title,
 			});
-			if (doc) closeModal();
+			if (doc) {
+				setActiveEntityId(doc._id);
+				closeModal();
+			}
 		},
 	});
 
