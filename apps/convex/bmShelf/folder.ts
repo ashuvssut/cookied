@@ -56,7 +56,23 @@ export const remove = mutation({
 		const allIdsToDelete = [...deletionLists.bmList, ...deletionLists.flList];
 		const uniqueIdsToDelete = Array.from(new Set(allIdsToDelete));
 		// console.log(uniqueIdsToDelete);
+
+		const flDoc = await ctx.db.get(flId); // get flDoc, then do the deletions
 		await Promise.all(uniqueIdsToDelete.map(id => ctx.db.delete(id)));
+
+		// Update parent fl's folders array
+		if (flDoc) {
+			const parentId = flDoc.parentId;
+			if (parentId !== "root") {
+				const parentFlDoc = await ctx.db.get(parentId);
+				if (parentFlDoc) {
+					const folders = parentFlDoc.folders;
+					const updatedFolders = folders.filter(id => id !== flId);
+					const flUpdates = { ...parentFlDoc, folders: updatedFolders };
+					ctx.db.patch(parentId, flUpdates);
+				}
+			}
+		}
 
 		return flId;
 	},

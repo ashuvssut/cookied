@@ -9,8 +9,8 @@ export const foldersCols = {
 	path: v.array(v.string()),
 	level: v.number(),
 	title: v.string(),
-	bookmarks: v.array(v.string()),
-	folders: v.array(v.string()),
+	bookmarks: v.array(v.id("bookmarks")),
+	folders: v.array(v.id("folders")),
 };
 export type TFl = ObjectType<typeof foldersCols>;
 

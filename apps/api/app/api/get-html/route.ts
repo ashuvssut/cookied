@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
 export async function GET(req: Request) {
 	try {
@@ -13,16 +14,24 @@ export async function GET(req: Request) {
 			);
 		}
 
-		const browser = await puppeteer.launch({ headless: "new" });
+		const browser = await puppeteer.launch({
+			args: chromium.args,
+			executablePath:
+				process.env.CHROME_EXECUTABLE_PATH || (await chromium.executablePath),
+			headless: true,
+			// ...more config options
+		});
 		const page = await browser.newPage();
 		await page.goto(url, { waitUntil: "networkidle2" });
 		const bodyHTML = await page.content();
 		await browser.close();
 
 		return NextResponse.json({ body: bodyHTML }, { status: 200 });
-	} catch (error) {
-		console.error(error);
-		return NextResponse.json({ error: "Error fetching URL" }, { status: 500 });
+	} catch (error: any) {
+		const msg =
+			"Error in scraping HTML text: " + error.message || error.toString();
+		console.error(msg);
+		return NextResponse.json({ error: msg }, { status: 500 });
 	}
 }
 

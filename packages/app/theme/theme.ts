@@ -60,7 +60,7 @@ export const darkTheme = makeTheme({
 		...commonColors,
 	},
 	linearGradients: {
-		// TODO: linear gradients not working for <Gradient/> but works for <LinearGradient/>
+		// contrib: linear gradients not working for <Gradient/> but works for <LinearGradient/>
 		primaryButtonBg: ["#B313DB", "#FF00B8"],
 		secondaryButtonBg: ["#000000", "#4D4855"],
 		surfaceGradientBg: ["#1c1c1c", "#1c1c1c", "#1c1c1c", "#333"],
