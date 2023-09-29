@@ -8,7 +8,8 @@
 5. TreeView vertical line
 6. Automatic eas build (trigger GH action) 
    1. Generate Preview builds to get the APKs(eas build -p android --profile preview)
-7. convert to tamagui with custom compoenents that follow MD3 (maybe start tamamui project first)
+7. Upgrade project to latest solito and RN. Use Solito App dir.
+8. convert to tamagui with custom compoenents that follow MD3 (maybe start tamamui project first)
 
 PROFILE MENU
 - Star on GitHub
