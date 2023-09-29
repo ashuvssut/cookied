@@ -18,6 +18,7 @@ import type * as bmShelf_bookmark from "../bmShelf/bookmark";
 import type * as bmShelf_folder from "../bmShelf/folder";
 import type * as constants from "../constants";
 import type * as openAi from "../openAi";
+import type * as types from "../types";
 import type * as utils from "../utils";
 import type * as webContent from "../webContent";
 import type * as webContentUtils from "../webContentUtils";
@@ -35,6 +36,7 @@ declare const fullApi: ApiFromModules<{
   "bmShelf/folder": typeof bmShelf_folder;
   constants: typeof constants;
   openAi: typeof openAi;
+  types: typeof types;
   utils: typeof utils;
   webContent: typeof webContent;
   webContentUtils: typeof webContentUtils;

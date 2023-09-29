@@ -8,6 +8,7 @@ import logr from "app/utils/logr";
 import { IBookmark, IFolder, IFolderNode } from "app/store/slices/bmShelfSlice";
 import { useUser } from "app/utils/clerk";
 import { PartialExceptForKeys } from "app/types/utility";
+import { TBookmarkFormSchema } from "app/components/Formik/bookmarkFormSchema";
 
 export function useBmShelfDb() {
 	const { user } = useUser();
@@ -81,12 +82,11 @@ export function useBmShelfDb() {
 
 	// Bookmark CRUD
 	const createBm = useMutation(api.bmShelf.bookmark.create);
-	async function addBookmark(newBm: Omit<TBm, "userId">) {
+	async function addBookmark(bmFormData: TBookmarkFormSchema) {
 		setIsLoading(true);
 		try {
 			if (!userId) throw new Error("Please log in first!");
-			const reqData = { ...newBm, userId };
-			const bm = await createBm(reqData);
+			const bm = await createBm(bmFormData);
 			setIsLoading(false);
 			Toast.success("Bookmark created!");
 			return bm;

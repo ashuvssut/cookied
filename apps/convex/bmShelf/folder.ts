@@ -1,9 +1,10 @@
 import { query, mutation } from "gconvex/_generated/server";
 import { ObjectType, v } from "convex/values";
-import { foldersCols, parentIdSchema } from "../schema";
+import { TFl, foldersCols, parentIdSchema } from "../schema";
 import { GenericMutationCtx } from "convex/server";
 import { getUserId } from "gconvex/utils";
 import { Id } from "gconvex/_generated/dataModel";
+import { TCtx } from "gconvex/types";
 
 export const getAll = query({
 	handler: async ctx => {
@@ -26,25 +27,29 @@ export const create = mutation({
 	handler: async (ctx, newFl) => {
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
-		const title = newFl.title.trim();
-		const flId = await ctx.db.insert("folders", { ...newFl, title });
-
-		// update parent Fl
-		const parentFlId = newFl.parentId;
-		if (parentFlId !== "root") {
-			const parentFl = await ctx.db.get(parentFlId);
-			if (parentFl) {
-				const userId = getUserId(identity);
-				const { _creationTime, _id, userId: _, ...updData } = parentFl;
-
-				const updates = { ...updData, folders: [...updData.folders, flId] };
-				await handleFlUpdate(ctx, userId, parentFlId, updates);
-			}
-		}
+		const userId = getUserId(identity);
+		const flId = await handleCreateFl(ctx, newFl, userId);
 
 		return { _id: flId, ...newFl };
 	},
 });
+export async function handleCreateFl(ctx: TCtx, newFl: TFl, userId: string) {
+	const title = newFl.title.trim();
+	const flId = await ctx.db.insert("folders", { ...newFl, title });
+
+	// update parent Fl
+	const parentFlId = newFl.parentId;
+	if (parentFlId !== "root") {
+		const parentFl = await ctx.db.get(parentFlId);
+		if (parentFl) {
+			const { _creationTime, _id, userId: _, ...updData } = parentFl;
+
+			const updates = { ...updData, folders: [...updData.folders, flId] };
+			await handleFlUpdate(ctx, userId, parentFlId, updates);
+		}
+	}
+	return flId
+}
 
 export const remove = mutation({
 	args: { flId: v.id("folders") },

@@ -13,7 +13,7 @@ export const AddBmModal = () => {
 	const { addBmPayload, closeModal } = useModal();
 	const [, setActiveEntityId] = useAtom(activeEntityIdAtom);
 
-	const { addBm } = useAddBookmark();
+	const { addBookmark } = useBmShelfDb();
 	const formik = useFormik<TBookmarkFormSchema>({
 		initialValues: {
 			title: "",
@@ -23,7 +23,7 @@ export const AddBmModal = () => {
 		validationSchema: bookmarkFormSchema,
 		validateOnMount: true,
 		onSubmit: async values => {
-			const doc = await addBm(values);
+			const doc = await addBookmark(values);
 			if (!doc) return;
 			setActiveEntityId(doc._id);
 			closeModal();
@@ -35,24 +35,3 @@ export const AddBmModal = () => {
 		</View>
 	);
 };
-
-function useAddBookmark() {
-	const [folder] = useAtom(bmFolderAtom);
-	const { addBookmark } = useBmShelfDb();
-
-	async function addBm(values: TBookmarkFormSchema) {
-		const { title, url, flPath } = values;
-		if (folder) {
-			const doc = await addBookmark({
-				type: "bookmark",
-				parentId: folder.id as any,
-				path: folder.pathArr,
-				level: folder.pathArr.length - 2,
-				title,
-				url,
-			});
-			return doc;
-		}
-	}
-	return { addBm };
-}

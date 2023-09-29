@@ -5,10 +5,12 @@ import {
 	internalMutation,
 } from "gconvex/_generated/server";
 import { v } from "convex/values";
-import { bmUpdSchema, bookmarksCols } from "../schema";
+import { TBm, TFl, bmUpdSchema } from "../schema";
 import { bmWithSearchFields, getUserId } from "gconvex/utils";
-import { handleFlUpdate } from "gconvex/bmShelf/folder";
+import { handleCreateFl, handleFlUpdate } from "gconvex/bmShelf/folder";
 import { internal } from "gconvex/_generated/api";
+import { Id } from "gconvex/_generated/dataModel";
+import { TCtx } from "gconvex/types";
 
 export const getAll = query({
 	handler: async ctx => {
@@ -25,21 +27,37 @@ export const getAll = query({
 });
 
 export const create = mutation({
-	args: bookmarksCols,
-	handler: async (ctx, newBm) => {
+	args: { title: v.string(), url: v.string(), flPath: v.string() },
+	handler: async (ctx, { title, flPath, url }) => {
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
+		const userId = getUserId(identity);
 
-		const title = newBm.title.trim();
-		const bmId = await ctx.db.insert("bookmarks", { ...newBm, title });
-		const { userId, ...updates } = newBm;
+		const bmTitle = title.trim();
+		const flTitleArr = flPath.split("/").map(t => t.trim());
+
+		const bmParentFlId = await createBmParentFls(ctx, flTitleArr, userId);
+		const parentFl = await ctx.db.get(bmParentFlId);
+		if (!parentFl)
+			throw new Error("Parent Folders of the Bookmark could not be created");
+		const newBm: TBm = {
+			level: parentFl.level,
+			parentId: parentFl._id,
+			path: parentFl.path,
+			title: bmTitle,
+			type: "bookmark",
+			url,
+			userId,
+		};
+		const bmId = await ctx.db.insert("bookmarks", newBm);
+		const { userId: _, ...updates } = newBm;
 		ctx.scheduler.runAfter(
 			0,
 			internal.bmShelf.bookmark.updBmWithSearchFields, // updates the bm
 			{ bmId, bm: updates },
 		);
 
-		// update parent Fl
+		// update parent Fl of the newly created Bm
 		const parentFlId = newBm.parentId;
 		if (parentFlId !== "root") {
 			const parentFl = await ctx.db.get(parentFlId);
@@ -55,6 +73,106 @@ export const create = mutation({
 		return { _id: bmId, ...newBm };
 	},
 });
+
+async function createBmParentFls(
+	ctx: TCtx,
+	flTitleArr: string[],
+	userId: string,
+) {
+	const firstTitle = flTitleArr[0];
+	// if (!firstTitle) return "root";
+	if (!firstTitle) throw new Error("Cannot create a Bookmark without a folder");
+
+	const firstFl = await ctx.db
+		.query("folders")
+		.withIndex("by_level", q => q.eq("level", 0).eq("title", firstTitle))
+		.unique();
+	if (!firstFl) {
+		console.info(
+			`Root Folder with title ${firstTitle} not found. Creating one.`,
+		);
+
+		// Recursively create folders
+		const lastFlId = await createFolderRecursive(
+			ctx,
+			flTitleArr,
+			userId,
+			0, // Start from level 0 for the root folder
+			"root", // Use "root" as parentId for the root folder
+			["root"], // updated path of the to-be-created folder
+		);
+
+		// Once the folders are created, return the folder ID
+		return lastFlId;
+	} else {
+		// The root folder already exists, proceed to create child folders
+		const lastFlId = await createFolderRecursive(
+			ctx,
+			flTitleArr,
+			userId,
+			1, // Start from level 1 since level 0 is the existing root folder
+			firstFl._id, // Use the ID of the existing root folder as parentId
+			["root", firstFl._id], // updated path of the to-be-created folder
+		);
+
+		// Return the last folder ID
+		return lastFlId;
+	}
+}
+
+async function createFolderRecursive(
+	ctx: TCtx,
+	flTitleArr: string[],
+	userId: string,
+	level: number,
+	parentId: Id<"folders"> | "root",
+	path: string[],
+): Promise<Id<"folders">> {
+	const currentTitle = flTitleArr[level];
+
+	if (!currentTitle) {
+		// All folders are created, return the last folder's ID
+		return parentId as Id<"folders">;
+	}
+
+	const existingFolder = await ctx.db
+		.query("folders")
+		.withIndex("by_level", q =>
+			q.eq("level", level).eq("title", currentTitle).eq("parentId", parentId),
+		)
+		.unique();
+
+	if (!existingFolder) {
+		console.info(`Folder with title ${currentTitle} not found. Creating one.`);
+
+		const newFolder: TFl = {
+			bookmarks: [],
+			folders: [],
+			level,
+			parentId,
+			path,
+			title: currentTitle,
+			type: "folder",
+			userId,
+		};
+
+		const folderId = await handleCreateFl(ctx, newFolder, userId);
+		return createFolderRecursive(ctx, flTitleArr, userId, level + 1, folderId, [
+			...newFolder.path,
+			folderId,
+		]);
+	} else {
+		// Folder already exists, proceed to the next level
+		return createFolderRecursive(
+			ctx,
+			flTitleArr,
+			userId,
+			level + 1,
+			existingFolder._id,
+			[...existingFolder.path, existingFolder._id],
+		);
+	}
+}
 
 export const remove = mutation({
 	args: { bmId: v.id("bookmarks") },
