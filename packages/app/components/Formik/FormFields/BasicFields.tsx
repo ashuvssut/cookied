@@ -17,7 +17,7 @@ export const FormTextField = <T extends FormikProps<any>>(
 	return (
 		<>
 			<Th.TextInput
-				value={p.values[name]}
+				value={p.values[name] || ""}
 				onChangeText={p.handleChange(name)}
 				autoCorrect={false}
 				onBlur={p.handleBlur(name)}

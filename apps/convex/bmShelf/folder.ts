@@ -26,7 +26,8 @@ export const create = mutation({
 	handler: async (ctx, newFl) => {
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
-		const flId = await ctx.db.insert("folders", newFl);
+		const title = newFl.title.trim();
+		const flId = await ctx.db.insert("folders", { ...newFl, title });
 
 		// update parent Fl
 		const parentFlId = newFl.parentId;

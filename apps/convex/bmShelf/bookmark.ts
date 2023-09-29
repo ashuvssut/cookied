@@ -30,7 +30,8 @@ export const create = mutation({
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) throw new Error("Unauthenticated. Please Sign in.");
 
-		const bmId = await ctx.db.insert("bookmarks", newBm);
+		const title = newBm.title.trim();
+		const bmId = await ctx.db.insert("bookmarks", { ...newBm, title });
 		const { userId, ...updates } = newBm;
 		ctx.scheduler.runAfter(
 			0,
