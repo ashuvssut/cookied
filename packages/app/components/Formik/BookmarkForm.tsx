@@ -11,7 +11,11 @@ import {
 } from "app/store/slices/bmShelfSlice";
 import { useAppSelector } from "app/store/hooks";
 import { useAtom } from "jotai";
-import { activeEntityIdAtom, barLoadingAtom, bmFolderAtom } from "app/store/slices/compoState";
+import {
+	activeEntityIdAtom,
+	barLoadingAtom,
+	bmFolderAtom,
+} from "app/store/slices/compoState";
 import { useModal } from "app/components/Modal/useModal";
 import * as yup from "yup";
 import { debounce } from "lodash";
@@ -44,8 +48,9 @@ export const BookmarkForm: FC<IBookmarkForm> = ({ formikProps: p }) => {
 			const isUrlValid = await yup.string().url().isValid(p.values.url);
 			if (!isUrlValid) return;
 			try {
-				const fetchedTitle = await getTitleFromUrl({ url: p.values.url });
-				p.setFieldValue("title", fetchedTitle);
+				const fetchedTitle =
+					(await getTitleFromUrl({ url: p.values.url })) || "";
+				p.setFieldValue("title", fetchedTitle.trim());
 			} catch (err) {
 				console.error("Error:", err);
 			}

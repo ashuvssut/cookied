@@ -32,7 +32,7 @@ export const BmFolderPathSearch: FC<SearchFieldProps> = (
 
 	const [searchQuery, setSearchQuery] = useState(initialQuery);
 	useEffect(() => {
-		p.setFieldValue("flPath", searchQuery); // contrib:- [TS] "flPath" was not autocompleted
+		p.setFieldValue("flPath", searchQuery.trim()); // contrib:- [TS] "flPath" was not autocompleted
 	}, [searchQuery]);
 	const [searchResults, setSearchResults] = useState<TSearchResults>([]);
 	const handleSearch = (text: string) => {
