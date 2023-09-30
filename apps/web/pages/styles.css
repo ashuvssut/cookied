@@ -20,3 +20,8 @@ body {
 	--toastify-icon-color-warning: var(--toastify-color-warning);
 	--toastify-icon-color-error: var(--toastify-color-error);
 }
+
+.cl-rootBox {
+	font-family: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Helvetica, Arial, Inter-serif;
+}
