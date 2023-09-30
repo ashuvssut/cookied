@@ -36,7 +36,7 @@ export const BmTitleFetchingField: FC<IBmTitleFetchingField> = ({
 		try {
 			const fetchedTitle = (await getTitleFromUrl({ url: p.values.url })) || "";
 			p.setFieldValue("title", fetchedTitle.trim());
-		} catch (err) {
+		} catch (err: any) {
 			const errMsg = err.message || err.toString();
 			console.error("Error:", errMsg);
 			Toast.error(errMsg);

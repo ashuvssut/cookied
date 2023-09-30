@@ -1,10 +1,4 @@
-import { mutation } from "gconvex/_generated/server";
+import { GenericMutationCtx } from "convex/server";
+import { DataModel } from "gconvex/_generated/dataModel";
 
-type ExtractHandlerCtx<TMutationHandler> = TMutationHandler extends {
-	handler: (ctx: infer Ctx, ...args: any[]) => any;
-}
-	? Ctx
-	: never;
-
-type TMutationHandler = Parameters<typeof mutation>[0];
-export type TCtx = ExtractHandlerCtx<TMutationHandler>;
+export type TMutationCtx = GenericMutationCtx<DataModel>;

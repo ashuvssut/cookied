@@ -4,7 +4,7 @@ import { TFl, foldersCols, parentIdSchema } from "../schema";
 import { GenericMutationCtx } from "convex/server";
 import { getUserId } from "gconvex/utils";
 import { Id } from "gconvex/_generated/dataModel";
-import { TCtx } from "gconvex/types";
+import { TMutationCtx } from "gconvex/types";
 
 export const getAll = query({
 	handler: async ctx => {
@@ -33,7 +33,7 @@ export const create = mutation({
 		return { _id: flId, ...newFl };
 	},
 });
-export async function handleCreateFl(ctx: TCtx, newFl: TFl, userId: string) {
+export async function handleCreateFl(ctx: TMutationCtx, newFl: TFl, userId: string) {
 	const title = newFl.title.trim();
 	const flId = await ctx.db.insert("folders", { ...newFl, title });
 
@@ -48,7 +48,7 @@ export async function handleCreateFl(ctx: TCtx, newFl: TFl, userId: string) {
 			await handleFlUpdate(ctx, userId, parentFlId, updates);
 		}
 	}
-	return flId
+	return flId;
 }
 
 export const remove = mutation({
