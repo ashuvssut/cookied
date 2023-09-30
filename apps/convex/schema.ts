@@ -33,7 +33,7 @@ export default defineSchema({
 		.index("by_userId", ["userId"])
 		.index("by_level", ["userId", "level", "title", "parentId"]),
 	bookmarks: defineTable(bookmarksCols)
-		.index("by_embedding", ["userId", "embedding"])
+		.index("by_embedding_idx", ["userId", "embedding"])
 		.vectorIndex("by_embedding", {
 			vectorField: "embedding",
 			dimensions: 1536,
