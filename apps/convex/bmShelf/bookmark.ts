@@ -10,7 +10,7 @@ import { bmWithSearchFields, getUserId } from "gconvex/utils";
 import { handleCreateFl, handleFlUpdate } from "gconvex/bmShelf/folder";
 import { internal } from "gconvex/_generated/api";
 import { Id } from "gconvex/_generated/dataModel";
-import { TCtx } from "gconvex/types";
+import { TMutationCtx } from "gconvex/types";
 
 export const getAll = query({
 	handler: async ctx => {
@@ -75,7 +75,7 @@ export const create = mutation({
 });
 
 async function createBmParentFls(
-	ctx: TCtx,
+	ctx: TMutationCtx,
 	flTitleArr: string[],
 	userId: string,
 ) {
@@ -127,7 +127,7 @@ async function createBmParentFls(
 }
 
 async function createFolderRecursive(
-	ctx: TCtx,
+	ctx: TMutationCtx,
 	flTitleArr: string[],
 	userId: string,
 	level: number,
