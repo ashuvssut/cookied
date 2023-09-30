@@ -2,13 +2,14 @@ import { FormTextField } from "app/components/Formik/FormFields/BasicFields";
 import { FC, useEffect, useState } from "react";
 import { FormikProps } from "formik";
 import { TBookmarkFormSchema } from "app/components/Formik/bookmarkFormSchema";
-import { View, useDripsyTheme } from "dripsy";
+import { ActivityIndicator, View, useDripsyTheme } from "dripsy";
 import { isUrlValid } from "app/utils/misc";
 import { IconButton } from "app/components/IconButton";
 import { MdRefresh } from "app/assets/icons";
 import { debounce } from "lodash";
 import { useAction } from "convex/react";
 import { api } from "gconvex/_generated/api";
+import { Toast } from "app/components/Toast";
 
 interface IBmTitleFetchingField {
 	formikProps: FormikProps<TBookmarkFormSchema>;
@@ -27,15 +28,20 @@ export const BmTitleFetchingField: FC<IBmTitleFetchingField> = ({
 		setFetchBtnVisibility();
 	}, [p.values.url]);
 
+	const [isLoading, setIsLoading] = useState(false);
 	const getTitleFromUrl = useAction(api.webContent.getTitleFromUrl);
 	async function setTitle() {
 		if (!(await isUrlValid(p.values.url))) return;
+		setIsLoading(true);
 		try {
 			const fetchedTitle = (await getTitleFromUrl({ url: p.values.url })) || "";
 			p.setFieldValue("title", fetchedTitle.trim());
 		} catch (err) {
-			console.error("Error:", err);
+			const errMsg = err.message || err.toString();
+			console.error("Error:", errMsg);
+			Toast.error(errMsg);
 		}
+		setIsLoading(false);
 	}
 	useEffect(() => {
 		const debouncedSetTitle = debounce(() => {
@@ -59,8 +65,13 @@ export const BmTitleFetchingField: FC<IBmTitleFetchingField> = ({
 					<IconButton
 						onPress={setTitle}
 						sx={{ display: displayTitleRefetcher ? "flex" : "none" }}
+						disabled={isLoading}
 					>
-						<MdRefresh color={onPrimary} size={18} />
+						{isLoading ? (
+							<ActivityIndicator />
+						) : (
+							<MdRefresh color={onPrimary} size={20} />
+						)}
 					</IconButton>
 				</View>
 			}

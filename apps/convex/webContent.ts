@@ -19,7 +19,8 @@ export const getTitleFromUrl = action({
 					.match(/<meta\s+name=["']description["']\s+content=["'](.*?)["']/i);
 
 				const urlObj = new URL(url);
-				const altUrl = urlObj.hostname + urlObj.pathname;
+				const altUrl = `${urlObj.hostname}${urlObj.pathname //
+					.replace(/\/$/, "")}`;
 
 				const title = titleMatch && titleMatch[1] ? titleMatch[1] : altUrl;
 				const description =

@@ -129,9 +129,11 @@ function SearchResultCards() {
 	const [results, setResults] = useState<IBookmark[]>([]);
 	const allBmsEntities = useSelector(selectAllBmEntities) || [];
 
+	const [isLoading, setIsLoading] = useState(false);
 	async function fetchResults() {
 		const encApiKey = await getEncryptedKey();
 		if (encApiKey) {
+			setIsLoading(true);
 			try {
 				const res = await aiSearchSimilarBms({ query, encApiKey });
 				const docs = res.flatMap(r => {
@@ -141,9 +143,10 @@ function SearchResultCards() {
 				setResults(docs);
 			} catch (err: any) {
 				const msg = err.message || err.toString();
-				Toast.error(`Search Error: ` + msg);
+				Toast.error(`Search Error: ${msg}`);
 				console.log(`Search Error`, msg);
 			}
+			setIsLoading(false);
 		} else Toast.error("OpenAI API not found. Please submit you API key.");
 	}
 
@@ -163,9 +166,14 @@ function SearchResultCards() {
 						pl: 20,
 						pr: 10,
 					}}
+					disabled={isLoading}
 				>
 					<Text>Search</Text>
-					<MdSearch color="#fff" size={24} />
+					{isLoading ? (
+						<ActivityIndicator />
+					) : (
+						<MdSearch color="#fff" size={24} />
+					)}
 				</IconButton>
 			</View>
 			<FlatList
