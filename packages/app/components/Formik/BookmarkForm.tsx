@@ -17,10 +17,7 @@ import {
 	bmFolderAtom,
 } from "app/store/slices/compoState";
 import { useModal } from "app/components/Modal/useModal";
-import * as yup from "yup";
-import { debounce } from "lodash";
-import { useAction } from "convex/react";
-import { api } from "gconvex/_generated/api";
+import { BmTitleFetchingField } from "app/components/Formik/FormFields/BmTitleFetchingField";
 
 interface IBookmarkForm {
 	formikProps: FormikProps<TBookmarkFormSchema>;
@@ -42,24 +39,6 @@ export const BookmarkForm: FC<IBookmarkForm> = ({ formikProps: p }) => {
 	const [, setBmFolder] = useAtom(bmFolderAtom);
 	useEffect(() => void setBmFolder(activeEntity), [activeEntity]);
 
-	const getTitleFromUrl = useAction(api.webContent.getTitleFromUrl);
-	useEffect(() => {
-		async function setTitle() {
-			const isUrlValid = await yup.string().url().isValid(p.values.url);
-			if (!isUrlValid) return;
-			try {
-				const fetchedTitle =
-					(await getTitleFromUrl({ url: p.values.url })) || "";
-				p.setFieldValue("title", fetchedTitle.trim());
-			} catch (err) {
-				console.error("Error:", err);
-			}
-		}
-
-		const debouncedSetTitle = debounce(setTitle, 1000);
-		debouncedSetTitle();
-		return () => void debouncedSetTitle.cancel();
-	}, [p.values.url]);
 	return (
 		<>
 			<FormTextField
@@ -72,11 +51,7 @@ export const BookmarkForm: FC<IBookmarkForm> = ({ formikProps: p }) => {
 				}}
 			/>
 			<View sx={{ marginTop: "$2" }} />
-			<FormTextField
-				name="title"
-				formikProps={p}
-				fieldProps={{ placeholder: "Enter the Bookmark name" }}
-			/>
+			<BmTitleFetchingField formikProps={p} />
 			<BmFolderPathSearch
 				formikProps={p}
 				initialQuery={activeEntity?.path || ""}
