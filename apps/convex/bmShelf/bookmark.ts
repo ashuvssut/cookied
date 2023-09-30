@@ -20,7 +20,7 @@ export const getAll = query({
 		const userId = getUserId(identity);
 		const allBms = await ctx.db
 			.query("bookmarks")
-			.withIndex("by_userId", q => q.eq("userId", userId))
+			.withIndex("by_embedding", q => q.eq("userId", userId))
 			.collect();
 		return allBms;
 	},
@@ -85,7 +85,13 @@ async function createBmParentFls(
 
 	const firstFl = await ctx.db
 		.query("folders")
-		.withIndex("by_level", q => q.eq("level", 0).eq("title", firstTitle))
+		.withIndex("by_level", q =>
+			q
+				.eq("userId", userId)
+				.eq("level", 0)
+				.eq("title", firstTitle)
+				.eq("parentId", "root"),
+		)
 		.unique();
 	if (!firstFl) {
 		console.info(
@@ -138,7 +144,11 @@ async function createFolderRecursive(
 	const existingFolder = await ctx.db
 		.query("folders")
 		.withIndex("by_level", q =>
-			q.eq("level", level).eq("title", currentTitle).eq("parentId", parentId),
+			q
+				.eq("userId", userId)
+				.eq("level", level)
+				.eq("title", currentTitle)
+				.eq("parentId", parentId),
 		)
 		.unique();
 
@@ -269,7 +279,9 @@ export const getEmptyEmbeddingDocs = query({
 		const userId = getUserId(identity);
 		const emptyFields = await ctx.db
 			.query("bookmarks")
-			.withIndex("by_userId", q => q.eq("userId", userId).eq("embedding", []))
+			.withIndex("by_embedding", q =>
+				q.eq("userId", userId).eq("embedding", []),
+			)
 			.collect();
 
 		const docs = emptyFields.flatMap(f => {

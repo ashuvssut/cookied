@@ -31,9 +31,9 @@ export type TBm = ObjectType<typeof bookmarksCols>;
 export default defineSchema({
 	folders: defineTable(foldersCols) //
 		.index("by_userId", ["userId"])
-		.index("by_level", ["level", "title", "parentId"]),
+		.index("by_level", ["userId", "level", "title", "parentId"]),
 	bookmarks: defineTable(bookmarksCols)
-		.index("by_userId", ["userId", "embedding"])
+		.index("by_embedding", ["userId", "embedding"])
 		.vectorIndex("by_embedding", {
 			vectorField: "embedding",
 			dimensions: 1536,
