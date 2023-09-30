@@ -6,6 +6,7 @@ import { useWindowDimensions } from "react-native";
 import { SearchMode } from "app/components/BmSearch/SearchMode";
 import { SearchResults } from "app/components/BmSearch/SearchResults";
 import { bmQueryAtom } from "app/store/slices/compoState";
+import { useUser } from "app/utils/clerk";
 
 export const BmSearchContent = () => {
 	const [query, setQuery] = useAtom(bmQueryAtom);
@@ -15,6 +16,9 @@ export const BmSearchContent = () => {
 	const headerHt = 54;
 	const offset = 4;
 	const maxHeight = height - (headerHt - offset);
+
+	const { user } = useUser();
+	if (!user) return null;
 	return (
 		<View sx={{ width }}>
 			<View variant="layout.absoluteFlex">

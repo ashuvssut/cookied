@@ -4,10 +4,13 @@ import { MdSearch } from "app/assets/icons";
 import { isWeb } from "app/utils/constants";
 import { useAtom } from "jotai";
 import { bmQueryAtom } from "app/store/slices/compoState";
+import { useUser } from "app/utils/clerk";
 
 export const BmSearch = () => {
 	const [query] = useAtom(bmQueryAtom);
 
+	const { user } = useUser();
+	if (!user) return null;
 	return (
 		<MotiView animate={{ scale: !!query ? 1.1 : 1 }}>
 			<SearchField />
@@ -18,7 +21,7 @@ export const BmSearch = () => {
 function SearchField() {
 	const [query, setQuery] = useAtom(bmQueryAtom);
 
-	const secondary = useDripsyTheme().theme.colors.onPrimary;
+	const onPrimary = useDripsyTheme().theme.colors.onPrimary;
 	const p = 20;
 	return (
 		<View variant="layout.secondary" sx={{ my: 8, borderRadius: p }}>
@@ -33,11 +36,11 @@ function SearchField() {
 					}}
 					onChangeText={txt => setQuery(txt)}
 					value={query}
-					placeholderTextColor={secondary}
+					placeholderTextColor={onPrimary}
 					placeholder="Search by site's content..."
 				/>
 				<View sx={{ position: "absolute", right: p, bg: "surface" }}>
-					<MdSearch color={secondary} size={20} />
+					<MdSearch color={onPrimary} size={20} />
 				</View>
 			</View>
 		</View>
