@@ -27,7 +27,7 @@ export function useOpenAi() {
 	}, []);
 
 	const [, setLoading] = useAtom(barLoadingAtom);
-	const encryptOpenAiKey = useAction(api.openAi.encryptOpenAiKey);
+	const encryptOpenAiKey = useAction(api.actions.openAi.encryptOpenAiKey);
 	async function submitApiKey(key: string) {
 		try {
 			setLoading(true);

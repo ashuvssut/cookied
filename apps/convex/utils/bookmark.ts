@@ -1,11 +1,7 @@
 import { UserIdentity } from "convex/server";
 import { TBmUpd } from "gconvex/schema";
+import { generateSearchableText } from "gconvex/utils/webContent";
 // @ts-ignore
-import { generateSearchableText } from "gconvex/webContentUtils";
-
-export function getUserId(identity: UserIdentity) {
-	return identity.tokenIdentifier.split("|")[1]!;
-}
 
 export async function bmWithSearchFields(bm: TBmUpd) {
 	if (!bm.url) return bm;

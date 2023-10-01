@@ -6,11 +6,12 @@ import {
 } from "gconvex/_generated/server";
 import { v } from "convex/values";
 import { TBm, TFl, bmUpdSchema } from "../schema";
-import { bmWithSearchFields, getUserId } from "gconvex/utils";
 import { handleCreateFl, handleFlUpdate } from "gconvex/bmShelf/folder";
 import { internal } from "gconvex/_generated/api";
 import { Id } from "gconvex/_generated/dataModel";
 import { TMutationCtx } from "gconvex/types";
+import { getUserId } from "gconvex/utils/user";
+import { bmWithSearchFields } from "gconvex/utils/bookmark";
 
 export const getAll = query({
 	handler: async ctx => {

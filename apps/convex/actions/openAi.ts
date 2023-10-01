@@ -3,6 +3,7 @@ import { v } from "convex/values";
 import { action } from "gconvex/_generated/server";
 import { internal } from "gconvex/_generated/api";
 import { aesCrypto } from "gconvex/crypto";
+import { embed } from "gconvex/utils/openAi";
 
 export const encryptOpenAiKey = action({
 	args: { openAiKey: v.string() },
@@ -59,39 +60,3 @@ export const aiSearchSimilarBms = action({
 		return sortedResults;
 	},
 });
-
-export async function embed(
-	text: string,
-	encApiKey: string,
-): Promise<number[]> {
-	const key = decryptKey(encApiKey);
-	const req = { input: text, model: "text-embedding-ada-002" };
-	const resp = await fetch("https://api.openai.com/v1/embeddings", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${key}`,
-		},
-		body: JSON.stringify(req),
-	});
-	if (!resp.ok) {
-		const msg = await resp.text();
-		throw new Error(`OpenAI API error: ${msg}`);
-	}
-	const json = await resp.json();
-	const vector = json["data"][0]["embedding"];
-	// console.log(`Computed embedding of "${text}": ${vector.length} dimensions`);
-	return vector;
-}
-
-export const decryptKey = (encryptedKey: string) => {
-	try {
-		const aes = aesCrypto();
-		return aes.decrypt(encryptedKey);
-	} catch (err: any) {
-		const msg = err.message || err.toString();
-		throw new Error("Error decrypting API key: " + msg);
-	}
-};
-
-// Crypto

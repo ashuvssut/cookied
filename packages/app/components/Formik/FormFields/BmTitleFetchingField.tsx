@@ -29,7 +29,7 @@ export const BmTitleFetchingField: FC<IBmTitleFetchingField> = ({
 	}, [p.values.url]);
 
 	const [isLoading, setIsLoading] = useState(false);
-	const getTitleFromUrl = useAction(api.webContent.getTitleFromUrl);
+	const getTitleFromUrl = useAction(api.actions.webContent.getTitleFromUrl);
 	async function setTitle() {
 		if (!(await isUrlValid(p.values.url))) return;
 		setIsLoading(true);

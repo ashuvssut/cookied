@@ -2,9 +2,9 @@ import { query, mutation } from "gconvex/_generated/server";
 import { ObjectType, v } from "convex/values";
 import { TFl, foldersCols, parentIdSchema } from "../schema";
 import { GenericMutationCtx } from "convex/server";
-import { getUserId } from "gconvex/utils";
 import { Id } from "gconvex/_generated/dataModel";
 import { TMutationCtx } from "gconvex/types";
+import { getUserId } from "gconvex/utils/user";
 
 export const getAll = query({
 	handler: async ctx => {

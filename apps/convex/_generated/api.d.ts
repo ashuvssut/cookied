@@ -14,15 +14,17 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as actions_openAi from "../actions/openAi";
+import type * as actions_webContent from "../actions/webContent";
 import type * as bmShelf_bookmark from "../bmShelf/bookmark";
 import type * as bmShelf_folder from "../bmShelf/folder";
-import type * as constants from "../constants";
 import type * as crypto from "../crypto";
-import type * as openAi from "../openAi";
 import type * as types from "../types";
-import type * as utils from "../utils";
-import type * as webContent from "../webContent";
-import type * as webContentUtils from "../webContentUtils";
+import type * as utils_bookmark from "../utils/bookmark";
+import type * as utils_constants from "../utils/constants";
+import type * as utils_openAi from "../utils/openAi";
+import type * as utils_user from "../utils/user";
+import type * as utils_webContent from "../utils/webContent";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -33,15 +35,17 @@ import type * as webContentUtils from "../webContentUtils";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  "actions/openAi": typeof actions_openAi;
+  "actions/webContent": typeof actions_webContent;
   "bmShelf/bookmark": typeof bmShelf_bookmark;
   "bmShelf/folder": typeof bmShelf_folder;
-  constants: typeof constants;
   crypto: typeof crypto;
-  openAi: typeof openAi;
   types: typeof types;
-  utils: typeof utils;
-  webContent: typeof webContent;
-  webContentUtils: typeof webContentUtils;
+  "utils/bookmark": typeof utils_bookmark;
+  "utils/constants": typeof utils_constants;
+  "utils/openAi": typeof utils_openAi;
+  "utils/user": typeof utils_user;
+  "utils/webContent": typeof utils_webContent;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

@@ -1,7 +1,7 @@
 "use node";
 import { v } from "convex/values";
 import { action } from "gconvex/_generated/server";
-import { handleFetchWebpage } from "gconvex/webContentUtils";
+import { handleFetchWebpage } from "gconvex/utils/webContent";
 import he from "he";
 
 export const getTitleFromUrl = action({

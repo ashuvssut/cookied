@@ -28,3 +28,13 @@ export function aesCrypto() {
 	}
 	return { encrypt, decrypt };
 }
+
+export const decryptKey = (encryptedKey: string) => {
+	try {
+		const aes = aesCrypto();
+		return aes.decrypt(encryptedKey);
+	} catch (err: any) {
+		const msg = err.message || err.toString();
+		throw new Error("Error decrypting API key: " + msg);
+	}
+};
