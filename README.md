@@ -24,7 +24,7 @@ Now, you might argue that there are alternative feature-packed bookmark managers
 
 Enter Cookied! 🌐 A cross-platform browser bookmarks manager designed to empower you to effortlessly manage and sync your bookmarks, regardless of the device or browser brand you prefer. 
 
-And that's not all! *Cookied goes beyond the ordinary* with features like fuzzy search, enabling you to find your bookmarks effortlessly. Ever tried describing your ancient-long-forgotten bookmarks in words to an AI Vector Search? With Cookied, now you can!
+And that's not all! *Cookied goes beyond the ordinary* with features like **fuzzy search**, enabling you to find your bookmarks effortlessly. Ever tried describing your ancient-long-forgotten bookmarks in words to an **AI Vector Search**? With Cookied, now you can!
 
 But wait, there's more to come! 🚀 We're actively working on a list of upcoming features to make your browsing experience even more delightful. Check out the exciting ideas in our [TODO.md](./TODO.md) file! Stay tuned for more Cookied goodness. 🍪✨
 
