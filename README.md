@@ -1,8 +1,6 @@
 # Cookied!!
 
-<div style="border-radius: 10px; overflow: hidden; display: inline-block;">
-  <img src="./.github/docs/banner.png" alt="Banner Image" style="border-radius: 10px;" />
-</div>
+![Banner Image](./.github/docs/banner.png)
 
 Cookied is a suite of cross-platform apps designed to revolutionize how you save and organize your bookmarks. It's available as a web app with a companion Chrome extension and an Android app. Built with Convex BaaS, Next.js, React Native, and Vite.
 
