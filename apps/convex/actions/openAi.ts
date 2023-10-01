@@ -2,7 +2,7 @@
 import { v } from "convex/values";
 import { action } from "gconvex/_generated/server";
 import { internal } from "gconvex/_generated/api";
-import { aesCrypto } from "gconvex/crypto";
+import { aesCrypto } from "gconvex/utils/crypto";
 import { embed } from "gconvex/utils/openAi";
 
 export const encryptOpenAiKey = action({

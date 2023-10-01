@@ -1,5 +1,5 @@
 "use node";
-import { decryptKey } from "gconvex/crypto";
+import { decryptKey } from "gconvex/utils/crypto";
 
 export async function embed(
 	text: string,
