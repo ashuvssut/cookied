@@ -1,10 +1,12 @@
 import { query, mutation } from "gconvex/_generated/server";
-import { ObjectType, v } from "convex/values";
-import { TFl, foldersCols, parentIdSchema } from "../schema";
-import { GenericMutationCtx } from "convex/server";
-import { Id } from "gconvex/_generated/dataModel";
-import { TMutationCtx } from "gconvex/types";
+import { v } from "convex/values";
+import { flUpdSchema, foldersCols } from "../schema";
 import { getUserId } from "gconvex/utils/user";
+import {
+	getDeletionList,
+	handleCreateFl,
+	handleFlUpdate,
+} from "gconvex/utils/folder";
 
 export const getAll = query({
 	handler: async ctx => {
@@ -33,23 +35,6 @@ export const create = mutation({
 		return { _id: flId, ...newFl };
 	},
 });
-export async function handleCreateFl(ctx: TMutationCtx, newFl: TFl, userId: string) {
-	const title = newFl.title.trim();
-	const flId = await ctx.db.insert("folders", { ...newFl, title });
-
-	// update parent Fl
-	const parentFlId = newFl.parentId;
-	if (parentFlId !== "root") {
-		const parentFl = await ctx.db.get(parentFlId);
-		if (parentFl) {
-			const { _creationTime, _id, userId: _, ...updData } = parentFl;
-
-			const updates = { ...updData, folders: [...updData.folders, flId] };
-			await handleFlUpdate(ctx, userId, parentFlId, updates);
-		}
-	}
-	return flId;
-}
 
 export const remove = mutation({
 	args: { flId: v.id("folders") },
@@ -84,46 +69,6 @@ export const remove = mutation({
 	},
 });
 
-// recursive list making
-async function getDeletionList(
-	ctx: GenericMutationCtx<any>,
-	bmList: Id<"bookmarks">[],
-	flList: Id<"folders">[],
-) {
-	async function collectFolderIds(folderId: Id<"folders">) {
-		const flDoc = await ctx.db.get(folderId);
-		if (!flDoc) {
-			flList = flList.filter(item => item !== folderId);
-			return;
-		}
-
-		// Collect bookmark IDs from the current folder
-		bmList.push(...flDoc.bookmarks);
-
-		// Recursively collect folder IDs from subfolders
-		for (const subfolderId of flDoc.folders) {
-			flList.push(subfolderId);
-			await collectFolderIds(subfolderId);
-		}
-	}
-
-	for (const folderId of flList) await collectFolderIds(folderId);
-
-	return { bmList, flList };
-}
-
-const flUpdSchema = {
-	flId: v.id("folders"),
-	updates: v.object({
-		type: v.literal("folder"),
-		parentId: v.optional(parentIdSchema),
-		path: v.optional(v.array(v.string())),
-		level: v.optional(v.number()),
-		title: v.optional(v.string()),
-		bookmarks: v.optional(v.array(v.string())),
-		folders: v.optional(v.array(v.string())),
-	}),
-};
 export const update = mutation({
 	args: flUpdSchema,
 	handler: async (ctx, { flId, updates }) => {
@@ -135,19 +80,3 @@ export const update = mutation({
 		return { _id: flId, ...updates };
 	},
 });
-
-type flUpdate = ObjectType<typeof flUpdSchema>;
-
-export const handleFlUpdate = async (
-	ctx: GenericMutationCtx<any>,
-	userId: string | undefined,
-	flId: flUpdate["flId"],
-	updates: flUpdate["updates"],
-) => {
-	const existingFl = await ctx.db.get(flId);
-
-	if (!existingFl) throw new Error("Folder not found");
-	if (existingFl.userId !== userId) throw new Error("Unauthorized");
-
-	return ctx.db.patch(flId, updates);
-};

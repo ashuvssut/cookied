@@ -22,6 +22,7 @@ import type * as crypto from "../crypto";
 import type * as types from "../types";
 import type * as utils_bookmark from "../utils/bookmark";
 import type * as utils_constants from "../utils/constants";
+import type * as utils_folder from "../utils/folder";
 import type * as utils_openAi from "../utils/openAi";
 import type * as utils_user from "../utils/user";
 import type * as utils_webContent from "../utils/webContent";
@@ -43,6 +44,7 @@ declare const fullApi: ApiFromModules<{
   types: typeof types;
   "utils/bookmark": typeof utils_bookmark;
   "utils/constants": typeof utils_constants;
+  "utils/folder": typeof utils_folder;
   "utils/openAi": typeof utils_openAi;
   "utils/user": typeof utils_user;
   "utils/webContent": typeof utils_webContent;

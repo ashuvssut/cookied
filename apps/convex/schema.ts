@@ -54,3 +54,17 @@ export const bmUpdSchema = {
 	// userId is prohibited to change!
 };
 export type TBmUpd = ObjectType<typeof bmUpdSchema>;
+
+export const flUpdSchema = {
+	flId: v.id("folders"),
+	updates: v.object({
+		type: v.literal("folder"),
+		parentId: v.optional(parentIdSchema),
+		path: v.optional(v.array(v.string())),
+		level: v.optional(v.number()),
+		title: v.optional(v.string()),
+		bookmarks: v.optional(v.array(v.id("bookmarks"))),
+		folders: v.optional(v.array(v.id("folders"))),
+	}),
+};
+export type TFlUpd = ObjectType<typeof flUpdSchema>;
