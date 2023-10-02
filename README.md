@@ -31,7 +31,8 @@ But wait, there's more to come! 🚀 We're actively working on a list of upcomin
 ## Demo Video
 
 Check out this YouTube video for the app walkthroughs!!
-[![Cookied Demo](https://img.youtube.com/vi/jcy70qBsbtY/0.jpg)](https://www.youtube.com/watch?v=jcy70qBsbtY)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jcy70qBsbtY" frameborder="0" allowfullscreen></iframe>
+
 
 ## 🤝🏽🍀 Contributing Guidelines [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 
