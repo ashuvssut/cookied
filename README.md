@@ -32,7 +32,7 @@ But wait, there's more to come! 🚀 We're actively working on a list of upcomin
 
 Check out this YouTube video for the app walkthroughs!!
 
-[![Cookied Demo](https://github.com/ashuvssut/cookied/assets/60546840/06b076cf-258e-4fec-a01d-a88f87f62888)](https://www.youtube.com/embed/jcy70qBsbtY)
+[![Cookied Demo](./.github/docs/thumbnail.png)](https://www.youtube.com/embed/jcy70qBsbtY)
 
 ## 🤝🏽🍀 Contributing Guidelines [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 
