@@ -95,5 +95,6 @@ Let's collaborate to make Cookied flawless and elevate the user experience! You 
      yarn convex dev
      ```
      - Note: You need to install Convex CLI first. Visit the [Convex documentation](https://docs.convex.dev/) for more information.
+     - you may run `npx convex dev --tail-log` instead in order to get logs pipelined to your terminal
 
 Feel free to dive in and contribute to Cookied's development journey!
