@@ -86,7 +86,7 @@ function SearchInitializer({ encryptedKey }: { encryptedKey: string }) {
 		api.bmShelf.bookmark.getEmptyEmbeddingDocs,
 	);
 
-	const updateEmbeddings = useAction(api.openAi.updateEmbeddings);
+	const updateEmbeddings = useAction(api.actions.openAi.updateEmbeddings);
 	const [isUpdating, setIsUpdating] = useState(false);
 	async function requestEmbedding() {
 		setIsUpdating(true);
@@ -123,7 +123,7 @@ function SearchInitializer({ encryptedKey }: { encryptedKey: string }) {
 }
 
 function SearchResultCards() {
-	const aiSearchSimilarBms = useAction(api.openAi.aiSearchSimilarBms);
+	const aiSearchSimilarBms = useAction(api.actions.openAi.aiSearchSimilarBms);
 	const [query] = useAtom(bmQueryAtom);
 
 	const [results, setResults] = useState<IBookmark[]>([]);

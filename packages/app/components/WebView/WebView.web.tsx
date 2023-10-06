@@ -19,7 +19,7 @@ interface IWebView
 export const WebView: FC<IWebView> = ({ src, style, ...props }) => {
 	const [htmlContent, setHtmlContent] = useState<string | undefined>(undefined);
 
-	const getWebResource = useAction(api.webContent.fetchWebpage);
+	const getWebResource = useAction(api.actions.webContent.fetchWebpage);
 	useEffect(() => {
 		async function getHtml() {
 			if (!src) {
