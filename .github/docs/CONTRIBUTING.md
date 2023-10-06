@@ -50,38 +50,25 @@ Let's collaborate to make Cookied flawless and elevate the user experience! You 
 
    - Run `yarn install` to install all the necessary dependencies.
 
-4. **Setting up clerk.com:**
+4. **Setting up Clerk Auth**
 
-- **Sign up for Clerk**
+  - Follow the [Convex docs](https://docs.convex.dev/auth/clerk). In the [Getting Started](https://docs.convex.dev/auth/clerk#get-started) section, 
+    1. **Get your Clerk Issuer URL**. 
+       - Follow steps 1 to 4. Copy the Issuer URL
+       - Duplicate the [auth.config.js.example](./../../apps/convex/auth.config.js.example) file and rename it as `auth.config.js`
+       - Paste you Issuer URL in the `domain` key.
+    2. **Get your Clerk Publishable Key and Clerk Secret Key**
+       - Follow Step 7 of the same Getting Started section
+       - Duplicate [.env.local.example](./../../apps/web/.env.local.example) and rename it as `.env.local`. Paste you Clerk Publishable Key and Secret key there.
+       - Do the same for [env.js.example](./../../apps/expo/env.js.example) and paste you Clerk Publishable Key only
 
-  - Sign up for a free Clerk account at [clerk.com/sign-up](https://clerk.com/sign-up).
+5. **Setting up Convex**
+   - Create a Convex project. Copy the Convex Deployment URL of your project. here a reference image for you: 
+   ![How to find Convex Deployment URL](./convex.jpeg) 
+   - Go to `.env.local` and `env.js` files that you created in step 4.2
+   - Paste your Convex deployment URL in both the files
 
-- **Create an application in Clerk**
-
-  - Choose how you want your users to sign in.
-
-- **Create a JWT Template**
-
-  - In the JWT Templates section of the Clerk dashboard tap on **+ New template** and choose Convex.
-
-  Copy the Issuer URL from the Issuer input field.
-
-  **Hit Apply Changes**.
-
-- **Update the auth config**
-  - In the convex folder create a new file auth.config.js with the server-side configuration for validating access tokens. Paste in the Issuer URL from the JWT template and set applicationID to "convex" (the value of the "aud" Claims field).
-  ```
-  export default {
-    providers: [
-      {
-        domain: "https://your-issuer-url.clerk.accounts.dev/",
-        applicationID: "convex",
-      },
-    ]
-  };
-  ```
-
-5. **Yarn Scripts:**
+6. **Yarn Scripts:**
 
    - **For Android Development:**
 
