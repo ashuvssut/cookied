@@ -7,6 +7,7 @@ Thank you for your interest in contributing to `cookied`! Whether you're a devel
 Before diving into contributing to our project, ensure you have the following prerequisites:
 
 - **Android Development:**
+
   - Set up your environment for React Native development. Follow the [React Native official documentation](https://reactnative.dev/docs/environment-setup) for Android.
 
 - **Node.js and Yarn:**
@@ -38,30 +39,55 @@ Let's collaborate to make Cookied flawless and elevate the user experience! You 
 #### Getting Started
 
 1. **Fork and Clone the Repository:**
+
    - Fork this repository and clone it to your local machine.
 
 2. **Set Up Environment Files:**
+
    - In every app directory (`apps/*`), you'll find example env files. Remove the `.example` extension and fill in the env values with your own.
 
 3. **Install Dependencies:**
+
    - Run `yarn install` to install all the necessary dependencies.
 
-4. **Yarn Scripts:**
+4. **Setting up Clerk Auth**
+
+  - Follow the [Convex docs](https://docs.convex.dev/auth/clerk). In the [Getting Started](https://docs.convex.dev/auth/clerk#get-started) section, 
+    1. **Get your Clerk Issuer URL**. 
+       - Follow steps 1 to 4. Copy the Issuer URL
+       - Duplicate the [auth.config.js.example](./../../apps/convex/auth.config.js.example) file and rename it as `auth.config.js`
+       - Paste you Issuer URL in the `domain` key.
+    2. **Get your Clerk Publishable Key and Clerk Secret Key**
+       - Follow Step 7 of the same Getting Started section
+       - Duplicate [.env.local.example](./../../apps/web/.env.local.example) and rename it as `.env.local`. Paste you Clerk Publishable Key and Secret key there.
+       - Do the same for [env.js.example](./../../apps/expo/env.js.example) and paste you Clerk Publishable Key only
+
+5. **Setting up Convex**
+   - Create a Convex project. Copy the Convex Deployment URL of your project. here a reference image for you: 
+   ![How to find Convex Deployment URL](./convex.jpeg) 
+   - Go to `.env.local` and `env.js` files that you created in step 4.2
+   - Paste your Convex deployment URL in both the files
+
+6. **Yarn Scripts:**
 
    - **For Android Development:**
+
      ```bash
      yarn workspace native start
      ```
 
    - **For Web App Development:**
+
      ```bash
      yarn workspace web dev
      ```
 
    - **For Chrome Extension Development:**
+
      ```bash
      yarn workspace ext dev
      ```
+
      - After running the script, go to your browser's Extension page, turn on Dev mode, and click on 'Load Unpacked'. Load the `dist/` folder (located in `apps/chrome-extension`).
 
    - **For Backend:**
