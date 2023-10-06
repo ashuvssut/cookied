@@ -95,3 +95,4 @@ db.json
 
 .env.local
 apps/expo/build.app.*
+apps/convex/auth.config.js
