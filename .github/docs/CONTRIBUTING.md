@@ -7,6 +7,7 @@ Thank you for your interest in contributing to `cookied`! Whether you're a devel
 Before diving into contributing to our project, ensure you have the following prerequisites:
 
 - **Android Development:**
+
   - Set up your environment for React Native development. Follow the [React Native official documentation](https://reactnative.dev/docs/environment-setup) for Android.
 
 - **Node.js and Yarn:**
@@ -38,30 +39,68 @@ Let's collaborate to make Cookied flawless and elevate the user experience! You 
 #### Getting Started
 
 1. **Fork and Clone the Repository:**
+
    - Fork this repository and clone it to your local machine.
 
 2. **Set Up Environment Files:**
+
    - In every app directory (`apps/*`), you'll find example env files. Remove the `.example` extension and fill in the env values with your own.
 
 3. **Install Dependencies:**
+
    - Run `yarn install` to install all the necessary dependencies.
 
-4. **Yarn Scripts:**
+4. **Setting up clerk.com:**
+
+- **Sign up for Clerk**
+
+  - Sign up for a free Clerk account at [clerk.com/sign-up](https://clerk.com/sign-up).
+
+- **Create an application in Clerk**
+
+  - Choose how you want your users to sign in.
+
+- **Create a JWT Template**
+
+  - In the JWT Templates section of the Clerk dashboard tap on **+ New template** and choose Convex.
+
+  Copy the Issuer URL from the Issuer input field.
+
+  **Hit Apply Changes**.
+
+- **Update the auth config**
+  - In the convex folder create a new file auth.config.js with the server-side configuration for validating access tokens. Paste in the Issuer URL from the JWT template and set applicationID to "convex" (the value of the "aud" Claims field).
+  ```
+  export default {
+    providers: [
+      {
+        domain: "https://your-issuer-url.clerk.accounts.dev/",
+        applicationID: "convex",
+      },
+    ]
+  };
+  ```
+
+5. **Yarn Scripts:**
 
    - **For Android Development:**
+
      ```bash
      yarn workspace native start
      ```
 
    - **For Web App Development:**
+
      ```bash
      yarn workspace web dev
      ```
 
    - **For Chrome Extension Development:**
+
      ```bash
      yarn workspace ext dev
      ```
+
      - After running the script, go to your browser's Extension page, turn on Dev mode, and click on 'Load Unpacked'. Load the `dist/` folder (located in `apps/chrome-extension`).
 
    - **For Backend:**
