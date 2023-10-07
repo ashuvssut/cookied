@@ -13,9 +13,12 @@
 10. convert to tamagui with custom compoenents that follow MD3 (maybe start tamamui project first)
 11. 404 page
 12. Drag to resize left pane in web
-13. PROFILE MENU OPTIONS
+13. PROFILE MENU OPTIONS (top right dropdown on web / slide-in menu on the right)
 - Star on GitHub
 - Buy me a Coffee
 - EXPORT/IMPORT 
 - Lock folders
 - Theme changer (start tamamui project first)
+- Report a Issue: this needs two things
+  - a TextBox UI theme to write in the issue in markdown
+  - a convex action that will call the GitHub apis to create the issue on repo with the received markdown content
