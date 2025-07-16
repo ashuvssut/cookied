@@ -44,13 +44,3 @@ Check out this YouTube video for the app walkthroughs!!
 Explore our [contributing guidelines](.github/docs/CONTRIBUTING.md)!
 
 Also, check out the Idea List in [TODO.md](./TODO.md).
-
----
-
-✨ **Evolving Brilliance ⭐**
-
-This repository is in a constant state of refinement and is destined to become an awesome productivity tool.
-
-Stargazers, you're the silent supporters who recognize the potential, and followers, you're on this journey with us.
-
-Exciting features are in the pipeline, set to transform your user experience. ⚙️ Stay tuned! 🌟
